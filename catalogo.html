@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogo - 33Giri</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      color: #2c2416;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
+      background-size: 100% auto;
+      opacity: 0.25;
+      z-index: 0;
+      pointer-events: none;
+      animation: textureMove 30s linear infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes textureMove {
+      from { background-position: 0 0; }
+      to { background-position: 0 -1000px; }
+    }
+    
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+    }
+    
+    /* Hero Section Redesign */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 60px;
+      z-index: 1;
+    }
+    
+    .hero-content {
+      max-width: 1400px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .hero-text {
+      animation: slideInLeft 1s ease-out;
+    }
+    
+    .hero-title {
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #f5f0e8 0%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: fadeInScale 1.2s ease-out;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: #f5f0e8;
+      margin-bottom: 40px;
+      font-weight: 300;
+      line-height: 1.6;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .hero-cta {
+      display: inline-block;
+      padding: 18px 50px;
+      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
+      color: #5d4e37;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      border-radius: 50px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      transition: left 0.5s;
+    }
+    
+    .hero-cta:hover::before {
+      left: 100%;
+    }
+    
+    .hero-cta:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 60px rgba(0,0,0,0.3);
+    }
+    
+    .hero-images {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      animation: slideInRight 1s ease-out;
+    }
+    
+    .hero-image {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      animation: floatIn 1s ease-out backwards;
+    }
+    
+    .hero-image:nth-child(1) { animation-delay: 0.2s; }
+    .hero-image:nth-child(2) { animation-delay: 0.4s; grid-row: span 2; }
+    .hero-image:nth-child(3) { animation-delay: 0.6s; }
+    
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    
+    .hero-image:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      z-index: 10;
+    }
+    
+    .hero-image:hover img {
+      transform: scale(1.15);
+    }
+    
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Collection Section */
+    .collection-section {
+      position: relative;
+      padding: 100px 20px;
+      background: rgba(245, 240, 232, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 1;
+      box-shadow: 0 -20px 80px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 4rem;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #8B7355 0%, #5d4e37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #6b5d4f;
+      margin-bottom: 80px;
+      font-weight: 300;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Carousel Cards */
+    .carousel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .vinyl-card {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+    }
+    
+    .vinyl-card:nth-child(1) { animation-delay: 0.1s; }
+    .vinyl-card:nth-child(2) { animation-delay: 0.3s; }
+    .vinyl-card:nth-child(3) { animation-delay: 0.5s; }
+    
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+      to { opacity: 1; transform: scale(1) rotate(0); }
+    }
+    
+    .vinyl-card:hover {
+      transform: translateY(-20px) scale(1.02);
+      box-shadow: 0 30px 80px rgba(139, 115, 85, 0.3);
+    }
+    
+    .vinyl-card-header {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #C4B5A0 0%, #9FB4B8 100%);
+    }
+    
+    .vinyl-card-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    
+    .vinyl-card:hover .vinyl-card-header img {
+      transform: scale(1.2) rotate(5deg);
+    }
+    
+    .vinyl-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(245, 240, 232, 0.95);
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #5d4e37;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      animation: bounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .vinyl-card-body {
+      padding: 40px;
+    }
+    
+    .vinyl-card-title {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #2c2416;
+    }
+    
+    .vinyl-card-description {
+      color: #6b5d4f;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    
+    .vinyl-button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #8B7355 0%, #A5927C 100%);
+      color: #f5f0e8;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .vinyl-button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .vinyl-button:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+    
+    .vinyl-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(139, 115, 85, 0.4);
+    }
+    
+    /* Gallery Section */
+    .gallery-section {
+      position: relative;
+      padding: 120px 20px;
+      background: linear-gradient(135deg, rgba(196, 181, 160, 0.15) 0%, rgba(159, 180, 184, 0.15) 100%);
+      z-index: 1;
+    }
+    
+    .gallery-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+      justify-content: center;
+    }
+    
+    .gallery-item {
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeInUp 0.8s ease-out backwards;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-10px) rotate(2deg);
+      box-shadow: 0 25px 50px rgba(139, 115, 85, 0.4);
+      z-index: 10;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+    
+    /* Text Cards */
+    .text-card {
+      background: rgba(245, 240, 232, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 25px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      animation: fadeInUp 0.8s ease-out backwards;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .text-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(139, 115, 85, 0.25);
+    }
+    
+    .text-card h3 {
+      font-size: 1.6rem;
+      color: #5d4e37;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    
+    .text-card p {
+      color: #6b5d4f;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    
+    .text-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0 0;
+    }
+    
+    .text-card ul li {
+      color: #6b5d4f;
+      padding: 6px 0;
+      padding-left: 22px;
+      position: relative;
+      font-size: 0.95rem;
+    }
+    
+    .text-card ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #8B7355;
+      font-size: 1.4rem;
+      line-height: 1;
+      top: 3px;
+    }
+    
+    /* Decorative Lines */
+    .decorative-line {
+      width: 100%;
+      background: linear-gradient(90deg, transparent, #8B7355, transparent);
+      height: 2px;
+      border-radius: 2px;
+      animation: fadeInUp 0.8s ease-out backwards;
+      margin: 20px 0;
+    }
+    
+    /* Grid Item Sizes - Flexbox based */
+    .item-small { 
+      width: calc(25% - 15px); 
+      height: 250px;
+    }
+    .item-medium { 
+      width: calc(33.333% - 14px); 
+      height: 320px;
+    }
+    .item-large { 
+      width: calc(50% - 10px); 
+      height: 400px;
+    }
+    
+    .text-small { 
+      width: calc(25% - 15px); 
+      min-height: 180px;
+    }
+    .text-medium { 
+      width: calc(33.333% - 14px); 
+      min-height: 220px;
+    }
+    .text-large { 
+      width: calc(50% - 10px); 
+      min-height: 250px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero-title { font-size: 4rem; }
+      .item-small, .item-medium { 
+        width: calc(33.333% - 14px); 
+        height: 280px;
+      }
+      .item-large { 
+        width: calc(50% - 10px); 
+        height: 350px;
+      }
+      .text-small, .text-medium { 
+        width: calc(33.333% - 14px); 
+      }
+      .text-large { 
+        width: calc(50% - 10px); 
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-title { font-size: 3rem; }
+      .section-title { font-size: 2.5rem; }
+      .gallery-grid { gap: 15px; }
+      .item-small, .item-medium, .item-large { 
+        width: calc(50% - 8px); 
+        height: 250px;
+      }
+      .text-small, .text-medium, .text-large { 
+        width: calc(50% - 8px); 
+        min-height: 160px;
+      }
+      .text-card { 
+        padding: 18px; 
+      }
+      .text-card h3 { font-size: 1.3rem; }
+      .text-card p { font-size: 0.85rem; }
+    }
+    
+    @media (max-width: 480px) {
+      .gallery-grid { gap: 12px; }
+      .item-small, .item-medium, .item-large { 
+        width: 100%; 
+        height: 220px;
+      }
+      .text-small, .text-medium, .text-large { 
+        width: 100%; 
+        min-height: 140px;
+      }
+      .text-card { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Include Header -->
+  <header id="header"></header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Vinili Unici<br>Fatti a Mano</h1>
+        <p class="hero-subtitle">Scopri l'arte della musica con i nostri vinili artigianali.<br>Ogni pezzo è unico, progettato per te.</p>
+        <a href="#collection" class="hero-cta">Esplora la Collezione</a>
+      </div>
+      <div class="hero-images">
+        <div class="hero-image">
+          <img src="assets/atelier 33 giri/20251110-IMG_4554.jpg" alt="33 Giri Atelier">
+        </div>
+        <div class="hero-image">
+          <img src="assets/atelier 33 giri/20251110-IMG_4940.jpg" alt="33 Giri Studio">
+        </div>
+        <div class="hero-image">
+          <img src="assets/atelier 33 giri/expo/IMG_4588.jpg" alt="Vinile Artistico">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection Section -->
+  <section class="collection-section" id="collection">
+    <h2 class="section-title">La Nostra Collezione</h2>
+    <p class="section-subtitle">Tre stili unici, infinite possibilità</p>
+    
+    <div class="carousel-grid">
+      <!-- Normal Card -->
+      <div class="vinyl-card">
+        <div class="vinyl-card-header">
+          <img src="assets/normal1.jpg/vinile3_cropped_1.jpeg" alt="Normal Vinyl">
+          <span class="vinyl-badge">NORMAL</span>
+        </div>
+        <div class="vinyl-card-body">
+          <h3 class="vinyl-card-title">Normal</h3>
+          <p class="vinyl-card-price">25€</p>
+          <p class="vinyl-card-description">Design classico ed elegante. Perfetto per chi ama la semplicità senza rinunciare allo stile.</p>
+          <button class="vinyl-button" data-style="NORMAL">Voglio Questo Stile</button>
+        </div>
+      </div>
+
+      <!-- Splash Card -->
+      <div class="vinyl-card">
+        <div class="vinyl-card-header">
+          <img src="assets/iloveimg-converted/IMG_3397.jpg" alt="Splash Vinyl">
+          <span class="vinyl-badge">SPLASH</span>
+        </div>
+        <div class="vinyl-card-body">
+          <h3 class="vinyl-card-title">Splash</h3>
+          <p class="vinyl-card-price">40€</p>
+          <p class="vinyl-card-description">Esplosioni di colore e creatività. Ogni vinile è un'opera d'arte unica e irripetibile.</p>
+          <button class="vinyl-button" data-style="SPLASH">Voglio Questo Stile</button>
+        </div>
+      </div>
+
+      <!-- Spiral Card -->
+      <div class="vinyl-card">
+        <div class="vinyl-card-header">
+          <img src="assets/iloveimg-converted/IMG_3348.jpg" alt="Spiral Vinyl">
+          <span class="vinyl-badge">SPIRAL</span>
+        </div>
+        <div class="vinyl-card-body">
+          <h3 class="vinyl-card-title">Spiral</h3>
+          <p class="vinyl-card-price">40€</p>
+          <p class="vinyl-card-description">Ipnotici motivi a spirale. Un design dinamico che cattura lo sguardo.</p>
+          <button class="vinyl-button" data-style="SPIRAL">Voglio Questo Stile</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section">
+    <h2 class="section-title">Scopri 33collection Made in Italy</h2>
+    <p class="section-subtitle">Artigianato italiano, qualità superiore</p>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item item-medium" style="animation-delay: 0.1s;"><img src="assets/atelier 33 giri/20251110-IMG_4734.jpg" alt="Vinile 1"></div>
+      
+      <div class="text-card text-small" style="animation-delay: 0.2s;">
+        <h3>Made in Italy</h3>
+        <p>Ogni pezzo è unico e realizzato a mano</p>
+      </div>
+      
+      <div class="gallery-item item-small" style="animation-delay: 0.3s;"><img src="assets/foto /sfondo bianco /IMG_3447.png" alt="Vinile 2"></div>
+      
+      <div class="gallery-item item-small" style="animation-delay: 0.4s;"><img src="assets/atelier 33 giri/expo/IMG_4597.jpg" alt="Atelier"></div>
+      
+      <div class="gallery-item item-large" style="animation-delay: 0.5s;"><img src="assets/foto /sfondo nero e marrone /IMG_3324.jpg" alt="Vinile Splash"></div>
+      
+      <div class="text-card text-medium" style="animation-delay: 0.6s;">
+        <h3>Fatto a Mano</h3>
+        <p>Artigianato italiano di qualità superiore</p>
+        <ul>
+          <li>Resina premium</li>
+          <li>Pigmenti professionali</li>
+          <li>Design esclusivo</li>
+        </ul>
+      </div>
+      
+      <div class="gallery-item item-medium" style="animation-delay: 0.7s;"><img src="assets/atelier 33 giri/20251110-IMG_4895.jpg" alt="Vinile 3"></div>
+      
+      <div class="gallery-item item-small" style="animation-delay: 0.8s;"><img src="assets/atelier 33 giri/20251110-IMG_4980.jpg" alt="Vinile 4"></div>
+      
+      <div class="decorative-line" style="animation-delay: 0.9s;"></div>
+      
+      <div class="gallery-item item-small" style="animation-delay: 1s;"><img src="assets/atelier 33 giri/expo/IMG_4614.jpg" alt="Vinile Spiral"></div>
+      
+      <div class="gallery-item item-medium" style="animation-delay: 1.1s;"><img src="assets/atelier 33 giri/20251110-IMG_4789.jpg" alt="Atelier 2"></div>
+      
+      <div class="text-card text-small" style="animation-delay: 1.2s;">
+        <h3>Personalizza</h3>
+        <p>Scegli colori e stile per il tuo vinile unico</p>
+      </div>
+      
+      <div class="gallery-item item-small" style="animation-delay: 1.3s;"><img src="assets/foto /sfondo nero e marrone /IMG_3331.jpg" alt="Vinile 5"></div>
+      
+      <div class="gallery-item item-large" style="animation-delay: 1.4s;"><img src="assets/atelier 33 giri/20251110-IMG_4958.jpg" alt="Vinile 6"></div>
+      
+      <div class="gallery-item item-medium" style="animation-delay: 1.5s;"><img src="assets/atelier 33 giri/expo/IMG_4636.jpg" alt="Vinile 7"></div>
+      
+      <div class="text-card text-medium" style="animation-delay: 1.6s;">
+        <h3>Tre Stili Unici</h3>
+        <p>Scegli tra le nostre collezioni esclusive</p>
+        <ul>
+          <li>Normal - 25€</li>
+          <li>Splash - 40€</li>
+          <li>Spiral - 40€</li>
+        </ul>
+      </div>
+      
+      <div class="gallery-item item-small" style="animation-delay: 1.7s;"><img src="assets/atelier 33 giri/20251110-IMG_4972.jpg" alt="Vinile 8"></div>
+    </div>
+  </section>
+
+
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contatti">
+    <div class="wrap">
+  <h2 class="contact-title">Contattaci per creare il tuo pezzo unico, fatto a mano, solo per te.</h2>
+      <form class="contact-form" id="contactForm">
+        <div class="form-group">
+          <label for="contactMethod">Scegli come vuoi contattarci</label>
+          <select id="contactMethod" class="form-select" required>
+            <option value="">Seleziona un metodo</option>
+            <option value="email">Email</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="instagram">Instagram</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="contactInfoGroup" style="display: none;">
+          <label for="contactInfo" id="contactInfoLabel">La tua email</label>
+          <input type="text" id="contactInfo" class="form-input" placeholder="nome@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Il tuo messaggio</label>
+          <textarea id="message" class="form-textarea" rows="5" placeholder="Scrivi qui..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-checkbox">
+            <input type="checkbox" id="autoSend" checked>
+            <span>Invia automaticamente quando completi i campi</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Invia ora</button>
+        
+        <p class="contact-note">Con "Email" si apre il client di posta predefinito; con "WhatsApp" l'app o il web; con "Instagram" i DM (ig.me).</p>
+      </form>
+    </div>
+  </section>
+
+
+  <!-- Lightbox per zoom immagini -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog">
+    <button class="lightbox-close" aria-label="Chiudi">×</button>
+    <img class="lightbox-img" src="" alt="Zoom immagine" />
+  </div>
+
+  <!-- Include Footer -->
+  <div id="footer"></div>
+
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script type="module">
+    // Popola il catalogo con i dati dal file content.js
+    import { COLLECTION } from './data/content.js';
+
+    const catalogWrap = document.getElementById('catalog-categories');
+    catalogWrap.innerHTML = COLLECTION.map(item => `
+      <article class="card">
+        <div class="thumb" style="background:url('${item.image}') center/cover no-repeat"></div>
+        <div class="body">
+          <h3>${item.title}</h3>
+          <p class="price">${item.price}</p>
+        </div>
+      </article>
+    `).join('');
+
+  // Header/Footer caricati da assets/js/layout.js con fallback
+  </script>
+
+  <script>
+  // Gestione click sui bottoni delle card
+  document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll per hero CTA
+    document.querySelector('.hero-cta')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('collection').scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    });
+    
+    // Click sui bottoni vinile
+    const vinylButtons = document.querySelectorAll('.vinyl-button');
+    vinylButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const style = this.getAttribute('data-style');
+        const messageField = document.getElementById('message');
+        const contactSection = document.querySelector('.contact-section');
+        
+        // Animazione click
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 200);
+        
+        if (contactSection) {
+          contactSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }
+        
+        setTimeout(() => {
+          if (messageField) {
+            messageField.value = `Ciao, vorrei acquistare il vinile ${style}`;
+            messageField.focus();
+          }
+        }, 800);
+      });
+    });
+    
+    // Parallax effect sulle hero images
+    document.addEventListener('mousemove', function(e) {
+      const heroImages = document.querySelectorAll('.hero-image');
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+      
+      heroImages.forEach((img, index) => {
+        const speed = (index + 1) * 10;
+        const x = (mouseX - 0.5) * speed;
+        const y = (mouseY - 0.5) * speed;
+        img.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+    
+    // Lightbox per gallery
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.querySelector('.lightbox-img');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    
+    galleryItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const img = this.querySelector('img');
+        if (lightbox && lightboxImg) {
+          lightboxImg.src = img.src;
+          lightbox.style.display = 'flex';
+          lightbox.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+    
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', function() {
+        if (lightbox) {
+          lightbox.style.display = 'none';
+          lightbox.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+    
+    // Check localStorage message
+    const prefilledMessage = localStorage.getItem('contactMessage');
+    if (prefilledMessage) {
+      const messageField = document.getElementById('message');
+      if (messageField) {
+        messageField.value = prefilledMessage;
+        localStorage.removeItem('contactMessage');
+        const contactSection = document.getElementById('contatti');
+        if (contactSection) {
+          setTimeout(() => {
+            contactSection.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+            messageField.focus();
+          }, 500);
+        }
+      }
+    }
+    
+    // Intersection Observer per animazioni scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.vinyl-card, .gallery-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+  </script>
+</body>
+</html>

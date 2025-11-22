@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lascia una Recensione — 33Giri</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body style="--bg:#e8dfd5">
+  <!-- Include Header -->
+  <header id="header"></header>
+
+  <main>
+    <section class="review-form-section wrap">
+      <div class="review-form-container">
+        <h1 class="review-form-title">La tua opinione conta!</h1>
+        <p class="review-form-subtitle">Condividi la tua esperienza con 33Giri e aiutaci a migliorare</p>
+
+        <form id="reviewForm" class="review-form">
+          <!-- Nome -->
+          <div class="form-group">
+            <label for="reviewerName">Il tuo nome *</label>
+            <input 
+              type="text" 
+              id="reviewerName" 
+              name="reviewerName" 
+              required 
+              placeholder="es. Mario Rossi"
+            />
+          </div>
+
+          <!-- Email (opzionale, per verifica) -->
+          <div class="form-group">
+            <label for="reviewerEmail">Email (opzionale)</label>
+            <input 
+              type="email" 
+              id="reviewerEmail" 
+              name="reviewerEmail" 
+              placeholder="mario.rossi@email.com"
+            />
+          </div>
+
+          <!-- Rating con stelle -->
+          <div class="form-group">
+            <label>Valutazione *</label>
+            <div class="star-rating">
+              <input type="radio" name="rating" value="5" id="star5" required />
+              <label for="star5" title="5 stelle">★</label>
+              
+              <input type="radio" name="rating" value="4" id="star4" />
+              <label for="star4" title="4 stelle">★</label>
+              
+              <input type="radio" name="rating" value="3" id="star3" />
+              <label for="star3" title="3 stelle">★</label>
+              
+              <input type="radio" name="rating" value="2" id="star2" />
+              <label for="star2" title="2 stelle">★</label>
+              
+              <input type="radio" name="rating" value="1" id="star1" />
+              <label for="star1" title="1 stella">★</label>
+            </div>
+            <div id="ratingValue" class="rating-value"></div>
+          </div>
+
+          <!-- Commento -->
+          <div class="form-group">
+            <label for="reviewComment">Il tuo commento *</label>
+            <textarea 
+              id="reviewComment" 
+              name="reviewComment" 
+              rows="5" 
+              required 
+              placeholder="Raccontaci la tua esperienza con i nostri prodotti..."
+            ></textarea>
+            <small class="char-count"><span id="charCount">0</span>/500 caratteri</small>
+          </div>
+
+          <!-- Upload Immagini -->
+          <div class="form-group">
+            <label for="reviewImages">Aggiungi foto (opzionale)</label>
+            <div class="image-upload-area">
+              <input 
+                type="file" 
+                id="reviewImages" 
+                name="reviewImages" 
+                accept="image/*" 
+                multiple 
+                class="file-input"
+              />
+              <label for="reviewImages" class="file-input-label">
+                <span class="upload-icon">📷</span>
+                <span class="upload-text">Clicca per caricare o trascina le immagini qui</span>
+                <span class="upload-info">Massimo 5 immagini (JPG, PNG, max 5MB ciascuna)</span>
+              </label>
+            </div>
+            <div id="imagePreview" class="image-preview"></div>
+          </div>
+
+          <!-- Privacy -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="privacyConsent" name="privacyConsent" required />
+              <span>Acconsento al trattamento dei dati personali secondo l'<a href="informativa-privacy.html" target="_blank">informativa sulla privacy</a> *</span>
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-submit">
+              <span class="btn-text">Invia Recensione</span>
+              <span class="btn-loader" style="display:none;">⏳ Invio in corso...</span>
+            </button>
+          </div>
+
+          <!-- Messaggio di successo/errore -->
+          <div id="formMessage" class="form-message" style="display:none;"></div>
+        </form>
+
+        <!-- Recensioni recenti -->
+        <div class="recent-reviews">
+          <h2>Recensioni recenti</h2>
+          <div id="recentReviewsList" class="reviews-list">
+            <!-- Le recensioni verranno caricate dinamicamente -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Include Footer -->
+  <footer id="footer"></footer>
+
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/reviews.js"></script>
+</body>
+</html>

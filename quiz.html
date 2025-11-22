@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>33Giri — Quiz</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    /* Access Code Overlay */
+    #access-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    #access-overlay.hidden {
+      display: none;
+    }
+    .access-box {
+      background: #fff;
+      padding: 48px 40px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    .access-box h2 {
+      margin: 0 0 16px;
+      font-size: 28px;
+      color: #333;
+    }
+    .access-box p {
+      margin: 0 0 24px;
+      color: #666;
+      font-size: 16px;
+    }
+    .access-box input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      text-align: center;
+      letter-spacing: 4px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+    .access-box input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+    .access-box button {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .access-box button:hover {
+      opacity: 0.85;
+    }
+    .access-error {
+      color: #c23;
+      font-size: 14px;
+      margin-top: 12px;
+      display: none;
+    }
+    .access-error.show {
+      display: block;
+    }
+    #page-content {
+      display: none;
+    }
+    #page-content.unlocked {
+      display: block;
+    }
+  </style>
+</head>
+<body style="--bg:#e8dfd5">
+  <!-- Access Code Overlay -->
+  <div id="access-overlay">
+    <div class="access-box">
+      <h2>🔒 Accesso Richiesto</h2>
+      <p>Inserisci il codice per accedere al quiz</p>
+      <input type="text" id="access-code" placeholder="Codice" maxlength="4" autocomplete="off">
+      <button onclick="checkAccessCode()">Accedi</button>
+      <div class="access-error" id="access-error">Codice non valido. Riprova.</div>
+    </div>
+  </div>
+
+  <!-- Page Content (hidden until code is entered) -->
+  <div id="page-content">
+    <!-- Include Header -->
+    <header id="header"></header>
+
+  <section id="quiz-hero-section" style="position:relative; padding:0; min-height:100vh; background-image:url('assets/pagina quiz/record-vinyl-playing-music (2).jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; display:flex; align-items:center; justify-content:center;">
+    <!-- Dark overlay -->
+    <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:1;"></div>
+    
+    <div class="wrap" style="position:relative; z-index:2; max-width:1200px; margin:0 auto; padding:48px 24px; text-align:center;">
+      <h1 style="font-family:'Baloo 2', 'Inter', sans-serif; font-size:clamp(60px,10vw,120px); font-weight:800; margin-bottom:48px; color:#fff; text-shadow:0 4px 12px rgba(0,0,0,0.5);">33Quiz</h1>
+      
+      <!-- Blue info card -->
+      <div style="background:rgba(0,123,255,0.15); border:2px solid #007bff; border-radius:8px; padding:40px 48px; max-width:900px; margin:0 auto 48px; backdrop-filter:blur(10px);">
+        <p style="color:#fff; font-size:clamp(16px,2vw,18px); line-height:1.7; margin:0; text-align:left;">
+          <b>🎵 Scopri il tuo vinile ideale</b><br><br>
+          Ogni vinile racchiude una storia: un suono, un momento, un frammento di vita che continua a parlare nel tempo.<br>
+          Con questo quiz potrai scoprire il disco che più ti rappresenta, quello che risuona con la tua personalità e il tuo modo di vedere il mondo.<br><br>
+          Rispondi in modo spontaneo: non ci sono risposte giuste o sbagliate.<br>
+          Il risultato sarà un vinile unico, scelto per affinità con ciò che trasmettono le tue risposte.<br><br>
+          <b>🎧 Come funziona</b><br><br>
+          1. Ad ogni risposta vengono associati dei valori che descrivono il tuo profilo.<br>
+          2. Alla fine del quiz, questi valori vengono confrontati con le caratteristiche di ogni vinile reale della nostra collezione.<br>
+          3. Il sistema trova la migliore corrispondenza tra il tuo profilo e il disco che più gli somiglia.<br>
+          4. In pochi secondi scoprirai quale vinile ti rappresenta di più — il tuo 33Giri personale.<br><br>
+          <b>✨ Lasciati guidare dal caso, dal suono e dal tempo.</b><br>
+          Ogni vinile ha qualcosa da raccontare — scoprilo, ascoltalo, e lascialo diventare parte del tuo spazio.
+        </p>
+      </div>
+      
+      <h2 style="color:#fff; font-size:clamp(22px,3vw,32px); font-weight:600; margin-bottom:64px; text-shadow:0 2px 8px rgba(0,0,0,0.5);">prova il quiz qua sotto e trova il tuo 33giri</h2>
+      
+      <div id="quiz-embed" style="margin-top:32px;">
+        <!-- ======= 33Giri — QUIZ EMOZIONALE ======= -->
+        <section id="quiz33" class="quiz33">
+          <div class="quiz33__wrap">
+            <!-- ========== CONFIG ========== -->
+            <script>
+              window.QUIZ33_CONFIG = {
+                links: {
+                  Standard:  "#catalogo",
+                  Splash:    "#catalogo",
+                  Spiral:    "#catalogo",
+                  Disegnato: "#collaborazioni"
+                },
+                webhookMatch: "https://hook.eu2.make.com/uap1minfmnu17sksr419akjvkdmw5fni",
+                webhookReserve: "https://hook.eu1.make.com/INSERISCI-URL-RESERVE"
+              };
+            </script>
+
+            <!-- ===================== QUIZ (10 DOMANDE) ===================== -->
+            <div class="quiz33__step" data-step="1">
+              <h2 class="quiz33__title">1) Quale scena ti fa venire voglia di mettere su un vinile?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Domenica piovosa e fotografie</button>
+                <button class="quiz33__btn" data-theme="liberta">Strada libera, vento in faccia</button>
+                <button class="quiz33__btn" data-theme="energia">Pre-serata con amici, volume alto</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Cena intima, luci calde</button>
+                <button class="quiz33__btn" data-theme="introspezione">Taccuino, cuffie e spazio per pensare</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="2">
+              <h2 class="quiz33__title">2) Quale parola senti più "tua" oggi?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Ricordo</button>
+                <button class="quiz33__btn" data-theme="liberta">Orizzonte</button>
+                <button class="quiz33__btn" data-theme="energia">Scintilla</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Abbraccio</button>
+                <button class="quiz33__btn" data-theme="introspezione">Silenzio</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="3">
+              <h2 class="quiz33__title">3) Quale strumento ti colpisce di più?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Pianoforte vellutato</button>
+                <button class="quiz33__btn" data-theme="liberta">Chitarra acustica leggera</button>
+                <button class="quiz33__btn" data-theme="energia">Batteria incisiva</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Archi morbidi</button>
+                <button class="quiz33__btn" data-theme="introspezione">Sax/contrabbasso profondo</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="4">
+              <h2 class="quiz33__title">4) Che colore senti vicino al tuo umore?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Seppia</button>
+                <button class="quiz33__btn" data-theme="liberta">Azzurro cielo</button>
+                <button class="quiz33__btn" data-theme="energia">Rosso vivo</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Ambra/rosato</button>
+                <button class="quiz33__btn" data-theme="introspezione">Petrolio/blu notte</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="5">
+              <h2 class="quiz33__title">5) Che tipo di testo ti emoziona di più?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Amori passati</button>
+                <button class="quiz33__btn" data-theme="liberta">Viaggi e partenze</button>
+                <button class="quiz33__btn" data-theme="energia">Rivalsa e ballare</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Cura e piccoli gesti</button>
+                <button class="quiz33__btn" data-theme="introspezione">Domande e riflessioni</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="6">
+              <h2 class="quiz33__title">6) Come ti immagini ad ascoltare il disco?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Guardando vecchie foto</button>
+                <button class="quiz33__btn" data-theme="liberta">In terrazza a guardare il cielo</button>
+                <button class="quiz33__btn" data-theme="energia">Sistemando casa a ritmo</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Sul divano con qualcuno</button>
+                <button class="quiz33__btn" data-theme="introspezione">In penombra con tisana</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="7">
+              <h2 class="quiz33__title">7) Quale "prima traccia" ti attira?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Tema dolce e malinconico</button>
+                <button class="quiz33__btn" data-theme="liberta">Ballad ariosa da viaggio</button>
+                <button class="quiz33__btn" data-theme="energia">Groove che parte forte</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Melodia carezzevole</button>
+                <button class="quiz33__btn" data-theme="introspezione">Brano lento e profondo</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="8">
+              <h2 class="quiz33__title">8) Il tuo ritmo ideale ora è…</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Medio-lento</button>
+                <button class="quiz33__btn" data-theme="liberta">Cadenzato e ampio</button>
+                <button class="quiz33__btn" data-theme="energia">Veloce e trascinante</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Morbido e avvolgente</button>
+                <button class="quiz33__btn" data-theme="introspezione">Variabile con pause</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="9">
+              <h2 class="quiz33__title">9) Che immagine di copertina ti conquista?</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">Foto vintage</button>
+                <button class="quiz33__btn" data-theme="liberta">Paesaggio aperto</button>
+                <button class="quiz33__btn" data-theme="energia">Luci al neon</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Texture calde</button>
+                <button class="quiz33__btn" data-theme="introspezione">Astratto scuro</button>
+              </div>
+            </div>
+
+            <div class="quiz33__step is-hidden" data-step="10">
+              <h2 class="quiz33__title">10) Alla fine dell'ascolto vuoi sentirti…</h2>
+              <div class="quiz33__grid">
+                <button class="quiz33__btn" data-theme="nostalgia">In pace col passato</button>
+                <button class="quiz33__btn" data-theme="liberta">Leggero e aperto</button>
+                <button class="quiz33__btn" data-theme="energia">Carico e motivato</button>
+                <button class="quiz33__btn" data-theme="tenerezza">Più vicino a qualcuno</button>
+                <button class="quiz33__btn" data-theme="introspezione">Chiarito dentro</button>
+              </div>
+            </div>
+
+            <!-- ===================== RISULTATO ===================== -->
+            <div id="quiz33-result" class="quiz33__result is-hidden">
+              <div class="quiz33__card">
+                <div class="quiz33__left">
+                  <div class="quiz33__logo-header">
+                    <img src="assets/logo/33_GIRI._logo-removebg-preview.png" alt="33Giri" class="quiz33__logo">
+                    <span class="quiz33__logo-text">Il tuo 33Giri</span>
+                  </div>
+                  <img id="quiz33-img" class="quiz33__img" alt="">
+                </div>
+                <div class="quiz33__info">
+                  <h3 id="quiz33-title"></h3>
+                  <p id="quiz33-artist" class="quiz33__muted"></p>
+                  <p id="quiz33-desc"></p>
+
+                  <div class="quiz33__perso">
+                    <label><input type="radio" name="quiz33-perso" value="Standard" checked> Standard</label>
+                    <label><input type="radio" name="quiz33-perso" value="Splash"> Splash</label>
+                    <label><input type="radio" name="quiz33-perso" value="Spiral"> Spiral</label>
+                    <label><input type="radio" name="quiz33-perso" value="Disegnato"> Disegnato</label>
+                  </div>
+
+                  <a id="quiz33-buy" class="quiz33__cta" href="#catalogo">Acquista ora</a>
+                  <p id="quiz33-msg" class="quiz33__msg"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ====== STYLES ====== -->
+          <style>
+            .quiz33 { padding: 24px 0 56px; }
+            .quiz33__title { font-size: clamp(22px, 2.4vw, 32px); margin-bottom: 16px; color: #fff; }
+            .quiz33__grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+            .quiz33__btn { padding: 12px 14px; border: 0; border-radius: 10px; background:#111; color:#fff; cursor:pointer; font-size: 16px; }
+            .quiz33__btn:hover { opacity:.85 }
+            .quiz33__step.is-hidden, .quiz33__result.is-hidden { display:none }
+            .quiz33__card { display:grid; grid-template-columns: 220px 1fr; gap:20px; align-items:start; margin-top:22px; background:#fff;border:1px solid #e7e7e7;border-radius:16px;padding:16px }
+            .quiz33__left { display:flex; flex-direction:column; gap:12px; }
+            .quiz33__logo-header { display:flex; align-items:center; gap:8px; padding:8px; background:#f8f8f8; border-radius:8px; }
+            .quiz33__logo { width:32px; height:32px; object-fit:contain; }
+            .quiz33__logo-text { font-size:14px; font-weight:600; color:#333; }
+            .quiz33__img { width:100%; height:auto; border-radius:12px; object-fit:cover; background:#eee }
+            .quiz33__muted { color:#666; margin-top:-6px }
+            .quiz33__perso { display:flex; flex-wrap:wrap; gap:14px; margin:14px 0 }
+            .quiz33__cta { display:inline-block; padding:12px 16px; border:0; border-radius:12px; background:#111; color:#fff; cursor:pointer; text-decoration:none }
+            .quiz33__msg { margin-top:10px; color:#c23; font-size:14px; }
+            @media (max-width: 900px){ .quiz33__grid{grid-template-columns:1fr} .quiz33__card{grid-template-columns:1fr} }
+          </style>
+
+          <!-- ====== SCRIPT ====== -->
+          <script>
+            (function(){
+              const steps = document.querySelectorAll('#quiz33 .quiz33__step');
+              const resultBox = document.getElementById('quiz33-result');
+              const imgEl = document.getElementById('quiz33-img');
+              const titleEl = document.getElementById('quiz33-title');
+              const artistEl = document.getElementById('quiz33-artist');
+              const descEl = document.getElementById('quiz33-desc');
+              const buyEl = document.getElementById('quiz33-buy');
+              const msgEl = document.getElementById('quiz33-msg');
+
+              const cfg = window.QUIZ33_CONFIG || {};
+              const selections = [];
+              let matched = null;
+
+              const FALLBACK_MAP = {
+                nostalgia: 'Standard',
+                energia: 'Splash',
+                liberta: 'Spiral',
+                tenerezza: 'Disegnato',
+                introspezione: 'Disegnato'
+              };
+
+              document.querySelectorAll('#quiz33 .quiz33__btn').forEach(btn=>{
+                btn.addEventListener('click', e=>{
+                  const stepEl = e.currentTarget.closest('.quiz33__step');
+                  const theme = e.currentTarget.dataset.theme;
+                  if (theme) selections.push(theme);
+                  stepEl.classList.add('is-hidden');
+                  const next = stepEl.nextElementSibling;
+                  if (next && next.classList.contains('quiz33__step')) next.classList.remove('is-hidden');
+                  else finishQuiz();
+                });
+              });
+
+              async function finishQuiz(){
+                msgEl.textContent = '';
+                console.log('QUIZ finishQuiz — selections:', selections);
+
+                try {
+                  if (cfg.webhookMatch){
+                    console.log('Chiamo webhookMatch:', cfg.webhookMatch);
+                    const res = await fetch(cfg.webhookMatch, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ answers: selections })
+                    });
+                    const text = await res.text();
+                    console.log('Webhook response status:', res.status, 'text:', text);
+                    try { matched = JSON.parse(text); }
+                    catch { matched = null; }
+                  }
+                } catch (err) {
+                  console.error('Webhook MATCH errore', err);
+                  console.warn('Webhook MATCH errore', err);
+                  matched = null;
+                }
+
+                function normalize(m){
+                  if (!m) return null;
+                  return {
+                    pickLabel:   m.pickLabel || m.category || m.model || '',
+                    id:          m.id || m.vinyl_id || '',
+                    title:       m.title || m.name || 'Il tuo 33Giri',
+                    artist:      m.artist || m.author || '',
+                    image:       m.image || m.cover || '',
+                    description: m.description || m.desc || ''
+                  };
+                }
+                matched = normalize(matched);
+
+                const tally = { Standard:0, Splash:0, Spiral:0, Disegnato:0 };
+                selections.forEach(t => {
+                  const cat = FALLBACK_MAP[t] || 'Standard';
+                  tally[cat] = (tally[cat] || 0) + 1;
+                });
+                const fallbackPick = Object.entries(tally).sort((a,b)=>b[1]-a[1])[0][0];
+
+                const pickLabel = (matched && matched.pickLabel) || fallbackPick;
+                const img   = (matched && matched.image)       || '';
+                const title = (matched && matched.title)       || `${pickLabel}`;
+                const artist= (matched && matched.artist)      || '';
+                const desc  = (matched && matched.description) || `In base alle tue risposte, ti consigliamo ${pickLabel}.`;
+
+                imgEl.src = img;
+                imgEl.alt = title;
+                titleEl.textContent = title;
+                artistEl.textContent = artist;
+                descEl.textContent = desc;
+                resultBox.classList.remove('is-hidden');
+
+                updateBuyHref();
+
+                try {
+                  if (cfg.webhookReserve && matched && matched.id){
+                    await fetch(cfg.webhookReserve, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ vinyl_id: matched.id, vinyl_title: matched.title })
+                    });
+                  }
+                } catch (err) {
+                  console.warn('Webhook RESERVE errore', err);
+                }
+              }
+
+              function updateBuyHref(){
+                const perso = document.querySelector('input[name="quiz33-perso"]:checked')?.value || 'Standard';
+                const href = (cfg.links && cfg.links[perso]) ? cfg.links[perso] : '#catalogo';
+                buyEl.setAttribute('href', href);
+              }
+
+              document.querySelectorAll('input[name="quiz33-perso"]').forEach(r=>r.addEventListener('change', updateBuyHref));
+            })();
+          </script>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- Include Footer -->
+  <div id="footer"></div>
+  </div>
+  <!-- End Page Content -->
+
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/quiz.js"></script>
+
+  <!-- Access Code Script -->
+  <script>
+    const CORRECT_CODE = '3254';
+    
+    function checkAccessCode() {
+      const inputCode = document.getElementById('access-code').value;
+      const errorMsg = document.getElementById('access-error');
+      
+      if (inputCode === CORRECT_CODE) {
+        // Correct code - unlock page
+        document.getElementById('access-overlay').classList.add('hidden');
+        document.getElementById('page-content').classList.add('unlocked');
+        errorMsg.classList.remove('show');
+        
+        // Store in sessionStorage to keep access during session
+        sessionStorage.setItem('quiz_access', 'granted');
+      } else {
+        // Wrong code - show error
+        errorMsg.classList.add('show');
+        document.getElementById('access-code').value = '';
+        document.getElementById('access-code').focus();
+      }
+    }
+    
+    // Check if already accessed in this session
+    window.addEventListener('DOMContentLoaded', function() {
+      if (sessionStorage.getItem('quiz_access') === 'granted') {
+        document.getElementById('access-overlay').classList.add('hidden');
+        document.getElementById('page-content').classList.add('unlocked');
+      }
+      
+      // Allow Enter key to submit code
+      document.getElementById('access-code').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          checkAccessCode();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

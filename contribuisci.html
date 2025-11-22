@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatAnimation {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 1.2s ease-out;
+    }
+    .float {
+      animation: floatAnimation 3s ease-in-out infinite;
+    }
+    .feature-box {
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 50px 40px;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      border-left: 4px solid #5d4e37;
+    }
+    .feature-box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contribuisci — 33Giri</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/vinyl-3d.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      color: #2c2416;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
+      background-size: 100% auto;
+      opacity: 0.25;
+      z-index: 0;
+      pointer-events: none;
+      animation: textureMove 30s linear infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes textureMove {
+      from { background-position: 0 0; }
+      to { background-position: 0 -1000px; }
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+    }
+  </style>
+</head>
+<body style="--bg:#e8dfd5">
+  <!-- Include Header -->
+  <header id="header"></header>
+
+  <main>
+    <!-- Hero Section -->
+    <section style="padding: 120px 20px 80px 20px; background: #e8dfd5; text-align: center;">
+  <div style="max-width: 900px; margin: 0 auto;" class="fade-in-up float">
+  <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 56px); font-weight: 900; margin-bottom: 18px; color: #222;">
+          Dai nuova vita ai tuoi vinili
+        </h1>
+  <p style="font-size: clamp(18px, 2.5vw, 22px); line-height: 1.7; color: #222; max-width: 700px; margin: 0 auto 10px auto; background: rgba(255,255,255,0.25); padding: 18px; border-radius: 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.08);">
+          Quando un vinile finisce nei rifiuti, il suo viaggio non è neutro: un disco da circa 140 g, se incenerito, può generare intorno a 200 g di CO₂, gas acidi e oltre 100 g di scorie da smaltire in discarica. Con 33Giri quel percorso può essere diverso: i dischi dimenticati diventano oggetti di design, la plastica non si trasforma in rifiuto e l’impatto dello smaltimento si riduce, dando alla stessa materia una nuova forma e un senso più consapevole
+        </p>
+      </div>
+    </section>
+
+    <!-- Content Section -->
+    <section style="padding: 60px 20px; background: #e8dfd5;">
+  <div style="max-width: 800px; margin: 30px auto 0 auto;" class="fade-in-up">
+        <h2 style="font-family: 'Inter', sans-serif; font-size: clamp(28px, 4vw, 36px); font-weight: 700; margin-bottom: 24px; color: #222;">
+          Come funziona
+        </h2>
+        <div style="font-size: 18px; line-height: 1.8; color: #555; margin-bottom: 48px;">
+          <div class="feature-box fade-in-up">
+            <p style="margin-bottom: 20px;">
+              Se hai vinili usati, fuori catalogo o che semplicemente non ascolti più, non buttarli. Inviaceli e li trasformeremo in pezzi di design unici: ciotole, sottobicchieri, lampade o altri oggetti d'arredo modellati a caldo.
+            </p>
+            <p style="margin-bottom: 20px;">
+              Ogni vinile ha una storia e con 33Giri quella storia continua in una nuova forma. Contribuire significa partecipare attivamente a un progetto di riuso creativo e sostenibile: dai una seconda vita ai tuoi dischi, riduci gli sprechi e sostieni un modo di produrre più consapevole verso l'ambiente.
+            </p>
+            <p style="margin-bottom: 20px;">
+              <strong>Cosa puoi inviarci:</strong>
+            </p>
+            <ul style="margin-left: 30px; margin-bottom: 20px;">
+              <li style="margin-bottom: 12px;">Vinili 33 giri che non usi più</li>
+              <li style="margin-bottom: 12px;">Dischi rovinati o graffiati</li>
+              <li style="margin-bottom: 12px;">Vinili senza custodia o di scarso valore commerciale</li>
+              <li style="margin-bottom: 12px;">Qualsiasi disco in vinile destinato allo scarto</li>
+            </ul>
+            <p style="margin-bottom: 20px;">
+              Contattaci per scoprire come inviarci i tuoi vinili e ricevere in cambio uno sconto speciale su un pezzo 33Giri personalizzato creato proprio con i tuoi dischi.
+            </p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div style="background: #f8f8f8; padding: 40px; border-radius: 16px; margin-top: 48px;">
+          <h3 style="font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #222;">
+            Contattaci per contribuire
+          </h3>
+          <form id="contributeForm" style="display: flex; flex-direction: column; gap: 20px;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Nome *</label>
+              <input type="text" name="name" required style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Email *</label>
+              <input type="email" name="email" required style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Telefono</label>
+              <input type="tel" name="phone" style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Quanti vinili hai da inviarci? *</label>
+              <select name="quantity" required style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
+                <option value="">Seleziona...</option>
+                <option value="1-5">1-5 vinili</option>
+                <option value="6-10">6-10 vinili</option>
+                <option value="11-20">11-20 vinili</option>
+                <option value="20+">Più di 20 vinili</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Raccontaci di più (condizioni, generi musicali, ecc.) *</label>
+              <textarea name="message" required rows="6" style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif; resize: vertical;" placeholder="Esempio: Ho 10 vinili rock degli anni '70, alcuni graffiati ma con belle copertine..."></textarea>
+            </div>
+            <button type="submit" style="background: #222; color: #fff; padding: 16px 40px; border: none; border-radius: 24px; font-weight: 600; font-size: 18px; cursor: pointer; transition: transform 0.2s; font-family: 'Inter', sans-serif;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              Invia richiesta
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Info -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="site-footer">
+    <div class="wrap footer-inner">
+      <div>© 33Giri — Made in Italy</div>
+      <nav class="footer-nav"></nav>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" 
+     style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); z-index: 9999; transition: all 0.3s ease; text-decoration: none;"
+     onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 30px rgba(0, 0, 0, 0.6)'"
+     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.4)'">
+    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
+    </svg>
+  </a>
+
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/layout.js"></script>
+
+  <script>
+    // Form submission handler
+    document.getElementById('contributeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      // Here you would normally send the data to a server
+      console.log('Form data:', data);
+      
+      // Show success message
+      alert('Grazie per il tuo interesse! Ti contatteremo al più presto per organizzare l\'invio dei tuoi vinili.');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
