@@ -23,7 +23,7 @@ function loadReviews() {
         rating: 5,
         comment: "Ottimo svuota-tasche in vinile, ben rifinito e con un design dipinto a mano davvero curato. ogni pezzo è unico e si vede la qualità del lavoro artigianale, molto bello e utile da avere in casa😁",
         images: [],
-        date: new Date('2024-10-15').toISOString(),
+        date: new Date('2025-11-15').toISOString(),
         verified: true
       },
       {
@@ -33,7 +33,7 @@ function loadReviews() {
         rating: 4.5,
         comment: "Il 33giri è molto comodo e ha un'estetica curata e piacevole",
         images: [],
-        date: new Date('2024-10-20').toISOString(),
+        date: new Date('2025-11-22').toISOString(),
         verified: true
       },
       {
@@ -43,7 +43,7 @@ function loadReviews() {
         rating: 4,
         comment: "Bellissimo oggetto di design. Io personalmente lo uso come porta vasi e da eeffetto wow. Consigliatissimo!",
         images: [],
-        date: new Date('2024-10-25').toISOString(),
+        date: new Date('2025-11-25').toISOString(),
         verified: true
       }
     ];
