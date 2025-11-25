@@ -18,30 +18,30 @@ function loadReviews() {
     reviews = [
       {
         id: 1,
-        name: "Laura Bianchi",
+        name: "Corrado Pisoni",
         email: "",
         rating: 5,
-        comment: "Prodotto fantastico! Ho acquistato una ciotola realizzata con un vinile dei Beatles e non potrei essere più felice. La qualità è eccezionale e il design unico.",
+        comment: "Ottimo svuota-tasche in vinile, ben rifinito e con un design dipinto a mano davvero curato. ogni pezzo è unico e si vede la qualità del lavoro artigianale, molto bello e utile da avere in casa😁",
         images: [],
         date: new Date('2024-10-15').toISOString(),
         verified: true
       },
       {
         id: 2,
-        name: "Marco Ferretti",
+        name: "Federico Missidenti",
         email: "",
-        rating: 5,
-        comment: "Oggetti davvero originali e ben fatti. Ho regalato un orologio da parete alla mia ragazza e lei ne è stata entusiasta. Servizio clienti impeccabile!",
+        rating: 4.5,
+        comment: "Il 33giri è molto comodo e ha un'estetica curata e piacevole",
         images: [],
         date: new Date('2024-10-20').toISOString(),
         verified: true
       },
       {
         id: 3,
-        name: "Giulia Romano",
+        name: "Claudia Bortolotti",
         email: "",
         rating: 4,
-        comment: "Bellissimo oggetto di design. L'unica nota è che i tempi di consegna sono stati un po' lunghi, ma ne è valsa assolutamente la pena. Consigliatissimo!",
+        comment: "Bellissimo oggetto di design. Io personalmente lo uso come porta vasi e da eeffetto wow. Consigliatissimo!",
         images: [],
         date: new Date('2024-10-25').toISOString(),
         verified: true
