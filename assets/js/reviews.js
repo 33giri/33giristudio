@@ -55,6 +55,7 @@ function loadReviews() {
         images: [],
         date: new Date('2025-11-27').toISOString(),
         verified: true
+      }      
     ];
     saveReviews();
   }
