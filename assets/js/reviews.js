@@ -45,7 +45,16 @@ function loadReviews() {
         images: [],
         date: new Date('2025-11-25').toISOString(),
         verified: true
-      }
+      },
+      {
+        id: 4,
+        name: "Vittoria Tretter",
+        email: "",
+        rating: 5,
+        comment: "Ho comprato da 33giristudio al mercatino dei gaulenti. I ragazzi sono stati disponibili , il progetto è interessante ,creativo ed  estremente contemporaneo . Al prezzo di 20 euro ho ricevuto il disco  personalizzato con la copertina originale  e lo sticker dello studio , il tutto contenuto nella loro scatola personalizzata . Sarà il primo di molti ",
+        images: [],
+        date: new Date('2025-11-27').toISOString(),
+        verified: true
     ];
     saveReviews();
   }
