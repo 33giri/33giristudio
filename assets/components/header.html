@@ -39,7 +39,6 @@
 
     /* Mobile behaviour */
     @media (max-width: 768px) {
-      .wrap.header-inner { position: relative; display:flex; align-items:center; gap:12px; }
       .wrap.header-inner {
         position: relative;
         display:flex;
@@ -49,22 +48,33 @@
 
       /* show hamburger button on mobile */
       .mobile-menu-btn {
-@@ -60,9 +65,8 @@
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        background: transparent;
+        border: none;
+        padding: 8px;
+        margin: 0;
+        cursor: pointer;
+        border-radius: 8px;
+      }
+
+      /* visually keep logo centered on mobile */
+      .logo {
         margin: 0 auto;
       }
 
-      /* Hide the normal horizontal nav on mobile (it becomes a dropdown) */
       /* NAV MOBILE – versione con max-height */
       .main-nav {
-        display: none;
         position: absolute;
         top: 100%;
         left: 0;
-@@ -71,12 +75,16 @@
+        right: 0;
+        background: #ffffff;
         box-shadow: 0 6px 18px rgba(0,0,0,0.08);
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        z-index: 999;
         z-index: 1200; /* leggermente più alto per sicurezza */
 
         /* nuovo comportamento */
@@ -73,71 +83,57 @@
         transition: max-height 0.25s ease-out;
       }
 
-      /* When open, show nav as block */
       .main-nav.open {
-        display: block;
         max-height: 280px; /* o una misura che copra l’altezza del menu */
       }
 
       .main-nav ul {
-@@ -112,54 +120,54 @@
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0;
+        padding: 12px 16px;
+        list-style: none;
+      }
+
+      .main-nav li {
+        margin: 0;
+      }
+
+      .main-nav a {
+        display: block;
+        padding: 8px 12px;
+        color: #111;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .main-nav a:hover,
+      .main-nav a:focus {
+        background: #f2f2f2;
+      }
+
+      /* keep header-actions (lang + account) visible and aligned to the right */
+      .header-actions {
+        margin-left: auto;
+      }
     }
   </style>
 
- <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.querySelector('.mobile-menu-btn');
-    const nav = document.getElementById('main-nav');
-    const navList = document.getElementById('main-nav-list');
-
-    if (!btn || !nav) return;
-
-    const openMenu = () => {
-      nav.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
-      btn.innerText = '✕'; // icona chiusura
-    };
-
-    const closeMenu = () => {
-      nav.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-      btn.innerText = '☰';
-    };
-
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      if (nav.classList.contains('open')) closeMenu();
-      else openMenu();
-    });
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const btn = document.querySelector('.mobile-menu-btn');
       const nav = document.getElementById('main-nav');
       const navList = document.getElementById('main-nav-list');
 
-    // Chiudi cliccando fuori
-    document.addEventListener('click', function(e) {
-      if (!nav.classList.contains('open')) return;
-      if (nav.contains(e.target) || btn.contains(e.target)) return;
-      closeMenu();
-    });
       if (!btn || !nav) return;
 
-    // Chiudi quando clicchi un link del menu
-    if (navList) {
-      navList.addEventListener('click', function(e) {
-        if (e.target.tagName === 'A') closeMenu();
-      });
-    }
       const openMenu = () => {
         nav.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
         btn.innerText = '✕'; // icona chiusura
       };
 
-    // Chiudi se si torna a desktop
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
       const closeMenu = () => {
         nav.classList.remove('open');
         btn.setAttribute('aria-expanded', 'false');
@@ -173,7 +169,5 @@
         }
       });
     });
-  });
-</script>
   </script>
 </header>
