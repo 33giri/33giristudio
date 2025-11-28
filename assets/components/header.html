@@ -1,15 +1,45 @@
+<header id="header" class="site-header">
+  <div class="wrap header-inner">
+    <!-- Mobile menu button: visible only on small screens -->
+    <button class="mobile-menu-btn" aria-expanded="false" aria-controls="main-nav-list" aria-label="Apri menu">☰</button>
+
+    <nav class="main-nav" id="main-nav" role="navigation">
+      <ul id="main-nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="quiz.html">33Quiz</a></li>
+        <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        <li><a href="chi_siamo.html">Chi Siamo</a></li>
+      </ul>
+    </nav>
+
+    <a class="logo" href="index.html" aria-label="33giri logo">
+      <img src="assets/logo/33_GIRI._logo-removebg-preview.png" alt="33giri" style="height:120px;">
+    </a>
+
+    <div class="header-actions" style="display:flex;align-items:center;gap:18px;">
+      <div class="lang-switch" style="font-size:1.1em; letter-spacing:0.04em; display:inline-flex; align-items:center; gap:4px; background:#f7f6f2; border-radius:18px; padding:2px 10px; box-shadow:0 1px 0 rgba(0,0,0,0.03);">
+        <span style="font-weight:600; color:#222; display:inline-flex; align-items:center; gap:2px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="IT" style="width:18px; height:13px; vertical-align:middle;"> IT
+        </span>
+        <span style="color:#888;"> | </span>
+        <a href="#" style="color:#222; text-decoration:none; font-weight:400; display:inline-flex; align-items:center; gap:2px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="EN" style="width:18px; height:13px; vertical-align:middle;"> EN
+        </a>
+      </div>
+      <a class="icon-btn" aria-label="Account" href="account.html" role="button">👤</a>
+    </div>
+  </div>
+
+  <!-- Mobile-only styles and small JS to toggle dropdown behaviour.
+       Desktop layout and structure are left unchanged; changes apply only for screens <= 768px. -->
   <style>
-    /* Desktop: resta com'è, niente cambia */
+    /* Keep default desktop behaviour untouched */
     .mobile-menu-btn { display: none; }
 
     /* Mobile behaviour */
     @media (max-width: 768px) {
-      #header {
-        position: relative;
-        z-index: 2000;
-        overflow: visible; /* importantissimo: non taglia il menu a tendina */
-      }
-
+      .wrap.header-inner { position: relative; display:flex; align-items:center; gap:12px; }
       .wrap.header-inner {
         position: relative;
         display:flex;
@@ -19,95 +49,95 @@
 
       /* show hamburger button on mobile */
       .mobile-menu-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-        background: transparent;
-        border: none;
-        padding: 8px;
-        margin: 0;
-        cursor: pointer;
-        border-radius: 8px;
-      }
-
-      /* visually keep logo centered on mobile */
-      .logo {
+@@ -60,9 +65,8 @@
         margin: 0 auto;
       }
 
-      /* NAV MOBILE – dropdown con max-height */
+      /* Hide the normal horizontal nav on mobile (it becomes a dropdown) */
+      /* NAV MOBILE – versione con max-height */
       .main-nav {
+        display: none;
         position: absolute;
         top: 100%;
         left: 0;
-        right: 0;
-        background: #ffffff;
+@@ -71,12 +75,16 @@
         box-shadow: 0 6px 18px rgba(0,0,0,0.08);
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        z-index: 2100;
+        z-index: 999;
+        z-index: 1200; /* leggermente più alto per sicurezza */
 
-        max-height: 0;          /* chiuso */
+        /* nuovo comportamento */
+        max-height: 0;
         overflow: hidden;
         transition: max-height 0.25s ease-out;
       }
 
+      /* When open, show nav as block */
       .main-nav.open {
-        max-height: 280px;      /* apre il menu */
+        display: block;
+        max-height: 280px; /* o una misura che copra l’altezza del menu */
       }
 
       .main-nav ul {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin: 0;
-        padding: 12px 16px;
-        list-style: none;
-      }
-
-      .main-nav li {
-        margin: 0;
-      }
-
-      .main-nav a {
-        display: block;
-        padding: 8px 12px;
-        color: #111;
-        text-decoration: none;
-        border-radius: 6px;
-      }
-
-      .main-nav a:hover,
-      .main-nav a:focus {
-        background: #f2f2f2;
-      }
-
-      /* keep header-actions (lang + account) visible and aligned to the right */
-      .header-actions {
-        margin-left: auto;
-      }
+@@ -112,54 +120,54 @@
     }
   </style>
 
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.mobile-menu-btn');
+    const nav = document.getElementById('main-nav');
+    const navList = document.getElementById('main-nav-list');
+
+    if (!btn || !nav) return;
+
+    const openMenu = () => {
+      nav.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      btn.innerText = '✕'; // icona chiusura
+    };
+
+    const closeMenu = () => {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerText = '☰';
+    };
+
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (nav.classList.contains('open')) closeMenu();
+      else openMenu();
+    });
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('mobile header script init');
-
       const btn = document.querySelector('.mobile-menu-btn');
       const nav = document.getElementById('main-nav');
       const navList = document.getElementById('main-nav-list');
 
-      console.log('btn:', btn, 'nav:', nav, 'navList:', navList);
-
+    // Chiudi cliccando fuori
+    document.addEventListener('click', function(e) {
+      if (!nav.classList.contains('open')) return;
+      if (nav.contains(e.target) || btn.contains(e.target)) return;
+      closeMenu();
+    });
       if (!btn || !nav) return;
 
+    // Chiudi quando clicchi un link del menu
+    if (navList) {
+      navList.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') closeMenu();
+      });
+    }
       const openMenu = () => {
         nav.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
         btn.innerText = '✕'; // icona chiusura
       };
 
+    // Chiudi se si torna a desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
       const closeMenu = () => {
         nav.classList.remove('open');
         btn.setAttribute('aria-expanded', 'false');
@@ -115,7 +145,6 @@
       };
 
       btn.addEventListener('click', function(e) {
-        console.log('hamburger click');
         e.stopPropagation();
         if (nav.classList.contains('open')) closeMenu();
         else openMenu();
@@ -128,11 +157,10 @@
         closeMenu();
       });
 
-      // Chiudi quando clicchi un link del menu (più robusto)
+      // Chiudi quando clicchi un link del menu
       if (navList) {
         navList.addEventListener('click', function(e) {
-          const link = e.target.closest('a');
-          if (link) closeMenu();
+          if (e.target.tagName === 'A') closeMenu();
         });
       }
 
@@ -145,4 +173,7 @@
         }
       });
     });
+  });
+</script>
   </script>
+</header>
