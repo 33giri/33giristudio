@@ -1,44 +1,15 @@
-<header id="header" class="site-header">
-  <div class="wrap header-inner">
-    <!-- Mobile menu button: visible only on small screens -->
-    <button class="mobile-menu-btn" aria-expanded="false" aria-controls="main-nav-list" aria-label="Apri menu">☰</button>
-
-    <nav class="main-nav" id="main-nav" role="navigation">
-      <ul id="main-nav-list">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="catalogo.html">Catalogo</a></li>
-        <li><a href="quiz.html">33Quiz</a></li>
-        <li><a href="collaborazioni.html">Collaborazioni</a></li>
-        <li><a href="chi_siamo.html">Chi Siamo</a></li>
-      </ul>
-    </nav>
-
-    <a class="logo" href="index.html" aria-label="33giri logo">
-      <img src="assets/logo/33_GIRI._logo-removebg-preview.png" alt="33giri" style="height:120px;">
-    </a>
-
-    <div class="header-actions" style="display:flex;align-items:center;gap:18px;">
-      <div class="lang-switch" style="font-size:1.1em; letter-spacing:0.04em; display:inline-flex; align-items:center; gap:4px; background:#f7f6f2; border-radius:18px; padding:2px 10px; box-shadow:0 1px 0 rgba(0,0,0,0.03);">
-        <span style="font-weight:600; color:#222; display:inline-flex; align-items:center; gap:2px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="IT" style="width:18px; height:13px; vertical-align:middle;"> IT
-        </span>
-        <span style="color:#888;"> | </span>
-        <a href="#" style="color:#222; text-decoration:none; font-weight:400; display:inline-flex; align-items:center; gap:2px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="EN" style="width:18px; height:13px; vertical-align:middle;"> EN
-        </a>
-      </div>
-      <a class="icon-btn" aria-label="Account" href="account.html" role="button">👤</a>
-    </div>
-  </div>
-
-  <!-- Mobile-only styles and small JS to toggle dropdown behaviour.
-       Desktop layout and structure are left unchanged; changes apply only for screens <= 768px. -->
   <style>
-    /* Keep default desktop behaviour untouched */
+    /* Desktop: resta com'è, niente cambia */
     .mobile-menu-btn { display: none; }
 
     /* Mobile behaviour */
     @media (max-width: 768px) {
+      #header {
+        position: relative;
+        z-index: 2000;
+        overflow: visible; /* importantissimo: non taglia il menu a tendina */
+      }
+
       .wrap.header-inner {
         position: relative;
         display:flex;
@@ -65,7 +36,7 @@
         margin: 0 auto;
       }
 
-      /* NAV MOBILE – versione con max-height */
+      /* NAV MOBILE – dropdown con max-height */
       .main-nav {
         position: absolute;
         top: 100%;
@@ -75,16 +46,15 @@
         box-shadow: 0 6px 18px rgba(0,0,0,0.08);
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        z-index: 1200; /* leggermente più alto per sicurezza */
+        z-index: 2100;
 
-        /* nuovo comportamento */
-        max-height: 0;
+        max-height: 0;          /* chiuso */
         overflow: hidden;
         transition: max-height 0.25s ease-out;
       }
 
       .main-nav.open {
-        max-height: 280px; /* o una misura che copra l’altezza del menu */
+        max-height: 280px;      /* apre il menu */
       }
 
       .main-nav ul {
@@ -122,9 +92,13 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('mobile header script init');
+
       const btn = document.querySelector('.mobile-menu-btn');
       const nav = document.getElementById('main-nav');
       const navList = document.getElementById('main-nav-list');
+
+      console.log('btn:', btn, 'nav:', nav, 'navList:', navList);
 
       if (!btn || !nav) return;
 
@@ -141,6 +115,7 @@
       };
 
       btn.addEventListener('click', function(e) {
+        console.log('hamburger click');
         e.stopPropagation();
         if (nav.classList.contains('open')) closeMenu();
         else openMenu();
@@ -153,10 +128,11 @@
         closeMenu();
       });
 
-      // Chiudi quando clicchi un link del menu
+      // Chiudi quando clicchi un link del menu (più robusto)
       if (navList) {
         navList.addEventListener('click', function(e) {
-          if (e.target.tagName === 'A') closeMenu();
+          const link = e.target.closest('a');
+          if (link) closeMenu();
         });
       }
 
@@ -170,4 +146,3 @@
       });
     });
   </script>
-</header>
