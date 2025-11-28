@@ -31,22 +31,70 @@
     </div>
   </div>
 
-  <!-- Mobile-only styles and small JS to toggle dropdown behaviour.
-       Desktop layout and structure are left unchanged; changes apply only for screens <= 768px. -->
   <style>
-    /* Keep default desktop behaviour untouched */
-    .mobile-menu-btn { display: none; }
+    /* ===== DESKTOP (default) ===== */
+    .site-header {
+      position: relative;
+      z-index: 100;
+      background: #ffffff;
+    }
 
-    /* Mobile behaviour */
+    .wrap.header-inner {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .main-nav {
+      margin-left: 16px;
+    }
+
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav li {
+      margin: 0;
+    }
+
+    .main-nav a {
+      display: block;
+      padding: 6px 8px;
+      color: #111;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .main-nav a:hover,
+    .main-nav a:focus {
+      background: #f2f2f2;
+    }
+
+    .mobile-menu-btn {
+      display: none; /* nascosto su desktop */
+    }
+
+    /* ===== MOBILE ===== */
     @media (max-width: 768px) {
-      .wrap.header-inner {
+      #header {
         position: relative;
-        display:flex;
-        align-items:center;
-        gap:12px;
+        z-index: 2000;
+        overflow: visible;
       }
 
-      /* show hamburger button on mobile */
+      .wrap.header-inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
       .mobile-menu-btn {
         display: inline-flex;
         align-items: center;
@@ -60,12 +108,11 @@
         border-radius: 8px;
       }
 
-      /* visually keep logo centered on mobile */
       .logo {
         margin: 0 auto;
       }
 
-      /* NAV MOBILE – versione con max-height */
+      /* Base nav mobile: per sicurezza è visibile se JS non gira */
       .main-nav {
         position: absolute;
         top: 100%;
@@ -75,16 +122,20 @@
         box-shadow: 0 6px 18px rgba(0,0,0,0.08);
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        z-index: 1200; /* leggermente più alto per sicurezza */
+        z-index: 2100;
+      }
 
-        /* nuovo comportamento */
+      /* Stato “chiuso” e “aperto” gestito da JS */
+      .main-nav.collapsed {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.25s ease-out;
       }
 
-      .main-nav.open {
-        max-height: 280px; /* o una misura che copra l’altezza del menu */
+      .main-nav.expanded {
+        max-height: 280px; /* adatta se serve */
+        overflow: hidden;
+        transition: max-height 0.25s ease-out;
       }
 
       .main-nav ul {
@@ -96,24 +147,10 @@
         list-style: none;
       }
 
-      .main-nav li {
-        margin: 0;
-      }
-
       .main-nav a {
-        display: block;
         padding: 8px 12px;
-        color: #111;
-        text-decoration: none;
-        border-radius: 6px;
       }
 
-      .main-nav a:hover,
-      .main-nav a:focus {
-        background: #f2f2f2;
-      }
-
-      /* keep header-actions (lang + account) visible and aligned to the right */
       .header-actions {
         margin-left: auto;
       }
@@ -128,45 +165,63 @@
 
       if (!btn || !nav) return;
 
+      // Su mobile: partiamo con il menu chiuso
+      const initMobileState = () => {
+        if (window.innerWidth <= 768) {
+          nav.classList.add('collapsed');
+          nav.classList.remove('expanded');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.innerText = '☰';
+        } else {
+          // Desktop: nav sempre visibile in orizzontale
+          nav.classList.remove('collapsed', 'expanded');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.innerText = '☰';
+        }
+      };
+
       const openMenu = () => {
-        nav.classList.add('open');
+        nav.classList.remove('collapsed');
+        nav.classList.add('expanded');
         btn.setAttribute('aria-expanded', 'true');
-        btn.innerText = '✕'; // icona chiusura
+        btn.innerText = '✕';
       };
 
       const closeMenu = () => {
-        nav.classList.remove('open');
+        nav.classList.remove('expanded');
+        nav.classList.add('collapsed');
         btn.setAttribute('aria-expanded', 'false');
         btn.innerText = '☰';
       };
 
+      initMobileState();
+
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
-        if (nav.classList.contains('open')) closeMenu();
-        else openMenu();
+        if (nav.classList.contains('expanded')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
       });
 
-      // Chiudi cliccando fuori
       document.addEventListener('click', function(e) {
-        if (!nav.classList.contains('open')) return;
+        if (!nav.classList.contains('expanded')) return;
         if (nav.contains(e.target) || btn.contains(e.target)) return;
         closeMenu();
       });
 
-      // Chiudi quando clicchi un link del menu
       if (navList) {
         navList.addEventListener('click', function(e) {
-          if (e.target.tagName === 'A') closeMenu();
+          const link = e.target.closest('a');
+          if (link && window.innerWidth <= 768) {
+            closeMenu();
+          }
         });
       }
 
-      // Chiudi se si torna a desktop
       window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-          nav.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-          btn.innerText = '☰';
-        }
+        initMobileState();
       });
     });
   </script>
