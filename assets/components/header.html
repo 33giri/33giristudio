@@ -112,52 +112,54 @@
     }
   </style>
 
-  <script>
-    (function() {
-      const btn = document.querySelector('.mobile-menu-btn');
-      const nav = document.getElementById('main-nav');
-      const navList = document.getElementById('main-nav-list');
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.mobile-menu-btn');
+    const nav = document.getElementById('main-nav');
+    const navList = document.getElementById('main-nav-list');
 
-      if (!btn || !nav) return;
+    if (!btn || !nav) return;
 
-      const openMenu = () => {
-        nav.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-        btn.innerText = '✕'; // change icon to close
-      };
+    const openMenu = () => {
+      nav.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      btn.innerText = '✕'; // icona chiusura
+    };
 
-      const closeMenu = () => {
-        nav.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.innerText = '☰';
-      };
+    const closeMenu = () => {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerText = '☰';
+    };
 
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (nav.classList.contains('open')) closeMenu();
-        else openMenu();
-      });
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (nav.classList.contains('open')) closeMenu();
+      else openMenu();
+    });
 
-      // close when clicking outside
-      document.addEventListener('click', function(e) {
-        if (!nav.classList.contains('open')) return;
-        if (nav.contains(e.target) || btn.contains(e.target)) return;
-        closeMenu();
-      });
+    // Chiudi cliccando fuori
+    document.addEventListener('click', function(e) {
+      if (!nav.classList.contains('open')) return;
+      if (nav.contains(e.target) || btn.contains(e.target)) return;
+      closeMenu();
+    });
 
-      // Close menu when a link is clicked (mobile) to improve UX
+    // Chiudi quando clicchi un link del menu
+    if (navList) {
       navList.addEventListener('click', function(e) {
         if (e.target.tagName === 'A') closeMenu();
       });
+    }
 
-      // Ensure menu is closed if viewport is resized to desktop
-      window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-          nav.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-          btn.innerText = '☰';
-        }
-      });
-    })();
-  </script>
+    // Chiudi se si torna a desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.innerText = '☰';
+      }
+    });
+  });
+</script>
 </header>
