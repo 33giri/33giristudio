@@ -1,7 +1,14 @@
 <header id="header" class="site-header">
   <div class="wrap header-inner">
-    <!-- Mobile menu button: visible only on small screens -->
-    <button class="mobile-menu-btn" aria-expanded="false" aria-controls="main-nav-list" aria-label="Apri menu">☰</button>
+    <!-- Checkbox nascosto per il toggle mobile -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+
+    <!-- Bottone hamburger (label del checkbox) -->
+    <label for="nav-toggle"
+           class="mobile-menu-btn"
+           aria-label="Apri menu">
+      ☰
+    </label>
 
     <nav class="main-nav" id="main-nav" role="navigation">
       <ul id="main-nav-list">
@@ -32,7 +39,8 @@
   </div>
 
   <style>
-    /* ===== DESKTOP (default) ===== */
+    /* ===== BASE / DESKTOP ===== */
+
     .site-header {
       position: relative;
       z-index: 100;
@@ -43,6 +51,14 @@
       display: flex;
       align-items: center;
       gap: 24px;
+    }
+
+    .nav-toggle {
+      display: none; /* checkbox nascosto */
+    }
+
+    .mobile-menu-btn {
+      display: none; /* nascosto su desktop */
     }
 
     .main-nav {
@@ -76,10 +92,6 @@
       background: #f2f2f2;
     }
 
-    .mobile-menu-btn {
-      display: none; /* nascosto su desktop */
-    }
-
     /* ===== MOBILE ===== */
     @media (max-width: 768px) {
       #header {
@@ -95,6 +107,7 @@
         gap: 12px;
       }
 
+      /* Mostra hamburger su mobile */
       .mobile-menu-btn {
         display: inline-flex;
         align-items: center;
@@ -112,7 +125,7 @@
         margin: 0 auto;
       }
 
-      /* Base nav mobile: per sicurezza è visibile se JS non gira */
+      /* Menu mobile come dropdown */
       .main-nav {
         position: absolute;
         top: 100%;
@@ -123,28 +136,17 @@
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
         z-index: 2100;
-      }
 
-      /* Stato “chiuso” e “aperto” gestito da JS */
-      .main-nav.collapsed {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.25s ease-out;
       }
 
-      .main-nav.expanded {
-        max-height: 280px; /* adatta se serve */
-        overflow: hidden;
-        transition: max-height 0.25s ease-out;
-      }
-
       .main-nav ul {
-        display: flex;
         flex-direction: column;
         gap: 8px;
         margin: 0;
         padding: 12px 16px;
-        list-style: none;
       }
 
       .main-nav a {
@@ -154,75 +156,11 @@
       .header-actions {
         margin-left: auto;
       }
+
+      /* Toggle: quando il checkbox è spuntato, apri il menu */
+      .nav-toggle:checked + .mobile-menu-btn + .main-nav {
+        max-height: 280px; /* aumenta se servono più voci */
+      }
     }
   </style>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const btn = document.querySelector('.mobile-menu-btn');
-      const nav = document.getElementById('main-nav');
-      const navList = document.getElementById('main-nav-list');
-
-      if (!btn || !nav) return;
-
-      // Su mobile: partiamo con il menu chiuso
-      const initMobileState = () => {
-        if (window.innerWidth <= 768) {
-          nav.classList.add('collapsed');
-          nav.classList.remove('expanded');
-          btn.setAttribute('aria-expanded', 'false');
-          btn.innerText = '☰';
-        } else {
-          // Desktop: nav sempre visibile in orizzontale
-          nav.classList.remove('collapsed', 'expanded');
-          btn.setAttribute('aria-expanded', 'false');
-          btn.innerText = '☰';
-        }
-      };
-
-      const openMenu = () => {
-        nav.classList.remove('collapsed');
-        nav.classList.add('expanded');
-        btn.setAttribute('aria-expanded', 'true');
-        btn.innerText = '✕';
-      };
-
-      const closeMenu = () => {
-        nav.classList.remove('expanded');
-        nav.classList.add('collapsed');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.innerText = '☰';
-      };
-
-      initMobileState();
-
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (nav.classList.contains('expanded')) {
-          closeMenu();
-        } else {
-          openMenu();
-        }
-      });
-
-      document.addEventListener('click', function(e) {
-        if (!nav.classList.contains('expanded')) return;
-        if (nav.contains(e.target) || btn.contains(e.target)) return;
-        closeMenu();
-      });
-
-      if (navList) {
-        navList.addEventListener('click', function(e) {
-          const link = e.target.closest('a');
-          if (link && window.innerWidth <= 768) {
-            closeMenu();
-          }
-        });
-      }
-
-      window.addEventListener('resize', function() {
-        initMobileState();
-      });
-    });
-  </script>
 </header>
