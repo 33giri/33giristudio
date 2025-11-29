@@ -10,8 +10,8 @@
     body {
       font-family: 'Inter', sans-serif;
       color: #2c2416;
+      overflow-x: hidden;
       position: relative;
-      /* tolto overflow-x: hidden; per non toccare il desktop */
     }
     /* Sfondo dinamico solo dalla gallery in poi */
     .dual-gallery-section {
@@ -96,37 +96,6 @@
       position: relative;
       z-index: 1;
       animation: fadeIn 1.5s ease-out;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    /* Titolo sull'immagine hero */
-    .hero-title {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      padding: 60px 20px;
-      box-sizing: border-box;
-      pointer-events: none;
-    }
-
-    .hero-title h1 {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 4rem;
-      line-height: 0.9;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      text-shadow: 0 8px 30px rgba(0,0,0,0.55);
-    }
-
-    .hero-title h1 span {
-      display: block;
     }
     
     .artist-quote-section {
@@ -157,29 +126,12 @@
 
     /* SOLO MOBILE */
     @media (max-width: 768px) {
-
-      /* Blocca scroll orizzontale solo da cellulare */
-      html, body {
-        max-width: 100%;
-        overflow-x: hidden;
-      }
-
-      /* Hero: più alto e più zoom per togliere la scritta in basso a destra */
+      /* Hero: riempi la sezione e togli il “vuoto” */
       .artist-hero-fullscreen {
-        min-height: 70vh;
-        background-size: 130%;
+        min-height: 50vh;
+        background-size: cover;
         background-repeat: no-repeat;
-        background-position: center top;
-      }
-
-      /* Titolo più compatto su mobile */
-      .hero-title {
-        padding: 40px 18px;
-      }
-
-      .hero-title h1 {
-        font-size: 2.6rem;
-        letter-spacing: 0.18em;
+        background-position: center;
       }
 
       /* Riduci spazi tra hero e citazione */
@@ -273,12 +225,6 @@
 
   <!-- Fullscreen Hero Image - Iris Shero -->
   <section class="artist-hero-fullscreen" style="background-image:url('assets/iris foto/Screenshot 2025-11-13 alle 16.21.38.png')">
-    <div class="hero-title">
-      <h1>
-        <span>Iris</span>
-        <span>Shero</span>
-      </h1>
-    </div>
   </section>
 
   <!-- Artist Quote Section -->
