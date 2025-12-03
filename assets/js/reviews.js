@@ -5,66 +5,80 @@ const MAX_IMAGES = 5;
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 const MAX_COMMENT_LENGTH = 500;
 
-// Dati recensioni (in produzione questi andrebbero salvati su un database)
+// Recensioni di base (uguali per tutti i dispositivi)
+const BASE_REVIEWS = [
+  {
+    id: 1,
+    name: "Corrado Pisoni",
+    email: "",
+    rating: 5,
+    comment: "Ottimo svuota-tasche in vinile, ben rifinito e con un design dipinto a mano davvero curato. ogni pezzo è unico e si vede la qualità del lavoro artigianale, molto bello e utile da avere in casa😁",
+    images: [],
+    date: new Date('2025-11-15').toISOString(),
+    verified: true
+  },
+  {
+    id: 2,
+    name: "Federico Missidenti",
+    email: "",
+    rating: 4.5,
+    comment: "Il 33giri è molto comodo e ha un'estetica curata e piacevole",
+    images: [],
+    date: new Date('2025-11-22').toISOString(),
+    verified: true
+  },
+  {
+    id: 3,
+    name: "Claudia Bortolotti",
+    email: "",
+    rating: 4,
+    comment: "Bellissimo oggetto di design. Io personalmente lo uso come porta vasi e da eeffetto wow. Consigliatissimo!",
+    images: [],
+    date: new Date('2025-11-25').toISOString(),
+    verified: true
+  },
+  {
+    id: 4,
+    name: "Vittoria Tretter",
+    email: "",
+    rating: 5,
+    comment: "Ho comprato da 33giristudio al mercatino dei gaulenti. I ragazzi sono stati disponibili , il progetto è interessante ,creativo ed  estremente contemporaneo . Al prezzo di 20 euro ho ricevuto il disco  personalizzato con la copertina originale  e lo sticker dello studio , il tutto contenuto nella loro scatola personalizzata . Sarà il primo di molti ",
+    images: [],
+    date: new Date('2025-11-27').toISOString(),
+    verified: true
+  }
+];
+
+// Array globale che useremo nelle varie funzioni
 let reviews = [];
 
-// Carica recensioni dal localStorage
+// Carica recensioni: base + eventuali recensioni utente salvate localmente
 function loadReviews() {
-  const savedReviews = localStorage.getItem('33giri_reviews');
-  if (savedReviews) {
-    reviews = JSON.parse(savedReviews);
-  } else {
-    // Recensioni di esempio iniziali
-    reviews = [
-      {
-        id: 1,
-        name: "Corrado Pisoni",
-        email: "",
-        rating: 5,
-        comment: "Ottimo svuota-tasche in vinile, ben rifinito e con un design dipinto a mano davvero curato. ogni pezzo è unico e si vede la qualità del lavoro artigianale, molto bello e utile da avere in casa😁",
-        images: [],
-        date: new Date('2025-11-15').toISOString(),
-        verified: true
-      },
-      {
-        id: 2,
-        name: "Federico Missidenti",
-        email: "",
-        rating: 4.5,
-        comment: "Il 33giri è molto comodo e ha un'estetica curata e piacevole",
-        images: [],
-        date: new Date('2025-11-22').toISOString(),
-        verified: true
-      },
-      {
-        id: 3,
-        name: "Claudia Bortolotti",
-        email: "",
-        rating: 4,
-        comment: "Bellissimo oggetto di design. Io personalmente lo uso come porta vasi e da eeffetto wow. Consigliatissimo!",
-        images: [],
-        date: new Date('2025-11-25').toISOString(),
-        verified: true
-      },
-      {
-        id: 4,
-        name: "Vittoria Tretter",
-        email: "",
-        rating: 5,
-        comment: "Ho comprato da 33giristudio al mercatino dei gaulenti. I ragazzi sono stati disponibili , il progetto è interessante ,creativo ed  estremente contemporaneo . Al prezzo di 20 euro ho ricevuto il disco  personalizzato con la copertina originale  e lo sticker dello studio , il tutto contenuto nella loro scatola personalizzata . Sarà il primo di molti ",
-        images: [],
-        date: new Date('2025-11-27').toISOString(),
-        verified: true
-      }      
-    ];
-    saveReviews();
+  let userReviews = [];
+  try {
+    const saved = localStorage.getItem('33giri_user_reviews');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        userReviews = parsed;
+      }
+    }
+  } catch (e) {
+    console.warn('Errore nel leggere le recensioni utente dal localStorage', e);
   }
+
+  // Prima le recensioni utente, poi quelle base ufficiali
+  reviews = [...userReviews, ...BASE_REVIEWS];
   return reviews;
 }
 
-// Salva recensioni nel localStorage
-function saveReviews() {
-  localStorage.setItem('33giri_reviews', JSON.stringify(reviews));
+// Salva solo le recensioni utente nel localStorage
+function saveUserReviews(userReviews) {
+  try {
+    localStorage.setItem('33giri_user_reviews', JSON.stringify(userReviews));
+  } catch (e) {
+    console.warn('Impossibile salvare le recensioni utente', e);
+  }
 }
 
 // Inizializzazione pagina recensioni
@@ -142,37 +156,39 @@ function initializeForm() {
   // Drag & drop
   const fileInputLabel = document.querySelector('.file-input-label');
   
-  fileInputLabel.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#1a1a1a';
-    this.style.background = '#f0f0f0';
-  });
-  
-  fileInputLabel.addEventListener('dragleave', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#ccc';
-    this.style.background = '#fafafa';
-  });
-  
-  fileInputLabel.addEventListener('drop', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#ccc';
-    this.style.background = '#fafafa';
-    
-    const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
-    
-    if (selectedFiles.length + files.length > MAX_IMAGES) {
-      showFormMessage(`Puoi caricare massimo ${MAX_IMAGES} immagini`, 'error');
-      return;
-    }
-    
-    files.forEach(file => {
-      if (file.size <= MAX_IMAGE_SIZE) {
-        selectedFiles.push(file);
-        displayImagePreview(file);
-      }
+  if (fileInputLabel) {
+    fileInputLabel.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.style.borderColor = '#1a1a1a';
+      this.style.background = '#f0f0f0';
     });
-  });
+    
+    fileInputLabel.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      this.style.borderColor = '#ccc';
+      this.style.background = '#fafafa';
+    });
+    
+    fileInputLabel.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.style.borderColor = '#ccc';
+      this.style.background = '#fafafa';
+      
+      const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+      
+      if (selectedFiles.length + files.length > MAX_IMAGES) {
+        showFormMessage(`Puoi caricare massimo ${MAX_IMAGES} immagini`, 'error');
+        return;
+      }
+      
+      files.forEach(file => {
+        if (file.size <= MAX_IMAGE_SIZE) {
+          selectedFiles.push(file);
+          displayImagePreview(file);
+        }
+      });
+    });
+  }
   
   // Mostra anteprima immagine
   function displayImagePreview(file) {
@@ -237,8 +253,10 @@ function initializeForm() {
     // Mostra loading
     const btnText = document.querySelector('.btn-text');
     const btnLoader = document.querySelector('.btn-loader');
-    btnText.style.display = 'none';
-    btnLoader.style.display = 'inline';
+    if (btnText && btnLoader) {
+      btnText.style.display = 'none';
+      btnLoader.style.display = 'inline';
+    }
     
     // Simula upload immagini (in produzione caricare su server)
     const imagePromises = selectedFiles.map(file => {
@@ -254,25 +272,44 @@ function initializeForm() {
     Promise.all(imagePromises).then(images => {
       formData.images = images;
       
-      // Salva recensione
       const newReview = {
         id: Date.now(),
         ...formData
       };
       
-      reviews.unshift(newReview);
-      saveReviews();
+      // Carica eventuali recensioni utente esistenti
+      let userReviews = [];
+      try {
+        const saved = localStorage.getItem('33giri_user_reviews');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            userReviews = parsed;
+          }
+        }
+      } catch (e) {
+        console.warn('Errore nel leggere le recensioni utente dal localStorage', e);
+      }
+      
+      // Aggiungi nuova recensione in testa
+      userReviews.unshift(newReview);
+      saveUserReviews(userReviews);
+      
+      // Aggiorna array globale (utente + base)
+      reviews = [...userReviews, ...BASE_REVIEWS];
       
       // Reset form
       reviewForm.reset();
       imagePreview.innerHTML = '';
       selectedFiles = [];
-      ratingValue.textContent = '';
-      charCount.textContent = '0';
+      if (ratingValue) ratingValue.textContent = '';
+      if (charCount) charCount.textContent = '0';
       
       // Nascondi loading
-      btnText.style.display = 'inline';
-      btnLoader.style.display = 'none';
+      if (btnText && btnLoader) {
+        btnText.style.display = 'inline';
+        btnLoader.style.display = 'none';
+      }
       
       // Mostra messaggio successo
       showFormMessage('Grazie per la tua recensione! Sarà pubblicata dopo la verifica.', 'success');
@@ -281,7 +318,10 @@ function initializeForm() {
       displayRecentReviews();
       
       // Scroll al messaggio
-      document.getElementById('formMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const formMessage = document.getElementById('formMessage');
+      if (formMessage) {
+        formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
   });
 }
@@ -289,6 +329,7 @@ function initializeForm() {
 // Mostra messaggio form
 function showFormMessage(message, type) {
   const formMessage = document.getElementById('formMessage');
+  if (!formMessage) return;
   formMessage.textContent = message;
   formMessage.className = `form-message ${type}`;
   formMessage.style.display = 'block';
@@ -298,12 +339,12 @@ function showFormMessage(message, type) {
   }, 5000);
 }
 
-// Mostra recensioni recenti
+// Mostra recensioni recenti (pagina recensioni)
 function displayRecentReviews() {
   const recentReviewsList = document.getElementById('recentReviewsList');
   if (!recentReviewsList) return;
   
-  const recentReviews = reviews.slice(0, 6); // Mostra ultime 6 recensioni
+  const recentReviews = reviews.slice(0, 6); // Ultime 6
   
   if (recentReviews.length === 0) {
     recentReviewsList.innerHTML = '<p style="text-align:center; color:#999;">Nessuna recensione ancora. Sii il primo a lasciarne una!</p>';
@@ -322,7 +363,8 @@ function createReviewCard(review) {
     day: 'numeric' 
   });
   
-  const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+  const safeRating = Math.max(0, Math.min(5, Math.round(review.rating || 0)));
+  const stars = '★'.repeat(safeRating) + '☆'.repeat(5 - safeRating);
   
   const imagesHTML = review.images && review.images.length > 0 
     ? `<div class="review-images">
