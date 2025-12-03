@@ -74,6 +74,12 @@
       to { opacity: 1; }
     }
 
+    /* freccia transizione */
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
     /* overlay mobile sul hero */
     .hero-mobile-content {
       display: none;
@@ -119,7 +125,7 @@
     /* ====== SOLO MOBILE ====== */
     @media (max-width: 768px) {
 
-      /* HERO: foto + titolo Iris Shero per 33Giri */
+      /* HERO: foto + titolo Iris Shero X 33Giri + immagine dedicata */
       .artist-hero-fullscreen {
         min-height: 55vh;
         background-size: cover;
@@ -165,6 +171,21 @@
         font-size: 2rem;
         line-height: 1.2;
         max-width: 14ch;
+      }
+
+      /* immagine SOTTO il titolo, solo mobile */
+      .hero-mobile-cover {
+        margin-top: 16px;
+        width: 70%;
+        max-width: 260px;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      }
+      .hero-mobile-cover img {
+        width: 100%;
+        display: block;
+        object-fit: cover;
       }
 
       /* Citazione */
@@ -252,7 +273,7 @@
         text-align: left !important;
       }
 
-      /* transizione tra le due gallerie */
+      /* transizione tra le due gallerie – dinamica */
       .gallery-transition {
         display: block;
         max-width: 520px;
@@ -260,13 +281,15 @@
         padding: 16px 18px;
         border-radius: 22px;
         background: linear-gradient(135deg,
-          rgba(90,127,160,0.18),
-          rgba(139,115,85,0.15)
+          rgba(90,127,160,0.22),
+          rgba(139,115,85,0.18)
         );
+        background-size: 200% 200%;
+        animation: gradientShift 12s ease infinite;
         color: #2c2416;
         font-size: 0.95rem;
         line-height: 1.7;
-        text-align: left;
+        text-align: center;
         position: relative;
         overflow: hidden;
       }
@@ -278,17 +301,26 @@
         mix-blend-mode: screen;
         opacity: 0.8;
       }
-      .gallery-transition span {
+      .gallery-transition-inner {
         position: relative;
         z-index: 1;
       }
+      .gallery-transition-inner p {
+        margin: 0 0 8px 0;
+      }
       .gallery-transition-cta {
-        display: inline-block;
-        margin-top: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         font-size: 0.82rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        opacity: 0.85;
+        opacity: 0.9;
+        margin-top: 4px;
+      }
+      .gallery-transition-arrow {
+        display: inline-block;
+        animation: arrowBounce 1.2s infinite ease-in-out;
       }
 
       /* Bottone "Acquista ora" un po’ più compatto */
@@ -311,6 +343,10 @@
         <span></span> Collaborazione
       </div>
       <h1 class="hero-mobile-title">Iris Shero X 33Giri</h1>
+      <!-- QUI cambi solo il src per mettere la foto che vuoi sotto il titolo su mobile -->
+      <div class="hero-mobile-cover">
+        <img src="assets/iris foto/hero-mobile-iris.jpg" alt="Opera di Iris Shero per 33Giri">
+      </div>
     </div>
   </section>
 
@@ -436,10 +472,16 @@
 
         <!-- Transizione solo mobile -->
         <div class="gallery-transition">
-          <span>
-            Da questi dipinti nasce la serie di <strong>vinili unici</strong> realizzati insieme a 33Giri: ogni disco viene modellato e dipinto a mano, trasformando l’opera di Iris in un oggetto da usare e da esporre.
-            <div class="gallery-transition-cta">↓ I vinili per 33Giri ↓</div>
-          </span>
+          <div class="gallery-transition-inner">
+            <p>
+              Da questi dipinti nasce la serie di <strong>vinili unici</strong> realizzati insieme a 33Giri:
+              ogni disco viene modellato e dipinto a mano, trasformando l’opera di Iris in un oggetto da usare e da esporre.
+            </p>
+            <div class="gallery-transition-cta">
+              <span class="gallery-transition-arrow">↓</span>
+              <span>I vinili per 33Giri</span>
+            </div>
+          </div>
         </div>
         
         <!-- Right Side: Vinili per 33Giri -->
