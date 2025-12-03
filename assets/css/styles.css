@@ -847,6 +847,7 @@ body{
   .carousel-slide img{ height:220px }
 }
 
+
 /* ===========================
    RECENSIONI - Review System
    =========================== */
@@ -1167,20 +1168,43 @@ body{
   color: #666;
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto 40px auto;
-  padding: 0 20px;
+/* Wrapper scrollabile orizzontale */
+.reviews-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 20px 10px;
 }
 
+/* Scrollbar (facoltativo) */
+.reviews-scroll-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.reviews-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+.reviews-scroll-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Contenitore delle recensioni in riga */
+.reviews-grid {
+  display: flex;
+  gap: 18px;
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  padding: 10px 0;
+}
+
+/* Card recensioni più piccole e rettangolari */
 .review-card {
+  flex: 0 0 auto;
+  min-width: 240px;
+  max-width: 260px;
   background: #fafafa;
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  border-radius: 18px;
+  padding: 20px 18px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
 }
 
@@ -1316,10 +1340,16 @@ body{
   .star-rating {
     font-size: 36px;
   }
-  
+
+  /* riduco un po' le card e lo spacing su mobile */
   .reviews-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
+  }
+
+  .review-card {
+    min-width: 220px;
+    max-width: 240px;
+    padding: 18px 16px;
   }
   
   .reviews-section {
