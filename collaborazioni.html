@@ -19,6 +19,18 @@
       font-weight: 900;
     }
 
+    /* HERO DESKTOP: immagine di sfondo */
+    .artist-hero-fullscreen {
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 1.5s ease-out;
+      min-height: 70vh;
+      background-image: url('assets/iris foto/Screenshot 2025-11-13 alle 16.21.38.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
     /* Sfondo dinamico solo dalla gallery in poi (DESKTOP) */
     .dual-gallery-section {
       background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
@@ -41,6 +53,16 @@
       z-index: 0;
       pointer-events: none;
       animation: gradientShift 15s ease infinite, textureMove 30s linear infinite;
+    }
+
+    /* Immagini “scattered” – stessa resa per opere e vinili su DESKTOP */
+    .scattered-gallery .scattered-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      border: 8px solid #ffffff;
     }
 
     @keyframes gradientShift {
@@ -90,12 +112,6 @@
       display: none;
     }
 
-    .artist-hero-fullscreen {
-      position: relative;
-      z-index: 1;
-      animation: fadeIn 1.5s ease-out;
-    }
-
     .artist-quote-section {
       position: relative;
       z-index: 1;
@@ -125,9 +141,15 @@
     /* ====== SOLO MOBILE ====== */
     @media (max-width: 768px) {
 
-      /* HERO: foto + titolo Iris Shero X 33Giri + immagine dedicata */
+      html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      /* HERO: su mobile uso una FOTO DIVERSA rispetto al desktop */
       .artist-hero-fullscreen {
         min-height: 55vh;
+        background-image: url('Screenshot 2025-12-03 alle 20.26.06.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -171,21 +193,6 @@
         font-size: 2rem;
         line-height: 1.2;
         max-width: 14ch;
-      }
-
-      /* immagine SOTTO il titolo, solo mobile */
-      .hero-mobile-cover {
-        margin-top: 16px;
-        width: 70%;
-        max-width: 260px;
-        border-radius: 18px;
-        overflow: hidden;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-      }
-      .hero-mobile-cover img {
-        width: 100%;
-        display: block;
-        object-fit: cover;
       }
 
       /* Citazione */
@@ -336,17 +343,14 @@
   <header id="header"></header>
 
   <!-- Fullscreen Hero Image - Iris Shero -->
-  <section class="artist-hero-fullscreen" style="background-image:url('assets/iris foto/Screenshot 2025-11-13 alle 16.21.38.png')">
+  <section class="artist-hero-fullscreen">
     <!-- Contenuto visibile SOLO su mobile -->
     <div class="hero-mobile-content">
       <div class="hero-mobile-tag">
         <span></span> Collaborazione
       </div>
       <h1 class="hero-mobile-title">Iris Shero X 33Giri</h1>
-      <!-- QUI cambi solo il src per mettere la foto che vuoi sotto il titolo su mobile -->
-      <div class="hero-mobile-cover">
-        <img src="Screenshot 2025-12-03 alle 20.26.06.png" alt="Opera di Iris Shero per 33Giri">
-      </div>
+      <!-- NESSUNA foto piccola aggiuntiva: l'immagine è solo di sfondo -->
     </div>
   </section>
 
@@ -427,19 +431,19 @@
           
           <div class="scattered-gallery" style="position: relative; min-height: 800px;">
             <div class="scattered-item" style="position: absolute; top: 0; left: 5%; width: 220px; transform: rotate(-3deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.16.51.png" alt="Opera Iris 1" style="width: 100%; height: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 8px solid white;">
+              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.16.51.png" alt="Opera Iris 1">
             </div>
             
             <div class="scattered-item" style="position: absolute; top: 180px; right: 10%; width: 280px; transform: rotate(5deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.52.png" alt="Opera Iris 2" style="width: 100%; height: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 8px solid white;">
+              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.52.png" alt="Opera Iris 2">
             </div>
             
             <div class="scattered-item" style="position: absolute; top: 320px; left: 15%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.15.34.png" alt="Opera Iris 3" style="width: 100%; height: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 8px solid white;">
+              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.15.34.png" alt="Opera Iris 3">
             </div>
             
             <div class="scattered-item" style="position: absolute; top: 580px; right: 5%; width: 260px; transform: rotate(-4deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.32.png" alt="Opera Iris 4" style="width: 100%; height: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 8px solid white;">
+              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.32.png" alt="Opera Iris 4">
             </div>
           </div>
         </div>
@@ -490,17 +494,17 @@
           
           <div class="scattered-gallery" style="position: relative; min-height: 800px;">
             <!-- Ciotola 1 -->
-            <div class="scattered-item" style="position: absolute; top: 50px; left: 10%; width: 260px; transform: rotate(4deg); transition: all 0.4s ease;">
+            <div class="scattered-item" style="position: absolute; top: 50px; left: 10%; width: 220px; transform: rotate(4deg); transition: all 0.4s ease;">
               <img src="IMG_3962.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 1">
             </div>
 
             <!-- Ciotola 2 -->
-            <div class="scattered-item" style="position: absolute; top: 260px; right: 8%; width: 260px; transform: rotate(-3deg); transition: all 0.4s ease;">
+            <div class="scattered-item" style="position: absolute; top: 260px; right: 8%; width: 280px; transform: rotate(-3deg); transition: all 0.4s ease;">
               <img src="IMG_3963.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 2">
             </div>
 
             <!-- Ciotola 3 -->
-            <div class="scattered-item" style="position: absolute; top: 470px; left: 12%; width: 260px; transform: rotate(2deg); transition: all 0.4s ease;">
+            <div class="scattered-item" style="position: absolute; top: 470px; left: 12%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
               <img src="IMG_3971.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 3">
             </div>
 
@@ -510,12 +514,12 @@
             </div>
 
             <!-- Ciotola vista dall'alto -->
-            <div class="scattered-item" style="position: absolute; top: 910px; left: 10%; width: 260px; transform: rotate(1deg); transition: all 0.4s ease;">
+            <div class="scattered-item" style="position: absolute; top: 910px; left: 10%; width: 220px; transform: rotate(1deg); transition: all 0.4s ease;">
               <img src="IMG_3988.jpeg" alt="Ciotola Iris Shero vista dall'alto">
             </div>
 
             <!-- Vinili piatti -->
-            <div class="scattered-item" style="position: absolute; top: 1130px; right: 4%; width: 300px; transform: rotate(-2deg); transition: all 0.4s ease;">
+            <div class="scattered-item" style="position: absolute; top: 1130px; right: 4%; width: 260px; transform: rotate(-2deg); transition: all 0.4s ease;">
               <img src="IMG_4001.jpeg" alt="Vinili piatti Iris Shero x 33Giri">
             </div>
           </div>
