@@ -890,33 +890,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactInfoLabel = document.getElementById('contactInfoLabel');
   const messageField = document.getElementById('message');
 
-  // Mostra/nasconde il campo extra in base al metodo scelto
+  // Mostra il campo extra SOLO per la mail
   methodSelect.addEventListener('change', () => {
     const method = methodSelect.value;
 
-    if (!method) {
-      contactInfoGroup.style.display = 'none';
-      contactInfo.value = '';
-      return;
-    }
-
-    contactInfoGroup.style.display = 'block';
-
     if (method === 'email') {
+      contactInfoGroup.style.display = 'block';
       contactInfoLabel.textContent = 'La tua email';
       contactInfo.placeholder = 'nome@example.com';
-    } else if (method === 'whatsapp') {
-      contactInfoLabel.textContent = 'Il tuo numero WhatsApp';
-      contactInfo.placeholder = '+39 3XX XXXXXXX';
-    } else if (method === 'instagram') {
-      contactInfoLabel.textContent = 'Il tuo username Instagram';
-      contactInfo.placeholder = '@tuonome';
+      contactInfo.required = true;
+    } else {
+      // WhatsApp e Instagram: niente campo extra
+      contactInfoGroup.style.display = 'none';
+      contactInfo.value = '';
+      contactInfo.required = false;
     }
   });
 
-  // NESSUN INVIO AUTOMATICO: si fa tutto qui, SOLO al submit
+  // Submit MANUALE, niente invii automatici
   form.addEventListener('submit', (e) => {
-    e.preventDefault(); // blocca l’invio “classico” del form
+    e.preventDefault(); // blocca l’invio classico del form
 
     const method = methodSelect.value;
     const info = contactInfo.value.trim();
@@ -933,21 +926,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let url = '';
-    const encodedMessage = encodeURIComponent(message + (info ? `\n\nContatto: ${info}` : ''));
 
     if (method === 'email') {
-      // SOSTITUISCI l’indirizzo con quello di 33Giri
-      url = `mailto:ciao@33giri.it?subject=Richiesta%20pezzo%20unico&body=${encodedMessage}`;
-    } else if (method === 'whatsapp') {
-      // SOSTITUISCI con il numero WhatsApp di 33Giri (senza +, con prefisso paese)
+      if (!info) {
+        alert('Inserisci la tua email.');
+        return;
+      }
+
+      const body = `${message}\n\nEmail di contatto: ${info}`;
+      const encodedBody = encodeURIComponent(body);
+
+      // SOSTITUISCI con la mail di 33Giri
+      url = `mailto:ciao@33giri.it?subject=Richiesta%20pezzo%20unico&body=${encodedBody}`;
+    }
+
+    if (method === 'whatsapp') {
+      // Nessun dato utente, solo il messaggio
+      const encodedMessage = encodeURIComponent(message);
+
+      // SOSTITUISCI con il numero WhatsApp di 33Giri (senza +, con prefisso)
       const numeroWhatsApp = '393XXXXXXXXX';
       url = `https://wa.me/${numeroWhatsApp}?text=${encodedMessage}`;
-    } else if (method === 'instagram') {
-      // SOSTITUISCI con il tuo handle IG
-      const handleInstagram = '33giri_trento';
+    }
+
+    if (method === 'instagram') {
+      // Nessun username utente, apri solo la chat con il profilo di 33Giri
+      const handleInstagram = '33giri.studio';
       url = `https://ig.me/m/${handleInstagram}`;
-      // Per IG i DM non supportano il testo pre-compilato come WhatsApp,
-      // quindi apriamo solo la chat e l’utente incolla/riscrive il messaggio.
+      // (se vuoi puoi lasciare il messaggio vuoto, l’utente scrive lì)
     }
 
     if (url) {
