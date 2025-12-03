@@ -687,44 +687,42 @@
 
 
   <!-- Contact Section -->
-  <section class="contact-section" id="contatti">
-    <div class="wrap">
-      <h2 class="contact-title">Contattaci per creare il tuo pezzo unico, fatto a mano, solo per te.</h2>
-      <form class="contact-form" id="contactForm">
-        <div class="form-group">
-          <label for="contactMethod">Scegli come vuoi contattarci</label>
-          <select id="contactMethod" class="form-select" required>
-            <option value="">Seleziona un metodo</option>
-            <option value="email">Email</option>
-            <option value="whatsapp">WhatsApp</option>
-            <option value="instagram">Instagram</option>
-          </select>
-        </div>
+<section class="contact-section" id="contatti">
+  <div class="wrap">
+    <h2 class="contact-title">Contattaci per creare il tuo pezzo unico, fatto a mano, solo per te.</h2>
+    <form class="contact-form" id="contactForm">
+      <div class="form-group">
+        <label for="contactMethod">Scegli come vuoi contattarci</label>
+        <select id="contactMethod" class="form-select" required>
+          <option value="">Seleziona un metodo</option>
+          <option value="email">Email</option>
+          <option value="whatsapp">WhatsApp</option>
+          <option value="instagram">Instagram</option>
+        </select>
+      </div>
 
-        <div class="form-group" id="contactInfoGroup" style="display: none;">
-          <label for="contactInfo" id="contactInfoLabel">La tua email</label>
-          <!-- tolto required QUI -->
-          <input type="text" id="contactInfo" class="form-input" placeholder="nome@example.com">
-        </div>
+      <div class="form-group" id="contactInfoGroup" style="display: none;">
+        <label for="contactInfo" id="contactInfoLabel">La tua email</label>
+        <!-- tolto required QUI -->
+        <input type="text" id="contactInfo" class="form-input" placeholder="nome@example.com">
+      </div>
 
-        <div class="form-group">
-          <label for="message">Il tuo messaggio</label>
-          <textarea id="message" class="form-textarea" rows="5" placeholder="Scrivi qui..." required></textarea>
-        </div>
+      <div class="form-group">
+        <label for="message">Il tuo messaggio</label>
+        <textarea id="message" class="form-textarea" rows="5" placeholder="Scrivi qui..." required></textarea>
+      </div>
 
-        <div class="form-group">
-          <label class="form-checkbox">
-            <input type="checkbox" id="autoSend" checked>
-            <span>Invia automaticamente quando completi i campi</span>
-          </label>
-        </div>
+      <!-- RIMOSSA LA CHECKBOX DI INVIO AUTOMATICO -->
 
-        <button type="submit" class="btn btn-primary">Invia ora</button>
-        
-        <p class="contact-note">Con "Email" si apre il client di posta predefinito; con "WhatsApp" l'app o il web; con "Instagram" i DM (ig.me).</p>
-      </form>
-    </div>
-  </section>
+      <button type="submit" class="btn btn-primary">Invia ora</button>
+      
+      <p class="contact-note">
+        Con "Email" si apre il client di posta predefinito; con "WhatsApp" l'app o il web; 
+        con "Instagram" i DM (ig.me). Il tutto solo quando clicchi su "Invia ora".
+      </p>
+    </form>
+  </div>
+</section>
 
 
   <!-- Lightbox per zoom immagini -->
@@ -883,95 +881,80 @@
     /* -------------------------
        GESTIONE FORM CONTATTI
        ------------------------- */
-    const contactForm = document.getElementById('contactForm');
-    const methodSelect = document.getElementById('contactMethod');
-    const contactInfoGroup = document.getElementById('contactInfoGroup');
-    const contactInfo = document.getElementById('contactInfo');
-    const contactInfoLabel = document.getElementById('contactInfoLabel');
-    const messageFieldContact = document.getElementById('message');
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contactForm');
+  const methodSelect = document.getElementById('contactMethod');
+  const contactInfoGroup = document.getElementById('contactInfoGroup');
+  const contactInfo = document.getElementById('contactInfo');
+  const contactInfoLabel = document.getElementById('contactInfoLabel');
+  const messageField = document.getElementById('message');
 
-    if (contactForm && methodSelect && contactInfoGroup && contactInfo && contactInfoLabel && messageFieldContact) {
-      
-      // Cambio etichetta/placeholder in base al metodo
-      methodSelect.addEventListener('change', function () {
-        const method = this.value;
+  // Mostra/nasconde il campo extra in base al metodo scelto
+  methodSelect.addEventListener('change', () => {
+    const method = methodSelect.value;
 
-        if (!method) {
-          contactInfoGroup.style.display = 'none';
-          contactInfo.required = false;
-          contactInfo.value = '';
-          return;
-        }
-
-        contactInfoGroup.style.display = 'block';
-
-        if (method === 'email') {
-          contactInfoLabel.textContent = 'La tua email';
-          contactInfo.placeholder = 'nome@example.com';
-          contactInfo.type = 'email';
-          contactInfo.required = true;
-        } else if (method === 'whatsapp') {
-          contactInfoLabel.textContent = 'Il tuo numero (opzionale)';
-          contactInfo.placeholder = 'es. +39 333 1234567';
-          contactInfo.type = 'text';
-          contactInfo.required = false;
-        } else if (method === 'instagram') {
-          contactInfoLabel.textContent = 'Il tuo @ Instagram (opzionale)';
-          contactInfo.placeholder = '@tuonome';
-          contactInfo.type = 'text';
-          contactInfo.required = false;
-        }
-      });
-
-      contactForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const method = methodSelect.value;
-        const msg = messageFieldContact.value.trim();
-        const userContact = contactInfo.value.trim();
-
-        if (!method) {
-          alert('Seleziona un metodo di contatto.');
-          return;
-        }
-
-        if (!msg) {
-          alert('Scrivi un messaggio prima di inviare.');
-          return;
-        }
-
-        let finalMessage = msg;
-        if (userContact) {
-          finalMessage += '\n\nContatto: ' + userContact;
-        }
-
-        let url = '';
-
-        if (method === 'email') {
-          const to = '33giristudios@gmail.com';
-          const subject = 'Richiesta dal sito 33Giri';
-          url = 'mailto:' + encodeURIComponent(to) +
-                '?subject=' + encodeURIComponent(subject) +
-                '&body=' + encodeURIComponent(finalMessage);
-        }
-
-        if (method === 'whatsapp') {
-          // +39 392 543 0575 -> 393925430575
-          const phone = '393925430575';
-          url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(finalMessage);
-        }
-
-        if (method === 'instagram') {
-          url = 'https://ig.me/m/33giri.studio?text=' + encodeURIComponent(finalMessage);
-        }
-
-        if (url) {
-          window.open(url, '_blank');
-        }
-      });
+    if (!method) {
+      contactInfoGroup.style.display = 'none';
+      contactInfo.value = '';
+      return;
     }
 
+    contactInfoGroup.style.display = 'block';
+
+    if (method === 'email') {
+      contactInfoLabel.textContent = 'La tua email';
+      contactInfo.placeholder = 'nome@example.com';
+    } else if (method === 'whatsapp') {
+      contactInfoLabel.textContent = 'Il tuo numero WhatsApp';
+      contactInfo.placeholder = '+39 3XX XXXXXXX';
+    } else if (method === 'instagram') {
+      contactInfoLabel.textContent = 'Il tuo username Instagram';
+      contactInfo.placeholder = '@tuonome';
+    }
   });
-  </script>
+
+  // NESSUN INVIO AUTOMATICO: si fa tutto qui, SOLO al submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault(); // blocca l’invio “classico” del form
+
+    const method = methodSelect.value;
+    const info = contactInfo.value.trim();
+    const message = messageField.value.trim();
+
+    if (!method) {
+      alert('Seleziona un metodo di contatto.');
+      return;
+    }
+
+    if (!message) {
+      alert('Scrivi un messaggio.');
+      return;
+    }
+
+    let url = '';
+    const encodedMessage = encodeURIComponent(message + (info ? `\n\nContatto: ${info}` : ''));
+
+    if (method === 'email') {
+      // SOSTITUISCI l’indirizzo con quello di 33Giri
+      url = `mailto:ciao@33giri.it?subject=Richiesta%20pezzo%20unico&body=${encodedMessage}`;
+    } else if (method === 'whatsapp') {
+      // SOSTITUISCI con il numero WhatsApp di 33Giri (senza +, con prefisso paese)
+      const numeroWhatsApp = '393XXXXXXXXX';
+      url = `https://wa.me/${numeroWhatsApp}?text=${encodedMessage}`;
+    } else if (method === 'instagram') {
+      // SOSTITUISCI con il tuo handle IG
+      const handleInstagram = '33giri_trento';
+      url = `https://ig.me/m/${handleInstagram}`;
+      // Per IG i DM non supportano il testo pre-compilato come WhatsApp,
+      // quindi apriamo solo la chat e l’utente incolla/riscrive il messaggio.
+    }
+
+    if (url) {
+      window.open(url, '_blank');
+    }
+  });
+});
+</script>
 </body>
 </html>
