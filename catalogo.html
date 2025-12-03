@@ -643,9 +643,9 @@
         <h3>Fatto a Mano</h3>
         <p>Artigianato italiano di qualità superiore</p>
         <ul>
-          <li>Resina trasparente colata a mano</li>
-          <li>Colori resistenti</li>
-          <li>Design esclusivo</li>
+          <li>Resina colata a mano</li>
+          <li>Colori acrilici resistenti</li>
+          <li>Finitura lucida protettiva</li>
         </ul>
       </div>
       
@@ -684,46 +684,40 @@
     </div>
   </section>
 
+  <!-- Contact Section (MODIFICATA) -->
+  <section class="contact-section" id="contatti">
+    <div class="wrap">
+      <h2 class="contact-title">Contattaci per creare il tuo pezzo unico, fatto a mano, solo per te.</h2>
+      <form class="contact-form" id="contactForm">
+        <div class="form-group">
+          <label for="contactMethod">Scegli come vuoi contattarci</label>
+          <select id="contactMethod" class="form-select" required>
+            <option value="">Seleziona un metodo</option>
+            <option value="email">Email</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="instagram">Instagram</option>
+          </select>
+        </div>
 
+        <div class="form-group" id="contactInfoGroup" style="display: none;">
+          <label for="contactInfo" id="contactInfoLabel">La tua email</label>
+          <input type="text" id="contactInfo" class="form-input" placeholder="nome@example.com">
+        </div>
 
-  <!-- Contact Section -->
-<section class="contact-section" id="contatti">
-  <div class="wrap">
-    <h2 class="contact-title">Contattaci per creare il tuo pezzo unico, fatto a mano, solo per te.</h2>
-    <form class="contact-form" id="contactForm">
-      <div class="form-group">
-        <label for="contactMethod">Scegli come vuoi contattarci</label>
-        <select id="contactMethod" class="form-select" required>
-          <option value="">Seleziona un metodo</option>
-          <option value="email">Email</option>
-          <option value="whatsapp">WhatsApp</option>
-          <option value="instagram">Instagram</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="message">Il tuo messaggio</label>
+          <textarea id="message" class="form-textarea" rows="5" placeholder="Scrivi qui..." required></textarea>
+        </div>
 
-      <div class="form-group" id="contactInfoGroup" style="display: none;">
-        <label for="contactInfo" id="contactInfoLabel">La tua email</label>
-        <!-- tolto required QUI -->
-        <input type="text" id="contactInfo" class="form-input" placeholder="nome@example.com">
-      </div>
-
-      <div class="form-group">
-        <label for="message">Il tuo messaggio</label>
-        <textarea id="message" class="form-textarea" rows="5" placeholder="Scrivi qui..." required></textarea>
-      </div>
-
-      <!-- RIMOSSA LA CHECKBOX DI INVIO AUTOMATICO -->
-
-      <button type="submit" class="btn btn-primary">Invia ora</button>
-      
-      <p class="contact-note">
-        Con "Email" si apre il client di posta predefinito; con "WhatsApp" l'app o il web; 
-        con "Instagram" i DM (ig.me). Il tutto solo quando clicchi su "Invia ora".
-      </p>
-    </form>
-  </div>
-</section>
-
+        <button type="submit" class="btn btn-primary">Invia ora</button>
+        
+        <p class="contact-note">
+          Con "Email" si apre il client di posta predefinito; con "WhatsApp" l'app o il web; 
+          con "Instagram" i DM (ig.me). Il tutto solo quando clicchi su "Invia ora".
+        </p>
+      </form>
+    </div>
+  </section>
 
   <!-- Lightbox per zoom immagini -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog">
@@ -737,6 +731,7 @@
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/main.js"></script>
+
   <script type="module">
     // Popola il catalogo con i dati dal file content.js
     import { COLLECTION } from './data/content.js';
@@ -754,11 +749,11 @@
       `).join('');
     }
 
-  // Header/Footer caricati da assets/js/layout.js con fallback
+    // Header/Footer caricati da assets/js/layout.js con fallback
   </script>
 
   <script>
-  // Gestione click sui bottoni delle card
+  // Gestione interazioni pagina (hero, gallery, lightbox, form contatti)
   document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll per hero CTA
     document.querySelector('.hero-cta')?.addEventListener('click', function(e) {
@@ -769,7 +764,7 @@
       });
     });
     
-    // Click sui bottoni vinile
+    // Click sui bottoni vinile -> precompila messaggio + scroll alla sezione contatti
     const vinylButtons = document.querySelectorAll('.vinyl-button');
     vinylButtons.forEach(btn => {
       btn.addEventListener('click', function() {
@@ -881,86 +876,94 @@
     /* -------------------------
        GESTIONE FORM CONTATTI
        ------------------------- */
-    <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('contactForm');
-  const methodSelect = document.getElementById('contactMethod');
-  const contactInfoGroup = document.getElementById('contactInfoGroup');
-  const contactInfo = document.getElementById('contactInfo');
-  const contactInfoLabel = document.getElementById('contactInfoLabel');
-  const messageField = document.getElementById('message');
+    const form = document.getElementById('contactForm');
+    const methodSelect = document.getElementById('contactMethod');
+    const contactInfoGroup = document.getElementById('contactInfoGroup');
+    const contactInfo = document.getElementById('contactInfo');
+    const contactInfoLabel = document.getElementById('contactInfoLabel');
+    const messageField = document.getElementById('message');
 
-  // Mostra il campo extra SOLO per la mail
-  methodSelect.addEventListener('change', () => {
-    const method = methodSelect.value;
+    if (form && methodSelect && messageField) {
+      // Mostra il campo extra SOLO per la mail
+      methodSelect.addEventListener('change', () => {
+        const method = methodSelect.value;
 
-    if (method === 'email') {
-      contactInfoGroup.style.display = 'block';
-      contactInfoLabel.textContent = 'La tua email';
-      contactInfo.placeholder = 'nome@example.com';
-      contactInfo.required = true;
-    } else {
-      // WhatsApp e Instagram: niente campo extra
-      contactInfoGroup.style.display = 'none';
-      contactInfo.value = '';
-      contactInfo.required = false;
+        if (method === 'email') {
+          contactInfoGroup.style.display = 'block';
+          contactInfoLabel.textContent = 'La tua email';
+          contactInfo.placeholder = 'nome@example.com';
+          contactInfo.required = true;
+        } else {
+          // WhatsApp e Instagram: niente campo extra
+          contactInfoGroup.style.display = 'none';
+          contactInfo.value = '';
+          contactInfo.required = false;
+        }
+      });
+
+      // Submit MANUALE
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); // blocca l’invio classico del form
+
+        const method = methodSelect.value;
+        const info = contactInfo.value.trim();
+        const message = messageField.value.trim();
+
+        if (!method) {
+          alert('Seleziona un metodo di contatto.');
+          return;
+        }
+
+        if (!message) {
+          alert('Scrivi un messaggio.');
+          return;
+        }
+
+        let url = '';
+
+        if (method === 'email') {
+          if (!info) {
+            alert('Inserisci la tua email.');
+            return;
+          }
+
+          const body = `${message}\n\nEmail di contatto: ${info}`;
+          const encodedBody = encodeURIComponent(body);
+
+          // Mail di 33Giri
+          url = `mailto:33giristudios@gmail.com?subject=Richiesta%20pezzo%20unico&body=${encodedBody}`;
+        }
+
+        if (method === 'whatsapp') {
+          // Messaggio visibile nella chat WhatsApp
+          const encodedMessage = encodeURIComponent(message);
+
+          // Numero WhatsApp di 33Giri (senza +, con prefisso 39)
+          const numeroWhatsApp = '393925430575';
+          url = `https://wa.me/${numeroWhatsApp}?text=${encodedMessage}`;
+        }
+
+        if (method === 'instagram') {
+          // Apri i DM di Instagram con il profilo di 33Giri
+          const handleInstagram = '33giri.studio';
+          url = `https://ig.me/m/${handleInstagram}`;
+
+          // Copia il messaggio negli appunti così l’utente lo incolla nella chat
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(message).then(() => {
+              alert('Si aprirà Instagram: il messaggio è stato copiato negli appunti, incollalo nella chat DM.');
+            }).catch(() => {
+              // fallback, nessun blocco
+            });
+          }
+        }
+
+        if (url) {
+          window.open(url, '_blank');
+        }
+      });
     }
   });
-
-  // Submit MANUALE, niente invii automatici
-  form.addEventListener('submit', (e) => {
-    e.preventDefault(); // blocca l’invio classico del form
-
-    const method = methodSelect.value;
-    const info = contactInfo.value.trim();
-    const message = messageField.value.trim();
-
-    if (!method) {
-      alert('Seleziona un metodo di contatto.');
-      return;
-    }
-
-    if (!message) {
-      alert('Scrivi un messaggio.');
-      return;
-    }
-
-    let url = '';
-
-    if (method === 'email') {
-      if (!info) {
-        alert('Inserisci la tua email.');
-        return;
-      }
-
-      const body = `${message}\n\nEmail di contatto: ${info}`;
-      const encodedBody = encodeURIComponent(body);
-
-      // SOSTITUISCI con la mail di 33Giri
-      url = `mailto:ciao@33giri.it?subject=Richiesta%20pezzo%20unico&body=${encodedBody}`;
-    }
-
-    if (method === 'whatsapp') {
-      // Nessun dato utente, solo il messaggio
-      const encodedMessage = encodeURIComponent(message);
-
-      // SOSTITUISCI con il numero WhatsApp di 33Giri (senza +, con prefisso)
-      const numeroWhatsApp = '393XXXXXXXXX';
-      url = `https://wa.me/${numeroWhatsApp}?text=${encodedMessage}`;
-    }
-
-    if (method === 'instagram') {
-      // Nessun username utente, apri solo la chat con il profilo di 33Giri
-      const handleInstagram = '33giri.studio';
-      url = `https://ig.me/m/${handleInstagram}`;
-      // (se vuoi puoi lasciare il messaggio vuoto, l’utente scrive lì)
-    }
-
-    if (url) {
-      window.open(url, '_blank');
-    }
-  });
-});
-</script>
+  </script>
 </body>
 </html>
