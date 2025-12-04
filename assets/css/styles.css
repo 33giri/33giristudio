@@ -335,7 +335,7 @@ body{
 
 /* Hero */
 .hero{
-  min-height:82vh;
+  min-height: 100dvh; /* altezza reale viewport su mobile */
   display:flex;
   align-items:center;
   justify-content:center;
@@ -344,6 +344,14 @@ body{
   background-size:cover;
   margin-top:0; /* header già gestito dal body */
 }
+
+/* Fallback per browser che non supportano 100dvh */
+@supports not (min-height: 100dvh) {
+  .hero{
+    min-height:82vh;
+  }
+}
+
 .hero::before{
   content:"";
   position:absolute;
@@ -402,11 +410,18 @@ body{
 /* Artist Page - Fullscreen Hero */
 .artist-hero-fullscreen {
   width: 100%;
-  height: 100vh;
+  min-height: 100dvh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   margin-top: 0;
+}
+
+/* Fallback per artist hero */
+@supports not (min-height: 100dvh) {
+  .artist-hero-fullscreen {
+    min-height: 100vh;
+  }
 }
 
 /* Artist Quote Section */
