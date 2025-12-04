@@ -5,49 +5,571 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>33Giri — Quiz</title>
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Background generale in linea con index */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      color: #2c2416;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
+      background-size: 100% auto;
+      opacity: 0.25;
+      z-index: 0;
+      pointer-events: none;
+      animation: textureMove 30s linear infinite;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes textureMove {
+      from { background-position: 0 0; }
+      to { background-position: 0 -1000px; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInContent {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes floatAnimation {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    @keyframes kenBurns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
+    /* HERO QUIZ */
+    .quiz-page-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    #quiz-hero-section {
+      position: relative;
+      min-height: 100vh;
+      padding: 140px 20px 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .quiz-hero-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .quiz-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.45);
+      animation: kenBurns 24s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    .quiz-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(0,0,0,0.6) 0, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0.95) 100%);
+      z-index: 1;
+    }
+
+    .quiz-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 40px;
+      align-items: center;
+      animation: fadeInContent 1.2s ease-out both;
+    }
+
+    .quiz-hero-text {
+      color: #fff;
+      animation: fadeInUp 1.2s ease-out both;
+    }
+
+    .quiz-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: rgba(245, 240, 232, 0.16);
+      border: 1px solid rgba(245, 240, 232, 0.4);
+      margin-bottom: 18px;
+      backdrop-filter: blur(12px);
+    }
+
+    .quiz-badge-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #f5f0e8;
+      box-shadow: 0 0 10px rgba(245,240,232,0.9);
+    }
+
+    .quiz-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      margin-bottom: 16px;
+      color: #fff;
+      text-shadow: 0 6px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    .quiz-subtitle {
+      font-size: clamp(18px, 2.1vw, 22px);
+      line-height: 1.7;
+      color: #f5f0e8;
+      margin-bottom: 26px;
+      text-shadow: 0 3px 14px rgba(0,0,0,0.8);
+      max-width: 480px;
+    }
+
+    .quiz-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .quiz-chip {
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #f5f0e8;
+      backdrop-filter: blur(10px);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Card info quiz in stile glassmorphism */
+    .quiz-info-card {
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.22), rgba(13,18,26,0.75));
+      border-radius: 28px;
+      padding: 30px 30px 34px;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow:
+        0 22px 60px rgba(0,0,0,0.75),
+        0 0 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(18px);
+      color: #fff;
+      animation: floatAnimation 12s ease-in-out infinite;
+      animation-delay: 0.3s;
+    }
+
+    .quiz-info-card p {
+      font-size: 0.98rem;
+      line-height: 1.75;
+      margin: 0 0 20px 0;
+      text-align: left;
+    }
+
+    .quiz-info-card b {
+      font-weight: 600;
+    }
+
+    .quiz-info-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .quiz-info-list li {
+      margin-bottom: 8px;
+    }
+
+    .quiz-cta-wrapper {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .quiz-cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
+      color: #5d4e37;
+      padding: 15px 40px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      border: none;
+    }
+
+    .quiz-cta-btn:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 16px 60px rgba(0,0,0,0.6);
+    }
+
+    .quiz-cta-btn:active {
+      transform: translateY(-1px) scale(0.99);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    .quiz-cta-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -30%;
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0.3), transparent);
+      opacity: 0;
+      transform: skewX(-20deg);
+      transition: all 0.5s ease;
+    }
+
+    .quiz-cta-btn:hover::after {
+      opacity: 1;
+      transform: translateX(260%) skewX(-20deg);
+    }
+
+    .quiz-cta-note {
+      font-size: 0.9rem;
+      color: #f5f0e8;
+      opacity: 0.85;
+    }
+
+    .quiz-cta-note span {
+      opacity: 0.7;
+    }
+
+    /* Scroll hint */
+    .quiz-scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #f5f0e8;
+      font-size: 0.85rem;
+      opacity: 0.85;
+      animation: fadeInUp 1.6s ease-out both;
+      z-index: 2;
+    }
+
+    .quiz-scroll-hint span {
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .quiz-scroll-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(245,240,232,0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-scroll-dot::after {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: #f5f0e8;
+      transform: translateX(-50%);
+      animation: quizScrollDotMove 1.6s ease-in-out infinite;
+    }
+
+    @keyframes quizScrollDotMove {
+      0% { top: -6px; opacity: 0; }
+      30% { top: 0; opacity: 1; }
+      70% { top: 6px; opacity: 1; }
+      100% { top: 12px; opacity: 0; }
+    }
+
+    /* Sezione breve sotto al hero (facoltativa ma carina) */
+    .quiz-secondary {
+      position: relative;
+      z-index: 1;
+      padding: 70px 20px 110px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .quiz-secondary-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.22);
+      border-radius: 26px;
+      padding: 32px 28px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .quiz-secondary-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3vw, 28px);
+      margin-bottom: 16px;
+      color: #2c2416;
+    }
+
+    .quiz-secondary-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #2c2416;
+      margin-bottom: 14px;
+    }
+
+    .quiz-secondary-highlight {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* WhatsApp Floating Button (in linea con index) */
+    .whatsapp-floating {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .whatsapp-floating:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .quiz-hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+
+      #quiz-hero-section {
+        padding: 120px 20px 90px;
+      }
+
+      .quiz-hero-text {
+        text-align: left;
+      }
+
+      .quiz-subtitle {
+        max-width: none;
+      }
+
+      .quiz-info-card {
+        animation: fadeInScale 0.9s ease-out both;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #quiz-hero-section {
+        padding-top: 110px;
+      }
+
+      .quiz-hero-inner {
+        gap: 28px;
+      }
+
+      .quiz-title {
+        font-size: clamp(34px, 9vw, 44px);
+      }
+
+      .quiz-secondary-inner {
+        padding: 24px 20px;
+      }
+
+      .quiz-cta-btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .quiz-cta-wrapper {
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
-<body style="--bg:#e8dfd5">
+
+<body>
   <!-- Include Header -->
   <header id="header"></header>
 
-  <section id="quiz-hero-section" style="position:relative; padding:0; min-height:100vh; background-image:url('assets/pagina quiz/record-vinyl-playing-music (2).jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; display:flex; align-items:center; justify-content:center;">
-    <!-- Dark overlay -->
-    <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:1;"></div>
-    
-    <div class="wrap" style="position:relative; z-index:2; max-width:1200px; margin:0 auto; padding:48px 24px; text-align:center;">
-      <h1 style="font-family:'Baloo 2', 'Inter', sans-serif; font-size:clamp(60px,10vw,120px); font-weight:800; margin-bottom:48px; color:#fff; text-shadow:0 4px 12px rgba(0,0,0,0.5);">33Quiz</h1>
-      
-      <!-- Blue info card -->
-      <div style="background:rgba(0,123,255,0.15); border:2px solid #007bff; border-radius:8px; padding:40px 48px; max-width:900px; margin:0 auto 48px; backdrop-filter:blur(10px);">
-        <p style="color:#fff; font-size:clamp(16px,2vw,18px); line-height:1.7; margin:0; text-align:left;">
-          <b>🎵 Scopri il tuo vinile ideale</b><br><br>
-          Ogni vinile racchiude una storia: un suono, un momento, un frammento di vita che continua a parlare nel tempo.<br>
-          Con questo quiz potrai scoprire il disco che più ti rappresenta, quello che risuona con la tua personalità e il tuo modo di vedere il mondo.<br><br>
-          Rispondi in modo spontaneo: non ci sono risposte giuste o sbagliate.<br>
-          Il risultato sarà un vinile unico, scelto per affinità con ciò che trasmettono le tue risposte.<br><br>
-          <b>🎧 Come funziona</b><br><br>
-          1. Ad ogni risposta vengono associati dei valori che descrivono il tuo profilo.<br>
-          2. Alla fine del quiz, questi valori vengono confrontati con le caratteristiche di ogni vinile reale della nostra collezione.<br>
-          3. Il sistema trova la migliore corrispondenza tra il tuo profilo e il disco che più gli somiglia.<br>
-          4. In pochi secondi scoprirai quale vinile ti rappresenta di più — il tuo 33Giri personale.<br><br>
-          <b>✨ Lasciati guidare dal caso, dal suono e dal tempo.</b><br>
-          Ogni vinile ha qualcosa da raccontare — scoprilo, ascoltalo, e lascialo diventare parte del tuo spazio.
-        </p>
+  <main class="quiz-page-wrapper">
+    <!-- HERO QUIZ -->
+    <section id="quiz-hero-section">
+      <!-- Background immagine + overlay scuro -->
+      <div class="quiz-hero-bg">
+        <img src="assets/pagina quiz/record-vinyl-playing-music (2).jpg" alt="Vinile che gira">
+      </div>
+      <div class="quiz-hero-overlay"></div>
+
+      <div class="wrap quiz-hero-inner">
+        <!-- Testo sinistra -->
+        <div class="quiz-hero-text">
+          <div class="quiz-badge">
+            <div class="quiz-badge-dot"></div>
+            <span>Match tra te e un vinile reale</span>
+          </div>
+
+          <h1 class="quiz-title">33Quiz</h1>
+          <p class="quiz-subtitle">
+            Un quiz veloce per scoprire il vinile che ti assomiglia di più — non per genere musicale,
+            ma per atmosfere, vibrazioni e modo di stare al mondo.
+          </p>
+
+          <div class="quiz-chips">
+            <div class="quiz-chip">⏱️ 3 minuti</div>
+            <div class="quiz-chip">✨ Nessuna risposta giusta o sbagliata</div>
+            <div class="quiz-chip">🎧 Ogni risultato è un vinile reale</div>
+          </div>
+
+          <div class="quiz-cta-wrapper">
+            <!-- Pulsante che apre il Google Form -->
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd1NBB4C48Dndnd_ps1CBNXSUL2FhI3fEar7zbDo9haBPIAZw/viewform?usp=header"
+              target="_blank"
+              class="quiz-cta-btn">
+              Fai il quiz
+            </a>
+            <p class="quiz-cta-note">
+              Nessun login richiesto. <span>Il risultato ti verrà mostrato alla fine del form.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Card descrizione/destra -->
+        <div class="quiz-info-card">
+          <p>
+            <b>🎵 Scopri il tuo vinile ideale</b><br><br>
+            Ogni vinile racchiude una storia: un suono, un momento, un frammento di vita che continua a parlare nel tempo.
+            Con questo quiz puoi scoprire il disco che più ti rappresenta, quello che risuona con la tua personalità
+            e il tuo modo di vedere il mondo.
+          </p>
+          <p>
+            Rispondi in modo spontaneo: non ci sono risposte giuste o sbagliate. Il risultato sarà un vinile unico,
+            scelto per affinità con ciò che trasmettono le tue risposte.
+          </p>
+
+          <p><b>🎧 Come funziona</b></p>
+          <ol class="quiz-info-list">
+            <li>Ad ogni risposta vengono associati dei valori che descrivono il tuo profilo.</li>
+            <li>Alla fine del quiz, questi valori vengono confrontati con le caratteristiche di ogni vinile reale della nostra collezione.</li>
+            <li>Il sistema trova la migliore corrispondenza tra il tuo profilo e il disco che più gli somiglia.</li>
+            <li>In pochi secondi scopri quale vinile ti rappresenta di più — il tuo 33Giri personale.</li>
+          </ol>
+
+          <p style="margin-top: 16px;">
+            <b>✨ Lasciati guidare dal caso, dal suono e dal tempo.</b><br>
+            Ogni vinile ha qualcosa da raccontare — scoprilo, ascoltalo e lascialo diventare parte del tuo spazio.
+          </p>
+        </div>
       </div>
 
-      <!-- Pulsante per aprire il quiz su Google Forms -->
-      <a 
-        href="https://docs.google.com/forms/d/e/1FAIpQLSd1NBB4C48Dndnd_ps1CBNXSUL2FhI3fEar7zbDo9haBPIAZw/viewform?usp=header" 
-        target="_blank"
-        style="display:inline-block; margin-top:32px; padding:14px 32px; font-size:18px; font-weight:600; border-radius:999px; background:#ffffff; color:#111111; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
-        Fai il quiz
-      </a>
-    </div>
-  </section>
+      <!-- Hint scroll -->
+      <div class="quiz-scroll-hint">
+        <span>Scorri</span>
+        <div class="quiz-scroll-dot"></div>
+      </div>
+    </section>
 
-  <!-- Include Footer -->
+    <!-- Sezione breve di testo sotto il hero per chi vuole leggere altro -->
+    <section class="quiz-secondary">
+      <div class="wrap quiz-secondary-inner">
+        <h2 class="quiz-secondary-title">Un piccolo rituale per scegliere il tuo 33Giri</h2>
+        <p class="quiz-secondary-text">
+          Il quiz non serve a “indovinare” i tuoi gusti musicali, ma a tradurre le tue risposte in atmosfere:
+          colori, intensità, ritmo, energia. Da lì, colleghiamo il tuo profilo a un vinile reale della nostra
+          selezione, già trasformato in oggetto di design.
+        </p>
+        <p class="quiz-secondary-highlight">
+          Puoi usare il risultato per scegliere il tuo pezzo preferito, per farti fare un regalo o per iniziare
+          una collezione che ti rappresenti davvero.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer caricato da layout.js (come sulle altre pagine) -->
   <div id="footer"></div>
 
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" class="whatsapp-floating">
+    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
+    </svg>
+  </a>
+
+  <!-- Script -->
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/main.js"></script>
