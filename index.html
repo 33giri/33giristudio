@@ -96,11 +96,6 @@
           <img src="assets/atelier 33 giri/20251110-IMG_4742.jpg" alt="Vinile 33Giri 2" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; min-width: 100vw; min-height: 100vh; filter: brightness(0.6); animation: kenBurns 20s ease-in-out infinite alternate;">
         </div>
 
-        <!-- Logo 33Giri in alto -->
-        <div style="position: absolute; top: 100px; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 25; animation: fadeInScale 1.0s ease-out;">
-          <img src="assets/logo 33giri white.png" alt="33Giri" style="max-width: clamp(300px, 50vw, 600px); height: auto; filter: drop-shadow(0 8px 30px rgba(0,0,0,0.7));">
-        </div>
-
         <!-- Navigation Arrows -->
         <button class="carousel-prev" style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 40px; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; backdrop-filter: blur(10px); opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" onmouseover="this.style.background='rgba(255,255,255,0.4)'; this.style.transform='translateY(-50%) scale(1.1)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-50%) scale(1)'">‹</button>
         <button class="carousel-next" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 40px; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; backdrop-filter: blur(10px); opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" onmouseover="this.style.background='rgba(255,255,255,0.4)'; this.style.transform='translateY(-50%) scale(1.1)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-50%) scale(1)'">›</button>
@@ -109,6 +104,11 @@
       <!-- Content Overlay -->
       <div style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); text-align: center; color: #fff; z-index: 10; width: min(1100px, 90vw); animation: fadeInContent 1.5s ease-out;">
         <div style="padding: 50px; border-radius: 30px;">
+          <!-- NUOVO: Scritta 33GIRI sopra al titolo -->
+          <div style="font-family: 'Inter', sans-serif; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; font-size: clamp(20px, 3vw, 28px); margin-bottom: 10px; text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.8);">
+            33GIRI
+          </div>
+
           <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 64px); font-weight: 900; margin-bottom: 25px; color: #fff; text-shadow: 0 6px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.8); line-height: 1.2; animation: fadeInScale 2.2s cubic-bezier(0.4,0,0.2,1) 0.8s both;">
             Dove la musica prende forma
           </h1>
