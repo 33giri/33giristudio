@@ -314,6 +314,13 @@
       line-height: 1.8;
       margin-bottom: 30px;
     }
+
+    .vinyl-card-price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #8B7355;
+      margin-bottom: 10px;
+    }
     
     .vinyl-button {
       width: 100%;
@@ -351,6 +358,39 @@
     .vinyl-button:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 30px rgba(139, 115, 85, 0.4);
+    }
+
+    /* BLOCCO CATALOGO CANVA SOTTO LE 3 CARD */
+    .collection-extra {
+      max-width: 800px;
+      margin: 60px auto 0;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .collection-extra-title {
+      font-size: 1.6rem;
+      color: #5d4e37;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .collection-extra-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #8B7355 0%, #A5927C 100%);
+      color: #f5f0e8;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(139, 115, 85, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .collection-extra-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 14px 40px rgba(139, 115, 85, 0.5);
     }
     
     /* Gallery Section */
@@ -528,6 +568,13 @@
       }
       .text-card h3 { font-size: 1.3rem; }
       .text-card p { font-size: 0.85rem; }
+      .collection-extra-title {
+        font-size: 1.4rem;
+      }
+      .collection-extra-btn {
+        width: 100%;
+        max-width: 320px;
+      }
     }
     
     @media (max-width: 480px) {
@@ -541,6 +588,13 @@
         min-height: 140px;
       }
       .text-card { padding: 15px; }
+      .collection-extra {
+        margin-top: 40px;
+      }
+      .collection-extra-btn {
+        padding: 14px 26px;
+        font-size: 0.95rem;
+      }
     }
   </style>
 </head>
@@ -617,6 +671,22 @@
           <button class="vinyl-button" data-style="SPIRAL">Voglio Questo Stile</button>
         </div>
       </div>
+    </div>
+
+    <!-- BLOCCO SOTTO LE 3 CARD: TITOLO + PULSANTE CANVA -->
+    <div class="collection-extra">
+      <h3 class="collection-extra-title">
+        Vuoi vedere tutti i vinili disponibili, divisi per stile e artista?
+      </h3>
+      <!-- Sostituisci LINK_CANVA_CATALOGO con il link al file Canva del catalogo -->
+      <a 
+        href="LINK_CANVA_CATALOGO" 
+        class="collection-extra-btn" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        Apri il catalogo completo su Canva
+      </a>
     </div>
   </section>
 
