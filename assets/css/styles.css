@@ -379,12 +379,6 @@ body{
   width:100%;
 }
 
-/* Su mobile alzo un po' il contenuto per stare sicuramente sotto all'header */
-@media (max-width: 768px){
-  .hero-inner{
-    padding-top: calc(var(--header-offset) + 40px);
-  }
-}
 /* translucent banner for titles inside hero */
 .hero-banner{
   display:inline-block;
@@ -874,10 +868,6 @@ body{
    RECENSIONI - Review System
    =========================== */
 
-/* ===========================
-   RECENSIONI - Review System
-   =========================== */
-
 /* Review Form Section */
 .review-form-section {
   margin-top: 120px;
@@ -1349,8 +1339,17 @@ body{
   color: #1a1a1a;
 }
 
-/* Responsive */
+/* Responsive per recensioni + hero mobile */
 @media (max-width: 768px) {
+  /* HERO: niente centraggio verticale, sposto il contenuto sotto al logo */
+  .hero{
+    align-items: flex-start;
+  }
+  .hero-inner{
+    padding-top: calc(var(--header-offset) + 50px);
+    padding-bottom: 40px;
+  }
+
   .review-form-section {
     margin-top: 90px;
   }
