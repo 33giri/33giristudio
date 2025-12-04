@@ -378,6 +378,13 @@ body{
   z-index:2;
   width:100%;
 }
+
+/* Su mobile alzo un po' il contenuto per stare sicuramente sotto all'header */
+@media (max-width: 768px){
+  .hero-inner{
+    padding-top: calc(var(--header-offset) + 40px);
+  }
+}
 /* translucent banner for titles inside hero */
 .hero-banner{
   display:inline-block;
