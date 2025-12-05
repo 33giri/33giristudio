@@ -336,217 +336,460 @@
         font-size: 1em !important;
       }
     }
+
+    /* ==============================
+       LAUNCH OVERLAY + COUNTDOWN
+       ============================== */
+
+    /* Contenuto del sito nascosto finché non scade */
+    #site-content.is-hidden {
+      display: none !important;
+    }
+
+    /* Overlay full screen */
+    #launch-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.08), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(255,255,255,0.08), transparent 40%),
+        linear-gradient(135deg, #0f1115 0%, #111827 40%, #0b0f14 100%);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    #launch-overlay.is-hidden {
+      display: none !important;
+    }
+
+    .launch-box {
+      width: min(680px, 92vw);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
+      padding: 48px 34px 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    .launch-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      margin-bottom: 14px;
+    }
+    .launch-tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #ffffff;
+      opacity: 0.9;
+    }
+
+    .launch-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .launch-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.78);
+      margin-bottom: 28px;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 auto 18px auto;
+    }
+
+    .countdown-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 16px 10px 14px;
+    }
+
+    .countdown-number {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .countdown-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.75;
+    }
+
+    .launch-foot {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    @media (max-width: 520px) {
+      .launch-box {
+        padding: 38px 22px 32px;
+      }
+      .countdown-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
   </style>
 </head>
 <body>
-  <!-- Include Header -->
-  <header id="header"></header>
 
-  <!-- Fullscreen Hero Image - Iris Shero -->
-  <section class="artist-hero-fullscreen">
-    <!-- Contenuto visibile SOLO su mobile -->
-    <div class="hero-mobile-content">
-      <div class="hero-mobile-tag">
-        <span></span> Collaborazione
+  <!-- =========================
+       LAUNCH OVERLAY (NEW)
+       ========================= -->
+  <div id="launch-overlay" data-target="2025-12-08T14:00:00+01:00">
+    <div class="launch-box">
+      <div class="launch-tag">
+        <span class="launch-tag-dot"></span>
+        In arrivo
       </div>
-      <h1 class="hero-mobile-title">Iris Shero X 33Giri</h1>
-      <!-- NESSUNA foto piccola aggiuntiva: l'immagine è solo di sfondo -->
-    </div>
-  </section>
-
-  <!-- Artist Quote Section -->
-  <section class="artist-quote-section wrap" style="padding: 100px 20px; position: relative; z-index: 1; background: transparent !important;">
-    <div style="max-width: 900px; margin: 0 auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); padding: 60px 50px; border-radius: 16px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);">
-      <div style="text-align: center; margin-bottom: 30px;">
-        <svg width="60" height="45" viewBox="0 0 60 45" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.3;">
-          <path d="M13.5 45C9.5 45 6.125 43.625 3.375 40.875C0.625 38.125 -0.583333 34.5833 0.25 30.25C1.08333 25.9167 3.16667 21.5833 6.5 17.25C9.83333 12.9167 14.1667 9 19.5 5.5L24 11.5C20.3333 14 17.5 16.75 15.5 19.75C13.5 22.75 12.5833 25.75 12.75 28.75C13.5833 28.5 14.5 28.375 15.5 28.375C18.1667 28.375 20.375 29.2917 22.125 31.125C23.875 32.9583 24.75 35.1667 24.75 37.75C24.75 40.5 23.875 42.75 22.125 44.5C20.375 46.25 18.1667 47.125 15.5 47.125L13.5 45ZM44.5 45C40.5 45 37.125 43.625 34.375 40.875C31.625 38.125 30.4167 34.5833 31.25 30.25C32.0833 25.9167 34.1667 21.5833 37.5 17.25C40.8333 12.9167 45.1667 9 50.5 5.5L55 11.5C51.3333 14 48.5 16.75 46.5 19.75C44.5 22.75 43.5833 25.75 43.75 28.75C44.5833 28.5 45.5 28.375 46.5 28.375C49.1667 28.375 51.375 29.2917 53.125 31.125C54.875 32.9583 55.75 35.1667 55.75 37.75C55.75 40.5 54.875 42.75 53.125 44.5C51.375 46.25 49.1667 47.125 46.5 47.125L44.5 45Z" fill="#5a7fa0"/>
-        </svg>
+      <div class="launch-title">Iris Shero X 33Giri</div>
+      <div class="launch-sub">
+        La pagina collaborazione sta per uscire.<br>
+        Sblocchiamo tutto lunedì <strong>8 dicembre 2025</strong> alle <strong>14:00</strong>.
       </div>
-      
-      <blockquote style="margin: 0; padding: 0; border: none;">
-        <p style="font-family: 'Playfair Display', serif; font-size: 1.5em; line-height: 1.8; color: #2c2416; font-style: italic; text-align: center; font-weight: 500; margin-bottom: 35px;">
-          "Vivere l'arte permette di accedere alle forme più pure delle emozioni, facendo eco nella nostra intimità fino a toccare anche punti che non pensavamo di poter raggiungere. L'estetica è sicuramente una parte importante, ma più continuo a dipingere e più mi rendo conto che i pezzi che amo di più sono quelli che mi fanno provare qualcosa: e nelle mie opere quel qualcosa si traduce spesso in un profondo e vivido senso di attaccamento alla vita, in tutte le sue sfumature."
-        </p>
-        <footer style="text-align: center; margin-top: 30px;">
-          <div style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, rgba(90, 127, 160, 0.15) 0%, rgba(90, 127, 160, 0.05) 100%); border-radius: 30px;">
-            <p style="font-family: 'Playfair Display', serif; font-size: 1.2em; color: #5a7fa0; font-weight: 700; margin: 0;">— Iris Shero</p>
-          </div>
-        </footer>
-      </blockquote>
-    </div>
-  </section>
 
-  <!-- Artist Bio Section -->
-  <section class="artist-bio-section wrap" style="padding: 80px 20px; position: relative; z-index: 1;">
-    <div style="max-width: 1200px; margin: 0 auto;">
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; text-align: center; margin-bottom: 60px; color: #2c2416; font-weight: 900;">L'Artista</h2>
-      
-      <div style="display: flex; gap: 80px; align-items: flex-start; flex-wrap: wrap;">
-        <div class="bio-image-container" style="flex: 0 0 350px;">
-          <img src="assets/iris foto/PHOTO-2025-11-13-17-09-41.jpg" alt="Iris Shero" style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);">
-          <div style="text-align: center; margin-top: 25px; padding: 20px; background: rgba(90, 127, 160, 0.1); border-radius: 8px;">
-            <p style="font-family: 'Playfair Display', serif; font-size: 1.3em; color: #5a7fa0; font-weight: 600; margin-bottom: 8px;">Iris Shero</p>
-            <p style="font-family: 'Inter', sans-serif; font-size: 0.95em; color: #666;">Artista Visiva & Pittrice</p>
-            <p style="font-family: 'Inter', sans-serif; font-size: 0.9em; color: #5a7fa0; margin-top: 12px;">
-              <a href="mailto:shero.iris.art@gmail.com" style="color: #5a7fa0; text-decoration: none; transition: color 0.3s;">shero.iris.art@gmail.com</a>
-            </p>
-          </div>
+      <div class="countdown-grid" aria-live="polite">
+        <div class="countdown-card">
+          <div class="countdown-number" id="cd-days">--</div>
+          <div class="countdown-label">Giorni</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-number" id="cd-hours">--</div>
+          <div class="countdown-label">Ore</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-number" id="cd-mins">--</div>
+          <div class="countdown-label">Minuti</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-number" id="cd-secs">--</div>
+          <div class="countdown-label">Secondi</div>
+        </div>
+      </div>
+
+      <div class="launch-foot">
+        Nel frattempo, stiamo preparando i dettagli della collezione.
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================
+       CONTENUTO DEL SITO
+       (WRAPPED TO HIDE)
+       ========================= -->
+  <div id="site-content">
+
+    <!-- Include Header -->
+    <header id="header"></header>
+
+    <!-- Fullscreen Hero Image - Iris Shero -->
+    <section class="artist-hero-fullscreen">
+      <!-- Contenuto visibile SOLO su mobile -->
+      <div class="hero-mobile-content">
+        <div class="hero-mobile-tag">
+          <span></span> Collaborazione
+        </div>
+        <h1 class="hero-mobile-title">Iris Shero X 33Giri</h1>
+        <!-- NESSUNA foto piccola aggiuntiva: l'immagine è solo di sfondo -->
+      </div>
+    </section>
+
+    <!-- Artist Quote Section -->
+    <section class="artist-quote-section wrap" style="padding: 100px 20px; position: relative; z-index: 1; background: transparent !important;">
+      <div style="max-width: 900px; margin: 0 auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); padding: 60px 50px; border-radius: 16px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <svg width="60" height="45" viewBox="0 0 60 45" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.3;">
+            <path d="M13.5 45C9.5 45 6.125 43.625 3.375 40.875C0.625 38.125 -0.583333 34.5833 0.25 30.25C1.08333 25.9167 3.16667 21.5833 6.5 17.25C9.83333 12.9167 14.1667 9 19.5 5.5L24 11.5C20.3333 14 17.5 16.75 15.5 19.75C13.5 22.75 12.5833 25.75 12.75 28.75C13.5833 28.5 14.5 28.375 15.5 28.375C18.1667 28.375 20.375 29.2917 22.125 31.125C23.875 32.9583 24.75 35.1667 24.75 37.75C24.75 40.5 23.875 42.75 22.125 44.5C20.375 46.25 18.1667 47.125 15.5 47.125L13.5 45ZM44.5 45C40.5 45 37.125 43.625 34.375 40.875C31.625 38.125 30.4167 34.5833 31.25 30.25C32.0833 25.9167 34.1667 21.5833 37.5 17.25C40.8333 12.9167 45.1667 9 50.5 5.5L55 11.5C51.3333 14 48.5 16.75 46.5 19.75C44.5 22.75 43.5833 25.75 43.75 28.75C44.5833 28.5 45.5 28.375 46.5 28.375C49.1667 28.375 51.375 29.2917 53.125 31.125C54.875 32.9583 55.75 35.1667 55.75 37.75C55.75 40.5 54.875 42.75 53.125 44.5C51.375 46.25 49.1667 47.125 46.5 47.125L44.5 45Z" fill="#5a7fa0"/>
+          </svg>
         </div>
         
-        <div class="bio-text-container" style="flex: 1; min-width: 300px;">
-          <div style="background: rgba(255, 255, 255, 0.5); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8em; color: #2c2416; margin-bottom: 25px; font-weight: 700;">La Visione Artistica</h3>
-            
-            <p style="font-family: 'Inter', sans-serif; font-size: 1.15em; line-height: 1.9; color: #3a3a3a; margin-bottom: 25px; font-weight: 400;">
-              <strong style="color: #5a7fa0;">Iris Shero</strong>, giovane artista di 22 anni, ha fatto della creatività il fulcro della sua esistenza. La sua identità artistica si è sviluppata attraverso un percorso di profonda introspezione, dove l'arte diventa il mezzo privilegiato per esplorare la complessità delle emozioni umane.
-            </p>
-            
-            <p style="font-family: 'Inter', sans-serif; font-size: 1.15em; line-height: 1.9; color: #3a3a3a; margin-bottom: 25px; font-weight: 400;">
-              La sua ricerca artistica si concentra sull'accessibilità alle <em>forme più pure delle emozioni</em>, quelle che risuonano nell'intimità dell'essere e rivelano dimensioni della coscienza spesso inesplorate. Attraverso il colore, la composizione e la materializzazione del pensiero, Iris crea opere che trascendono la mera estetica.
-            </p>
-            
-            <p style="font-family: 'Inter', sans-serif; font-size: 1.15em; line-height: 1.9; color: #3a3a3a; margin-bottom: 25px; font-weight: 400;">
-              Il processo creativo di Iris si articola in <strong>trasformazione, progettazione e materializzazione</strong> — elementi che danno vita a ciò che prima esisteva solo nell'immaginazione. Le sue opere incarnano un profondo e vivido senso di attaccamento alla vita, celebrando tutte le sfumature dell'esperienza umana.
-            </p>
-            
-            <div style="border-left: 4px solid #5a7fa0; padding-left: 20px; margin-top: 30px; background: rgba(90, 127, 160, 0.05); padding: 20px; border-radius: 4px;">
-              <p style="font-family: 'Playfair Display', serif; font-size: 1.1em; line-height: 1.8; color: #5a7fa0; font-style: italic;">
-                "I pezzi che amo di più sono quelli che mi fanno provare qualcosa: nelle mie opere quel qualcosa si traduce in un profondo senso di attaccamento alla vita."
+        <blockquote style="margin: 0; padding: 0; border: none;">
+          <p style="font-family: 'Playfair Display', serif; font-size: 1.5em; line-height: 1.8; color: #2c2416; font-style: italic; text-align: center; font-weight: 500; margin-bottom: 35px;">
+            "Vivere l'arte permette di accedere alle forme più pure delle emozioni, facendo eco nella nostra intimità fino a toccare anche punti che non pensavamo di poter raggiungere. L'estetica è sicuramente una parte importante, ma più continuo a dipingere e più mi rendo conto che i pezzi che amo di più sono quelli che mi fanno provare qualcosa: e nelle mie opere quel qualcosa si traduce spesso in un profondo e vivido senso di attaccamento alla vita, in tutte le sue sfumature."
+          </p>
+          <footer style="text-align: center; margin-top: 30px;">
+            <div style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, rgba(90, 127, 160, 0.15) 0%, rgba(90, 127, 160, 0.05) 100%); border-radius: 30px;">
+              <p style="font-family: 'Playfair Display', serif; font-size: 1.2em; color: #5a7fa0; font-weight: 700; margin: 0;">— Iris Shero</p>
+            </div>
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Artist Bio Section -->
+    <section class="artist-bio-section wrap" style="padding: 80px 20px; position: relative; z-index: 1;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; text-align: center; margin-bottom: 60px; color: #2c2416; font-weight: 900;">L'Artista</h2>
+        
+        <div style="display: flex; gap: 80px; align-items: flex-start; flex-wrap: wrap;">
+          <div class="bio-image-container" style="flex: 0 0 350px;">
+            <img src="assets/iris foto/PHOTO-2025-11-13-17-09-41.jpg" alt="Iris Shero" style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);">
+            <div style="text-align: center; margin-top: 25px; padding: 20px; background: rgba(90, 127, 160, 0.1); border-radius: 8px;">
+              <p style="font-family: 'Playfair Display', serif; font-size: 1.3em; color: #5a7fa0; font-weight: 600; margin-bottom: 8px;">Iris Shero</p>
+              <p style="font-family: 'Inter', sans-serif; font-size: 0.95em; color: #666;">Artista Visiva & Pittrice</p>
+              <p style="font-family: 'Inter', sans-serif; font-size: 0.9em; color: #5a7fa0; margin-top: 12px;">
+                <a href="mailto:shero.iris.art@gmail.com" style="color: #5a7fa0; text-decoration: none; transition: color 0.3s;">shero.iris.art@gmail.com</a>
               </p>
             </div>
           </div>
+          
+          <div class="bio-text-container" style="flex: 1; min-width: 300px;">
+            <div style="background: rgba(255, 255, 255, 0.5); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
+              <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8em; color: #2c2416; margin-bottom: 25px; font-weight: 700;">La Visione Artistica</h3>
+              
+              <p style="font-family: 'Inter', sans-serif; font-size: 1.15em; line-height: 1.9; color: #3a3a3a; margin-bottom: 25px; font-weight: 400;">
+                <strong style="color: #5a7fa0;">Iris Shero</strong>, giovane artista di 22 anni, ha fatto della creatività il fulcro della sua esistenza. La sua identità artistica si è sviluppata attraverso un percorso di profonda introspezione, dove l'arte diventa il mezzo privilegiato per esplorare la complessità delle emozioni umane.
+              </p>
+              
+              <p style="font-family: 'Inter', sans-serif; font-size: 1.15em; line-height: 1.9; color: #3a3a3a; margin-bottom: 25px; font-weight: 400;">
+                La sua ricerca artistica si concentra sull'accessibilità alle <em>forme più pure delle emozioni</em>, quelle che risuonano nell'intimità dell'essere e rivelano dimensioni della coscienza spesso inesplorate. Attraverso il colore, la composizione e la materializzazione del pensiero, Iris crea opere che trascendono la mera estetica.
+              </p>
+              
+              <p style="font-family: 'Inter', sans-serif; font-size: 1.15em; line-height: 1.9; color: #3a3a3a; margin-bottom: 25px; font-weight: 400;">
+                Il processo creativo di Iris si articola in <strong>trasformazione, progettazione e materializzazione</strong> — elementi che danno vita a ciò che prima esisteva solo nell'immaginazione. Le sue opere incarnano un profondo e vivido senso di attaccamento alla vita, celebrando tutte le sfumature dell'esperienza umana.
+              </p>
+              
+              <div style="border-left: 4px solid #5a7fa0; padding-left: 20px; margin-top: 30px; background: rgba(90, 127, 160, 0.05); padding: 20px; border-radius: 4px;">
+                <p style="font-family: 'Playfair Display', serif; font-size: 1.1em; line-height: 1.8; color: #5a7fa0; font-style: italic;">
+                  "I pezzi che amo di più sono quelli che mi fanno provare qualcosa: nelle mie opere quel qualcosa si traduce in un profondo senso di attaccamento alla vita."
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Gallery Section: Opere Sparse + Collaborazioni -->
-  <section class="dual-gallery-section" style="padding: 80px 20px; position: relative; z-index: 1;">
-    <div style="max-width: 1600px; margin: 0 auto;">
-      <div style="display: flex; gap: 60px; align-items: stretch; flex-wrap: wrap;">
-        
-        <!-- Left Side: Opere di Iris -->
-        <div style="flex: 1; min-width: 400px; position: relative; padding: 40px;">
-          <h3 style="font-family: Georgia, serif; font-size: 1.6em; font-style: italic; margin-bottom: 50px; color: #2c2c2c; text-align: center;">Le opere di Iris</h3>
+    <!-- Gallery Section: Opere Sparse + Collaborazioni -->
+    <section class="dual-gallery-section" style="padding: 80px 20px; position: relative; z-index: 1;">
+      <div style="max-width: 1600px; margin: 0 auto;">
+        <div style="display: flex; gap: 60px; align-items: stretch; flex-wrap: wrap;">
           
-          <div class="scattered-gallery" style="position: relative; min-height: 800px;">
-            <div class="scattered-item" style="position: absolute; top: 0; left: 5%; width: 220px; transform: rotate(-3deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.16.51.png" alt="Opera Iris 1">
-            </div>
+          <!-- Left Side: Opere di Iris -->
+          <div style="flex: 1; min-width: 400px; position: relative; padding: 40px;">
+            <h3 style="font-family: Georgia, serif; font-size: 1.6em; font-style: italic; margin-bottom: 50px; color: #2c2c2c; text-align: center;">Le opere di Iris</h3>
             
-            <div class="scattered-item" style="position: absolute; top: 180px; right: 10%; width: 280px; transform: rotate(5deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.52.png" alt="Opera Iris 2">
-            </div>
-            
-            <div class="scattered-item" style="position: absolute; top: 320px; left: 15%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.15.34.png" alt="Opera Iris 3">
-            </div>
-            
-            <div class="scattered-item" style="position: absolute; top: 580px; right: 5%; width: 260px; transform: rotate(-4deg); transition: all 0.4s ease;">
-              <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.32.png" alt="Opera Iris 4">
+            <div class="scattered-gallery" style="position: relative; min-height: 800px;">
+              <div class="scattered-item" style="position: absolute; top: 0; left: 5%; width: 220px; transform: rotate(-3deg); transition: all 0.4s ease;">
+                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.16.51.png" alt="Opera Iris 1">
+              </div>
+              
+              <div class="scattered-item" style="position: absolute; top: 180px; right: 10%; width: 280px; transform: rotate(5deg); transition: all 0.4s ease;">
+                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.52.png" alt="Opera Iris 2">
+              </div>
+              
+              <div class="scattered-item" style="position: absolute; top: 320px; left: 15%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
+                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.15.34.png" alt="Opera Iris 3">
+              </div>
+              
+              <div class="scattered-item" style="position: absolute; top: 580px; right: 5%; width: 260px; transform: rotate(-4deg); transition: all 0.4s ease;">
+                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.32.png" alt="Opera Iris 4">
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Creative Divider (desktop) -->
-        <div class="creative-divider" style="width: 2px; position: relative; min-height: 800px; align-self: stretch;">
-          <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%;">
-            <!-- Wavy Line SVG -->
-            <svg width="100" height="100%" style="position: absolute; left: -49px; top: 0;">
-              <defs>
-                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style="stop-color:#5a7fa0;stop-opacity:0.3" />
-                  <stop offset="50%" style="stop-color:#5a7fa0;stop-opacity:0.8" />
-                  <stop offset="100%" style="stop-color:#5a7fa0;stop-opacity:0.3" />
-                </linearGradient>
-              </defs>
-              <path d="M 50 0 Q 60 100, 50 200 T 50 400 T 50 600 T 50 800 T 50 1000" 
-                    stroke="url(#lineGradient)" 
-                    stroke-width="3" 
-                    fill="none" 
-                    stroke-linecap="round"/>
-            </svg>
+          <!-- Creative Divider (desktop) -->
+          <div class="creative-divider" style="width: 2px; position: relative; min-height: 800px; align-self: stretch;">
+            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%;">
+              <!-- Wavy Line SVG -->
+              <svg width="100" height="100%" style="position: absolute; left: -49px; top: 0;">
+                <defs>
+                  <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#5a7fa0;stop-opacity:0.3" />
+                    <stop offset="50%" style="stop-color:#5a7fa0;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#5a7fa0;stop-opacity:0.3" />
+                  </linearGradient>
+                </defs>
+                <path d="M 50 0 Q 60 100, 50 200 T 50 400 T 50 600 T 50 800 T 50 1000" 
+                      stroke="url(#lineGradient)" 
+                      stroke-width="3" 
+                      fill="none" 
+                      stroke-linecap="round"/>
+              </svg>
 
-            <!-- Decorative Circles -->
-            <div style="position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #5a7fa0; border-radius: 50%; opacity: 0.6;"></div>
-            <div style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #5a7fa0; border-radius: 50%; opacity: 0.4;"></div>
-            <div style="position: absolute; top: 80%; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; background: #5a7fa0; border-radius: 50%; opacity: 0.5;"></div>
-          </div>
-        </div>
-
-        <!-- Transizione solo mobile -->
-        <div class="gallery-transition">
-          <div class="gallery-transition-inner">
-            <p>
-              Da questi dipinti nasce la serie di <strong>vinili unici</strong> realizzati insieme a 33Giri:
-              ogni disco viene modellato e dipinto a mano, trasformando l’opera di Iris in un oggetto da usare e da esporre.
-            </p>
-            <div class="gallery-transition-cta">
-              <span class="gallery-transition-arrow">↓</span>
-              <span>I vinili per 33Giri</span>
+              <!-- Decorative Circles -->
+              <div style="position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #5a7fa0; border-radius: 50%; opacity: 0.6;"></div>
+              <div style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #5a7fa0; border-radius: 50%; opacity: 0.4;"></div>
+              <div style="position: absolute; top: 80%; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; background: #5a7fa0; border-radius: 50%; opacity: 0.5;"></div>
             </div>
           </div>
-        </div>
-        
-        <!-- Right Side: Vinili per 33Giri -->
-        <div style="flex: 1; min-width: 400px; position: relative; padding: 40px;">
-          <h3 style="font-family: Georgia, serif; font-size: 1.6em; font-style: italic; margin-bottom: 50px; color: #2c2c2c; text-align: center;">I vinili per 33Giri</h3>
-          
-          <!-- CAMBIO QUI: aumento l’altezza minima per contenere tutte le foto prima del bottone -->
-          <div class="scattered-gallery" style="position: relative; min-height: 1500px;">
-            <!-- Ciotola 1 -->
-            <div class="scattered-item" style="position: absolute; top: 50px; left: 10%; width: 220px; transform: rotate(4deg); transition: all 0.4s ease;">
-              <img src="IMG_3962.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 1">
-            </div>
 
-            <!-- Ciotola 2 -->
-            <div class="scattered-item" style="position: absolute; top: 260px; right: 8%; width: 280px; transform: rotate(-3deg); transition: all 0.4s ease;">
-              <img src="IMG_3963.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 2">
-            </div>
-
-            <!-- Ciotola 3 -->
-            <div class="scattered-item" style="position: absolute; top: 470px; left: 12%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
-              <img src="IMG_3971.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 3">
-            </div>
-
-            <!-- Ciotola 4 -->
-            <div class="scattered-item" style="position: absolute; top: 690px; right: 6%; width: 260px; transform: rotate(-4deg); transition: all 0.4s ease;">
-              <img src="IMG_3978.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 4">
-            </div>
-
-            <!-- Ciotola vista dall'alto -->
-            <div class="scattered-item" style="position: absolute; top: 910px; left: 10%; width: 220px; transform: rotate(1deg); transition: all 0.4s ease;">
-              <img src="IMG_3988.jpeg" alt="Ciotola Iris Shero vista dall'alto">
-            </div>
-
-            <!-- Vinili piatti -->
-            <div class="scattered-item" style="position: absolute; top: 1130px; right: 4%; width: 260px; transform: rotate(-2deg); transition: all 0.4s ease;">
-              <img src="IMG_4001.jpeg" alt="Vinili piatti Iris Shero x 33Giri">
+          <!-- Transizione solo mobile -->
+          <div class="gallery-transition">
+            <div class="gallery-transition-inner">
+              <p>
+                Da questi dipinti nasce la serie di <strong>vinili unici</strong> realizzati insieme a 33Giri:
+                ogni disco viene modellato e dipinto a mano, trasformando l’opera di Iris in un oggetto da usare e da esporre.
+              </p>
+              <div class="gallery-transition-cta">
+                <span class="gallery-transition-arrow">↓</span>
+                <span>I vinili per 33Giri</span>
+              </div>
             </div>
           </div>
           
-          <!-- Purchase Button -->
-          <div style="margin-top: 60px; text-align: center;">
-            <a href="catalogo.html#contatti" onclick="localStorage.setItem('contactMessage', 'Ciao, vorrei acquistare un pezzo della collaborazione Iris Shero x 33Giri');" style="display: inline-block; background-color: #5a7fa0; color: white; padding: 15px 40px; font-family: Georgia, serif; font-size: 1.1em; text-decoration: none; border-radius: 30px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(90, 127, 160, 0.3);">
-              Acquista Ora
-            </a>
-            <p style="margin-top: 15px; font-family: Georgia, serif; font-size: 0.85em; color: #666; font-style: italic;">
-              (per le collaborazioni puoi chiedere il modello specifico o farti consigliare il pezzo giusto)
-            </p>
+          <!-- Right Side: Vinili per 33Giri -->
+          <div style="flex: 1; min-width: 400px; position: relative; padding: 40px;">
+            <h3 style="font-family: Georgia, serif; font-size: 1.6em; font-style: italic; margin-bottom: 50px; color: #2c2c2c; text-align: center;">I vinili per 33Giri</h3>
+            
+            <!-- CAMBIO QUI: aumento l’altezza minima per contenere tutte le foto prima del bottone -->
+            <div class="scattered-gallery" style="position: relative; min-height: 1500px;">
+              <!-- Ciotola 1 -->
+              <div class="scattered-item" style="position: absolute; top: 50px; left: 10%; width: 220px; transform: rotate(4deg); transition: all 0.4s ease;">
+                <img src="IMG_3962.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 1">
+              </div>
+
+              <!-- Ciotola 2 -->
+              <div class="scattered-item" style="position: absolute; top: 260px; right: 8%; width: 280px; transform: rotate(-3deg); transition: all 0.4s ease;">
+                <img src="IMG_3963.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 2">
+              </div>
+
+              <!-- Ciotola 3 -->
+              <div class="scattered-item" style="position: absolute; top: 470px; left: 12%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
+                <img src="IMG_3971.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 3">
+              </div>
+
+              <!-- Ciotola 4 -->
+              <div class="scattered-item" style="position: absolute; top: 690px; right: 6%; width: 260px; transform: rotate(-4deg); transition: all 0.4s ease;">
+                <img src="IMG_3978.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 4">
+              </div>
+
+              <!-- Ciotola vista dall'alto -->
+              <div class="scattered-item" style="position: absolute; top: 910px; left: 10%; width: 220px; transform: rotate(1deg); transition: all 0.4s ease;">
+                <img src="IMG_3988.jpeg" alt="Ciotola Iris Shero vista dall'alto">
+              </div>
+
+              <!-- Vinili piatti -->
+              <div class="scattered-item" style="position: absolute; top: 1130px; right: 4%; width: 260px; transform: rotate(-2deg); transition: all 0.4s ease;">
+                <img src="IMG_4001.jpeg" alt="Vinili piatti Iris Shero x 33Giri">
+              </div>
+            </div>
+            
+            <!-- Purchase Button -->
+            <div style="margin-top: 60px; text-align: center;">
+              <a href="catalogo.html#contatti" onclick="localStorage.setItem('contactMessage', 'Ciao, vorrei acquistare un pezzo della collaborazione Iris Shero x 33Giri');" style="display: inline-block; background-color: #5a7fa0; color: white; padding: 15px 40px; font-family: Georgia, serif; font-size: 1.1em; text-decoration: none; border-radius: 30px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(90, 127, 160, 0.3);">
+                Acquista Ora
+              </a>
+              <p style="margin-top: 15px; font-family: Georgia, serif; font-size: 0.85em; color: #666; font-style: italic;">
+                (per le collaborazioni puoi chiedere il modello specifico o farti consigliare il pezzo giusto)
+              </p>
+            </div>
           </div>
+          
         </div>
-        
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Include Footer -->
-  <div id="footer"></div>
+    <!-- Include Footer -->
+    <div id="footer"></div>
+
+  </div><!-- /#site-content -->
 
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/main.js"></script>
+
   <script>
+    /* =========================
+       LAUNCH TIMER LOGIC (NEW)
+       ========================= */
+    (function() {
+      const overlay = document.getElementById('launch-overlay');
+      const content = document.getElementById('site-content');
+
+      if (!overlay || !content) return;
+
+      const targetStr = overlay.getAttribute('data-target');
+      const targetDate = new Date(targetStr);
+
+      const daysEl = document.getElementById('cd-days');
+      const hoursEl = document.getElementById('cd-hours');
+      const minsEl = document.getElementById('cd-mins');
+      const secsEl = document.getElementById('cd-secs');
+
+      function pad(n) {
+        return String(n).padStart(2, '0');
+      }
+
+      function showOverlay() {
+        overlay.classList.remove('is-hidden');
+        content.classList.add('is-hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function hideOverlay() {
+        overlay.classList.add('is-hidden');
+        content.classList.remove('is-hidden');
+        document.body.style.overflow = '';
+      }
+
+      function tick() {
+        const now = new Date();
+        let diff = targetDate - now;
+
+        if (isNaN(targetDate.getTime())) {
+          // Fallback: se per qualche motivo la data non viene letta
+          hideOverlay();
+          return;
+        }
+
+        if (diff <= 0) {
+          // Scaduto
+          if (daysEl) daysEl.textContent = '00';
+          if (hoursEl) hoursEl.textContent = '00';
+          if (minsEl) minsEl.textContent = '00';
+          if (secsEl) secsEl.textContent = '00';
+          hideOverlay();
+          return;
+        }
+
+        showOverlay();
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const mins = Math.floor((totalSeconds % 3600) / 60);
+        const secs = totalSeconds % 60;
+
+        if (daysEl) daysEl.textContent = pad(days);
+        if (hoursEl) hoursEl.textContent = pad(hours);
+        if (minsEl) minsEl.textContent = pad(mins);
+        if (secsEl) secsEl.textContent = pad(secs);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
+
     // Scattered Gallery Hover Effects (desktop)
     document.addEventListener('DOMContentLoaded', function() {
       const scatteredItems = document.querySelectorAll('.scattered-item');
