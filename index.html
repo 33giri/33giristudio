@@ -217,12 +217,6 @@
          (SOLO sotto la galleria)
          ========================================= -->
     <section class="iris-promo-placeholder" data-iris-promo="after-gallery"></section>
-
-    <!-- =========================================
-         PLACEHOLDER DINAMICO RESHARE
-         (teaser piccolo sopra le recensioni)
-         ========================================= -->
-    <section class="reshare-promo-placeholder" data-reshare-promo="before-reviews"></section>
   
    <!-- Sezione Recensioni -->
 <section class="reviews-section" style="position: relative; z-index: 1; padding: 100px 20px; animation: fadeInUp 1s ease-out;">
@@ -477,141 +471,11 @@
       transform: scale(1.08);
     }
 
-    /* =========================
-       RESHARE PROMO (PIÙ PICCOLO)
-       ========================= */
-    .reshare-promo-section {
-      position: relative;
-      z-index: 1;
-      padding: 10px 20px 70px 20px;
-      animation: fadeInUp 1.05s ease-out;
-    }
-
-    .reshare-promo-card {
-      max-width: 860px;
-      margin: 0 auto;
-      border-radius: 26px;
-      padding: clamp(22px, 3vw, 34px);
-      backdrop-filter: blur(14px);
-      background: rgba(255,255,255,0.20);
-      box-shadow: 0 16px 50px rgba(0,0,0,0.22);
-      border-left: 4px solid #5d4e37;
-      transition: all 0.45s ease;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: clamp(18px, 2.6vw, 32px);
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .reshare-promo-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 26px 70px rgba(0,0,0,0.32);
-    }
-
-    .reshare-promo-badge {
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 11px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.55);
-      color: #fff;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-      margin-bottom: 12px;
-    }
-
-    .reshare-promo-title {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(22px, 3.1vw, 32px);
-      line-height: 1.15;
-      color: #fff;
-      text-shadow: 0 4px 16px rgba(0,0,0,0.75);
-      margin: 0 0 10px 0;
-    }
-
-    .reshare-promo-text {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(14px, 1.1vw, 16px);
-      line-height: 1.65;
-      color: #fff;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-      margin: 0 0 18px 0;
-      max-width: 52ch;
-    }
-
-    .reshare-promo-cta {
-      display: inline-block;
-      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
-      color: #5d4e37;
-      padding: 12px 28px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14.5px;
-      box-shadow: 0 10px 36px rgba(0,0,0,0.28);
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .reshare-promo-cta:hover {
-      transform: translateY(-4px) scale(1.04);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.38);
-    }
-
-    .reshare-promo-media {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 14px 45px rgba(0,0,0,0.35);
-      background: rgba(0,0,0,0.15);
-      min-height: 210px;
-    }
-
-    .reshare-promo-media img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      transition: transform 0.7s ease;
-      min-height: 210px;
-    }
-
-    .reshare-promo-card:hover .reshare-promo-media img {
-      transform: scale(1.07);
-    }
-
-    /* Countdown overlay su immagine Reshare */
-    .reshare-countdown-overlay {
-      position: absolute;
-      right: 12px;
-      bottom: 12px;
-      padding: 8px 12px;
-      border-radius: 12px;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-      pointer-events: none;
-    }
-
     @media (max-width: 980px) {
-      .iris-promo-card,
-      .reshare-promo-card {
+      .iris-promo-card {
         grid-template-columns: 1fr;
       }
-      .iris-promo-text,
-      .reshare-promo-text {
+      .iris-promo-text {
         max-width: 100%;
       }
     }
@@ -776,93 +640,6 @@
 
       const promo = buildIrisPromoSection(irisPromoConfig);
       placeholder.replaceWith(promo);
-
-    });
-  </script>
-
-  <!-- =========================================
-       RESHARE PROMO - SCRIPT DINAMICO
-       Card più piccola + countdown sulla foto
-       Countdown fisso a:
-       Martedì 9 dicembre 2025, ore 14:00
-       ========================================= -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-      const resharePromoConfig = {
-        badge: "RESHARE",
-        title: "Reshare per 33Giri",
-        text: "Un piccolo teaser in arrivo. Stiamo preparando qualcosa di speciale per dare nuova vita ai vinili e alle storie che portano con sé.",
-        buttonLabel: "Scopri di più",
-        imageSrc: "assets/atelier 33 giri/20251110-IMG_4742.jpg",
-        imageAlt: "Reshare per 33Giri",
-        href: "collaborazioni.html"
-      };
-
-      const targetDateISO = "2025-12-09T14:00:00+01:00";
-
-      function buildResharePromoSection(cfg) {
-        const section = document.createElement('section');
-        section.className = 'reshare-promo-section';
-
-        section.innerHTML = `
-          <div class="reshare-promo-card">
-            <div class="reshare-promo-content">
-              <span class="reshare-promo-badge">${cfg.badge}</span>
-              <h3 class="reshare-promo-title">${cfg.title}</h3>
-              <p class="reshare-promo-text">${cfg.text}</p>
-              <a class="reshare-promo-cta" href="${cfg.href}">
-                ${cfg.buttonLabel}
-              </a>
-            </div>
-
-            <div class="reshare-promo-media">
-              <img loading="lazy" src="${cfg.imageSrc}" alt="${cfg.imageAlt}">
-              <div class="reshare-countdown-overlay" data-reshare-countdown></div>
-            </div>
-          </div>
-        `;
-        return section;
-      }
-
-      function formatRemaining(ms) {
-        if (ms <= 0) return "Svelato";
-        const totalSeconds = Math.floor(ms / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-
-        if (days > 0) return `${days}g ${hours}h`;
-        if (hours > 0) return `${hours}h ${minutes}m`;
-        return `${minutes}m`;
-      }
-
-      function initReshareCountdown() {
-        const el = document.querySelector('[data-reshare-countdown]');
-        if (!el) return;
-
-        const target = new Date(targetDateISO).getTime();
-
-        function tick() {
-          const now = Date.now();
-          const diff = target - now;
-
-          el.textContent = diff > 0
-            ? `Reveal tra ${formatRemaining(diff)}`
-            : `Reveal in corso`;
-        }
-
-        tick();
-        setInterval(tick, 30000);
-      }
-
-      const placeholder = document.querySelector('.reshare-promo-placeholder[data-reshare-promo="before-reviews"]');
-      if (placeholder) {
-        const promo = buildResharePromoSection(resharePromoConfig);
-        placeholder.replaceWith(promo);
-      }
-
-      initReshareCountdown();
 
     });
   </script>
