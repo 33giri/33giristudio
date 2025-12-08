@@ -765,7 +765,7 @@
         </div>
       </div>
 
-      <!-- SHERO IRIS X 33GIRI Card (NUOVA) - BLOCCATA FINO A LUN 8 DIC 2025 14:00 -->
+      <!-- SHERO IRIS X 33GIRI Card (NUOVA) - BLOCCATA FINO A MAR 9 DIC 2025 14:00 -->
       <div class="vinyl-card is-locked" id="shero-card">
 
         <!-- Overlay blocco + countdown -->
@@ -949,7 +949,7 @@
 
     /* ------------------------------------
        COUNTDOWN LOCK SHERO IRIS
-       Scadenza: Lunedì 8 Dicembre 2025, 14:00
+       Scadenza: Martedì 9 Dicembre 2025, 14:00
        ------------------------------------ */
     const sheroCard = document.getElementById('shero-card');
     const sheroCountdown = document.getElementById('shero-countdown');
@@ -957,7 +957,7 @@
     if (sheroCard && sheroCountdown) {
       // Usa costruttore numerico per evitare ambiguità di timezone parsing
       // (mese 11 = dicembre)
-      const target = new Date(2025, 11, 8, 14, 0, 0);
+      const target = new Date(2025, 11, 9, 14, 0, 0);
 
       const pad = (n) => String(n).padStart(2, '0');
 
