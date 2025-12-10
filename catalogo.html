@@ -95,10 +95,36 @@
     .hero-subtitle {
       font-size: 1.5rem;
       color: #f5f0e8;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       font-weight: 300;
       line-height: 1.6;
       text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Piccolo decoro di Natale nell'hero */
+    .hero-xmas-decor {
+      font-size: 0.95rem;
+      color: #f5f0e8;
+      margin-bottom: 40px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(4px);
+      animation: twinkle 2.4s ease-in-out infinite;
+    }
+
+    .hero-xmas-decor span {
+      display: inline-block;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.9; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-2px); }
     }
     
     .hero-cta {
@@ -202,6 +228,46 @@
       backdrop-filter: blur(20px);
       z-index: 1;
       box-shadow: 0 -20px 80px rgba(0,0,0,0.1);
+    }
+
+    /* Banner di Natale sopra la collezione */
+    .christmas-ribbon {
+      max-width: 900px;
+      margin: 0 auto 26px auto;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(139,115,85,0.18), rgba(184,60,60,0.28));
+      color: #5d4e37;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .christmas-ribbon::before,
+    .christmas-ribbon::after {
+      content: '';
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.35);
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.5;
+    }
+
+    .christmas-ribbon::before { left: -40px; }
+    .christmas-ribbon::after { right: -40px; }
+
+    .christmas-emoji {
+      font-size: 1.1rem;
     }
     
     .section-title {
@@ -321,6 +387,33 @@
       font-weight: 600;
       color: #8B7355;
       margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .vinyl-card-price .old-price {
+      text-decoration: line-through;
+      opacity: 0.6;
+      font-weight: 400;
+    }
+
+    .vinyl-card-price .new-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #b4443b;
+    }
+
+    .vinyl-card-price .discount-tag {
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(180, 68, 59, 0.08);
+      color: #b4443b;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
     
     .vinyl-button {
@@ -362,7 +455,7 @@
     }
 
     /* ==============================
-       LOCK + COUNTDOWN SHERO IRIS
+       LOCK + COUNTDOWN METAMORFOSI
        ============================== */
     .vinyl-card.is-locked .vinyl-card-header,
     .vinyl-card.is-locked .vinyl-card-body {
@@ -701,6 +794,11 @@
       <div class="hero-text">
         <h1 class="hero-title">Vinili Unici<br>Fatti a Mano</h1>
         <p class="hero-subtitle">Scopri l'arte della musica con i nostri vinili artigianali.<br>Ogni pezzo è unico, progettato per te.</p>
+        <div class="hero-xmas-decor">
+          <span>✨</span>
+          <span>Speciale Natale: sconti fino al 25%</span>
+          <span>🎄</span>
+        </div>
         <a href="#collection" class="hero-cta">Esplora la Collezione</a>
       </div>
       <div class="hero-images">
@@ -719,11 +817,17 @@
 
   <!-- Collection Section -->
   <section class="collection-section" id="collection">
+    <div class="christmas-ribbon">
+      <span class="christmas-emoji">🎄</span>
+      <span>Speciale Natale · Sconti su Normal, Splash, Spiral e Metamorfosi</span>
+      <span class="christmas-emoji">⭐️</span>
+    </div>
+
     <h2 class="section-title">La Nostra Collezione</h2>
-    <p class="section-subtitle">Tre stili unici, infinite possibilità</p>
+    <p class="section-subtitle">Tre stili unici, una collezione speciale di Natale</p>
     
     <div class="carousel-grid">
-      <!-- Normal Card -->
+      <!-- Normal Card (Standard) -->
       <div class="vinyl-card">
         <div class="vinyl-card-header">
           <img src="assets/normal1.jpg/vinile3_cropped_1.jpeg" alt="Normal Vinyl">
@@ -731,7 +835,11 @@
         </div>
         <div class="vinyl-card-body">
           <h3 class="vinyl-card-title">Normal</h3>
-          <p class="vinyl-card-price">20€</p>
+          <p class="vinyl-card-price">
+            <span class="old-price">20€</span>
+            <span class="new-price">15€</span>
+            <span class="discount-tag">-25%</span>
+          </p>
           <p class="vinyl-card-description">Design classico ed elegante. Perfetto per chi ama la semplicità senza rinunciare allo stile.</p>
           <button class="vinyl-button" data-style="NORMAL">Voglio Questo Stile</button>
         </div>
@@ -745,7 +853,11 @@
         </div>
         <div class="vinyl-card-body">
           <h3 class="vinyl-card-title">Splash</h3>
-          <p class="vinyl-card-price">25€</p>
+          <p class="vinyl-card-price">
+            <span class="old-price">25€</span>
+            <span class="new-price">20€</span>
+            <span class="discount-tag">-20%</span>
+          </p>
           <p class="vinyl-card-description">Esplosioni di colore e creatività. Ogni vinile è un'opera d'arte unica e irripetibile.</p>
           <button class="vinyl-button" data-style="SPLASH">Voglio Questo Stile</button>
         </div>
@@ -759,37 +871,45 @@
         </div>
         <div class="vinyl-card-body">
           <h3 class="vinyl-card-title">Spiral</h3>
-          <p class="vinyl-card-price">25€</p>
+          <p class="vinyl-card-price">
+            <span class="old-price">25€</span>
+            <span class="new-price">20€</span>
+            <span class="discount-tag">-20%</span>
+          </p>
           <p class="vinyl-card-description">Ipnotici motivi a spirale. Un design dinamico che cattura lo sguardo.</p>
           <button class="vinyl-button" data-style="SPIRAL">Voglio Questo Stile</button>
         </div>
       </div>
 
-      <!-- SHERO IRIS X 33GIRI Card (NUOVA) - BLOCCATA FINO A MAR 9 DIC 2025 14:00 -->
+      <!-- METAMORFOSI X 33GIRI Card -->
       <div class="vinyl-card is-locked" id="shero-card">
 
         <!-- Overlay blocco + countdown -->
         <div class="vinyl-locked-overlay">
           <div class="vinyl-locked-inner">
             <span class="vinyl-locked-badge">DROP IN ARRIVO</span>
-            <h3 class="vinyl-locked-title">SHERO IRIS X 33GIRI</h3>
+            <h3 class="vinyl-locked-title">METAMORFOSI X 33GIRI</h3>
             <p class="vinyl-locked-sub">Disponibile tra</p>
             <div class="vinyl-locked-countdown" id="shero-countdown">--:--:--</div>
           </div>
         </div>
 
         <div class="vinyl-card-header">
-          <!-- Sostituisci il percorso con la foto corretta di Shero Iris x 33Giri -->
-          <img src="IMG_3986.jpeg" alt="SHERO IRIS X 33GIRI">
-          <span class="vinyl-badge">SHERO IRIS</span>
+          <!-- Sostituisci il percorso con la foto corretta di Metamorfosi -->
+          <img src="IMG_3986.jpeg" alt="Metamorfosi — Iris Shero x 33Giri">
+          <span class="vinyl-badge">METAMORFOSI</span>
         </div>
         <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">SHERO IRIS X 33GIRI</h3>
-          <p class="vinyl-card-price">45€</p>
-          <p class="vinyl-card-description">
-            Una collaborazione speciale con l’artista Shero Iris: vinili illustrati a mano, pezzi unici da collezione.
+          <h3 class="vinyl-card-title">Metamorfosi — Iris Shero x 33Giri</h3>
+          <p class="vinyl-card-price">
+            <span class="old-price">45€</span>
+            <span class="new-price">35€</span>
+            <span class="discount-tag">-22%</span>
           </p>
-          <button class="vinyl-button" data-style="SHERO IRIS X 33GIRI">Voglio Questo Stile</button>
+          <p class="vinyl-card-description">
+            La collezione Metamorfosi firmata da Iris Shero: vinili illustrati a mano, pezzi unici da collezione, pensati per trasformare ogni spazio.
+          </p>
+          <button class="vinyl-button" data-style="Metamorfosi — Iris Shero x 33Giri">Voglio Questo Stile</button>
         </div>
       </div>
     </div>
@@ -863,11 +983,11 @@
       
       <div class="text-card text-medium" style="animation-delay: 1.6s;">
         <h3>Tre Stili Unici</h3>
-        <p>Scegli tra le nostre collezioni esclusive</p>
+        <p>Scegli tra le nostre collezioni esclusive di Natale</p>
         <ul>
-          <li>Normal - 20€</li>
-          <li>Splash - 25€</li>
-          <li>Spiral - 25€</li>
+          <li>Normal — 15€ (invece di 20€)</li>
+          <li>Splash — 20€ (invece di 25€)</li>
+          <li>Spiral — 20€ (invece di 25€)</li>
         </ul>
       </div>
       
@@ -875,7 +995,7 @@
     </div>
   </section>
 
-  <!-- Contact Section (MODIFICATA) -->
+  <!-- Contact Section -->
   <section class="contact-section" id="contatti">
     <div class="wrap">
       <h2 class="contact-title">Contattaci per creare il tuo pezzo unico, fatto a mano, solo per te.</h2>
@@ -948,7 +1068,7 @@
   document.addEventListener('DOMContentLoaded', function() {
 
     /* ------------------------------------
-       COUNTDOWN LOCK SHERO IRIS
+       COUNTDOWN LOCK METAMORFOSI
        Scadenza: Martedì 9 Dicembre 2025, 14:00
        ------------------------------------ */
     const sheroCard = document.getElementById('shero-card');
