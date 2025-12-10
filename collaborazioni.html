@@ -146,10 +146,10 @@
         overflow-x: hidden;
       }
 
-      /* HERO: su mobile ORA usa la stessa foto del desktop */
+      /* HERO MOBILE: usa lo stesso dipinto dell’ultima opera di Iris */
       .artist-hero-fullscreen {
         min-height: 55vh;
-        background-image: url('assets/iris foto/Screenshot 2025-11-13 alle 16.21.38.png');
+        background-image: url('assets/iris foto/Screenshot 2025-11-14 alle 16.14.32.png'); /* stesso file di Opera Iris 4 */
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -522,7 +522,6 @@
         </div>
         <!-- NOME COLLEZIONE AGGIORNATO -->
         <h1 class="hero-mobile-title">Metamorfosi</h1>
-        <!-- NESSUNA foto piccola aggiuntiva: l'immagine è solo di sfondo -->
       </div>
     </section>
 
@@ -677,34 +676,27 @@ possiamo esplorare quell’infinito attraverso le nostre azioni."
           <div style="flex: 1; min-width: 400px; position: relative; padding: 40px;">
             <h3 style="font-family: Georgia, serif; font-size: 1.6em; font-style: italic; margin-bottom: 50px; color: #2c2c2c; text-align: center;">I vinili per 33Giri</h3>
             
-            <!-- CAMBIO QUI: aumento l’altezza minima per contenere tutte le foto prima del bottone -->
             <div class="scattered-gallery" style="position: relative; min-height: 1500px;">
-              <!-- Ciotola 1 -->
               <div class="scattered-item" style="position: absolute; top: 50px; left: 10%; width: 220px; transform: rotate(4deg); transition: all 0.4s ease;">
                 <img src="IMG_3962.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 1">
               </div>
 
-              <!-- Ciotola 2 -->
               <div class="scattered-item" style="position: absolute; top: 260px; right: 8%; width: 280px; transform: rotate(-3deg); transition: all 0.4s ease;">
                 <img src="IMG_3963.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 2">
               </div>
 
-              <!-- Ciotola 3 -->
               <div class="scattered-item" style="position: absolute; top: 470px; left: 12%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
                 <img src="IMG_3971.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 3">
               </div>
 
-              <!-- Ciotola 4 -->
               <div class="scattered-item" style="position: absolute; top: 690px; right: 6%; width: 260px; transform: rotate(-4deg); transition: all 0.4s ease;">
                 <img src="IMG_3978.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 4">
               </div>
 
-              <!-- Ciotola vista dall'alto -->
               <div class="scattered-item" style="position: absolute; top: 910px; left: 10%; width: 220px; transform: rotate(1deg); transition: all 0.4s ease;">
                 <img src="IMG_3988.jpeg" alt="Ciotola Iris Shero vista dall'alto">
               </div>
 
-              <!-- Vinili piatti -->
               <div class="scattered-item" style="position: absolute; top: 1130px; right: 4%; width: 260px; transform: rotate(-2deg); transition: all 0.4s ease;">
                 <img src="IMG_4001.jpeg" alt="Vinili piatti Iris Shero x 33Giri">
               </div>
@@ -735,9 +727,6 @@ possiamo esplorare quell’infinito attraverso le nostre azioni."
   <script src="assets/js/main.js"></script>
 
   <script>
-    /* =========================
-       LAUNCH TIMER LOGIC (NEW)
-       ========================= */
     (function() {
       const overlay = document.getElementById('launch-overlay');
       const content = document.getElementById('site-content');
@@ -773,13 +762,11 @@ possiamo esplorare quell’infinito attraverso le nostre azioni."
         let diff = targetDate - now;
 
         if (isNaN(targetDate.getTime())) {
-          // Fallback: se per qualche motivo la data non viene letta
           hideOverlay();
           return;
         }
 
         if (diff <= 0) {
-          // Scaduto
           if (daysEl) daysEl.textContent = '00';
           if (hoursEl) hoursEl.textContent = '00';
           if (minsEl) minsEl.textContent = '00';
@@ -806,7 +793,6 @@ possiamo esplorare quell’infinito attraverso le nostre azioni."
       setInterval(tick, 1000);
     })();
 
-    // Scattered Gallery Hover Effects (desktop)
     document.addEventListener('DOMContentLoaded', function() {
       const scatteredItems = document.querySelectorAll('.scattered-item');
       
@@ -825,7 +811,6 @@ possiamo esplorare quell’infinito attraverso le nostre azioni."
         });
       });
       
-      // Purchase Button Hover Effect
       const purchaseBtn = document.querySelector('a[href="catalogo.html#contatti"]');
       if (purchaseBtn) {
         purchaseBtn.addEventListener('mouseenter', function() {
