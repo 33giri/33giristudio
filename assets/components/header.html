@@ -1,157 +1,304 @@
 <header id="header" class="site-header">
+
   <div class="wrap header-inner">
+
+    <!-- Checkbox nascosto per il toggle mobile -->
+
     <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+
+
+
+    <!-- Bottone hamburger (label del checkbox) -->
 
     <label for="nav-toggle"
            class="mobile-menu-btn"
            aria-label="Apri menu">
-      ☰ 
+      ☰
     </label>
 
+
+
     <nav class="main-nav" id="main-nav" role="navigation">
+
       <ul id="main-nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="catalogo.html">Catalogo</a></li>
         <li><a href="quiz.html">33Quiz</a></li>
         <li><a href="collaborazioni.html">Collaborazioni</a></li>
-        <li><a href="corporate.html">Corporate</a></li>
+        <li><a href="corporate.html">Idea regalo</a></li>
         <li><a href="chi_siamo.html">Chi Siamo</a></li>
       </ul>
+
     </nav>
 
+
+
     <a class="logo" href="index.html" aria-label="33giri logo">
+
       <img src="assets/logo/33_GIRI._logo-removebg-preview.png" alt="33giri" style="height:120px;">
+
     </a>
 
+
+
     <div class="header-actions" style="display:flex;align-items:center;gap:18px;">
+
       <a class="icon-btn" aria-label="Account" href="account.html" role="button">👤</a>
+
     </div>
+
   </div>
 
+
+
   <style>
+
     /* ===== BASE / DESKTOP ===== */
 
+
+
     .site-header {
+
       position: relative;
+
       z-index: 100;
+
       background: #ffffff;
+
     }
+
+
 
     .wrap.header-inner {
+
       display: flex;
+
       align-items: center;
+
       gap: 24px;
+
     }
+
+
 
     .nav-toggle {
+
       display: none; /* checkbox nascosto */
+
     }
+
+
 
     .mobile-menu-btn {
+
       display: none; /* nascosto su desktop */
+
     }
+
+
 
     .main-nav {
+
       margin-left: 16px;
+
     }
+
+
 
     .main-nav ul {
+
       display: flex;
+
       align-items: center;
+
       gap: 18px;
+
       list-style: none;
+
       margin: 0;
+
       padding: 0;
+
     }
+
+
 
     .main-nav li {
+
       margin: 0;
+
     }
+
+
 
     .main-nav a {
+
       display: block;
+
       padding: 6px 8px;
+
       color: #111;
+
       text-decoration: none;
+
       border-radius: 4px;
+
       font-weight: 500;
+
     }
+
+
 
     .main-nav a:hover,
+
     .main-nav a:focus {
+
       background: #f2f2f2;
+
     }
+
+
 
     /* ===== MOBILE ===== */
+
     @media (max-width: 768px) {
+
       #header {
+
         position: relative;
+
         z-index: 2000;
+
         overflow: visible;
+
       }
+
+
 
       .wrap.header-inner {
+
         position: relative;
+
         display: flex;
+
         align-items: center;
+
         gap: 12px;
+
       }
+
+
 
       /* Mostra hamburger su mobile */
+
       .mobile-menu-btn {
+
         display: inline-flex;
+
         align-items: center;
+
         justify-content: center;
+
         font-size: 22px;
+
         background: transparent;
+
         border: none;
+
         padding: 8px;
+
         margin: 0;
+
         cursor: pointer;
+
         border-radius: 8px;
+
       }
+
+
 
       .logo {
+
         margin: 0 auto;
+
       }
+
+
 
       /* Menu mobile come dropdown */
+
       .main-nav {
+
         position: absolute;
+
         top: 100%;
+
         left: 0;
+
         right: 0;
+
         background: #ffffff;
+
         box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
         border-bottom-left-radius: 8px;
+
         border-bottom-right-radius: 8px;
+
         z-index: 2100;
 
+
+
         max-height: 0;
+
         overflow: hidden;
+
         transition: max-height 0.25s ease-out;
+
       }
+
+
 
       .main-nav ul {
+
         flex-direction: column;
+
         gap: 8px;
+
         margin: 0;
+
         padding: 12px 16px;
+
       }
+
+
 
       .main-nav a {
+
         padding: 8px 12px;
+
       }
+
+
 
       .header-actions {
+
         margin-left: auto;
+
       }
 
+
+
       /* Toggle: quando il checkbox è spuntato, apri il menu */
+
       .nav-toggle:checked + .mobile-menu-btn + .main-nav {
-        /* Aumentato da 280px a 350px per far stare la nuova voce */
-        max-height: 350px; 
+
+        max-height: 280px; /* aumenta se servono più voci */
+
       }
+
     }
+
   </style>
+
 </header>
