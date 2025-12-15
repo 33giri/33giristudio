@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>33Giri — Corporate & Eventi</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/vinyl-3d.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* STILI BASE EREDITATI (Sfondo animato e Texture) */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      color: #2c2416;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
+      background-size: 100% auto;
+      opacity: 0.25;
+      z-index: 0;
+      pointer-events: none;
+      animation: textureMove 30s linear infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes textureMove {
+      from { background-position: 0 0; }
+      to { background-position: 0 -1000px; }
+    }
+    
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+    }
+
+    /* Animazioni Generiche */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* STILI SPECIFICI B2B */
+    .b2b-hero {
+        position: relative; 
+        width: 100%; 
+        height: 80vh; 
+        overflow: hidden; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        background: #000;
+    }
+
+    .glass-card {
+        backdrop-filter: blur(10px); 
+        background: rgba(255,255,255,0.4); 
+        border-radius: 20px; 
+        padding: 50px 40px; 
+        transition: all 0.4s ease; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+        border-left: 4px solid #5d4e37;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    /* Form Styles */
+    .contact-form-wrapper {
+        backdrop-filter: blur(15px);
+        background: rgba(255,255,255,0.25);
+        padding: 50px;
+        border-radius: 30px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #fff;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 15px 20px;
+        border-radius: 15px;
+        border: 2px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.8);
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        background: #fff;
+        border-color: #5d4e37;
+        box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    }
+
+    /* Grid per i servizi */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+  </style>
+</head>
+<body>
+  <header id="header"></header>
+
+  <main>
+    <section class="b2b-hero">
+      <div style="position: absolute; width: 100%; height: 100%;">
+         <img src="assets/atelier 33 giri/20251110-IMG_4557.jpg" alt="Corporate Gifts" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5);">
+      </div>
+
+      <div style="position: relative; z-index: 10; text-align: center; color: #fff; width: min(1100px, 90vw); animation: fadeInUp 1.5s ease-out;">
+        <div style="padding: 50px;">
+          <div style="font-family: 'Helvetica', serif; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; font-size: clamp(20px, 4vw, 30px); margin-bottom: 20px; color: #f5f0e8;">
+            33GIRI CORPORATE
+          </div>
+          <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(40px, 7vw, 72px); font-weight: 900; margin-bottom: 25px; line-height: 1.1; text-shadow: 0 6px 20px rgba(0,0,0,0.9);">
+            Regala un'icona,<br>sostieni il futuro.
+          </h1>
+          <p style="font-family: 'Inter', sans-serif; font-size: clamp(18px, 2.5vw, 22px); max-width: 800px; margin: 0 auto 40px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.6;">
+            Bomboniere, regali aziendali e gadget per eventi realizzati a mano con vinili riciclati. Personalizzabili, unici, indimenticabili.
+          </p>
+          <a href="#contatti" style="display: inline-block; background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; padding: 18px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transition: all 0.4s ease;" onmouseover="this.style.transform='translateY(-5px) scale(1.05)'" onmouseout="this.style.transform='translateY(0) scale(1)'"> Richiedi Preventivo</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features wrap" style="position: relative; z-index: 1; padding: 80px 20px; animation: fadeInUp 1s ease-out;">
+        <div style="text-align: center; margin-bottom: 60px;">
+            <h2 style="font-size: clamp(30px, 5vw, 48px); margin-bottom: 20px; color: #2c2416;">Perché scegliere 33Giri per la tua azienda?</h2>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; color: #2c2416;">Distinguersi significa scegliere oggetti che raccontano una storia. I nostri vinili non sono semplici oggetti, sono dichiarazioni di stile e sostenibilità.</p>
+        </div>
+
+      <div class="services-grid">
+        <div class="glass-card">
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; color: #2c2416;">Sostenibilità Reale (CSR)</h3>
+          <p style="color: #2c2416; font-size: 1.05rem; line-height: 1.8;">Rafforza l'immagine green della tua azienda. Ogni pezzo è un vinile salvato dalla discarica e trasformato in arte.</p>
+        </div>
+        <div class="glass-card">
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; color: #2c2416;">Personalizzazione Totale</h3>
+          <p style="color: #2c2416; font-size: 1.05rem; line-height: 1.8;">Dalla label centrale con il tuo logo, al packaging dedicato. Creiamo un oggetto che parla del tuo brand.</p>
+        </div>
+        <div class="glass-card">
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; color: #2c2416;">Made in Italy</h3>
+          <p style="color: #2c2416; font-size: 1.05rem; line-height: 1.8;">Nessun gadget industriale di massa. Ogni bowl è modellata a mano in Italia, garantendo l'unicità artigianale.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 60px 20px 100px 20px; position: relative; z-index: 1;">
+      <div style="max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 80px; flex-wrap: wrap;">
+        
+        <div style="flex: 1; min-width: 350px; animation: slideInLeft 1s ease-out;">
+          <div style="position: relative; overflow: hidden; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Esempio Personalizzazione Aziendale" style="width: 100%; height: auto; display: block;">
+          </div>
+        </div>
+        
+        <div style="flex: 1; min-width: 350px; color: #fff; animation: fadeInUp 1.2s ease-out;">
+          <h2 style="font-size: clamp(36px, 5vw, 56px); margin-bottom: 30px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Brandizza il tuo Vinile</h2>
+          
+          <div style="margin-bottom: 30px; backdrop-filter: blur(10px); background: rgba(255,255,255,0.2); padding: 30px; border-radius: 20px;">
+            <h4 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;">1. Etichetta (Label) Custom</h4>
+            <p style="font-size: 1.1rem; line-height: 1.6;">Sostituiamo l'etichetta originale con il logo della tua azienda, la data dell'evento o un messaggio speciale.</p>
+          </div>
+
+          <div style="margin-bottom: 30px; backdrop-filter: blur(10px); background: rgba(255,255,255,0.2); padding: 30px; border-radius: 20px;">
+            <h4 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;">2. Colori e Forme</h4>
+            <p style="font-size: 1.1rem; line-height: 1.6;">Possiamo selezionare vinili che richiamano la palette colori aziendale o creare forme specifiche su richiesta.</p>
+          </div>
+
+          <div style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.2); padding: 30px; border-radius: 20px;">
+            <h4 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;">3. Packaging Dedicato</h4>
+            <p style="font-size: 1.1rem; line-height: 1.6;">Scatole regalo ecologiche, biglietti di ringraziamento inseriti e spedizione diretta ai dipendenti/clienti.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="collection wrap" style="position: relative; z-index: 1; padding: 40px 20px 100px;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); text-align: center; margin-bottom: 60px; color: #2c2416;">Idee per il tuo Business</h2>
+        
+        <div class="services-grid">
+            <div class="masonry-item" style="cursor: default;">
+                <div style="height: 300px; overflow: hidden;">
+                    <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Bomboniere" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="padding: 25px; background: rgba(255,255,255,0.9);">
+                    <h3 style="margin-bottom: 10px; color: #5d4e37;">Eventi & Bomboniere</h3>
+                    <p style="font-size: 0.95rem; color: #444;">Matrimoni, lauree o cene di gala aziendali. Un ricordo elegante che gli ospiti useranno davvero.</p>
+                </div>
+            </div>
+
+            <div class="masonry-item" style="cursor: default;">
+                <div style="height: 300px; overflow: hidden;">
+                    <img src="assets/foto /sfondo nero e marrone /IMG_3219.png" alt="Regali Natale" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="padding: 25px; background: rgba(255,255,255,0.9);">
+                    <h3 style="margin-bottom: 10px; color: #5d4e37;">Regali di Natale</h3>
+                    <p style="font-size: 0.95rem; color: #444;">Sorprendi clienti e dipendenti con un cesto natalizio alternativo: un vinile di design pieno di prodotti tipici.</p>
+                </div>
+            </div>
+
+            <div class="masonry-item" style="cursor: default;">
+                <div style="height: 300px; overflow: hidden;">
+                    <img src="assets/foto /sfondo bianco /IMG_3466.png" alt="Onboarding Kits" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="padding: 25px; background: rgba(255,255,255,0.9);">
+                    <h3 style="margin-bottom: 10px; color: #5d4e37;">Welcome Kit</h3>
+                    <p style="font-size: 0.95rem; color: #444;">Dai il benvenuto ai nuovi assunti con un oggetto da scrivania stiloso e utile come svuotatasche.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contatti" style="position: relative; z-index: 1; padding: 0 20px 120px 20px;">
+        <div class="contact-form-wrapper">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 50px); text-align: center; margin-bottom: 10px; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">Parliamo del tuo progetto</h2>
+            <p style="text-align: center; color: #fff; margin-bottom: 40px; font-size: 1.1rem;">Compila il form per ricevere il catalogo B2B e un preventivo personalizzato.</p>
+            
+            <form action="mailto:33giristudios@gmail.com" method="post" enctype="text/plain">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 250px;">
+                        <label for="nome">Nome / Referente</label>
+                        <input type="text" id="nome" name="nome" class="form-control" placeholder="Mario Rossi" required>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 250px;">
+                        <label for="azienda">Azienda</label>
+                        <input type="text" id="azienda" name="azienda" class="form-control" placeholder="Nome Azienda Srl" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Aziendale</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="email@azienda.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">Tipologia Richiesta</label>
+                    <select id="tipo" name="tipo" class="form-control">
+                        <option value="regali_aziendali">Regali Aziendali (Natale/Ricorrenze)</option>
+                        <option value="eventi">Gadget per Eventi</option>
+                        <option value="bomboniere">Bomboniere</option>
+                        <option value="collaborazione">Altro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="messaggio">Messaggio (Quantità stimate, idee, tempistiche)</label>
+                    <textarea id="messaggio" name="messaggio" rows="4" class="form-control" placeholder="Vorremmo ordinare circa 50 pezzi per..." required></textarea>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <button type="submit" style="background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; padding: 18px 60px; border: none; border-radius: 50px; font-weight: 700; font-size: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); cursor: pointer; transition: all 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 50px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.3)'">Invia Richiesta</button>
+                </div>
+            </form>
+            
+            <p style="text-align: center; margin-top: 30px; color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                Oppure scrivici direttamente a: <a href="mailto:33giristudios@gmail.com" style="color: #fff; font-weight: 700; text-decoration: underline;">33giristudios@gmail.com</a>
+            </p>
+        </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="site-footer" style="position: relative; z-index: 1; backdrop-filter: blur(15px); background: rgba(0,0,0,0.6); padding: 40px 20px; margin-top: 0px;">
+    <div class="wrap footer-inner" style="color: #f5f0e8; text-shadow: 0 2px 10px rgba(0,0,0,0.8); font-size: 1.1rem; font-weight: 500;">
+      <div>© 33Giri — Made in Italy</div>
+      <nav class="footer-nav">
+        </nav>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" 
+     style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); z-index: 10000; transition: all 0.3s ease; text-decoration: none;"
+     onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 30px rgba(0, 0, 0, 0.7)'"
+     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.5)'">
+    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
+    </svg>
+  </a>
+
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>
