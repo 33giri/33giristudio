@@ -3,165 +3,313 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>33Giri — Corporate & Eventi</title>
+  <title>33Giri — Regali Aziendali</title>
+
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/vinyl-3d.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* STILI BASE EREDITATI (Sfondo animato e Texture) */
-    body {
-      font-family: 'Inter', sans-serif;
+    /* ===== BASE (tuo stile) ===== */
+    body{
+      font-family:'Inter', sans-serif;
       background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
       background-size: 400% 400%;
       animation: gradientShift 15s ease infinite;
-      color: #2c2416;
-      position: relative;
-      margin: 0; /* Importante per evitare bordi bianchi */
+      color:#2c2416;
+      position:relative;
+      margin:0;
+      overflow-x:hidden;
     }
-     
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
-      background-size: 100% auto;
-      opacity: 0.25;
-      z-index: 0;
-      pointer-events: none;
+    body::before{
+      content:'';
+      position:fixed;
+      top:0;left:0;width:100%;height:100%;
+      background:url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
+      background-size:100% auto;
+      opacity:.22;
+      z-index:0;
+      pointer-events:none;
       animation: textureMove 30s linear infinite;
     }
-     
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @keyframes textureMove{from{background-position:0 0}to{background-position:0 -1000px}}
+
+    h1,h2,h3{font-family:'Playfair Display', serif;font-weight:900;}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+
+    /* ===== HEADER (come il tuo) ===== */
+    .site-header{position:relative; z-index:100; background:#ffffff;}
+    .wrap.header-inner{display:flex; align-items:center; gap:24px; padding:10px 20px;}
+    .nav-toggle,.mobile-menu-btn{display:none;}
+    .main-nav{margin-left:16px;}
+    .main-nav ul{display:flex; align-items:center; gap:18px; list-style:none; margin:0; padding:0;}
+    .main-nav a{display:block; padding:6px 8px; color:#111; text-decoration:none; border-radius:6px; font-weight:600;}
+    .main-nav a:hover{background:#f2f2f2;}
+    .header-actions{margin-left:auto;}
+
+    @media (max-width:768px){
+      .wrap.header-inner{gap:12px;}
+      .mobile-menu-btn{display:inline-flex; align-items:center; justify-content:center; font-size:22px; background:transparent; border:none; cursor:pointer;}
+      .main-nav{
+        position:absolute; top:100%; left:0; right:0;
+        background:#fff; box-shadow:0 6px 18px rgba(0,0,0,0.08);
+        max-height:0; overflow:hidden; transition:max-height .25s ease-out;
+        border-bottom-left-radius:10px; border-bottom-right-radius:10px;
+        z-index:2100;
+      }
+      .main-nav ul{flex-direction:column; gap:8px; padding:12px 16px;}
+      .nav-toggle:checked + .mobile-menu-btn + .main-nav{max-height:360px;}
+      .logo{margin:0 auto;}
     }
-     
-    @keyframes textureMove {
-      from { background-position: 0 0; }
-      to { background-position: 0 -1000px; }
+
+    /* ===== NUOVO LAYOUT: diretto + CTA ===== */
+    .corp-wrap{width:min(1200px, 92vw); margin:0 auto; position:relative; z-index:1;}
+    .corp-section{padding:70px 0;}
+    .corp-kicker{letter-spacing:.18em; text-transform:uppercase; font-weight:800; font-size:.95rem; opacity:.95;}
+    .corp-title{font-family:'Playfair Display', serif; font-weight:900; letter-spacing:-0.02em;}
+
+    .corp-hero{
+      position:relative;
+      min-height:78vh;
+      display:grid;
+      align-items:center;
+      overflow:hidden;
+      background:#000;
     }
-     
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
+    .corp-hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.58) 48%, rgba(0,0,0,.18) 100%);
+      z-index:2;
+    }
+    .corp-hero-media{position:absolute; inset:0; z-index:1;}
+    .corp-hero-media img{width:100%; height:100%; object-fit:cover; filter:brightness(.78);}
+    .corp-hero-inner{z-index:3; padding:90px 0 40px;}
+    .corp-hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 26px;
+      align-items:end;
+    }
+    .corp-hero h1{
+      font-size:clamp(36px, 6.2vw, 70px);
+      line-height:1.06;
+      margin:12px 0 14px;
+      color:#fff;
+      text-shadow:0 10px 26px rgba(0,0,0,.75);
+    }
+    .corp-hero p{
+      color:rgba(255,255,255,.92);
+      font-size:clamp(16px, 2.2vw, 20px);
+      line-height:1.6;
+      margin:0 0 16px;
+      text-shadow:0 6px 18px rgba(0,0,0,.75);
+      max-width:58ch;
+    }
+
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:16px;}
+    .btn-cta{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 22px;
+      border-radius:999px;
+      font-weight:900;
+      text-decoration:none;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+      box-shadow:0 14px 40px rgba(0,0,0,.38);
+      border:1px solid rgba(255,255,255,.22);
+      gap:10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn-primary{
+      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
+      color:#5d4e37;
+    }
+    .btn-ghost{
+      background: rgba(255,255,255,.12);
+      color:#fff;
+      backdrop-filter: blur(10px);
+    }
+    .btn-cta:hover{transform:translateY(-2px); box-shadow:0 18px 50px rgba(0,0,0,.48);}
+
+    .corp-badges{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .badge{
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,.14);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(10px);
+      font-weight:800;
+      font-size:.92rem;
+    }
+
+    .photo-strip{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+    }
+    .photo-strip img{
+      width:100%;
+      height:170px;
+      object-fit:cover;
+      border-radius:18px;
+      box-shadow:0 18px 50px rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.18);
+    }
+
+    @media (max-width:900px){
+      .corp-hero-grid{grid-template-columns:1fr;}
+      .corp-badges{justify-content:flex-start;}
+      .photo-strip{grid-template-columns:1fr;}
+      .photo-strip img{height:190px;}
+    }
+
+    .block{
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(14px);
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:24px;
+      box-shadow:0 18px 60px rgba(0,0,0,.18);
+      overflow:hidden;
+    }
+    .block-pad{padding:22px;}
+
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      align-items:center;
+    }
+    @media (max-width:980px){ .grid-2{grid-template-columns:1fr;} }
+
+    .card-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:18px;
+    }
+    .card{
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(14px);
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.28);
+      box-shadow:0 18px 60px rgba(0,0,0,.18);
+      overflow:hidden;
+    }
+    .card img{width:100%; height:220px; object-fit:cover; display:block;}
+    .card .card-body{padding:18px 18px 20px;}
+    .card h3{margin:0 0 8px; color:#2c2416; font-size:1.25rem;}
+    .card p{margin:0; color:#2c2416; line-height:1.65; opacity:.92;}
+    @media (max-width:980px){
+      .card-grid{grid-template-columns:1fr;}
+      .card img{height:240px;}
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+    }
+    .step{
+      background: rgba(255,255,255,.48);
+      backdrop-filter: blur(12px);
+      border-radius:22px;
+      padding:18px;
+      border:1px solid rgba(255,255,255,.28);
+      box-shadow:0 16px 50px rgba(0,0,0,.16);
+    }
+    .step .n{
+      width:40px; height:40px; border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900;
+      color:#5d4e37;
+      background: rgba(245,240,232,.92);
+      margin-bottom:10px;
+    }
+    .step h4{margin:0 0 6px;}
+    .step p{margin:0; line-height:1.6;}
+    @media (max-width:980px){ .steps{grid-template-columns:1fr;} }
+
+    /* Form (più pulito e leggibile) */
+    .contact-form-wrapper{
+      backdrop-filter: blur(16px);
+      background: rgba(0,0,0,0.45);
+      padding: 38px 28px;
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+      max-width: 900px;
+      margin: 0 auto;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .form-group{margin-bottom:18px; text-align:left;}
+    .form-group label{
+      display:block; font-weight:800; margin-bottom:10px;
+      color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5);
+    }
+    .form-control{
+      width:100%;
+      padding:14px 16px;
+      border-radius:16px;
+      border: 2px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.9);
+      font-family:'Inter', sans-serif;
+      font-size:16px;
+      transition: all .25s ease;
+      box-sizing:border-box;
+    }
+    .form-control:focus{
+      outline:none;
+      background:#fff;
+      border-color:#e8dfd5;
+      box-shadow:0 0 18px rgba(255,255,255,0.35);
+    }
+
+    .mini-note{opacity:.9; font-size:.95rem; color: rgba(255,255,255,0.88);}
+
+    /* Sticky CTA bottom (solo mobile) */
+    .sticky-cta{
+      position: fixed;
+      left: 14px; right: 14px; bottom: 14px;
+      z-index: 9999;
+      display: none;
+    }
+    .sticky-cta a{
+      width:100%;
+      padding: 14px 18px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       font-weight: 900;
+      text-decoration:none;
+      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
+      color:#5d4e37;
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    @media (max-width: 768px){
+      .sticky-cta{display:block;}
+      main{padding-bottom:90px;} /* spazio per sticky */
     }
 
-    /* Animazioni Generiche */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Footer */
+    .site-footer{
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(15px);
+      background: rgba(0,0,0,0.6);
+      padding: 40px 20px;
+      margin-top: 0px;
     }
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-100px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* STILI SPECIFICI B2B */
-    .b2b-hero {
-        position: relative; 
-        width: 100%; 
-        height: 80vh; 
-        overflow: hidden; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        background: #000;
-    }
-
-    .glass-card {
-        backdrop-filter: blur(10px); 
-        background: rgba(255,255,255,0.4); 
-        border-radius: 20px; 
-        padding: 50px 40px; 
-        transition: all 0.4s ease; 
-        box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
-        border-left: 4px solid #5d4e37;
-    }
-
-    .glass-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    }
-
-    /* Form Styles */
-    .contact-form-wrapper {
-        backdrop-filter: blur(15px);
-        background: rgba(255,255,255,0.25);
-        padding: 50px;
-        border-radius: 30px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .form-group {
-        margin-bottom: 25px;
-        text-align: left;
-    }
-
-    .form-group label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #fff;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 15px 20px;
-        border-radius: 15px;
-        border: 2px solid rgba(255,255,255,0.3);
-        background: rgba(255,255,255,0.8);
-        font-family: 'Inter', sans-serif;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-    }
-
-    .form-control:focus {
-        outline: none;
-        background: #fff;
-        border-color: #5d4e37;
-        box-shadow: 0 0 20px rgba(255,255,255,0.4);
-    }
-
-    /* Grid per i servizi */
-    .services-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-
-    /* Stili Header Integrati per questa pagina */
-    .site-header { position: relative; z-index: 100; background: #ffffff; }
-    .wrap.header-inner { display: flex; align-items: center; gap: 24px; padding: 10px 20px; }
-    .nav-toggle, .mobile-menu-btn { display: none; }
-    .main-nav { margin-left: 16px; }
-    .main-nav ul { display: flex; align-items: center; gap: 18px; list-style: none; margin: 0; padding: 0; }
-    .main-nav a { display: block; padding: 6px 8px; color: #111; text-decoration: none; border-radius: 4px; font-weight: 500; }
-    .main-nav a:hover { background: #f2f2f2; }
-    .header-actions { margin-left: auto; }
-
-    @media (max-width: 768px) {
-      .wrap.header-inner { gap: 12px; }
-      .mobile-menu-btn { display: inline-flex; align-items: center; justify-content: center; font-size: 22px; background: transparent; border: none; cursor: pointer; }
-      .main-nav { position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; z-index: 2100; }
-      .main-nav ul { flex-direction: column; gap: 8px; padding: 12px 16px; }
-      .nav-toggle:checked + .mobile-menu-btn + .main-nav { max-height: 350px; }
-      .logo { margin: 0 auto; }
-    }
-
   </style>
 </head>
+
 <body>
 
+  <!-- HEADER -->
   <header id="header" class="site-header">
     <div class="wrap header-inner">
       <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
@@ -173,7 +321,8 @@
           <li><a href="catalogo.html">Catalogo</a></li>
           <li><a href="quiz.html">33Quiz</a></li>
           <li><a href="collaborazioni.html">Collaborazioni</a></li>
-          <li><a href="corporate.html" style="font-weight: 700; color: #5d4e37;">Corporate</a></li> <li><a href="chi_siamo.html">Chi Siamo</a></li>
+          <li><a href="corporate.html" style="font-weight: 900; color: #5d4e37;">Corporate</a></li>
+          <li><a href="chi_siamo.html">Chi Siamo</a></li>
         </ul>
       </nav>
 
@@ -188,178 +337,240 @@
   </header>
 
   <main>
-    <section class="b2b-hero">
-      <div style="position: absolute; width: 100%; height: 100%;">
-         <img src="assets/atelier 33 giri/20251110-IMG_4557.jpg" alt="Corporate Gifts" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5);">
+
+    <!-- HERO: diretto + CTA -->
+    <section class="corp-hero">
+      <div class="corp-hero-media">
+        <img src="assets/atelier 33 giri/20251110-IMG_4557.jpg" alt="Regali aziendali 33Giri">
       </div>
 
-      <div style="position: relative; z-index: 10; text-align: center; color: #fff; width: min(1100px, 90vw); animation: fadeInUp 1.5s ease-out;">
-        <div style="padding: 50px;">
-          <div style="font-family: 'Helvetica', serif; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; font-size: clamp(20px, 4vw, 30px); margin-bottom: 20px; color: #f5f0e8;">
-            33GIRI CORPORATE
+      <div class="corp-hero-inner">
+        <div class="corp-wrap" style="animation: fadeInUp 1s ease-out;">
+          <div class="corp-hero-grid">
+            <div>
+              <div class="corp-kicker" style="color: rgba(255,255,255,.92);">33GIRI • REGALI AZIENDALI</div>
+              <h1 class="corp-title">Un regalo che si usa.<br>Un gesto che si ricorda.</h1>
+              <p>
+                Svuotatasche e oggetti di design realizzati a mano con vinili riciclati.
+                Perfetti per <b>clienti</b>, <b>dipendenti</b>, <b>partner</b> e <b>eventi</b>. Personalizzabili con logo e packaging.
+              </p>
+
+              <div class="cta-row">
+                <a class="btn-cta btn-primary" href="#contatti">Richiedi un preventivo</a>
+                <a class="btn-cta btn-ghost" href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a>
+              </div>
+
+              <div class="photo-strip">
+                <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Dettaglio prodotto 33Giri">
+                <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Esposizione 33Giri">
+                <img src="assets/foto /sfondo nero e marrone /IMG_3219.png" alt="Regalo aziendale 33Giri">
+              </div>
+            </div>
+
+            <div class="corp-badges">
+              <div class="badge">Personalizzazione logo</div>
+              <div class="badge">Made in Italy</div>
+              <div class="badge">CSR & sostenibilità</div>
+              <div class="badge">Consegna per team</div>
+              <div class="badge">Packaging dedicato</div>
+            </div>
           </div>
-          <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(40px, 7vw, 72px); font-weight: 900; margin-bottom: 25px; line-height: 1.1; text-shadow: 0 6px 20px rgba(0,0,0,0.9);">
-            Regala un'icona,<br>sostieni il futuro.
-          </h1>
-          <p style="font-family: 'Inter', sans-serif; font-size: clamp(18px, 2.5vw, 22px); max-width: 800px; margin: 0 auto 40px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.6;">
-            Bomboniere, regali aziendali e gadget per eventi realizzati a mano con vinili riciclati. Personalizzabili, unici, indimenticabili.
+        </div>
+      </div>
+    </section>
+
+    <!-- SEZIONE: cosa offriamo (super rapida) -->
+    <section class="corp-section">
+      <div class="corp-wrap">
+        <div class="block">
+          <div class="block-pad grid-2">
+            <div style="animation: slideInLeft .9s ease-out;">
+              <div class="corp-kicker">Soluzioni corporate</div>
+              <h2 class="corp-title" style="font-size: clamp(28px, 4vw, 44px); margin: 10px 0 10px;">Regali aziendali pronti, ma su misura.</h2>
+              <p style="margin:0; line-height:1.75; opacity:.95;">
+                Scegli un prodotto iconico (svuotatasche / bowl), aggiungi il tuo logo e un messaggio,
+                e noi ci occupiamo del resto: selezione vinili, produzione, confezione e spedizione.
+              </p>
+
+              <div class="cta-row" style="margin-top:18px;">
+                <a class="btn-cta btn-primary" href="#contatti">Parliamone ora</a>
+                <a class="btn-cta btn-ghost" href="mailto:33giristudios@gmail.com">Scrivi una mail</a>
+              </div>
+
+              <p class="mini-note" style="margin:14px 0 0;">
+                Tip: nel messaggio indica <b>quantità</b>, <b>data</b> e se vuoi <b>logo/packaging</b>.
+              </p>
+            </div>
+
+            <div>
+              <img src="assets/foto /sfondo bianco /IMG_3466.png" alt="Esempio regalo aziendale" style="width:100%; border-radius:22px; box-shadow:0 18px 60px rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.25); display:block;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IDEE (3 card con foto) -->
+    <section class="corp-section" style="padding-top: 10px;">
+      <div class="corp-wrap">
+        <div style="text-align:center; margin-bottom:18px;">
+          <h2 class="corp-title" style="font-size: clamp(30px, 4.6vw, 52px); margin: 0 0 10px;">Quando funziona perfettamente</h2>
+          <p style="margin:0; max-width:70ch; margin-inline:auto; opacity:.95; line-height:1.7;">
+            Regali utili e “instagrammabili” per momenti in cui vuoi farti ricordare.
           </p>
-          <a href="#contatti" style="display: inline-block; background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; padding: 18px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transition: all 0.4s ease;" onmouseover="this.style.transform='translateY(-5px) scale(1.05)'" onmouseout="this.style.transform='translateY(0) scale(1)'"> Richiedi Preventivo</a>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Eventi e bomboniere">
+            <div class="card-body">
+              <h3>Eventi & Gala</h3>
+              <p>Un ricordo elegante che le persone useranno davvero: desk, casa, ufficio.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="assets/foto /sfondo nero e marrone /IMG_3219.png" alt="Natale aziendale">
+            <div class="card-body">
+              <h3>Regali di Natale</h3>
+              <p>Perfetti per clienti e team: un oggetto di design con una storia (e un impatto).</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Welcome kit onboarding">
+            <div class="card-body">
+              <h3>Welcome kit</h3>
+              <p>Onboarding con stile: un pezzo unico da scrivania, brandizzato e memorabile.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="features wrap" style="position: relative; z-index: 1; padding: 80px 20px; animation: fadeInUp 1s ease-out;">
-        <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: clamp(30px, 5vw, 48px); margin-bottom: 20px; color: #2c2416;">Perché scegliere 33Giri per la tua azienda?</h2>
-            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; color: #2c2416;">Distinguersi significa scegliere oggetti che raccontano una storia. I nostri vinili non sono semplici oggetti, sono dichiarazioni di stile e sostenibilità.</p>
-        </div>
+    <!-- COME FUNZIONA (3 step) -->
+    <section class="corp-section" style="padding-top: 10px;">
+      <div class="corp-wrap">
+        <div class="block">
+          <div class="block-pad">
+            <div style="display:flex; justify-content:space-between; gap:14px; align-items:flex-end; flex-wrap:wrap;">
+              <div>
+                <div class="corp-kicker">Processo semplice</div>
+                <h2 class="corp-title" style="font-size: clamp(28px, 4vw, 44px); margin: 10px 0 0;">3 step e si parte</h2>
+              </div>
+              <a class="btn-cta btn-primary" href="#contatti">Richiedi preventivo</a>
+            </div>
 
-      <div class="services-grid">
-        <div class="glass-card">
-          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; color: #2c2416;">Sostenibilità Reale (CSR)</h3>
-          <p style="color: #2c2416; font-size: 1.05rem; line-height: 1.8;">Rafforza l'immagine green della tua azienda. Ogni pezzo è un vinile salvato dalla discarica e trasformato in arte.</p>
-        </div>
-        <div class="glass-card">
-          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; color: #2c2416;">Personalizzazione Totale</h3>
-          <p style="color: #2c2416; font-size: 1.05rem; line-height: 1.8;">Dalla label centrale con il tuo logo, al packaging dedicato. Creiamo un oggetto che parla del tuo brand.</p>
-        </div>
-        <div class="glass-card">
-          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; color: #2c2416;">Made in Italy</h3>
-          <p style="color: #2c2416; font-size: 1.05rem; line-height: 1.8;">Nessun gadget industriale di massa. Ogni bowl è modellata a mano in Italia, garantendo l'unicità artigianale.</p>
+            <div class="steps" style="margin-top:18px;">
+              <div class="step">
+                <div class="n">1</div>
+                <h4>Ci scrivi</h4>
+                <p>Quantità, data, idea (Natale / evento / kit). Anche solo “mi serve un’idea”.</p>
+              </div>
+              <div class="step">
+                <div class="n">2</div>
+                <h4>Personalizziamo</h4>
+                <p>Logo su label, messaggio, palette/packaging. Ti mandiamo proposta e preventivo.</p>
+              </div>
+              <div class="step">
+                <div class="n">3</div>
+                <h4>Produzione & consegna</h4>
+                <p>Realizziamo a mano e spediamo dove vuoi (anche a più indirizzi).</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section style="padding: 60px 20px 100px 20px; position: relative; z-index: 1;">
-      <div style="max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 80px; flex-wrap: wrap;">
-        
-        <div style="flex: 1; min-width: 350px; animation: slideInLeft 1s ease-out;">
-          <div style="position: relative; overflow: hidden; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-            <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Esempio Personalizzazione Aziendale" style="width: 100%; height: auto; display: block;">
-          </div>
-        </div>
-        
-        <div style="flex: 1; min-width: 350px; color: #fff; animation: fadeInUp 1.2s ease-out;">
-          <h2 style="font-size: clamp(36px, 5vw, 56px); margin-bottom: 30px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Brandizza il tuo Vinile</h2>
-          
-          <div style="margin-bottom: 30px; backdrop-filter: blur(10px); background: rgba(255,255,255,0.2); padding: 30px; border-radius: 20px;">
-            <h4 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;">1. Etichetta (Label) Custom</h4>
-            <p style="font-size: 1.1rem; line-height: 1.6;">Sostituiamo l'etichetta originale con il logo della tua azienda, la data dell'evento o un messaggio speciale.</p>
-          </div>
-
-          <div style="margin-bottom: 30px; backdrop-filter: blur(10px); background: rgba(255,255,255,0.2); padding: 30px; border-radius: 20px;">
-            <h4 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;">2. Colori e Forme</h4>
-            <p style="font-size: 1.1rem; line-height: 1.6;">Possiamo selezionare vinili che richiamano la palette colori aziendale o creare forme specifiche su richiesta.</p>
-          </div>
-
-          <div style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.2); padding: 30px; border-radius: 20px;">
-            <h4 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;">3. Packaging Dedicato</h4>
-            <p style="font-size: 1.1rem; line-height: 1.6;">Scatole regalo ecologiche, biglietti di ringraziamento inseriti e spedizione diretta ai dipendenti/clienti.</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="collection wrap" style="position: relative; z-index: 1; padding: 40px 20px 100px;">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); text-align: center; margin-bottom: 60px; color: #2c2416;">Idee per il tuo Business</h2>
-        
-        <div class="services-grid">
-            <div class="masonry-item" style="cursor: default;">
-                <div style="height: 300px; overflow: hidden;">
-                    <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Bomboniere" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div style="padding: 25px; background: rgba(255,255,255,0.9);">
-                    <h3 style="margin-bottom: 10px; color: #5d4e37;">Eventi & Bomboniere</h3>
-                    <p style="font-size: 0.95rem; color: #444;">Matrimoni, lauree o cene di gala aziendali. Un ricordo elegante che gli ospiti useranno davvero.</p>
-                </div>
-            </div>
-
-            <div class="masonry-item" style="cursor: default;">
-                <div style="height: 300px; overflow: hidden;">
-                    <img src="assets/foto /sfondo nero e marrone /IMG_3219.png" alt="Regali Natale" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div style="padding: 25px; background: rgba(255,255,255,0.9);">
-                    <h3 style="margin-bottom: 10px; color: #5d4e37;">Regali di Natale</h3>
-                    <p style="font-size: 0.95rem; color: #444;">Sorprendi clienti e dipendenti con un cesto natalizio alternativo: un vinile di design pieno di prodotti tipici.</p>
-                </div>
-            </div>
-
-            <div class="masonry-item" style="cursor: default;">
-                <div style="height: 300px; overflow: hidden;">
-                     <img src="assets/foto /sfondo bianco /IMG_3466.png" alt="Onboarding Kits" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div style="padding: 25px; background: rgba(255,255,255,0.9);">
-                    <h3 style="margin-bottom: 10px; color: #5d4e37;">Welcome Kit</h3>
-                    <p style="font-size: 0.95rem; color: #444;">Dai il benvenuto ai nuovi assunti con un oggetto da scrivania stiloso e utile come svuotatasche.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contatti" style="position: relative; z-index: 1; padding: 0 20px 120px 20px;">
+    <!-- CONTATTI (CTA forte) -->
+    <section id="contatti" class="corp-section" style="padding-bottom: 110px;">
+      <div class="corp-wrap">
         <div class="contact-form-wrapper">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 50px); text-align: center; margin-bottom: 10px; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">Parliamo del tuo progetto</h2>
-            <p style="text-align: center; color: #fff; margin-bottom: 40px; font-size: 1.1rem;">Compila il form per ricevere il catalogo B2B e un preventivo personalizzato.</p>
-            
-            <form action="mailto:33giristudios@gmail.com" method="post" enctype="text/plain">
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <div class="form-group" style="flex: 1; min-width: 250px;">
-                        <label for="nome">Nome / Referente</label>
-                        <input type="text" id="nome" name="nome" class="form-control" placeholder="Mario Rossi" required>
-                    </div>
-                    <div class="form-group" style="flex: 1; min-width: 250px;">
-                        <label for="azienda">Azienda</label>
-                        <input type="text" id="azienda" name="azienda" class="form-control" placeholder="Nome Azienda Srl" required>
-                    </div>
-                </div>
+          <h2 class="corp-title" style="font-size: clamp(30px, 4.8vw, 50px); text-align:center; margin: 0 0 8px; color:#fff; text-shadow:0 4px 15px rgba(0,0,0,0.6);">
+            Chiedi subito un preventivo
+          </h2>
+          <p style="text-align:center; color: rgba(255,255,255,0.92); margin: 0 auto 26px; max-width: 70ch; line-height:1.6;">
+            Compila in 30 secondi. Ti rispondiamo con proposta e prezzi in base a quantità e personalizzazione.
+          </p>
 
-                <div class="form-group">
-                    <label for="email">Email Aziendale</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="email@azienda.com" required>
-                </div>
+          <form action="mailto:33giristudios@gmail.com" method="post" enctype="text/plain">
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+              <div class="form-group" style="flex:1; min-width:240px;">
+                <label for="nome">Nome / Referente</label>
+                <input type="text" id="nome" name="nome" class="form-control" placeholder="Mario Rossi" required>
+              </div>
+              <div class="form-group" style="flex:1; min-width:240px;">
+                <label for="azienda">Azienda</label>
+                <input type="text" id="azienda" name="azienda" class="form-control" placeholder="Nome Azienda Srl" required>
+              </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="tipo">Tipologia Richiesta</label>
-                    <select id="tipo" name="tipo" class="form-control">
-                        <option value="regali_aziendali">Regali Aziendali (Natale/Ricorrenze)</option>
-                        <option value="eventi">Gadget per Eventi</option>
-                        <option value="bomboniere">Bomboniere</option>
-                        <option value="collaborazione">Altro</option>
-                    </select>
-                </div>
+            <div class="form-group">
+              <label for="email">Email aziendale</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="email@azienda.com" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="messaggio">Messaggio (Quantità stimate, idee, tempistiche)</label>
-                    <textarea id="messaggio" name="messaggio" rows="4" class="form-control" placeholder="Vorremmo ordinare circa 50 pezzi per..." required></textarea>
-                </div>
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+              <div class="form-group" style="flex:1; min-width:240px;">
+                <label for="tipo">Tipologia</label>
+                <select id="tipo" name="tipo" class="form-control">
+                  <option value="regali_aziendali">Regali Aziendali (Natale / ricorrenze)</option>
+                  <option value="eventi">Gadget per eventi</option>
+                  <option value="welcome_kit">Welcome kit</option>
+                  <option value="altro">Altro</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex:1; min-width:240px;">
+                <label for="quantita">Quantità (stima)</label>
+                <input type="text" id="quantita" name="quantita" class="form-control" placeholder="Es. 50 / 100 / 200">
+              </div>
+            </div>
 
-                <div style="text-align: center; margin-top: 40px;">
-                    <button type="submit" style="background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; padding: 18px 60px; border: none; border-radius: 50px; font-weight: 700; font-size: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); cursor: pointer; transition: all 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 50px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.3)'">Invia Richiesta</button>
-                </div>
-            </form>
-            
-            <p style="text-align: center; margin-top: 30px; color: rgba(255,255,255,0.8); font-size: 0.9rem;">
-                Oppure scrivici direttamente a: <a href="mailto:33giristudios@gmail.com" style="color: #fff; font-weight: 700; text-decoration: underline;">33giristudios@gmail.com</a>
+            <div class="form-group">
+              <label for="messaggio">Messaggio (data, urgenza, logo, packaging)</label>
+              <textarea id="messaggio" name="messaggio" rows="4" class="form-control" placeholder="Vorremmo 80 pezzi entro il 18/12, con logo e biglietto..." required></textarea>
+            </div>
+
+            <div style="text-align:center; margin-top:18px;">
+              <button type="submit" class="btn-cta btn-primary" style="border:none; padding: 16px 28px;">
+                Invia richiesta
+              </button>
+              <div style="margin-top:12px;">
+                <a class="btn-cta btn-ghost" href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" style="padding: 14px 22px;">
+                  WhatsApp diretto
+                </a>
+              </div>
+            </div>
+
+            <p style="text-align:center; margin-top:18px; color: rgba(255,255,255,0.85); font-size: 0.92rem;">
+              Oppure scrivici: <a href="mailto:33giristudios@gmail.com" style="color:#fff; font-weight:900; text-decoration:underline;">33giristudios@gmail.com</a>
             </p>
+          </form>
         </div>
+      </div>
     </section>
 
   </main>
 
-  <footer id="footer" class="site-footer" style="position: relative; z-index: 1; backdrop-filter: blur(15px); background: rgba(0,0,0,0.6); padding: 40px 20px; margin-top: 0px;">
-    <div class="wrap footer-inner" style="color: #f5f0e8; text-shadow: 0 2px 10px rgba(0,0,0,0.8); font-size: 1.1rem; font-weight: 500;">
+  <!-- FOOTER -->
+  <footer id="footer" class="site-footer">
+    <div class="wrap footer-inner" style="color:#f5f0e8; text-shadow:0 2px 10px rgba(0,0,0,0.8); font-size:1.05rem; font-weight:600; display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;">
       <div>© 33Giri — Made in Italy</div>
-      <nav class="footer-nav">
-        </nav>
+      <div style="opacity:.9;">Regali aziendali • Eventi • Personalizzazioni</div>
     </div>
   </footer>
 
-  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" 
-      style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); z-index: 10000; transition: all 0.3s ease; text-decoration: none;"
-      onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 30px rgba(0, 0, 0, 0.7)'"
-      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.5)'">
+  <!-- Sticky CTA mobile -->
+  <div class="sticky-cta">
+    <a href="#contatti">Richiedi preventivo ora</a>
+  </div>
+
+  <!-- WhatsApp floating (tuo) -->
+  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer"
+     style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); z-index: 10000; transition: all 0.3s ease; text-decoration: none;"
+     onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 30px rgba(0, 0, 0, 0.7)'"
+     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.5)'">
     <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
     </svg>
@@ -367,6 +578,5 @@
 
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/main.js"></script>
-
 </body>
 </html>
