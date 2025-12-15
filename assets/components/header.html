@@ -1,9 +1,7 @@
 <header id="header" class="site-header">
   <div class="wrap header-inner">
-    <!-- Checkbox nascosto per il toggle mobile -->
     <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
 
-    <!-- Bottone hamburger (label del checkbox) -->
     <label for="nav-toggle"
            class="mobile-menu-btn"
            aria-label="Apri menu">
@@ -16,6 +14,7 @@
         <li><a href="catalogo.html">Catalogo</a></li>
         <li><a href="quiz.html">33Quiz</a></li>
         <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        <li><a href="corporate.html">Corporate</a></li>
         <li><a href="chi_siamo.html">Chi Siamo</a></li>
       </ul>
     </nav>
@@ -150,7 +149,8 @@
 
       /* Toggle: quando il checkbox è spuntato, apri il menu */
       .nav-toggle:checked + .mobile-menu-btn + .main-nav {
-        max-height: 280px; /* aumenta se servono più voci */
+        /* Aumentato da 280px a 350px per far stare la nuova voce */
+        max-height: 350px; 
       }
     }
   </style>
