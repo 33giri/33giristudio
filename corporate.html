@@ -479,7 +479,12 @@
             Privato o azienda: dicci per chi è il regalo, quantità e data. Ti rispondiamo con proposta e prezzi.
           </p>
 
-          <form action="mailto:33giristudios@gmail.com" method="post" enctype="text/plain">
+          <!-- ✅ FORM MODIFICATO: FormSubmit (HTTPS) -->
+          <form action="https://formsubmit.co/33giristudios@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="Nuova richiesta dal form — 33Giri Idee regalo">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="text" name="_honey" style="display:none">
+
             <div style="display:flex; gap:14px; flex-wrap:wrap;">
               <div class="form-group" style="flex:1; min-width:240px;">
                 <label for="nome">Nome</label>
