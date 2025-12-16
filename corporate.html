@@ -21,19 +21,26 @@
       margin:0;
       overflow-x:hidden;
     }
+
+    /* ✅ FIX: texture senza “cuciture” anche cambiando zoom */
     body::before{
       content:'';
       position:fixed;
-      top:0;left:0;width:100%;height:100%;
-      background:url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
-      background-size:100% auto;
+      inset:0;
+      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') center top / cover no-repeat;
       opacity:.22;
       z-index:0;
       pointer-events:none;
       animation: textureMove 30s linear infinite;
     }
+
     @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    @keyframes textureMove{from{background-position:0 0}to{background-position:0 -1000px}}
+
+    /* ✅ movimento “safe” (niente repeat) */
+    @keyframes textureMove{
+      from{ background-position: 50% 0%; }
+      to  { background-position: 50% 100%; }
+    }
 
     h1,h2,h3{font-family:'Playfair Display', serif;font-weight:900;}
     @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
@@ -242,8 +249,6 @@
       box-shadow:0 0 18px rgba(255,255,255,0.35);
     }
 
-    .mini-note{opacity:.9; font-size:.95rem; color: rgba(255,255,255,0.88);}
-
     /* Sticky CTA bottom (solo mobile) */
     .sticky-cta{
       position: fixed;
@@ -267,7 +272,7 @@
     }
     @media (max-width: 768px){
       .sticky-cta{display:block;}
-      main{padding-bottom:90px;} /* spazio per sticky */
+      main{padding-bottom:90px;}
     }
 
     /* Footer */
@@ -313,10 +318,10 @@
 
   <main>
 
-    <!-- HERO: idee regalo per tutti + CTA -->
+    <!-- HERO -->
     <section class="corp-hero">
       <div class="corp-hero-media">
-        <img src="assets/atelier 33 giri/20251110-IMG_4557.jpg" alt="Idee regalo 33Giri">
+        <img src="assets/atelier 33 giri/20251110-IMG_4743.jpg" alt="Idee regalo 33Giri">
       </div>
 
       <div class="corp-hero-inner">
@@ -339,8 +344,8 @@
 
               <div class="photo-strip">
                 <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Dettaglio prodotto 33Giri">
-                <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Esposizione 33Giri">
-                <img src="assets/foto /sfondo nero e marrone /IMG_3219.png" alt="Regalo 33Giri">
+                <img src="assets/atelier 33 giri/20251110-IMG_4834.jpg" alt="Esposizione 33Giri">
+                <img src="assets/atelier 33 giri/20251110-IMG_5000.jpg" alt="Regalo 33Giri">
               </div>
             </div>
 
@@ -356,7 +361,7 @@
       </div>
     </section>
 
-    <!-- IDEE REGALO PER TUTTI (3 card) -->
+    <!-- IDEE REGALO -->
     <section id="idee" class="corp-section">
       <div class="corp-wrap">
         <div style="text-align:center; margin-bottom:18px;">
@@ -376,7 +381,7 @@
           </div>
 
           <div class="card">
-            <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Regalo per chi ama la musica">
+            <img src="assets/atelier 33 giri/20251110-IMG_4810.jpg" alt="Regalo per chi ama la musica">
             <div class="card-body">
               <h3>Per chi ama la musica</h3>
               <p>Vinili riciclati, vibe vintage, risultato moderno: il classico “wow” immediato.</p>
@@ -384,7 +389,7 @@
           </div>
 
           <div class="card">
-            <img src="assets/foto /sfondo nero e marrone /IMG_3219.png" alt="Regalo da scrivania">
+            <img src="assets/atelier 33 giri/20251110-IMG_4734.jpg" alt="Regalo da scrivania">
             <div class="card-body">
               <h3>Per scrivania & studio</h3>
               <p>Perfetto per chi lavora/ studia: utile ogni giorno e sempre fotogenico.</p>
@@ -398,7 +403,7 @@
       </div>
     </section>
 
-    <!-- SEZIONE DEDICATA: regali aziendali -->
+    <!-- AZIENDE -->
     <section id="aziende" class="corp-section" style="padding-top: 10px;">
       <div class="corp-wrap">
         <div class="block">
@@ -417,7 +422,7 @@
                 <a class="btn-cta btn-ghost" href="mailto:33giristudios@gmail.com">Scrivi una mail</a>
               </div>
 
-              <p class="mini-note" style="margin:14px 0 0;">
+              <p class="mini-note" style="margin:14px 0 0; color: rgba(44,36,22,.72);">
                 Tip: nel messaggio indica <b>quantità</b>, <b>data</b> e se vuoi <b>logo/packaging</b>.
               </p>
             </div>
@@ -430,45 +435,9 @@
       </div>
     </section>
 
-    <!-- QUANDO FUNZIONA (3 card) -->
-    <section class="corp-section" style="padding-top: 10px;">
-      <div class="corp-wrap">
-        <div style="text-align:center; margin-bottom:18px;">
-          <h2 class="corp-title" style="font-size: clamp(30px, 4.6vw, 52px); margin: 0 0 10px;">Quando funziona perfettamente</h2>
-          <p style="margin:0; max-width:70ch; margin-inline:auto; opacity:.95; line-height:1.7;">
-            Regali utili e “instagrammabili” per momenti in cui vuoi farti ricordare.
-          </p>
-        </div>
+    
 
-        <div class="card-grid">
-          <div class="card">
-            <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Eventi e bomboniere">
-            <div class="card-body">
-              <h3>Eventi & Gala</h3>
-              <p>Un ricordo elegante che le persone useranno davvero: desk, casa, ufficio.</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <img src="assets/foto /sfondo nero e marrone /IMG_3219.png" alt="Natale aziendale">
-            <div class="card-body">
-              <h3>Regali di Natale</h3>
-              <p>Perfetti per clienti e team: un oggetto di design con una storia (e un impatto).</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Welcome kit onboarding">
-            <div class="card-body">
-              <h3>Welcome kit</h3>
-              <p>Onboarding con stile: un pezzo unico da scrivania, brandizzato e memorabile.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTATTI (CTA forte) -->
+    <!-- CONTATTI -->
     <section id="contatti" class="corp-section" style="padding-bottom: 110px;">
       <div class="corp-wrap">
         <div class="contact-form-wrapper">
