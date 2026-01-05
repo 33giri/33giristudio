@@ -237,7 +237,7 @@
   </div>
   
   <div class="reviews-cta" style="margin-top: 60px; animation: fadeInUp 1.8s ease-out;">
-    <a href="recensioni.html" class="btn btn-primary" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; font-weight: 700; font-size: 1.1rem; text-decoration: none; border-radius: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); transition: all 0.4s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-5px) scale(1.05)'; this.style.boxShadow='0 15px 60px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.3)'">
+    <a href="recensioni.html" class="btn btn-primary" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; font-weight: 700; font-size: 1.1rem; text-decoration: none; border-radius: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); transition: all 0.4s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-5px) scale(1.05)'; this.style.boxShadow='0 15px 60px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.3)'">
       Lascia una recensione
     </a>
   </div>
@@ -747,6 +747,203 @@
       initIrisCountdown(mediaEl, revealDate);
 
     });
+  </script>
+
+  <!-- =========================
+       NEWSLETTER POPUP (10s)
+       ========================= -->
+  <style>
+    :root { --np-z: 20001; --np-radius: 18px; --np-shadow: 0 20px 60px rgba(0,0,0,.25); }
+    .np-overlay{
+      position: fixed; inset: 0; background: rgba(0,0,0,.55);
+      display: none; align-items: center; justify-content: center;
+      z-index: var(--np-z); padding: 18px;
+    }
+    .np-modal{
+      width: 100%; max-width: 440px; background: #fff; border-radius: var(--np-radius);
+      box-shadow: var(--np-shadow); overflow: hidden; transform: translateY(8px);
+    }
+    .np-head{ padding: 18px 18px 8px; display:flex; gap:12px; align-items:flex-start; justify-content:space-between;}
+    .np-title{ margin:0; font-size: 18px; line-height:1.2; }
+    .np-sub{ margin:6px 0 0; color:#444; font-size:14px; line-height:1.4;}
+    .np-close{
+      border:0; background: transparent; font-size: 22px; line-height: 1;
+      cursor:pointer; padding: 6px 8px; border-radius: 10px;
+    }
+    .np-close:hover{ background: rgba(0,0,0,.06); }
+    .np-body{ padding: 0 18px 18px; }
+    .np-form{ display:flex; gap:10px; margin-top: 12px; }
+    .np-input{
+      flex:1; padding: 12px 12px; border-radius: 12px; border:1px solid #ddd;
+      font-size: 14px; outline: none;
+    }
+    .np-input:focus{ border-color:#999; }
+    .np-btn{
+      padding: 12px 14px; border-radius: 12px; border:0; cursor:pointer;
+      background:#111; color:#fff; font-weight:600; font-size:14px;
+      white-space:nowrap;
+    }
+    .np-btn:disabled{ opacity:.6; cursor:not-allowed; }
+    .np-note{ margin-top:10px; font-size:12px; color:#555; }
+    .np-check{ display:flex; gap:8px; align-items:flex-start; margin-top:10px; font-size:12px; color:#555; }
+    .np-check input{ margin-top:2px; }
+    .np-check a{ color:#111; text-decoration: underline; }
+    .np-success{
+      display:none; margin-top: 12px; padding: 12px; border:1px dashed #bbb;
+      border-radius: 14px; background: rgba(0,0,0,.02);
+    }
+    .np-codeRow{ display:flex; gap:10px; align-items:center; margin-top:10px; }
+    .np-code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      padding: 10px 12px; border-radius: 12px; border:1px solid #ddd;
+      font-size: 14px; flex:1; background:#fff;
+    }
+    .np-smallBtn{
+      padding: 10px 12px; border-radius: 12px; border:1px solid #ddd;
+      background:#fff; cursor:pointer; font-weight:600;
+    }
+  </style>
+
+  <div class="np-overlay" id="npOverlay" aria-hidden="true">
+    <div class="np-modal" role="dialog" aria-modal="true" aria-labelledby="npTitle">
+      <div class="np-head">
+        <div>
+          <h3 class="np-title" id="npTitle">-10% sul primo acquisto</h3>
+          <p class="np-sub">Iscriviti alla newsletter e ricevi subito lo sconto.</p>
+        </div>
+        <button class="np-close" id="npClose" aria-label="Chiudi">×</button>
+      </div>
+
+      <div class="np-body">
+        <form class="np-form" id="npForm">
+          <input class="np-input" id="npEmail" type="email" placeholder="La tua email" required autocomplete="email" />
+          <button class="np-btn" id="npSubmit" type="submit">Ottieni -10%</button>
+        </form>
+
+        <label class="np-check">
+          <input type="checkbox" id="npConsent" required />
+          <span>Accetto di ricevere comunicazioni via email e ho letto la <a href="privacy.html">privacy policy</a>.</span>
+        </label>
+
+        <div class="np-note">Niente spam. Puoi annullare l’iscrizione quando vuoi.</div>
+
+        <div class="np-success" id="npSuccess">
+          <div><strong>Perfetto!</strong> Il tuo codice sconto:</div>
+          <div class="np-codeRow">
+            <input class="np-code" id="npCode" value="BENVENUTO10" readonly />
+            <button class="np-smallBtn" type="button" id="npCopy">Copia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const OVERLAY = document.getElementById('npOverlay');
+    const CLOSE = document.getElementById('npClose');
+    const FORM = document.getElementById('npForm');
+    const EMAIL = document.getElementById('npEmail');
+    const CONSENT = document.getElementById('npConsent');
+    const SUBMIT = document.getElementById('npSubmit');
+    const SUCCESS = document.getElementById('npSuccess');
+    const COPY = document.getElementById('npCopy');
+    const CODE = document.getElementById('npCode');
+
+    // === CONFIG ===
+    const DELAY_MS = 10000;                 // 10 secondi
+    const DISMISS_DAYS = 30;                // se chiuso, non riappare per 30 giorni
+    const COUPON_CODE = "BENVENUTO10";      // crea questo codice nel tuo e-commerce
+    const ENDPOINT = ""; // <-- se vuoi salvare davvero l'email: metti qui un endpoint (Mailchimp/Brevo/Formspree ecc.)
+
+    CODE.value = COUPON_CODE;
+
+    const now = () => Date.now();
+    const daysToMs = d => d * 24 * 60 * 60 * 1000;
+
+    function setWithExpiry(key, value, ttlMs){
+      localStorage.setItem(key, JSON.stringify({ value, exp: now() + ttlMs }));
+    }
+    function getWithExpiry(key){
+      const raw = localStorage.getItem(key);
+      if(!raw) return null;
+      try{
+        const obj = JSON.parse(raw);
+        if(obj.exp && now() > obj.exp){ localStorage.removeItem(key); return null; }
+        return obj.value;
+      }catch(e){ return null; }
+    }
+
+    function openPopup(){
+      OVERLAY.style.display = 'flex';
+      OVERLAY.setAttribute('aria-hidden', 'false');
+      setTimeout(() => EMAIL.focus(), 50);
+      document.addEventListener('keydown', onEsc);
+    }
+    function closePopup(markDismissed=true){
+      OVERLAY.style.display = 'none';
+      OVERLAY.setAttribute('aria-hidden', 'true');
+      document.removeEventListener('keydown', onEsc);
+      if(markDismissed) setWithExpiry('np_dismissed', true, daysToMs(DISMISS_DAYS));
+    }
+    function onEsc(e){
+      if(e.key === 'Escape') closePopup(true);
+    }
+
+    // non mostrarlo se già iscritto o se chiuso di recente
+    const dismissed = getWithExpiry('np_dismissed');
+    const subscribed = localStorage.getItem('np_subscribed') === 'true';
+    if(!dismissed && !subscribed){
+      setTimeout(openPopup, DELAY_MS);
+    }
+
+    CLOSE.addEventListener('click', () => closePopup(true));
+    OVERLAY.addEventListener('click', (e) => { if(e.target === OVERLAY) closePopup(true); });
+
+    COPY.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(COUPON_CODE);
+        COPY.textContent = "Copiato!";
+        setTimeout(()=> COPY.textContent="Copia", 1200);
+      }catch{
+        CODE.select(); document.execCommand('copy');
+      }
+    });
+
+    FORM.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if(!CONSENT.checked) { CONSENT.focus(); return; }
+
+      const email = (EMAIL.value || "").trim();
+      if(!email) return;
+
+      SUBMIT.disabled = true;
+      SUBMIT.textContent = "Invio...";
+
+      try{
+        // Se non hai endpoint, mostra comunque il codice (modalità test)
+        if(ENDPOINT){
+          const res = await fetch(ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email })
+          });
+          if(!res.ok) throw new Error("Errore endpoint");
+        }
+
+        SUCCESS.style.display = "block";
+        localStorage.setItem('np_subscribed', 'true');
+
+        SUBMIT.textContent = "Fatto!";
+        setTimeout(() => closePopup(false), 2500); // chiude senza impostare "dismissed"
+      }catch(err){
+        SUBMIT.disabled = false;
+        SUBMIT.textContent = "Ottieni -10%";
+        alert("Non sono riuscito a salvare l’email. Riprova oppure controlla l’integrazione newsletter.");
+        console.error(err);
+      }
+    });
+  })();
   </script>
 
 </body>
