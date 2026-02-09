@@ -1411,4 +1411,54 @@ body{
   .image-preview {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
+ 
+  /* ===== 33GIRI custom font (Fluro) ===== */
+@font-face {
+  font-family: "Fluro";
+  src: url("assets/fonts/kazer-studio-fluro.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fluro";
+  src: url("assets/fonts/kazer-studio-fluro-light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fluro";
+  src: url("assets/fonts/kazer-studio-fluro-semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fluro";
+  src: url("assets/fonts/kazer-studio-fluro-bold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Opzionale: se il file outline è un vero font outline */
+@font-face {
+  font-family: "Fluro Outline";
+  src: url("assets/fonts/kazer-studio-fluro-bold-outline.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Classe per la scritta 33GIRI */
+.brand-33giri {
+  font-family: "Fluro", "Inter", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
 }
