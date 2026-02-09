@@ -285,8 +285,31 @@
       text-align: center;
       font-size: 1.3rem;
       color: #6b5d4f;
-      margin-bottom: 80px;
+      margin-bottom: 60px;
       font-weight: 300;
+    }
+
+    /* NUOVI TITOLI SOTTO-SEZIONI */
+    .collection-block-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin: 0 auto 12px auto;
+      color: #2c2416;
+    }
+    .collection-block-subtitle {
+      text-align: center;
+      color: #6b5d4f;
+      margin: 0 auto 40px auto;
+      font-weight: 300;
+      max-width: 900px;
+      line-height: 1.5;
+    }
+    .collection-divider {
+      max-width: 1100px;
+      margin: 70px auto;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(139,115,85,0.55), transparent);
+      border-radius: 2px;
     }
     
     @keyframes fadeInUp {
@@ -455,7 +478,7 @@
     }
 
     /* ==============================
-       LOCK + COUNTDOWN METAMORFOSI
+       LOCK OVERLAY (METAMORFOSI)
        ============================== */
     .vinyl-card.is-locked .vinyl-card-header,
     .vinyl-card.is-locked .vinyl-card-body {
@@ -467,7 +490,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 520px; /* altezza visiva simile a header+body */
+      min-height: 520px;
       padding: 32px 26px;
       border-radius: 30px;
       background: linear-gradient(135deg, rgba(44, 36, 22, 0.96) 0%, rgba(93, 78, 55, 0.96) 100%);
@@ -490,7 +513,7 @@
     .vinyl-locked-inner {
       position: relative;
       z-index: 1;
-      max-width: 320px;
+      max-width: 360px;
     }
 
     .vinyl-locked-badge {
@@ -506,32 +529,21 @@
 
     .vinyl-locked-title {
       font-size: 1.6rem;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       line-height: 1.2;
     }
 
     .vinyl-locked-sub {
       font-size: 0.98rem;
       opacity: 0.85;
-      margin-bottom: 12px;
-    }
-
-    .vinyl-locked-countdown {
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      padding: 10px 14px;
-      border-radius: 14px;
-      background: rgba(245,240,232,0.08);
-      display: inline-block;
-      min-width: 180px;
+      margin-bottom: 0;
     }
 
     .vinyl-card:not(.is-locked) .vinyl-locked-overlay {
       display: none;
     }
 
-    /* BLOCCO CATALOGO CANVA SOTTO LE 3 CARD */
+    /* BLOCCO CATALOGO CANVA SOTTO LE CARD */
     .collection-extra {
       max-width: 800px;
       margin: 60px auto 0;
@@ -753,9 +765,6 @@
       .vinyl-locked-title {
         font-size: 1.4rem;
       }
-      .vinyl-locked-countdown {
-        font-size: 1.5rem;
-      }
     }
     
     @media (max-width: 480px) {
@@ -817,83 +826,86 @@
   <!-- Collection Section -->
   <section class="collection-section" id="collection">
     <div class="christmas-ribbon">
-      <span>Sconti su Normal, Splash, Spiral e Metamorfosi</span>
+      <span>Sconti su Svuotatasche e Posacenere</span>
       <span class="christmas-emoji">⭐️</span>
     </div>
 
-    <h2 class="section-title">La Nostra Collezione</h2>
-    <p class="section-subtitle">Tre stili unici e una collezione speciale </p>
-    
+    <h2 class="section-title">Le Collezioni</h2>
+    <p class="section-subtitle">Svuotatasche e Posacenere: tre stili, pezzi unici, fatti a mano.</p>
+
+    <!-- =========================
+         COLLEZIONE SVUOTATASCHE
+         ========================= -->
+    <h3 class="collection-block-title">Collezione Svuotatasche</h3>
+    <p class="collection-block-subtitle">Tre stili: Normal, Splash e Spiral. Ogni pezzo è unico.</p>
+
     <div class="carousel-grid">
-      <!-- Normal Card (Standard) -->
+      <!-- Svuotatasche - Normal -->
       <div class="vinyl-card">
         <div class="vinyl-card-header">
-          <img src="assets/normal1.jpg/vinile3_cropped_1.jpeg" alt="Normal Vinyl">
+          <img src="assets/normal1.jpg/vinile3_cropped_1.jpeg" alt="Svuotatasche Normal">
           <span class="vinyl-badge">NORMAL</span>
         </div>
         <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Normal</h3>
+          <h3 class="vinyl-card-title">Svuotatasche — Normal</h3>
           <p class="vinyl-card-price">
             <span class="old-price">25€</span>
             <span class="new-price">20€</span>
             <span class="discount-tag">-20%</span>
           </p>
           <p class="vinyl-card-description">Design classico ed elegante. Perfetto per chi ama la semplicità senza rinunciare allo stile.</p>
-          <button class="vinyl-button" data-style="NORMAL">Voglio Questo Stile</button>
+          <button class="vinyl-button" data-style="Svuotatasche - Normal">Voglio Questo Stile</button>
         </div>
       </div>
 
-      <!-- Splash Card -->
+      <!-- Svuotatasche - Splash -->
       <div class="vinyl-card">
         <div class="vinyl-card-header">
-          <img src="assets/iloveimg-converted/IMG_3397.jpg" alt="Splash Vinyl">
+          <img src="assets/iloveimg-converted/IMG_3397.jpg" alt="Svuotatasche Splash">
           <span class="vinyl-badge">SPLASH</span>
         </div>
         <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Splash</h3>
+          <h3 class="vinyl-card-title">Svuotatasche — Splash</h3>
           <p class="vinyl-card-price">
             <span class="old-price">31€</span>
             <span class="new-price">25€</span>
             <span class="discount-tag">-20%</span>
           </p>
-          <p class="vinyl-card-description">Esplosioni di colore e creatività. Ogni vinile è un'opera d'arte unica e irripetibile.</p>
-          <button class="vinyl-button" data-style="SPLASH">Voglio Questo Stile</button>
+          <p class="vinyl-card-description">Esplosioni di colore e creatività. Ogni pezzo è un'opera d'arte unica e irripetibile.</p>
+          <button class="vinyl-button" data-style="Svuotatasche - Splash">Voglio Questo Stile</button>
         </div>
       </div>
 
-      <!-- Spiral Card -->
+      <!-- Svuotatasche - Spiral -->
       <div class="vinyl-card">
         <div class="vinyl-card-header">
-          <img src="assets/iloveimg-converted/IMG_3348.jpg" alt="Spiral Vinyl">
+          <img src="assets/iloveimg-converted/IMG_3348.jpg" alt="Svuotatasche Spiral">
           <span class="vinyl-badge">SPIRAL</span>
         </div>
         <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Spiral</h3>
+          <h3 class="vinyl-card-title">Svuotatasche — Spiral</h3>
           <p class="vinyl-card-price">
             <span class="old-price">31€</span>
             <span class="new-price">25€</span>
             <span class="discount-tag">-20%</span>
           </p>
           <p class="vinyl-card-description">Ipnotici motivi a spirale. Un design dinamico che cattura lo sguardo.</p>
-          <button class="vinyl-button" data-style="SPIRAL">Voglio Questo Stile</button>
+          <button class="vinyl-button" data-style="Svuotatasche - Spiral">Voglio Questo Stile</button>
         </div>
       </div>
 
-      <!-- METAMORFOSI X 33GIRI Card -->
+      <!-- METAMORFOSI (terminata) -->
       <div class="vinyl-card is-locked" id="shero-card">
-
-        <!-- Overlay blocco + countdown -->
         <div class="vinyl-locked-overlay">
           <div class="vinyl-locked-inner">
-            <span class="vinyl-locked-badge">DROP IN ARRIVO</span>
+            <span class="vinyl-locked-badge">COMING SOON</span>
             <h3 class="vinyl-locked-title">METAMORFOSI X 33GIRI</h3>
-            <p class="vinyl-locked-sub">Disponibile tra</p>
-            <div class="vinyl-locked-countdown" id="shero-countdown">--:--:--</div>
+            <p class="vinyl-locked-sub">Questa collezione è terminata. Nuovo drop in arrivo.</p>
           </div>
         </div>
 
+        <!-- (Contenuto nascosto dalla classe is-locked) -->
         <div class="vinyl-card-header">
-          <!-- Sostituisci il percorso con la foto corretta di Metamorfosi -->
           <img src="IMG_3986.jpeg" alt="Metamorfosi — Iris Shero x 33Giri">
           <span class="vinyl-badge">METAMORFOSI</span>
         </div>
@@ -905,19 +917,87 @@
             <span class="discount-tag">-25%</span>
           </p>
           <p class="vinyl-card-description">
-            La collezione Metamorfosi firmata da Iris Shero: vinili illustrati a mano, pezzi unici da collezione, pensati per trasformare ogni spazio.
+            La collezione Metamorfosi firmata da Iris Shero: vinili illustrati a mano, pezzi unici da collezione.
           </p>
-          <button class="vinyl-button" data-style="Metamorfosi — Iris Shero x 33Giri">Voglio Questo Stile</button>
+          <button class="vinyl-button" data-style="Metamorfosi - Coming Soon">Voglio Questo Stile</button>
         </div>
       </div>
     </div>
 
-    <!-- BLOCCO SOTTO LE CARD: TITOLO + PULSANTE CANVA -->
+    <div class="collection-divider"></div>
+
+    <!-- =========================
+         COLLEZIONE POSACENERE (45 giri)
+         collegata a pulsante index: #posacenere
+         ========================= -->
+    <div id="posacenere"></div>
+    <h3 class="collection-block-title">Collezione Posacenere</h3>
+    <p class="collection-block-subtitle">Posacenere in vinile 45 giri. Tre stili: Normal, Splash e Spiral.</p>
+
+    <div class="carousel-grid">
+      <!-- Posacenere - Normal -->
+      <div class="vinyl-card">
+        <div class="vinyl-card-header">
+          <!-- TODO: sostituisci con la tua foto posacenere normal -->
+          <img src="assets/posacenere/posacenere-normal.jpg" alt="Posacenere 45giri Normal">
+          <span class="vinyl-badge">NORMAL</span>
+        </div>
+        <div class="vinyl-card-body">
+          <h3 class="vinyl-card-title">Posacenere 45 giri — Normal</h3>
+          <p class="vinyl-card-price">
+            <span class="old-price">18,75€</span>
+            <span class="new-price">15€</span>
+            <span class="discount-tag">-20%</span>
+          </p>
+          <p class="vinyl-card-description">Compatto, pulito, iconico. Il 45 giri che diventa design da tavolo.</p>
+          <button class="vinyl-button" data-style="Posacenere 45 giri - Normal">Voglio Questo Stile</button>
+        </div>
+      </div>
+
+      <!-- Posacenere - Splash -->
+      <div class="vinyl-card">
+        <div class="vinyl-card-header">
+          <!-- TODO: sostituisci con la tua foto posacenere splash -->
+          <img src="assets/posacenere/posacenere-splash.jpg" alt="Posacenere 45giri Splash">
+          <span class="vinyl-badge">SPLASH</span>
+        </div>
+        <div class="vinyl-card-body">
+          <h3 class="vinyl-card-title">Posacenere 45 giri — Splash</h3>
+          <p class="vinyl-card-price">
+            <span class="old-price">21,25€</span>
+            <span class="new-price">17€</span>
+            <span class="discount-tag">-20%</span>
+          </p>
+          <p class="vinyl-card-description">Macchie e colpi di colore: ogni pezzo è diverso, super “statement”.</p>
+          <button class="vinyl-button" data-style="Posacenere 45 giri - Splash">Voglio Questo Stile</button>
+        </div>
+      </div>
+
+      <!-- Posacenere - Spiral -->
+      <div class="vinyl-card">
+        <div class="vinyl-card-header">
+          <!-- TODO: sostituisci con la tua foto posacenere spiral -->
+          <img src="assets/posacenere/posacenere-spiral.jpg" alt="Posacenere 45giri Spiral">
+          <span class="vinyl-badge">SPIRAL</span>
+        </div>
+        <div class="vinyl-card-body">
+          <h3 class="vinyl-card-title">Posacenere 45 giri — Spiral</h3>
+          <p class="vinyl-card-price">
+            <span class="old-price">21,25€</span>
+            <span class="new-price">17€</span>
+            <span class="discount-tag">-20%</span>
+          </p>
+          <p class="vinyl-card-description">Vortici ipnotici sul formato 45: dinamico, elegante, super visivo.</p>
+          <button class="vinyl-button" data-style="Posacenere 45 giri - Spiral">Voglio Questo Stile</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCCO SOTTO LE CARD: TITOLO + PULSANTE CATALOGO -->
     <div class="collection-extra">
       <h3 class="collection-extra-title">
         Vuoi vedere tutti i vinili disponibili, divisi per stile e artista?
       </h3>
-      <!-- Link al catalogo completo su Google Presentazioni -->
       <a 
         href="https://docs.google.com/presentation/d/1Q-D0krz6ECQYA3UdoOnzXoRQmgna0TVm/edit?usp=drivesdk&ouid=114064638775225545182&rtpof=true&sd=true" 
         class="collection-extra-btn" 
@@ -970,7 +1050,7 @@
       
       <div class="text-card text-small" style="animation-delay: 1.2s;">
         <h3>Personalizza</h3>
-        <p>Scegli colori e stile per il tuo vinile unico</p>
+        <p>Scegli colori e stile per il tuo pezzo unico</p>
       </div>
       
       <div class="gallery-item item-small" style="animation-delay: 1.3s;"><img src="assets/foto /sfondo nero e marrone /IMG_3331.jpg" alt="Vinile 5"></div>
@@ -980,12 +1060,13 @@
       <div class="gallery-item item-medium" style="animation-delay: 1.5s;"><img src="assets/atelier 33 giri/expo/IMG_4636.jpg" alt="Vinile 7"></div>
       
       <div class="text-card text-medium" style="animation-delay: 1.6s;">
-        <h3>Tre Stili Unici</h3>
-        <p>Scegli tra le nostre collezioni esclusive di Natale</p>
+        <h3>Prezzi in promo (-20%)</h3>
+        <p>Due collezioni, tre stili:</p>
         <ul>
-          <li>Normal — 15€ (invece di 20€)</li>
-          <li>Splash — 20€ (invece di 25€)</li>
-          <li>Spiral — 20€ (invece di 25€)</li>
+          <li>Svuotatasche — Normal 20€ (da 25€)</li>
+          <li>Svuotatasche — Splash/Spiral 25€ (da 31€)</li>
+          <li>Posacenere 45giri — Normal 15€ (da 18,75€)</li>
+          <li>Posacenere 45giri — Splash/Spiral 17€ (da 21,25€)</li>
         </ul>
       </div>
       
@@ -1065,48 +1146,6 @@
   // Gestione interazioni pagina (hero, gallery, lightbox, form contatti)
   document.addEventListener('DOMContentLoaded', function() {
 
-    /* ------------------------------------
-       COUNTDOWN LOCK METAMORFOSI
-       Scadenza: Martedì 9 Dicembre 2025, 14:00
-       ------------------------------------ */
-    const sheroCard = document.getElementById('shero-card');
-    const sheroCountdown = document.getElementById('shero-countdown');
-
-    if (sheroCard && sheroCountdown) {
-      // Usa costruttore numerico per evitare ambiguità di timezone parsing
-      // (mese 11 = dicembre)
-      const target = new Date(2025, 11, 9, 14, 0, 0);
-
-      const pad = (n) => String(n).padStart(2, '0');
-
-      function updateSheroCountdown() {
-        const now = new Date();
-        const diff = target - now;
-
-        if (diff <= 0) {
-          sheroCard.classList.remove('is-locked');
-          sheroCountdown.textContent = 'Disponibile ora';
-          return true; // finito
-        }
-
-        const totalSeconds = Math.floor(diff / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        const dayPart = days > 0 ? `${days}g ` : '';
-        sheroCountdown.textContent = `${dayPart}${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-        return false;
-      }
-
-      updateSheroCountdown();
-      const sheroTimer = setInterval(() => {
-        const done = updateSheroCountdown();
-        if (done) clearInterval(sheroTimer);
-      }, 1000);
-    }
-
     // Smooth scroll per hero CTA
     document.querySelector('.hero-cta')?.addEventListener('click', function(e) {
       e.preventDefault();
@@ -1116,7 +1155,7 @@
       });
     });
     
-    // Click sui bottoni vinile -> precompila messaggio + scroll alla sezione contatti
+    // Click sui bottoni -> precompila messaggio + scroll alla sezione contatti
     const vinylButtons = document.querySelectorAll('.vinyl-button');
     vinylButtons.forEach(btn => {
       btn.addEventListener('click', function() {
@@ -1139,7 +1178,7 @@
         
         setTimeout(() => {
           if (messageField) {
-            messageField.value = `Ciao, vorrei acquistare il vinile ${style}`;
+            messageField.value = `Ciao, vorrei acquistare ${style}`;
             messageField.focus();
           }
         }, 800);
