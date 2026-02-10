@@ -826,6 +826,176 @@ possiamo esplorare quell’infinito attraverso le nostre azioni."
         });
       }
     });
+    <script>
+  (function() {
+    const overlay = document.getElementById('launch-overlay');
+    const content = document.getElementById('site-content');
+
+    if (!overlay || !content) return;
+
+    const targetStr = overlay.getAttribute('data-target');
+    const targetDate = new Date(targetStr);
+
+    const daysEl = document.getElementById('cd-days');
+    const hoursEl = document.getElementById('cd-hours');
+    const minsEl = document.getElementById('cd-mins');
+    const secsEl = document.getElementById('cd-secs');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function showOverlay() {
+      overlay.classList.remove('is-hidden');
+      content.classList.add('is-hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideOverlay() {
+      overlay.classList.add('is-hidden');
+      content.classList.remove('is-hidden');
+      document.body.style.overflow = '';
+    }
+
+    function tick() {
+      const now = new Date();
+      let diff = targetDate - now;
+
+      if (isNaN(targetDate.getTime())) {
+        hideOverlay();
+        return;
+      }
+
+      if (diff <= 0) {
+        if (daysEl) daysEl.textContent = '00';
+        if (hoursEl) hoursEl.textContent = '00';
+        if (minsEl) minsEl.textContent = '00';
+        if (secsEl) secsEl.textContent = '00';
+        hideOverlay();
+        return;
+      }
+
+      showOverlay();
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = totalSeconds % 60;
+
+      if (daysEl) daysEl.textContent = pad(days);
+      if (hoursEl) hoursEl.textContent = pad(hours);
+      if (minsEl) minsEl.textContent = pad(mins);
+      if (secsEl) secsEl.textContent = pad(secs);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const scatteredItems = document.querySelectorAll('.scattered-item');
+
+    scatteredItems.forEach(item => {
+      const originalTransform = window.getComputedStyle(item).transform;
+
+      item.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.35) rotate(0deg)';
+        this.style.zIndex = '100';
+        this.style.cursor = 'pointer';
+      });
+
+      item.addEventListener('mouseleave', function() {
+        this.style.transform = originalTransform;
+        this.style.zIndex = '1';
+      });
+    });
+
+    const purchaseBtn = document.querySelector('a[href="catalogo.html#contatti"]');
+    if (purchaseBtn) {
+      purchaseBtn.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#4a6a85';
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 6px 20px rgba(90, 127, 160, 0.5)';
+      });
+
+      purchaseBtn.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = '#5a7fa0';
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 15px rgba(90, 127, 160, 0.3)';
+      });
+    }
+  });
+
+  /* ===========================
+     MENU: Collaborazioni -> flyout a destra
+     Iris Shero -> Metamorfosi
+     =========================== */
+  (function addCollaborazioniFlyout() {
+    const headerMount = document.getElementById('header');
+    if (!headerMount) return;
+
+    function buildFlyout() {
+      const nav = headerMount.querySelector('.main-nav');
+      if (!nav) return false;
+
+      // trova il link "Collaborazioni"
+      const links = Array.from(nav.querySelectorAll('a'));
+      const collabLink = links.find(a => a.textContent.trim().toLowerCase() === 'collaborazioni');
+      if (!collabLink) return false;
+
+      const li = collabLink.closest('li');
+      if (!li) return false;
+
+      // garantisce dropdown di primo livello
+      li.classList.add('has-dropdown');
+
+      let dropdown = li.querySelector(':scope > .dropdown-menu');
+      if (!dropdown) {
+        dropdown = document.createElement('ul');
+        dropdown.className = 'dropdown-menu';
+        li.appendChild(dropdown);
+      }
+
+      // se esiste già Iris Shero, non duplicare
+      const already = Array.from(dropdown.querySelectorAll('a'))
+        .some(a => a.textContent.trim().toLowerCase() === 'iris shero');
+      if (already) return true;
+
+      // crea: Iris Shero -> (flyout) Metamorfosi
+      const irisLi = document.createElement('li');
+      irisLi.className = 'has-flyout';
+
+      const irisA = document.createElement('a');
+      irisA.href = '#';
+      irisA.textContent = 'Iris Shero';
+      irisA.setAttribute('aria-haspopup', 'true');
+
+      const fly = document.createElement('ul');
+      fly.className = 'flyout-menu';
+
+      const metaLi = document.createElement('li');
+      const metaA = document.createElement('a');
+      metaA.href = 'collaborazioni.html';
+      metaA.textContent = 'Metamorfosi';
+      metaLi.appendChild(metaA);
+
+      fly.appendChild(metaLi);
+      irisLi.appendChild(irisA);
+      irisLi.appendChild(fly);
+      dropdown.appendChild(irisLi);
+
+      return true;
+    }
+
+    // prova subito, altrimenti aspetta che layout.js inietti l'header
+    if (buildFlyout()) return;
+
+    const obs = new MutationObserver(() => {
+      if (buildFlyout()) obs.disconnect();
+    });
+
+    obs.observe(headerMount, { childList: true, subtree: true });
+  })();
+</script>
   </script>
 </body>
 </html>
