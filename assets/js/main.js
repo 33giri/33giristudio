@@ -7,13 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.text())
       .then(html => { 
         headerDiv.innerHTML = html; 
+
         // Inizializza language switcher dopo che l'header è stato caricato
         if (typeof initLanguageSwitcher === 'function') {
           initLanguageSwitcher();
         }
+
+        // Inietta dropdown + flyout Collaborazioni dopo che l'header è stato caricato
+        if (typeof initCollaborazioniFlyout === 'function') {
+          initCollaborazioniFlyout();
+        }
       })
       .catch(err => console.error('Errore caricamento header:', err));
   }
+
   // Footer
   const footerDiv = document.getElementById('footer-include');
   if (footerDiv) {
@@ -22,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(html => { footerDiv.innerHTML = html; });
   }
 });
+
 // Carousel functionality + zoom immagini caroselli
 document.addEventListener('DOMContentLoaded', () => {
   const carousels = document.querySelectorAll('.carousel-track');
@@ -218,6 +226,69 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/* ==========================================
+   Collaborazioni dropdown + flyout a destra
+   Collaborazioni -> Iris Shero -> Metamorfosi
+   ========================================== */
+function initCollaborazioniFlyout() {
+  const nav = document.querySelector('.main-nav');
+  if (!nav) return;
+
+  // Trova il link top-level "Collaborazioni" (robusto: prima per href, poi per testo)
+  const topLevelLinks = Array.from(nav.querySelectorAll('a')).filter(a => {
+    return !a.closest('.dropdown-menu') && !a.closest('.flyout-menu');
+  });
+
+  const collabLink =
+    topLevelLinks.find(a => (a.getAttribute('href') || '').toLowerCase().includes('collaborazioni')) ||
+    topLevelLinks.find(a => a.textContent.trim().toLowerCase() === 'collaborazioni') ||
+    topLevelLinks.find(a => a.textContent.trim().toLowerCase() === 'collaborations');
+
+  if (!collabLink) return;
+
+  const li = collabLink.closest('li');
+  if (!li) return;
+
+  li.classList.add('has-dropdown');
+
+  // Dropdown menu di primo livello (se non esiste, lo crea)
+  let dropdown = li.querySelector(':scope > .dropdown-menu');
+  if (!dropdown) {
+    dropdown = document.createElement('ul');
+    dropdown.className = 'dropdown-menu';
+    li.appendChild(dropdown);
+  }
+
+  // Evita duplicati
+  const already = Array.from(dropdown.querySelectorAll('a')).some(a =>
+    a.textContent.trim().toLowerCase() === 'iris shero'
+  );
+  if (already) return;
+
+  // Crea: Iris Shero -> flyout: Metamorfosi
+  const irisLi = document.createElement('li');
+  irisLi.className = 'has-flyout';
+
+  const irisA = document.createElement('a');
+  irisA.href = '#';
+  irisA.textContent = 'Iris Shero';
+  irisA.setAttribute('aria-haspopup', 'true');
+
+  const fly = document.createElement('ul');
+  fly.className = 'flyout-menu';
+
+  const metaLi = document.createElement('li');
+  const metaA = document.createElement('a');
+  metaA.href = 'collaborazioni.html';
+  metaA.textContent = 'Metamorfosi';
+  metaLi.appendChild(metaA);
+
+  fly.appendChild(metaLi);
+  irisLi.appendChild(irisA);
+  irisLi.appendChild(fly);
+  dropdown.appendChild(irisLi);
+}
+
 // Language switcher IT/EN - Sistema completo multi-pagina
 function initLanguageSwitcher() {
   const langSwitch = document.querySelector('.lang-switch');
@@ -251,9 +322,17 @@ function initLanguageSwitcher() {
     currentLang = lang;
     
     const t = siteTranslations[lang];
-    
+
     // ===== HEADER (tutte le pagine) =====
-    const navLinks = document.querySelectorAll('.main-nav a');
+    // IMPORTANT: prendo SOLO i link top-level del menu (così dropdown/flyout non sballano gli indici)
+    const nav = document.querySelector('.main-nav');
+    let navLinks = [];
+    if (nav) {
+      navLinks = Array.from(nav.querySelectorAll('a')).filter(a => {
+        return !a.closest('.dropdown-menu') && !a.closest('.flyout-menu');
+      });
+    }
+
     if (navLinks[0]) navLinks[0].textContent = t.navHome;
     if (navLinks[1]) navLinks[1].textContent = t.navCatalogo;
     if (navLinks[2]) navLinks[2].textContent = t.navQuiz;
