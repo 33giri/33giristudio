@@ -22,11 +22,16 @@
       </ul>
     </nav>
 
+    <!-- LOGO (nuovo) -->
     <a class="logo" href="index.html" aria-label="33giri logo">
-      <img src="assets/logo/33_GIRI._logo-removebg-preview.png" alt="33giri" style="height:120px;">
+      <img
+        src="assets/logo/33giri-studiowhite.jpeg"
+        alt="33GIRI Italian Design Studio"
+        class="logo-img"
+      />
     </a>
 
-    <div class="header-actions" style="display:flex;align-items:center;gap:18px;">
+    <div class="header-actions">
       <a class="icon-btn" aria-label="Account" href="account.html" role="button">👤</a>
     </div>
   </div>
@@ -77,7 +82,22 @@
     .menu-icon{ font-size:18px; line-height:1; }
     .menu-text{ font-size:14px; }
 
-    .logo{ margin: 0 auto; }
+    /* ===== LOGO (centrato davvero) ===== */
+    .logo{
+      flex: 1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-decoration:none;
+      min-width: 0;
+    }
+
+    .logo-img{
+      height: 145px;           /* <-- INGRANDITO (prima 120) */
+      width: auto;
+      display:block;
+      object-fit: contain;
+    }
 
     /* ===== DROPDOWN (desktop default) ===== */
     .main-nav{
@@ -133,9 +153,14 @@
     }
 
     /* header actions */
-    .header-actions{ margin-left:auto; }
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      margin-left: 0;
+    }
 
-    /* ===== MOBILE: dropdown full-width ===== */
+    /* ===== MOBILE: dropdown full-width + logo un po’ più piccolo ===== */
     @media (max-width: 768px){
       #header{
         position: relative;
@@ -151,7 +176,7 @@
         padding:10px 12px;
       }
 
-      .menu-text{ display:none; } /* su mobile solo icona, più pulito */
+      .menu-text{ display:none; }
 
       .main-nav{
         left: 0;
@@ -159,6 +184,10 @@
         width: auto;
         border-bottom-left-radius: 14px;
         border-bottom-right-radius: 14px;
+      }
+
+      .logo-img{
+        height: 115px;         /* <-- mobile */
       }
     }
   </style>
