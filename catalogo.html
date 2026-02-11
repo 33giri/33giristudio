@@ -543,38 +543,49 @@
       display: none;
     }
 
-    /* BLOCCO CATALOGO CANVA SOTTO LE CARD */
-    .collection-extra {
-      max-width: 800px;
-      margin: 60px auto 0;
-      text-align: center;
-      padding: 0 20px;
-    }
+   /* BLOCCO CATALOGO CANVA SOTTO LE CARD (centrato davvero) */
+.collection-extra{
+  width: 100%;
+  max-width: 800px;
+  margin: 60px auto 0;      /* auto = centra il blocco */
+  padding: 0 20px;
+  text-align: center;
 
-    .collection-extra-title {
-      font-size: 1.6rem;
-      color: #5d4e37;
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
+  display: flex;            /* centra anche il bottone */
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;                /* spazio tra titolo e bottone */
+}
 
-    .collection-extra-btn {
-      display: inline-block;
-      padding: 16px 40px;
-      border-radius: 40px;
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 100%);
-      color: #f5f0e8;
-      font-weight: 700;
-      font-size: 1rem;
-      text-decoration: none;
-      box-shadow: 0 10px 30px rgba(139, 115, 85, 0.4);
-      transition: all 0.3s ease;
-    }
+.collection-extra-title{
+  font-size: 1.6rem;
+  color: #5d4e37;
+  line-height: 1.4;
+  margin: 0;                /* gestito dal gap */
+}
 
-    .collection-extra-btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 14px 40px rgba(139, 115, 85, 0.5);
-    }
+.collection-extra-btn{
+  display: inline-flex;     /* migliore del block per centratura */
+  justify-content: center;
+  align-items: center;
+  width: fit-content;       /* evita che si allarghi */
+  max-width: 100%;
+
+  padding: 16px 40px;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #8B7355 0%, #A5927C 100%);
+  color: #f5f0e8;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(139, 115, 85, 0.4);
+  transition: all 0.3s ease;
+}
+
+.collection-extra-btn:hover{
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(139, 115, 85, 0.5);
+}
     
     /* Gallery Section */
     .gallery-section {
