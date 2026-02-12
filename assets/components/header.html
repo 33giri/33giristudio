@@ -16,12 +16,24 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="catalogo.html">Catalogo</a></li>
         <li><a href="quiz.html">33Quiz</a></li>
-        <li><a href="collaborazioni.html">Collaborazioni</a></li>
+
+        <!-- ✅ COLLABORAZIONI con flyout desktop + accordion mobile -->
+        <li class="has-dropdown">
+          <a href="collaborazioni.html" class="dropdown-trigger" aria-expanded="false">
+            Collaborazioni
+          </a>
+
+          <!-- submenu -->
+          <ul class="dropdown-menu flyout-menu" aria-label="Sottomenu Collaborazioni">
+            <li><a href="collaborazioni.html">Iris Shero</a></li>
+          </ul>
+        </li>
+
         <li><a href="chi_siamo.html">Chi Siamo</a></li>
       </ul>
     </nav>
 
-    <!-- LOGO (nuovo) -->
+    <!-- LOGO -->
     <a class="logo" href="index.html" aria-label="33giri logo">
       <img
         src="logo 33 GIRI studiowhite  copia.png"
@@ -41,6 +53,7 @@
       position: relative;
       z-index: 100;
       background: #ffffff;
+      overflow: visible;
     }
 
     .wrap.header-inner{
@@ -48,6 +61,7 @@
       align-items:center;
       gap:16px;
       position: relative;
+      overflow: visible;
     }
 
     .nav-toggle{ display:none; }
@@ -81,7 +95,7 @@
     .menu-icon{ font-size:18px; line-height:1; }
     .menu-text{ font-size:14px; }
 
-    /* ===== LOGO (centrato davvero) ===== */
+    /* ===== LOGO ===== */
     .logo{
       flex: 1;
       display:flex;
@@ -92,13 +106,13 @@
     }
 
     .logo-img{
-      height: 145px;           /* <-- INGRANDITO (prima 120) */
+      height: 145px;
       width: auto;
       display:block;
       object-fit: contain;
     }
 
-    /* ===== DROPDOWN (desktop default) ===== */
+    /* ===== DROPDOWN MENU container ===== */
     .main-nav{
       position:absolute;
       top: calc(100% + 10px);
@@ -109,7 +123,7 @@
       border:1px solid rgba(44,36,22,0.14);
       border-radius:14px;
       box-shadow: 0 18px 40px rgba(0,0,0,0.10);
-      overflow:hidden;
+      overflow: visible;
 
       opacity:0;
       transform: translateY(-6px);
@@ -125,6 +139,7 @@
       display:flex;
       flex-direction:column;
       gap:6px;
+      overflow: visible;
     }
 
     .main-nav a{
@@ -159,22 +174,76 @@
       margin-left: 0;
     }
 
-    /* ===== MOBILE: dropdown full-width + logo un po’ più piccolo ===== */
+    /* ===============================
+       ✅ DESKTOP FLYOUT
+       =============================== */
+    .main-nav .has-dropdown { position: relative; }
+    .has-dropdown { padding-right: 14px; } /* ponte */
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+      margin-left: 12px;
+      margin-top: 0;
+
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 26px rgba(0, 0, 0, 0.14);
+      min-width: 210px;
+      padding: 10px 0;
+      list-style: none;
+      z-index: 9999;
+      overflow: visible;
+    }
+
+    /* mostra menu al hover (DESKTOP) */
+    .has-dropdown:hover > .dropdown-menu { display: block; }
+
+    .dropdown-menu li { margin: 0; padding: 0; }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 11px 18px;
+      color: var(--text);
+      font-size: 13px;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu a:hover {
+      background: #f7f6f2;
+      color: var(--accent);
+      transform: translateX(2px);
+    }
+
+    /* freccina su Collaborazioni (DESKTOP) */
+    .main-nav .has-dropdown > a {
+      position: relative;
+      padding-right: 18px;
+    }
+
+    .main-nav .has-dropdown > a::after {
+      content: "›";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.55;
+      font-size: 16px;
+    }
+
+    /* ===============================
+       ✅ MOBILE: submenu “accordion”
+       =============================== */
     @media (max-width: 768px){
-      #header{
-        position: relative;
-        z-index: 2000;
-        overflow: visible;
-      }
-
-      .wrap.header-inner{
-        gap:12px;
-      }
-
-      .menu-btn{
-        padding:10px 12px;
-      }
-
+      #header{ position: relative; z-index: 2000; overflow: visible; }
+      .wrap.header-inner{ gap:12px; overflow: visible; }
+      .menu-btn{ padding:10px 12px; }
       .menu-text{ display:none; }
 
       .main-nav{
@@ -185,9 +254,48 @@
         border-bottom-right-radius: 14px;
       }
 
-      .logo-img{
-        height: 115px;         /* <-- mobile */
+      .logo-img{ height: 115px; }
+
+      /* su mobile: NON flyout a destra */
+      .dropdown-menu{
+        position: static;
+        transform: none;
+        margin: 0;
+        min-width: 0;
+        box-shadow: none;
+        border-radius: 10px;
+        padding: 6px 0 0;
+        background: transparent;
+        display: none; /* chiuso di default */
       }
+
+      /* quando è aperto via JS */
+      .has-dropdown.is-open > .dropdown-menu{ display: block; }
+
+      /* stile “indentato” per Iris Shero */
+      .has-dropdown.is-open > .dropdown-menu a{
+        padding: 10px 12px 10px 20px;
+        font-size: 13px;
+        border-radius: 10px;
+        background: rgba(44,36,22,0.03);
+      }
+
+      .has-dropdown.is-open > .dropdown-menu a:hover{
+        background: rgba(44,36,22,0.06);
+      }
+
+      /* freccina che cambia direzione su mobile */
+      .main-nav .has-dropdown > a::after{
+        content: "▾";
+        opacity: 0.7;
+      }
+
+      .has-dropdown.is-open > a::after{
+        content: "▴";
+      }
+
+      /* IMPORTANT: su mobile disattivo l’hover */
+      .has-dropdown:hover > .dropdown-menu{ display: none; }
     }
   </style>
 
@@ -212,6 +320,50 @@
       // chiudi con ESC
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') toggle.checked = false;
+      });
+    })();
+
+    // ✅ MOBILE: tap su "Collaborazioni" apre/chiude Iris Shero
+    (function () {
+      const mq = window.matchMedia('(max-width: 768px)');
+      const li = document.querySelector('.main-nav .has-dropdown');
+      const trigger = li ? li.querySelector('.dropdown-trigger') : null;
+
+      if (!li || !trigger) return;
+
+      function setAria() {
+        trigger.setAttribute('aria-expanded', li.classList.contains('is-open') ? 'true' : 'false');
+      }
+
+      function enableMobileBehavior() {
+        // su mobile: tap non naviga, apre accordion
+        trigger.addEventListener('click', onTriggerClick);
+      }
+
+      function disableMobileBehavior() {
+        trigger.removeEventListener('click', onTriggerClick);
+        li.classList.remove('is-open');
+        setAria();
+      }
+
+      function onTriggerClick(e) {
+        if (!mq.matches) return; // desktop: lascia navigare
+        e.preventDefault();
+        li.classList.toggle('is-open');
+        setAria();
+      }
+
+      // init
+      if (mq.matches) enableMobileBehavior();
+      setAria();
+
+      // se cambi dimensione schermo
+      mq.addEventListener('change', (e) => {
+        if (e.matches) {
+          enableMobileBehavior();
+        } else {
+          disableMobileBehavior();
+        }
       });
     })();
   </script>
