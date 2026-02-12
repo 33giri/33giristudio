@@ -355,6 +355,17 @@ body {
 /* Dropdown menu styles */
 .main-nav .has-dropdown { position: relative; }
 
+/* ✅ IMPORTANTISSIMO: lascia uscire il flyout dal riquadro bianco del menu */
+.main-nav,
+.main-nav ul,
+#main-nav,
+#main-nav-list,
+.site-header,
+.header-inner,
+.wrap {
+  overflow: visible !important;
+}
+
 /* ✅ Dropdown che si apre A DESTRA (flyout) */
 .dropdown-menu {
   display: none;
@@ -373,7 +384,9 @@ body {
   min-width: 210px;
   padding: 10px 0;
   list-style: none;
-  z-index: 2000;
+
+  /* ✅ sopra al pannello menu */
+  z-index: 999999 !important;
 
   /* Important: lascia uscire il menu senza essere tagliato */
   overflow: visible;
@@ -415,6 +428,7 @@ body {
   opacity: 0.55;
   font-size: 16px;
 }
+
 /* Evita che il menu sparisca mentre ci entri col mouse */
 .has-dropdown {
   padding-right: 14px; /* crea un piccolo ponte */
