@@ -11,20 +11,31 @@
     </label>
 
     <!-- Dropdown -->
-    <nav class="main-nav" id="main-nav" role="navigation">
+    <nav class="main-nav" id="main-nav" role="navigation" aria-label="Menu principale">
       <ul id="main-nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="catalogo.html">Catalogo</a></li>
         <li><a href="quiz.html">33Quiz</a></li>
 
-        <!-- ✅ COLLABORAZIONI con flyout desktop + accordion mobile -->
-        <li class="has-dropdown">
-          <a href="collaborazioni.html" class="dropdown-trigger" aria-expanded="false">
-            Collaborazioni
-          </a>
+        <!-- ✅ Collaborazioni con sub-menu -->
+        <li class="has-dropdown" id="collab-item">
+          <div class="nav-row">
+            <a class="nav-link" href="collaborazioni.html">Collaborazioni</a>
 
-          <!-- submenu -->
-          <ul class="dropdown-menu flyout-menu" aria-label="Sottomenu Collaborazioni">
+            <!-- ✅ Freccetta cliccabile (serve per MOBILE) -->
+            <button
+              type="button"
+              class="dropdown-toggle"
+              aria-label="Apri sottomenù Collaborazioni"
+              aria-expanded="false"
+              aria-controls="collab-submenu"
+            >
+              <span class="chev">›</span>
+            </button>
+          </div>
+
+          <!-- ✅ Submenu: compare SOLO in hover (desktop) o click freccetta (mobile) -->
+          <ul class="dropdown-menu" id="collab-submenu" role="menu" aria-label="Sottomenù Collaborazioni">
             <li><a href="collaborazioni.html">Iris Shero</a></li>
           </ul>
         </li>
@@ -66,20 +77,18 @@
 
     .nav-toggle{ display:none; }
 
-    /* ===== BOTTONE MENU (desktop + mobile) ===== */
+    /* ===== BOTTONE MENU ===== */
     .menu-btn{
       display:inline-flex;
       align-items:center;
       gap:10px;
       cursor:pointer;
       user-select:none;
-
       padding:10px 14px;
       border-radius:999px;
       border:1px solid rgba(44,36,22,0.18);
       background: rgba(255,255,255,0.92);
       box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-
       color:#2c2416;
       font-weight:600;
       letter-spacing:0.2px;
@@ -112,7 +121,7 @@
       object-fit: contain;
     }
 
-    /* ===== DROPDOWN MENU container ===== */
+    /* ===== MENU PRINCIPALE (dropdown) ===== */
     .main-nav{
       position:absolute;
       top: calc(100% + 10px);
@@ -159,90 +168,101 @@
       outline:none;
     }
 
-    /* Toggle dropdown */
+    /* Toggle menu principale */
     .nav-toggle:checked + .menu-btn + .main-nav{
       opacity:1;
       transform: translateY(0);
       pointer-events:auto;
     }
 
-    /* header actions */
-    .header-actions{
+    /* ===== riga Collaborazioni + freccetta ===== */
+    .has-dropdown{ position: relative; }
+    .nav-row{
       display:flex;
       align-items:center;
-      gap:18px;
-      margin-left: 0;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .nav-link{
+      flex:1;
+      min-width:0;
     }
 
-    /* ===============================
-       ✅ DESKTOP FLYOUT
-       =============================== */
-    .main-nav .has-dropdown { position: relative; }
-    .has-dropdown { padding-right: 14px; } /* ponte */
-
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-
-      top: 50%;
-      left: 100%;
-      transform: translateY(-50%);
-      margin-left: 12px;
-      margin-top: 0;
-
-      background: #fff;
+    .dropdown-toggle{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      background: transparent;
       border-radius: 10px;
-      box-shadow: 0 6px 26px rgba(0, 0, 0, 0.14);
-      min-width: 210px;
-      padding: 10px 0;
-      list-style: none;
-      z-index: 9999;
+      cursor: pointer;
+      transition: background .15s ease, transform .15s ease;
+    }
+    .dropdown-toggle:hover{
+      background: rgba(44,36,22,0.06);
+      transform: translateX(1px);
+    }
+    .dropdown-toggle .chev{
+      font-size: 18px;
+      opacity: .65;
+      line-height: 1;
+    }
+
+    /* ===== SUBMENU (Iris Shero) - DI DEFAULT NASCOSTO OVUNQUE ===== */
+    .dropdown-menu{
+      display:none;
+      list-style:none;
+      margin:0;
+      padding:10px 0;
+      background:#fff;
+      border-radius:10px;
+      box-shadow: 0 6px 26px rgba(0,0,0,0.14);
+      min-width:210px;
+      z-index: 3000;
       overflow: visible;
     }
 
-    /* mostra menu al hover (DESKTOP) */
-    .has-dropdown:hover > .dropdown-menu { display: block; }
-
-    .dropdown-menu li { margin: 0; padding: 0; }
-
-    .dropdown-menu a {
-      display: block;
-      padding: 11px 18px;
-      color: var(--text);
-      font-size: 13px;
-      text-decoration: none;
+    .dropdown-menu a{
+      display:block;
+      padding:11px 18px;
+      color:#2c2416;
+      font-size:13px;
+      text-decoration:none;
       transition: background 0.2s ease, transform 0.15s ease;
       white-space: nowrap;
     }
-
-    .dropdown-menu a:hover {
-      background: #f7f6f2;
-      color: var(--accent);
+    .dropdown-menu a:hover{
+      background:#f7f6f2;
+      color: #5a7fa0;
       transform: translateX(2px);
     }
 
-    /* freccina su Collaborazioni (DESKTOP) */
-    .main-nav .has-dropdown > a {
-      position: relative;
-      padding-right: 18px;
+    /* =========================
+       DESKTOP: flyout A DESTRA solo in HOVER
+       ========================= */
+    @media (min-width: 769px){
+      .dropdown-menu{
+        position:absolute;
+        top: 50%;
+        left: 100%;
+        transform: translateY(-50%);
+        margin-left: 12px;
+      }
+
+      /* ✅ appare solo passando su Collaborazioni (anche sulla freccetta) */
+      .has-dropdown:hover > .dropdown-menu{
+        display:block;
+      }
     }
 
-    .main-nav .has-dropdown > a::after {
-      content: "›";
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.55;
-      font-size: 16px;
-    }
-
-    /* ===============================
-       ✅ MOBILE: submenu “accordion”
-       =============================== */
+    /* =========================
+       MOBILE: submenu sotto, SOLO se clicchi la freccetta
+       ========================= */
     @media (max-width: 768px){
       #header{ position: relative; z-index: 2000; overflow: visible; }
-      .wrap.header-inner{ gap:12px; overflow: visible; }
+      .wrap.header-inner{ gap:12px; }
       .menu-btn{ padding:10px 12px; }
       .menu-text{ display:none; }
 
@@ -256,114 +276,100 @@
 
       .logo-img{ height: 115px; }
 
-      /* su mobile: NON flyout a destra */
       .dropdown-menu{
         position: static;
         transform: none;
-        margin: 0;
-        min-width: 0;
+        margin-left: 0;
+        margin-top: 6px;
         box-shadow: none;
-        border-radius: 10px;
-        padding: 6px 0 0;
-        background: transparent;
-        display: none; /* chiuso di default */
+        border: 1px solid rgba(44,36,22,0.10);
+        border-radius: 12px;
+        padding: 6px 0;
+        background: #fff;
       }
 
-      /* quando è aperto via JS */
-      .has-dropdown.is-open > .dropdown-menu{ display: block; }
-
-      /* stile “indentato” per Iris Shero */
-      .has-dropdown.is-open > .dropdown-menu a{
-        padding: 10px 12px 10px 20px;
-        font-size: 13px;
-        border-radius: 10px;
-        background: rgba(44,36,22,0.03);
+      /* ✅ SOLO quando metto la classe "is-open" (via JS) */
+      .has-dropdown.is-open > .dropdown-menu{
+        display:block;
       }
-
-      .has-dropdown.is-open > .dropdown-menu a:hover{
-        background: rgba(44,36,22,0.06);
-      }
-
-      /* freccina che cambia direzione su mobile */
-      .main-nav .has-dropdown > a::after{
-        content: "▾";
-        opacity: 0.7;
-      }
-
-      .has-dropdown.is-open > a::after{
-        content: "▴";
-      }
-
-      /* IMPORTANT: su mobile disattivo l’hover */
-      .has-dropdown:hover > .dropdown-menu{ display: none; }
     }
   </style>
 
   <script>
-    // Chiude il menu quando clicchi su un link o fuori dal menu
     (function () {
       const toggle = document.getElementById('nav-toggle');
       const nav = document.getElementById('main-nav');
       const btn = document.querySelector('label[for="nav-toggle"]');
 
-      // chiudi quando clicchi un link
+      const collabItem = document.getElementById('collab-item');
+      const collabBtn = collabItem ? collabItem.querySelector('.dropdown-toggle') : null;
+      const submenu = document.getElementById('collab-submenu');
+
+      function closeSubmenu() {
+        if (!collabItem) return;
+        collabItem.classList.remove('is-open');
+        if (collabBtn) collabBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      function toggleSubmenu() {
+        if (!collabItem) return;
+        const isOpen = collabItem.classList.toggle('is-open');
+        if (collabBtn) collabBtn.setAttribute('aria-expanded', String(isOpen));
+      }
+
+      // ✅ MOBILE: apri/chiudi SOLO cliccando la freccetta
+      if (collabBtn) {
+        collabBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleSubmenu();
+        });
+      }
+
+      // chiudi submenu quando clicchi un link del submenu
+      if (submenu) {
+        submenu.addEventListener('click', (e) => {
+          if (e.target.tagName === 'A') {
+            closeSubmenu();
+            toggle.checked = false; // chiude anche il menu principale
+          }
+        });
+      }
+
+      // chiudi menu principale quando clicchi un link normale
       nav.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A') toggle.checked = false;
+        if (e.target.tagName === 'A') {
+          // se clicchi "Collaborazioni" (link), lasciamo navigare e chiudiamo tutto
+          closeSubmenu();
+          toggle.checked = false;
+        }
       });
 
       // chiudi quando clicchi fuori
       document.addEventListener('click', (e) => {
         const clickedInside = nav.contains(e.target) || btn.contains(e.target);
-        if (!clickedInside) toggle.checked = false;
+        if (!clickedInside) {
+          toggle.checked = false;
+          closeSubmenu();
+        }
       });
 
       // chiudi con ESC
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') toggle.checked = false;
-      });
-    })();
-
-    // ✅ MOBILE: tap su "Collaborazioni" apre/chiude Iris Shero
-    (function () {
-      const mq = window.matchMedia('(max-width: 768px)');
-      const li = document.querySelector('.main-nav .has-dropdown');
-      const trigger = li ? li.querySelector('.dropdown-trigger') : null;
-
-      if (!li || !trigger) return;
-
-      function setAria() {
-        trigger.setAttribute('aria-expanded', li.classList.contains('is-open') ? 'true' : 'false');
-      }
-
-      function enableMobileBehavior() {
-        // su mobile: tap non naviga, apre accordion
-        trigger.addEventListener('click', onTriggerClick);
-      }
-
-      function disableMobileBehavior() {
-        trigger.removeEventListener('click', onTriggerClick);
-        li.classList.remove('is-open');
-        setAria();
-      }
-
-      function onTriggerClick(e) {
-        if (!mq.matches) return; // desktop: lascia navigare
-        e.preventDefault();
-        li.classList.toggle('is-open');
-        setAria();
-      }
-
-      // init
-      if (mq.matches) enableMobileBehavior();
-      setAria();
-
-      // se cambi dimensione schermo
-      mq.addEventListener('change', (e) => {
-        if (e.matches) {
-          enableMobileBehavior();
-        } else {
-          disableMobileBehavior();
+        if (e.key === 'Escape') {
+          toggle.checked = false;
+          closeSubmenu();
         }
+      });
+
+      // quando chiudi il menu principale, chiudi anche il submenu
+      toggle.addEventListener('change', () => {
+        if (!toggle.checked) closeSubmenu();
+      });
+
+      // su resize da mobile->desktop, resetto stato mobile
+      window.addEventListener('resize', () => {
+        closeSubmenu();
       });
     })();
   </script>
