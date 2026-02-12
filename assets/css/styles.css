@@ -351,86 +351,73 @@ body {
 
 .main-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
 
+
 /* Dropdown menu styles */
 .main-nav .has-dropdown { position: relative; }
 
+/* ✅ Dropdown che si apre A DESTRA (flyout) */
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-  min-width: 180px;
-  padding: 8px 0;
-  margin-top: 8px;
-  list-style: none;
-  z-index: 1000;
 
-  /* Important: lascia uscire il flyout senza essere tagliato */
+  /* invece che scendere sotto, si apre a destra */
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  margin-left: 12px;
+  margin-top: 0;
+
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 26px rgba(0, 0, 0, 0.14);
+  min-width: 210px;
+  padding: 10px 0;
+  list-style: none;
+  z-index: 2000;
+
+  /* Important: lascia uscire il menu senza essere tagliato */
   overflow: visible;
 }
 
-.has-dropdown:hover .dropdown-menu { display: block; }
+/* mostra menu al hover */
+.has-dropdown:hover > .dropdown-menu { display: block; }
 
 .dropdown-menu li { margin: 0; padding: 0; }
 
 .dropdown-menu a {
   display: block;
-  padding: 10px 18px;
+  padding: 11px 18px;
   color: var(--text);
   font-size: 13px;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
 }
 
 .dropdown-menu a:hover {
   background: #f7f6f2;
   color: var(--accent);
+  transform: translateX(2px);
 }
 
-/* ===========================
-   FLYOUT (sottomenu a destra)
-   =========================== */
-
-/* il li che contiene un sottomenu laterale */
-.dropdown-menu .has-flyout { position: relative; }
-
-/* sottomenu laterale */
-.dropdown-menu .flyout-menu {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  margin-left: 8px;
-
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-  min-width: 180px;
-  padding: 8px 0;
-  list-style: none;
-  z-index: 2000;
-}
-
-/* mostra flyout al hover */
-.dropdown-menu .has-flyout:hover > .flyout-menu { display: block; }
-
-/* freccina ">" per capire che c'è un secondo livello */
-.dropdown-menu .has-flyout > a {
+/* piccola freccina sul link "Collaborazioni" per far capire che apre un menu */
+.main-nav .has-dropdown > a {
   position: relative;
-  padding-right: 34px; /* spazio per freccia */
-  white-space: nowrap;
+  padding-right: 18px;
 }
-.dropdown-menu .has-flyout > a::after {
+
+.main-nav .has-dropdown > a::after {
   content: "›";
   position: absolute;
-  right: 14px;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
-  opacity: 0.6;
+  opacity: 0.55;
   font-size: 16px;
+}
+/* Evita che il menu sparisca mentre ci entri col mouse */
+.has-dropdown {
+  padding-right: 14px; /* crea un piccolo ponte */
 }
 
 /* link dentro al flyout */
