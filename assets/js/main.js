@@ -228,7 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ==========================================
    Collaborazioni dropdown A DESTRA (lista artisti)
-   Collaborazioni -> Iris Shero (per ora)
+   Desktop: hover su Collaborazioni
+   Mobile: click sulla freccetta
+   Collaborazioni (testo) resta un link verso collaborazioni.html
    ========================================== */
 function initCollaborazioniFlyout() {
   const nav = document.querySelector('.main-nav');
@@ -247,38 +249,104 @@ function initCollaborazioniFlyout() {
 
   if (!collabLink) return;
 
-  // Rendo "Collaborazioni" un trigger (non naviga)
-  collabLink.href = '#';
-  collabLink.setAttribute('aria-haspopup', 'true');
-  collabLink.addEventListener('click', (e) => e.preventDefault());
-
   const li = collabLink.closest('li');
   if (!li) return;
 
   li.classList.add('has-dropdown');
+  li.setAttribute('id', li.id || 'collab-item');
 
-  // Dropdown menu (se non esiste, lo crea)
+  // ✅ Collaborazioni DEVE restare un link vero
+  // (se per caso era stato trasformato in '#', lo ripristino)
+  if (!collabLink.getAttribute('href') || collabLink.getAttribute('href') === '#') {
+    collabLink.setAttribute('href', 'collaborazioni.html');
+  }
+
+  collabLink.setAttribute('aria-haspopup', 'true');
+
+  // Dropdown menu (se non esiste, lo crea) — deve essere figlio diretto di <li>
   let dropdown = li.querySelector(':scope > .dropdown-menu');
   if (!dropdown) {
     dropdown = document.createElement('ul');
     dropdown.className = 'dropdown-menu';
+    dropdown.id = 'collab-submenu';
     li.appendChild(dropdown);
   }
 
-  // Evita duplicati
+  // ✅ Freccetta: la creo SOLO una volta
+  // Serve a mobile per aprire/chiudere il submenu senza navigare
+  let toggleBtn = li.querySelector(':scope > .dropdown-toggle');
+  if (!toggleBtn) {
+    toggleBtn = document.createElement('button');
+    toggleBtn.type = 'button';
+    toggleBtn.className = 'dropdown-toggle';
+    toggleBtn.setAttribute('aria-label', 'Apri sottomenù Collaborazioni');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.setAttribute('aria-controls', dropdown.id || 'collab-submenu');
+    toggleBtn.innerHTML = '<span class="chev">›</span>';
+
+    // Inserisco la freccetta subito dopo il link "Collaborazioni"
+    collabLink.insertAdjacentElement('afterend', toggleBtn);
+  }
+
+  // Evita duplicati Iris
   const already = Array.from(dropdown.querySelectorAll('a')).some(a =>
     a.textContent.trim().toLowerCase() === 'iris shero'
   );
-  if (already) return;
+  if (!already) {
+    const irisLi = document.createElement('li');
+    const irisA = document.createElement('a');
+    irisA.href = 'collaborazioni.html';
+    irisA.textContent = 'Iris Shero';
+    irisLi.appendChild(irisA);
+    dropdown.appendChild(irisLi);
+  }
 
-  // === ARTISTI (per ora uno) ===
-  const irisLi = document.createElement('li');
-  const irisA = document.createElement('a');
-  irisA.href = 'collaborazioni.html';
-  irisA.textContent = 'Iris Shero';
-  irisLi.appendChild(irisA);
+  // ====== MOBILE: click SOLO sulla freccetta ======
+  function closeSubmenu() {
+    li.classList.remove('is-open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+  }
 
-  dropdown.appendChild(irisLi);
+  function toggleSubmenu(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const isOpen = li.classList.toggle('is-open');
+    toggleBtn.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  // Rimuovo eventuali vecchi listener duplicati
+  toggleBtn.onclick = null;
+  toggleBtn.addEventListener('click', toggleSubmenu);
+
+  // Se clicchi un link del submenu: chiudi submenu e (su mobile) anche il menu principale se c'è
+  dropdown.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      closeSubmenu();
+
+      // chiudi menu principale (se usi nav-toggle)
+      const navToggle = document.getElementById('nav-toggle');
+      if (navToggle) navToggle.checked = false;
+    }
+  });
+
+  // Click fuori: chiudi submenu (mobile)
+  document.addEventListener('click', (e) => {
+    const clickedInside = li.contains(e.target);
+    if (!clickedInside) closeSubmenu();
+  });
+
+  // ESC: chiudi submenu (mobile)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSubmenu();
+  });
+
+  // Se chiudi il menu principale: chiudi anche submenu
+  const navToggle = document.getElementById('nav-toggle');
+  if (navToggle) {
+    navToggle.addEventListener('change', () => {
+      if (!navToggle.checked) closeSubmenu();
+    });
+  }
 }
 
 // Language switcher IT/EN - Sistema completo multi-pagina
