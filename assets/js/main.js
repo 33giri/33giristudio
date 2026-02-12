@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
           initLanguageSwitcher();
         }
 
-        // Inietta dropdown + flyout Collaborazioni dopo che l'header è stato caricato
+        // Inietta dropdown Collaborazioni (lista artisti) dopo che l'header è stato caricato
         if (typeof initCollaborazioniFlyout === 'function') {
           initCollaborazioniFlyout();
         }
@@ -221,24 +221,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
     
-    contactInfo.addEventListener('input', checkAndAutoSend);
-    messageField.addEventListener('input', checkAndAutoSend);
+    if (contactInfo) contactInfo.addEventListener('input', checkAndAutoSend);
+    if (messageField) messageField.addEventListener('input', checkAndAutoSend);
   }
 });
 
 /* ==========================================
-   Collaborazioni dropdown + flyout a destra
-   Collaborazioni -> Iris Shero -> Metamorfosi
+   Collaborazioni dropdown A DESTRA (lista artisti)
+   Collaborazioni -> Iris Shero (per ora)
    ========================================== */
 function initCollaborazioniFlyout() {
   const nav = document.querySelector('.main-nav');
   if (!nav) return;
 
-  // Trova il link top-level "Collaborazioni" (robusto: prima per href, poi per testo)
+  // Prendo solo i link top-level (così non sballa con dropdown interni)
   const topLevelLinks = Array.from(nav.querySelectorAll('a')).filter(a => {
     return !a.closest('.dropdown-menu') && !a.closest('.flyout-menu');
   });
 
+  // Trova "Collaborazioni" in modo robusto (href o testo IT/EN)
   const collabLink =
     topLevelLinks.find(a => (a.getAttribute('href') || '').toLowerCase().includes('collaborazioni')) ||
     topLevelLinks.find(a => a.textContent.trim().toLowerCase() === 'collaborazioni') ||
@@ -246,12 +247,17 @@ function initCollaborazioniFlyout() {
 
   if (!collabLink) return;
 
+  // Rendo "Collaborazioni" un trigger (non naviga)
+  collabLink.href = '#';
+  collabLink.setAttribute('aria-haspopup', 'true');
+  collabLink.addEventListener('click', (e) => e.preventDefault());
+
   const li = collabLink.closest('li');
   if (!li) return;
 
   li.classList.add('has-dropdown');
 
-  // Dropdown menu di primo livello (se non esiste, lo crea)
+  // Dropdown menu (se non esiste, lo crea)
   let dropdown = li.querySelector(':scope > .dropdown-menu');
   if (!dropdown) {
     dropdown = document.createElement('ul');
@@ -265,27 +271,13 @@ function initCollaborazioniFlyout() {
   );
   if (already) return;
 
-  // Crea: Iris Shero -> flyout: Metamorfosi
+  // === ARTISTI (per ora uno) ===
   const irisLi = document.createElement('li');
-  irisLi.className = 'has-flyout';
-
   const irisA = document.createElement('a');
-  irisA.href = '#';
+  irisA.href = 'collaborazioni.html';
   irisA.textContent = 'Iris Shero';
-  irisA.setAttribute('aria-haspopup', 'true');
-
-  const fly = document.createElement('ul');
-  fly.className = 'flyout-menu';
-
-  const metaLi = document.createElement('li');
-  const metaA = document.createElement('a');
-  metaA.href = 'collaborazioni.html';
-  metaA.textContent = 'Metamorfosi';
-  metaLi.appendChild(metaA);
-
-  fly.appendChild(metaLi);
   irisLi.appendChild(irisA);
-  irisLi.appendChild(fly);
+
   dropdown.appendChild(irisLi);
 }
 
