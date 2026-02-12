@@ -294,7 +294,31 @@
       }
     }
   </style>
+  <style>
+  /* ... tutto il tuo CSS del menu ... */
 
+  /* ====== AGGIUNGI QUI SOTTO ====== */
+  .has-dropdown { position: relative; }
+
+  .dropdown-toggle{
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 10px;
+    margin-left: 6px;
+  }
+  .dropdown-toggle .chev{
+    font-size: 16px;
+    opacity: .55;
+  }
+
+  /* Mobile: submenu sotto e solo con .is-open */
+  @media (max-width: 768px){
+    .dropdown-menu{ position: static; transform:none; margin-left:0; box-shadow:none; }
+    .has-dropdown.is-open > .dropdown-menu{ display:block; }
+  }
+  </style>
   <script>
     (function () {
       const toggle = document.getElementById('nav-toggle');
@@ -371,6 +395,7 @@
       window.addEventListener('resize', () => {
         closeSubmenu();
       });
+      
     })();
   </script>
 </header>
