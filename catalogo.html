@@ -161,6 +161,43 @@
       transform: translateY(-5px) scale(1.05);
       box-shadow: 0 15px 60px rgba(0,0,0,0.3);
     }
+
+    /* ====== NUOVO PULSANTE "Scegli il tuo" sotto l'hero CTA ====== */
+    .hero-cta-secondary {
+      display: inline-block;
+      padding: 18px 50px;
+      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
+      color: #5d4e37;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      border-radius: 50px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      margin-top: 14px; /* spazio sotto "Esplora la Collezione" */
+    }
+
+    .hero-cta-secondary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      transition: left 0.5s;
+    }
+
+    .hero-cta-secondary:hover::before {
+      left: 100%;
+    }
+
+    .hero-cta-secondary:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 60px rgba(0,0,0,0.3);
+    }
     
     .hero-images {
       display: grid;
@@ -776,6 +813,14 @@
       .vinyl-locked-title {
         font-size: 1.4rem;
       }
+
+      /* Hero CTA secondary full width on mobile (optional but nice) */
+      .hero-cta,
+      .hero-cta-secondary{
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+      }
     }
     
     @media (max-width: 480px) {
@@ -819,6 +864,16 @@
           <span>Sconti fino al 25%</span>
         </div>
         <a href="https://upcycled-vinyl.emergent.host" class="hero-cta">Esplora la Collezione</a>
+
+        <!-- ✅ NUOVO PULSANTE sotto "Esplora la Collezione" -->
+        <a
+          href="https://upcycled-vinyl.emergent.host"
+          class="hero-cta-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Scegli il tuo
+        </a>
       </div>
       <div class="hero-images">
         <div class="hero-image">
@@ -1003,8 +1058,7 @@
           <button class="vinyl-button" data-style="Posacenere 45 giri - Spiral">Voglio Questo Stile</button>
         </div>
       </div>
-
-
+    </div>
 
     <!-- BLOCCO SOTTO LE CARD: TITOLO + PULSANTE CATALOGO -->
     <div class="collection-extra">
@@ -1167,6 +1221,8 @@
         block: 'start' 
       });
     });
+
+    // (Il nuovo pulsante "Scegli il tuo" apre direttamente il catalogo in nuova scheda: nessuno scroll)
     
     // Click sui bottoni -> precompila messaggio + scroll alla sezione contatti
     const vinylButtons = document.querySelectorAll('.vinyl-button');
