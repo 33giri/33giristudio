@@ -95,79 +95,19 @@
     .hero-subtitle {
       font-size: 1.5rem;
       color: #f5f0e8;
-      margin-bottom: 20px;
+      margin-bottom: 26px; /* un filo più stretto perché ora ci va sotto il bottone */
       font-weight: 300;
       line-height: 1.6;
       text-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
 
-    /* Piccolo decoro di Natale nell'hero */
-    .hero-xmas-decor {
-      font-size: 0.95rem;
-      color: #f5f0e8;
-      margin-bottom: 40px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(4px);
-      animation: twinkle 2.4s ease-in-out infinite;
-    }
+    /* ✅ RIMOSSO: decoro sconti / natalizio */
+    .hero-xmas-decor { display: none !important; }
 
-    .hero-xmas-decor span {
-      display: inline-block;
-    }
+    /* (Esplora la Collezione) nascosto */
+    .hero-cta { display: none !important; }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.9; transform: translateY(0); }
-      50% { opacity: 1; transform: translateY(-2px); }
-    }
-    
-    .hero-cta {
-      display: inline-block;
-      padding: 18px 50px;
-      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
-      color: #5d4e37;
-      font-weight: 700;
-      font-size: 1.1rem;
-      text-decoration: none;
-      border-radius: 50px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .hero-cta::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-      transition: left 0.5s;
-    }
-    
-    .hero-cta:hover::before {
-      left: 100%;
-    }
-    
-    .hero-cta:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 60px rgba(0,0,0,0.3);
-    }
-
-    /* ✅ NASCONDI PULSANTE "Esplora la Collezione" */
-    .hero-cta {
-      display: none !important;
-    }
-
-    /* ====== PULSANTE "Scegli il tuo" ====== */
+    /* ====== PULSANTE sotto la subtitle ====== */
     .hero-cta-secondary {
       display: inline-block;
       padding: 18px 50px;
@@ -181,7 +121,7 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
-      margin-top: 0; /* non serve più spazio sopra */
+      margin-top: 0; /* ora è già sotto la subtitle */
     }
 
     .hero-cta-secondary::before {
@@ -272,45 +212,8 @@
       box-shadow: 0 -20px 80px rgba(0,0,0,0.1);
     }
 
-    /* Banner di Natale sopra la collezione */
-    .christmas-ribbon {
-      max-width: 900px;
-      margin: 0 auto 26px auto;
-      padding: 10px 20px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(139,115,85,0.18), rgba(184,60,60,0.28));
-      color: #5d4e37;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .christmas-ribbon::before,
-    .christmas-ribbon::after {
-      content: '';
-      position: absolute;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.35);
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.5;
-    }
-
-    .christmas-ribbon::before { left: -40px; }
-    .christmas-ribbon::after { right: -40px; }
-
-    .christmas-emoji {
-      font-size: 1.1rem;
-    }
+    /* ✅ RIMOSSO: banner sconti sopra collezione */
+    .christmas-ribbon { display: none !important; }
     
     .section-title {
       text-align: center;
@@ -447,39 +350,11 @@
       margin-bottom: 30px;
     }
 
-    .vinyl-card-price {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #8B7355;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .vinyl-card-price .old-price {
-      text-decoration: line-through;
-      opacity: 0.6;
-      font-weight: 400;
-    }
-
-    .vinyl-card-price .new-price {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #b4443b;
-    }
-
-    .vinyl-card-price .discount-tag {
-      font-size: 0.9rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(180, 68, 59, 0.08);
-      color: #b4443b;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+    /* ✅ RIMOSSO: prezzi scontati (old/new/discount) */
+    .vinyl-card-price { display: none !important; }
+    .vinyl-card-price .old-price,
+    .vinyl-card-price .new-price,
+    .vinyl-card-price .discount-tag { display: none !important; }
     
     .vinyl-button {
       width: 100%;
@@ -589,28 +464,28 @@
 .collection-extra{
   width: 100%;
   max-width: 800px;
-  margin: 60px auto 0;      /* auto = centra il blocco */
+  margin: 60px auto 0;
   padding: 0 20px;
   text-align: center;
 
-  display: flex;            /* centra anche il bottone */
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;                /* spazio tra titolo e bottone */
+  gap: 20px;
 }
 
 .collection-extra-title{
   font-size: 1.6rem;
   color: #5d4e37;
   line-height: 1.4;
-  margin: 0;                /* gestito dal gap */
+  margin: 0;
 }
 
 .collection-extra-btn{
-  display: inline-flex;     /* migliore del block per centratura */
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;       /* evita che si allarghi */
+  width: fit-content;
   max-width: 100%;
 
   padding: 16px 40px;
@@ -819,7 +694,6 @@
         font-size: 1.4rem;
       }
 
-      /* Hero CTA secondary full width on mobile (optional but nice) */
       .hero-cta-secondary{
         width: 100%;
         max-width: 360px;
@@ -863,15 +737,8 @@
       <div class="hero-text">
         <h1 class="hero-title">Vinili Unici<br>Fatti a Mano</h1>
         <p class="hero-subtitle">Scopri il 33Catalogo.</p>
-        <div class="hero-xmas-decor">
-          <span>✨</span>
-          <span>Sconti fino al 25%</span>
-        </div>
 
-        <!-- (Esplora la Collezione nascosto via CSS) -->
-        <a href="https://upcycled-vinyl.emergent.host" class="hero-cta">Esplora la Collezione</a>
-
-        <!-- ✅ Rimane solo questo -->
+        <!-- ✅ PULSANTE SOTTO LA SUBTITLE -->
         <a
           href="https://33giri.github.io/33giri/"
           class="hero-cta-secondary"
@@ -880,7 +747,11 @@
         >
           33Catalogo
         </a>
+
+        <!-- (Esplora la Collezione nascosto via CSS) -->
+        <a href="https://upcycled-vinyl.emergent.host" class="hero-cta">Esplora la Collezione</a>
       </div>
+
       <div class="hero-images">
         <div class="hero-image">
           <img src="P1070198.JPG" alt="33 Giri Atelier">
@@ -897,10 +768,7 @@
 
   <!-- Collection Section -->
   <section class="collection-section" id="collection">
-    <div class="christmas-ribbon">
-      <span>Sconti su Svuotatasche e Posacenere</span>
-      <span class="christmas-emoji">⭐️</span>
-    </div>
+    <!-- (banner sconti rimosso) -->
 
     <h2 class="section-title">Le Collezioni</h2>
     <p class="section-subtitle">Svuotatasche e Posacenere: tre stili, pezzi unici, fatti a mano.</p>
@@ -976,7 +844,6 @@
           </div>
         </div>
 
-        <!-- (Contenuto nascosto dalla classe is-locked) -->
         <div class="vinyl-card-header">
           <img src="IMG_3986.jpeg" alt="Metamorfosi — Iris Shero x 33Giri">
           <span class="vinyl-badge">METAMORFOSI</span>
@@ -1000,7 +867,6 @@
 
     <!-- =========================
          COLLEZIONE POSACENERE (45 giri)
-         collegata a pulsante index: #posacenere
          ========================= -->
     <div id="posacenere"></div>
     <h3 class="collection-block-title">Collezione Posacenere</h3>
@@ -1062,7 +928,6 @@
       </div>
     </div>
 
-    <!-- BLOCCO SOTTO LE CARD: TITOLO + PULSANTE CATALOGO -->
     <div class="collection-extra">
       <h3 class="collection-extra-title">
         Vuoi vedere tutti i vinili disponibili, divisi per stile e artista?
@@ -1128,16 +993,7 @@
       
       <div class="gallery-item item-medium" style="animation-delay: 1.5s;"><img src="IMG_5492.jpg" alt="Vinile 7"></div>
       
-      <div class="text-card text-medium" style="animation-delay: 1.6s;">
-        <h3>Prezzi in promo (-20%)</h3>
-        <p>Due collezioni, tre stili:</p>
-        <ul>
-          <li>Svuotatasche — Normal 20€ (da 25€)</li>
-          <li>Svuotatasche — Splash/Spiral 25€ (da 31€)</li>
-          <li>Posacenere 45giri — Normal 15€ (da 18,75€)</li>
-          <li>Posacenere 45giri — Splash/Touch 17€ (da 21,25€)</li>
-        </ul>
-      </div>
+      <!-- ✅ RIMOSSO: box "Prezzi in promo" (era solo sconti) -->
       
       <div class="gallery-item item-small" style="animation-delay: 1.7s;"><img src="assets/atelier 33 giri/20251110-IMG_4972.jpg" alt="Vinile 8"></div>
     </div>
@@ -1207,25 +1063,11 @@
         </article>
       `).join('');
     }
-
-    // Header/Footer caricati da assets/js/layout.js con fallback
   </script>
 
   <script>
-  // Gestione interazioni pagina (hero, gallery, lightbox, form contatti)
   document.addEventListener('DOMContentLoaded', function() {
 
-    // ✅ DISABILITO lo smooth scroll per il bottone "Esplora la Collezione" (che è nascosto)
-    // document.querySelector('.hero-cta')?.addEventListener('click', function(e) {
-    //   e.preventDefault();
-    //   document.getElementById('collection').scrollIntoView({ 
-    //     behavior: 'smooth', 
-    //     block: 'start' 
-    //   });
-    // });
-
-    // (Il pulsante "Scegli il tuo" apre direttamente il catalogo in nuova scheda)
-    
     // Click sui bottoni -> precompila messaggio + scroll alla sezione contatti
     const vinylButtons = document.querySelectorAll('.vinyl-button');
     vinylButtons.forEach(btn => {
@@ -1234,17 +1076,11 @@
         const messageField = document.getElementById('message');
         const contactSection = document.querySelector('.contact-section');
         
-        // Animazione click
         this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          this.style.transform = '';
-        }, 200);
+        setTimeout(() => { this.style.transform = ''; }, 200);
         
         if (contactSection) {
-          contactSection.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-          });
+          contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         
         setTimeout(() => {
@@ -1306,10 +1142,7 @@
         const contactSection = document.getElementById('contatti');
         if (contactSection) {
           setTimeout(() => {
-            contactSection.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'center' 
-            });
+            contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
             messageField.focus();
           }, 500);
         }
@@ -1317,11 +1150,7 @@
     }
     
     // Intersection Observer per animazioni scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-    
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
     const observer = new IntersectionObserver(function(entries) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1331,9 +1160,7 @@
       });
     }, observerOptions);
     
-    document.querySelectorAll('.vinyl-card, .gallery-item').forEach(el => {
-      observer.observe(el);
-    });
+    document.querySelectorAll('.vinyl-card, .gallery-item').forEach(el => observer.observe(el));
 
     /* -------------------------
        GESTIONE FORM CONTATTI
@@ -1346,7 +1173,6 @@
     const messageField = document.getElementById('message');
 
     if (form && methodSelect && messageField) {
-      // Mostra il campo extra SOLO per la mail
       methodSelect.addEventListener('change', () => {
         const method = methodSelect.value;
 
@@ -1356,73 +1182,49 @@
           contactInfo.placeholder = 'nome@example.com';
           contactInfo.required = true;
         } else {
-          // WhatsApp e Instagram: niente campo extra
           contactInfoGroup.style.display = 'none';
           contactInfo.value = '';
           contactInfo.required = false;
         }
       });
 
-      // Submit MANUALE
       form.addEventListener('submit', (e) => {
-        e.preventDefault(); // blocca l’invio classico del form
+        e.preventDefault();
 
         const method = methodSelect.value;
         const info = contactInfo.value.trim();
         const message = messageField.value.trim();
 
-        if (!method) {
-          alert('Seleziona un metodo di contatto.');
-          return;
-        }
-
-        if (!message) {
-          alert('Scrivi un messaggio.');
-          return;
-        }
+        if (!method) { alert('Seleziona un metodo di contatto.'); return; }
+        if (!message) { alert('Scrivi un messaggio.'); return; }
 
         let url = '';
 
         if (method === 'email') {
-          if (!info) {
-            alert('Inserisci la tua email.');
-            return;
-          }
-
+          if (!info) { alert('Inserisci la tua email.'); return; }
           const body = `${message}\n\nEmail di contatto: ${info}`;
           const encodedBody = encodeURIComponent(body);
-
-          // Mail di 33Giri
           url = `mailto:33giristudios@gmail.com?subject=Richiesta%20pezzo%20unico&body=${encodedBody}`;
         }
 
         if (method === 'whatsapp') {
-          // Messaggio visibile nella chat WhatsApp
           const encodedMessage = encodeURIComponent(message);
-
-          // Numero WhatsApp di 33Giri (senza +, con prefisso 39)
           const numeroWhatsApp = '393471692948';
           url = `https://wa.me/${numeroWhatsApp}?text=${encodedMessage}`;
         }
 
         if (method === 'instagram') {
-          // Apri i DM di Instagram con il profilo di 33Giri
           const handleInstagram = '33giri.studio';
           url = `https://ig.me/m/${handleInstagram}`;
 
-          // Copia il messaggio negli appunti così l’utente lo incolla nella chat
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(message).then(() => {
               alert('Si aprirà Instagram: il messaggio è stato copiato negli appunti, incollalo nella chat DM.');
-            }).catch(() => {
-              // fallback, nessun blocco
-            });
+            }).catch(() => {});
           }
         }
 
-        if (url) {
-          window.open(url, '_blank');
-        }
+        if (url) window.open(url, '_blank');
       });
     }
   });
