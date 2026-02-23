@@ -162,7 +162,12 @@
       box-shadow: 0 15px 60px rgba(0,0,0,0.3);
     }
 
-    /* ====== NUOVO PULSANTE "Scegli il tuo" sotto l'hero CTA ====== */
+    /* ✅ NASCONDI PULSANTE "Esplora la Collezione" */
+    .hero-cta {
+      display: none !important;
+    }
+
+    /* ====== PULSANTE "Scegli il tuo" ====== */
     .hero-cta-secondary {
       display: inline-block;
       padding: 18px 50px;
@@ -176,7 +181,7 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
-      margin-top: 14px; /* spazio sotto "Esplora la Collezione" */
+      margin-top: 0; /* non serve più spazio sopra */
     }
 
     .hero-cta-secondary::before {
@@ -815,7 +820,6 @@
       }
 
       /* Hero CTA secondary full width on mobile (optional but nice) */
-      .hero-cta,
       .hero-cta-secondary{
         width: 100%;
         max-width: 360px;
@@ -863,9 +867,11 @@
           <span>✨</span>
           <span>Sconti fino al 25%</span>
         </div>
+
+        <!-- (Esplora la Collezione nascosto via CSS) -->
         <a href="https://upcycled-vinyl.emergent.host" class="hero-cta">Esplora la Collezione</a>
 
-        <!-- ✅ NUOVO PULSANTE sotto "Esplora la Collezione" -->
+        <!-- ✅ Rimane solo questo -->
         <a
           href="https://33giri.github.io/33giri/"
           class="hero-cta-secondary"
@@ -1004,7 +1010,6 @@
       <!-- Posacenere - Normal -->
       <div class="vinyl-card">
         <div class="vinyl-card-header">
-          <!-- TODO: sostituisci con la tua foto posacenere normal -->
           <img src="IMG_5465.jpg" alt="Posacenere 45giri Normal">
           <span class="vinyl-badge">NORMAL</span>
         </div>
@@ -1023,7 +1028,6 @@
       <!-- Posacenere - Splash -->
       <div class="vinyl-card">
         <div class="vinyl-card-header">
-          <!-- TODO: sostituisci con la tua foto posacenere splash -->
           <img src="IMG_5502.jpg" alt="Posacenere 45giri Splash">
           <span class="vinyl-badge">SPLASH</span>
         </div>
@@ -1039,11 +1043,9 @@
         </div>
       </div>
      
-      
-      <!-- Posacenere - Spiral -->
+      <!-- Posacenere - Touch -->
       <div class="vinyl-card">
         <div class="vinyl-card-header">
-          <!-- TODO: sostituisci con la tua foto posacenere splash -->
           <img src="IMG_5509.jpg" alt="Posacenere 45giri Touch">
           <span class="vinyl-badge">TOUCH</span>
         </div>
@@ -1213,16 +1215,16 @@
   // Gestione interazioni pagina (hero, gallery, lightbox, form contatti)
   document.addEventListener('DOMContentLoaded', function() {
 
-    // Smooth scroll per hero CTA
-    document.querySelector('.hero-cta')?.addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('collection').scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
-    });
+    // ✅ DISABILITO lo smooth scroll per il bottone "Esplora la Collezione" (che è nascosto)
+    // document.querySelector('.hero-cta')?.addEventListener('click', function(e) {
+    //   e.preventDefault();
+    //   document.getElementById('collection').scrollIntoView({ 
+    //     behavior: 'smooth', 
+    //     block: 'start' 
+    //   });
+    // });
 
-    // (Il nuovo pulsante "Scegli il tuo" apre direttamente il catalogo in nuova scheda: nessuno scroll)
+    // (Il pulsante "Scegli il tuo" apre direttamente il catalogo in nuova scheda)
     
     // Click sui bottoni -> precompila messaggio + scroll alla sezione contatti
     const vinylButtons = document.querySelectorAll('.vinyl-button');
