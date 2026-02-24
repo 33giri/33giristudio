@@ -1496,68 +1496,43 @@ body {
   .image-preview { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
 }
 /* =========================================================
-   ✅ FIX HERO TITLE IMAGES — posizione sotto header
-   (Incolla in fondo a styles.css)
+   HERO TITLE IMAGES — FIX definitivo (stabile e pulito)
+   incolla IN FONDO a assets/css/styles.css
    ========================================================= */
 
-/* Stack immagini (RESHAPE sopra, 33GIRI sotto) */
+.hero-overlay-content{
+  /* se in futuro togli l'inline bottom, resta gestibile qui */
+  bottom: 56px;
+}
+
 .hero-title-stack{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(10px, 1.8vw, 18px);
-  margin-bottom: 26px; /* meno aria sotto: resta vicino al pulsante */
-  margin-top: 46px;    /* ✅ scende: evita che 33GIRI finisca sotto l'header */
+  gap: clamp(10px, 1.8vw, 14px);
+  margin: 0 0 14px 0; /* ✅ appena sopra il bottone */
 }
 
-/* immagini */
 .hero-title-img{
-  width: min(920px, 88vw);
-  height: auto;
   display: block;
+  height: auto;
+  width: min(920px, 88vw);
   filter:
     drop-shadow(0 6px 20px rgba(0,0,0,0.85))
     drop-shadow(0 0 40px rgba(0,0,0,0.65));
-  transform: translateZ(0);
 }
 
-/* Reshape un po' più grande del 33Giri */
-.hero-title-reshape{ width: min(980px, 90vw); }
-.hero-title-33giri{ width: min(760px, 78vw); }
+.hero-title-33giri{ width: min(620px, 70vw); }   /* 33GIRI un po’ più compatto */
+.hero-title-reshape{ width: min(980px, 92vw); }  /* Reshape dominante */
 
-/* ✅ Abbasso anche l’intero overlay nell'Hero
-   (funziona perché nel tuo HTML l’overlay ha bottom: 100px inline) */
-#home > div[style*="bottom: 100px"]{
-  bottom: 70px !important; /* prima 100px -> scende e libera la parte alta */
-}
-
-/* Tablet / mobile */
+/* ✅ se header è molto alto, su mobile scendo ancora */
 @media (max-width: 768px){
-  #home > div[style*="bottom: 100px"]{
-    bottom: 44px !important;
-  }
-
-  .hero-title-stack{
-    margin-top: 86px;   /* ✅ più giù su mobile (header più invasivo) */
-    margin-bottom: 22px;
-    gap: 12px;
-  }
-
-  .hero-title-reshape{ width: min(92vw, 980px); }
-  .hero-title-33giri{ width: min(80vw, 760px); }
+  .hero-overlay-content{ bottom: 40px; }
+  .hero-title-33giri{ width: min(72vw, 620px); }
+  .hero-title-reshape{ width: min(94vw, 980px); }
 }
 
-/* Small mobile */
 @media (max-width: 520px){
-  #home > div[style*="bottom: 100px"]{
-    bottom: 34px !important;
-  }
-
-  .hero-title-stack{
-    margin-top: 104px;  /* ✅ extra spazio perché header/logo coprono di più */
-    margin-bottom: 20px;
-  }
-
-  .hero-title-reshape{ width: min(92vw, 980px); }
-  .hero-title-33giri{ width: min(82vw, 760px); }
+  .hero-overlay-content{ bottom: 34px; }
+  .hero-title-stack{ gap: 10px; margin-bottom: 12px; }
 }
