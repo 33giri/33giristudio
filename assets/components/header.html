@@ -10,7 +10,7 @@
       <span class="menu-text">Menu</span>
     </label>
 
-    <!-- Dropdown -->
+    <!-- Menu -->
     <nav class="main-nav" id="main-nav" role="navigation" aria-label="Menu principale">
       <ul id="main-nav-list">
         <li><a href="index.html">Home</a></li>
@@ -152,90 +152,8 @@
       pointer-events:auto;
     }
 
-    /* ===== riga Collaborazioni + freccetta ===== */
-    .has-dropdown{ position: relative; }
-    .nav-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-    }
-    .nav-link{
-      flex:1;
-      min-width:0;
-    }
-
-    .dropdown-toggle{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width: 34px;
-      height: 34px;
-      border: 0;
-      background: transparent;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background .15s ease, transform .15s ease;
-    }
-    .dropdown-toggle:hover{
-      background: rgba(44,36,22,0.06);
-      transform: translateX(1px);
-    }
-    .dropdown-toggle .chev{
-      font-size: 18px;
-      opacity: .65;
-      line-height: 1;
-    }
-
-    /* ===== SUBMENU (Iris Shero) - DI DEFAULT NASCOSTO OVUNQUE ===== */
-    .dropdown-menu{
-      display:none;
-      list-style:none;
-      margin:0;
-      padding:10px 0;
-      background:#fff;
-      border-radius:10px;
-      box-shadow: 0 6px 26px rgba(0,0,0,0.14);
-      min-width:210px;
-      z-index: 3000;
-      overflow: visible;
-    }
-
-    .dropdown-menu a{
-      display:block;
-      padding:11px 18px;
-      color:#2c2416;
-      font-size:13px;
-      text-decoration:none;
-      transition: background 0.2s ease, transform 0.15s ease;
-      white-space: nowrap;
-    }
-    .dropdown-menu a:hover{
-      background:#f7f6f2;
-      color: #5a7fa0;
-      transform: translateX(2px);
-    }
-
     /* =========================
-       DESKTOP: flyout A DESTRA solo in HOVER
-       ========================= */
-    @media (min-width: 769px){
-      .dropdown-menu{
-        position:absolute;
-        top: 50%;
-        left: 100%;
-        transform: translateY(-50%);
-        margin-left: 12px;
-      }
-
-      /* ✅ appare solo passando su Collaborazioni (anche sulla freccetta) */
-      .has-dropdown:hover > .dropdown-menu{
-        display:block;
-      }
-    }
-
-    /* =========================
-       MOBILE: submenu sotto, SOLO se clicchi la freccetta
+       MOBILE
        ========================= */
     @media (max-width: 768px){
       #header{ position: relative; z-index: 2000; overflow: visible; }
@@ -252,96 +170,18 @@
       }
 
       .logo-img{ height: 115px; }
-
-      .dropdown-menu{
-        position: static;
-        transform: none;
-        margin-left: 0;
-        margin-top: 6px;
-        box-shadow: none;
-        border: 1px solid rgba(44,36,22,0.10);
-        border-radius: 12px;
-        padding: 6px 0;
-        background: #fff;
-      }
-
-      /* ✅ SOLO quando metto la classe "is-open" (via JS) */
-      .has-dropdown.is-open > .dropdown-menu{
-        display:block;
-      }
     }
   </style>
-  <style>
-  /* ... tutto il tuo CSS del menu ... */
 
-  /* ====== AGGIUNGI QUI SOTTO ====== */
-  .has-dropdown { position: relative; }
-
-  .dropdown-toggle{
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    padding: 8px 10px;
-    border-radius: 10px;
-    margin-left: 6px;
-  }
-  .dropdown-toggle .chev{
-    font-size: 16px;
-    opacity: .55;
-  }
-
-  /* Mobile: submenu sotto e solo con .is-open */
-  @media (max-width: 768px){
-    .dropdown-menu{ position: static; transform:none; margin-left:0; box-shadow:none; }
-    .has-dropdown.is-open > .dropdown-menu{ display:block; }
-  }
-  </style>
   <script>
     (function () {
       const toggle = document.getElementById('nav-toggle');
       const nav = document.getElementById('main-nav');
       const btn = document.querySelector('label[for="nav-toggle"]');
 
-      const collabItem = document.getElementById('collab-item');
-      const collabBtn = collabItem ? collabItem.querySelector('.dropdown-toggle') : null;
-      const submenu = document.getElementById('collab-submenu');
-
-      function closeSubmenu() {
-        if (!collabItem) return;
-        collabItem.classList.remove('is-open');
-        if (collabBtn) collabBtn.setAttribute('aria-expanded', 'false');
-      }
-
-      function toggleSubmenu() {
-        if (!collabItem) return;
-        const isOpen = collabItem.classList.toggle('is-open');
-        if (collabBtn) collabBtn.setAttribute('aria-expanded', String(isOpen));
-      }
-
-      // ✅ MOBILE: apri/chiudi SOLO cliccando la freccetta
-      if (collabBtn) {
-        collabBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleSubmenu();
-        });
-      }
-
-      // chiudi submenu quando clicchi un link del submenu
-      if (submenu) {
-        submenu.addEventListener('click', (e) => {
-          if (e.target.tagName === 'A') {
-            closeSubmenu();
-            toggle.checked = false; // chiude anche il menu principale
-          }
-        });
-      }
-
-      // chiudi menu principale quando clicchi un link normale
+      // chiudi menu principale quando clicchi un link
       nav.addEventListener('click', (e) => {
         if (e.target.tagName === 'A') {
-          // se clicchi "Collaborazioni" (link), lasciamo navigare e chiudiamo tutto
-          closeSubmenu();
           toggle.checked = false;
         }
       });
@@ -351,7 +191,6 @@
         const clickedInside = nav.contains(e.target) || btn.contains(e.target);
         if (!clickedInside) {
           toggle.checked = false;
-          closeSubmenu();
         }
       });
 
@@ -359,20 +198,8 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           toggle.checked = false;
-          closeSubmenu();
         }
       });
-
-      // quando chiudi il menu principale, chiudi anche il submenu
-      toggle.addEventListener('change', () => {
-        if (!toggle.checked) closeSubmenu();
-      });
-
-      // su resize da mobile->desktop, resetto stato mobile
-      window.addEventListener('resize', () => {
-        closeSubmenu();
-      });
-      
     })();
   </script>
 </header>
