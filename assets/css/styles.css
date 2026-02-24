@@ -1496,83 +1496,40 @@ body {
   .image-preview { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
 }
 /* =========================================================
-   HERO OVERLAY TITLES — definitivo (NO conflitti)
-   Incolla in FONDO a assets/css/styles.css
+   HERO — SOLO POSTER (mobile + desktop)
    ========================================================= */
 
-/* 1) sposto tutto un filo più su su desktop (come hai chiesto) */
-@media (min-width: 769px){
-  .hero-overlay-content{
-    bottom: 70px !important; /* ✅ più su rispetto al bottone */
-  }
+/* overlay più basso come avevi richiesto */
+.hero-overlay-content{
+  bottom: 14px !important;
 }
 
-/* 2) su mobile lo lasciamo basso */
-@media (max-width: 768px){
-  .hero-overlay-content{
-    bottom: 30px !important; /* ✅ basso su mobile */
-  }
-}
-
-/* stack molto compatto (separazione minima tra le due immagini) */
+/* stack compatto sopra al bottone */
 .hero-title-stack{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px !important;
-  margin: 0 0 12px 0 !important;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 2px;
+  margin: 0 0 12px 0;
   line-height: 1;
 }
 
-.hero-title-img{
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  height: auto;
-  filter:
-    drop-shadow(0 6px 20px rgba(0,0,0,0.85))
-    drop-shadow(0 0 40px rgba(0,0,0,0.65));
+/* poster = al posto di 33giri */
+.hero-title-poster{
+  width: min(820px, 86vw); /* desktop */
 }
 
-/* dimensioni */
-.hero-title-33giri{ width: min(760px, 78vw); }
-.hero-title-reshape{ width: min(980px, 90vw); }
-
-/* ========= VISIBILITÀ ========= */
-/* default: desktop */
-.hero-only-mobile{ display: none !important; }
-.hero-only-desktop{ display: block !important; }
-
-/* mobile: mostra SOLO le immagini (33 sopra, reshape sotto), e NASCONDE il testo */
+/* mobile */
 @media (max-width: 768px){
-  .hero-only-mobile{ display: block !important; }
-  .hero-only-desktop{ display: none !important; }
-
-  /* mobile più stretto e più “attaccato” */
-  .hero-title-stack{ gap: 1px !important; margin-bottom: 10px !important; }
-  .hero-title-33giri{ width: min(82vw, 760px); }
-  .hero-title-reshape{ width: min(92vw, 980px); }
+  .hero-title-poster{
+    width: min(90vw, 900px);
+  }
 }
 
-/* desktop: testo Fluro molto più grande e bianco, e un po' più su */
-@media (min-width: 769px){
-  .hero-title-stack{
-    gap: 8px !important;
-    margin-bottom: 14px !important;
-  }
-
-  .hero-reshape-text{
-    font-family: "Fluro","Inter",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #fff;
-
-    /* ✅ MOLTO più grande */
-    font-size: clamp(52px, 5.6vw, 110px);
-
-    /* ✅ effetto “hero” */
-    text-shadow: 0 10px 30px rgba(0,0,0,0.85), 0 0 60px rgba(0,0,0,0.55);
-    margin-top: -6px; /* ✅ un filo più su rispetto all’immagine */
-  }
+/* sicurezza: se per caso resta roba vecchia, la spegne */
+.hero-reshape-text,
+.hero-title-reshape,
+.hero-only-mobile,
+.hero-only-desktop{
+  display:none !important;
 }
