@@ -1496,137 +1496,83 @@ body {
   .image-preview { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
 }
 /* =========================================================
-   HERO TITLE IMAGES — FIX definitivo (stabile e pulito)
-   incolla IN FONDO a assets/css/styles.css
+   HERO OVERLAY TITLES — definitivo (NO conflitti)
+   Incolla in FONDO a assets/css/styles.css
    ========================================================= */
 
-.hero-overlay-content{
-  /* se in futuro togli l'inline bottom, resta gestibile qui */
-  bottom: 22px;
-}
-
-.hero-title-stack{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(10px, 1.8vw, 14px);
-  margin: 0 0 14px 0; /* ✅ appena sopra il bottone */
-}
-
-.hero-title-img{
-  display: block;
-  height: auto;
-  width: min(920px, 88vw);
-  filter:
-    drop-shadow(0 6px 20px rgba(0,0,0,0.85))
-    drop-shadow(0 0 40px rgba(0,0,0,0.65));
-}
-
-.hero-title-33giri{ width: min(620px, 70vw); }   /* 33GIRI un po’ più compatto */
-.hero-title-reshape{ width: min(980px, 92vw); }  /* Reshape dominante */
-
-/* ✅ se header è molto alto, su mobile scendo ancora */
-@media (max-width: 768px){
-  .hero-overlay-content{ bottom: 18px; }
-  .hero-title-33giri{ width: min(72vw, 620px); }
-  .hero-title-reshape{ width: min(94vw, 980px); }
-}
-
-@media (max-width: 520px){
-  .hero-overlay-content{ bottom: 14px; }
-  .hero-title-stack{ gap: 10px; margin-bottom: 12px; }
-}
-/* ✅ gap quasi zero tra 33GIRI e RESHAPE */
-.hero-title-stack{
-  gap: 4px !important;      /* era clamp(...) */
-  margin: 0 0 12px 0 !important;
-  line-height: 1;
-}
-
-/* ✅ elimina qualsiasi spazio “fantasma” da immagini inline */
-.hero-title-img{
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Mobile: ancora più stretto */
-@media (max-width: 520px){
-  .hero-title-stack{ gap: 1px !important; }
-}
-
-/* =========================================================
-   HERO TITLE — Mobile immagini / Desktop testo Fluro
-   INCOLLA IN FONDO a assets/css/styles.css
-   ========================================================= */
-
-/* Overlay più basso (desktop + mobile) */
-.hero-overlay-content{
-  bottom: 14px !important;   /* ✅ ancora più basso */
-}
-
-/* Stack compatto */
-.hero-title-stack{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px !important;       /* ✅ separazione minima */
-  margin: 0 0 12px 0 !important;
-  line-height: 1;
-}
-
-.hero-title-img{
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  height: auto;
-  filter:
-    drop-shadow(0 6px 20px rgba(0,0,0,0.85))
-    drop-shadow(0 0 40px rgba(0,0,0,0.65));
-}
-
-/* Dimensioni base */
-.hero-title-33giri{ width: min(620px, 70vw); }
-.hero-title-reshape{ width: min(980px, 92vw); }
-
-/* ✅ VISIBILITÀ: mobile vs desktop */
-.hero-only-mobile{ display: none; }
-.hero-only-desktop{ display: block; }
-
-/* ✅ Desktop (>= 769px): SOLO 33giri immagine + testo Fluro */
+/* 1) sposto tutto un filo più su su desktop (come hai chiesto) */
 @media (min-width: 769px){
-  .hero-only-mobile{ display: none !important; }
-  .hero-only-desktop{ display: block !important; }
+  .hero-overlay-content{
+    bottom: 44px !important; /* ✅ più su rispetto al bottone */
+  }
+}
 
+/* 2) su mobile lo lasciamo basso */
+@media (max-width: 768px){
+  .hero-overlay-content{
+    bottom: 10px !important; /* ✅ basso su mobile */
+  }
+}
+
+/* stack molto compatto (separazione minima tra le due immagini) */
+.hero-title-stack{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px !important;
+  margin: 0 0 12px 0 !important;
+  line-height: 1;
+}
+
+.hero-title-img{
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto;
+  filter:
+    drop-shadow(0 6px 20px rgba(0,0,0,0.85))
+    drop-shadow(0 0 40px rgba(0,0,0,0.65));
+}
+
+/* dimensioni */
+.hero-title-33giri{ width: min(760px, 78vw); }
+.hero-title-reshape{ width: min(980px, 90vw); }
+
+/* ========= VISIBILITÀ ========= */
+/* default: desktop */
+.hero-only-mobile{ display: none !important; }
+.hero-only-desktop{ display: block !important; }
+
+/* mobile: mostra SOLO le immagini (33 sopra, reshape sotto), e NASCONDE il testo */
+@media (max-width: 768px){
+  .hero-only-mobile{ display: block !important; }
+  .hero-only-desktop{ display: none !important; }
+
+  /* mobile più stretto e più “attaccato” */
+  .hero-title-stack{ gap: 1px !important; margin-bottom: 10px !important; }
+  .hero-title-33giri{ width: min(82vw, 760px); }
+  .hero-title-reshape{ width: min(92vw, 980px); }
+}
+
+/* desktop: testo Fluro molto più grande e bianco, e un po' più su */
+@media (min-width: 769px){
   .hero-title-stack{
-    gap: 6px !important;   /* un filo di respiro sul desktop */
+    gap: 8px !important;
     margin-bottom: 14px !important;
   }
 
   .hero-reshape-text{
     font-family: "Fluro","Inter",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
     font-weight: 800;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    font-size: clamp(22px, 2.2vw, 34px);
     color: #fff;
-    text-shadow: 0 6px 20px rgba(0,0,0,0.85), 0 0 40px rgba(0,0,0,0.65);
-    margin-top: 2px;
+
+    /* ✅ MOLTO più grande */
+    font-size: clamp(42px, 4.8vw, 86px);
+
+    /* ✅ effetto “hero” */
+    text-shadow: 0 10px 30px rgba(0,0,0,0.85), 0 0 60px rgba(0,0,0,0.55);
+    margin-top: -6px; /* ✅ un filo più su rispetto all’immagine */
   }
-}
-
-/* ✅ Mobile (<= 768px): 2 immagini come ora */
-@media (max-width: 768px){
-  .hero-only-mobile{ display: block !important; }
-  .hero-only-desktop{ display: none !important; }
-
-  .hero-overlay-content{ bottom: 10px !important; }  /* mobile ancora più basso */
-  .hero-title-stack{ gap: 1px !important; }          /* mobile: quasi zero */
-  .hero-title-33giri{ width: min(82vw, 760px); }
-  .hero-title-reshape{ width: min(92vw, 980px); }
-}
-
-/* Small mobile */
-@media (max-width: 520px){
-  .hero-overlay-content{ bottom: 8px !important; }
 }
