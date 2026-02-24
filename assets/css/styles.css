@@ -1502,7 +1502,7 @@ body {
 
 .hero-overlay-content{
   /* se in futuro togli l'inline bottom, resta gestibile qui */
-  bottom: 56px;
+  bottom: 22px;
 }
 
 .hero-title-stack{
@@ -1527,12 +1527,30 @@ body {
 
 /* ✅ se header è molto alto, su mobile scendo ancora */
 @media (max-width: 768px){
-  .hero-overlay-content{ bottom: 40px; }
+  .hero-overlay-content{ bottom: 18px; }
   .hero-title-33giri{ width: min(72vw, 620px); }
   .hero-title-reshape{ width: min(94vw, 980px); }
 }
 
 @media (max-width: 520px){
-  .hero-overlay-content{ bottom: 34px; }
+  .hero-overlay-content{ bottom: 14px; }
   .hero-title-stack{ gap: 10px; margin-bottom: 12px; }
+}
+/* ✅ gap quasi zero tra 33GIRI e RESHAPE */
+.hero-title-stack{
+  gap: 4px !important;      /* era clamp(...) */
+  margin: 0 0 12px 0 !important;
+  line-height: 1;
+}
+
+/* ✅ elimina qualsiasi spazio “fantasma” da immagini inline */
+.hero-title-img{
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Mobile: ancora più stretto */
+@media (max-width: 520px){
+  .hero-title-stack{ gap: 1px !important; }
 }
