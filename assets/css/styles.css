@@ -1536,6 +1536,6 @@ body {
 /* Desktop: abbasso SOLO il poster (il bottone resta dov'è) */
 @media (min-width: 769px){
   .hero-title-poster{
-    transform: translateY(90px); /* aumenta per scendere (es. 60–160) */
+    transform: translateY(160px); /* aumenta per scendere (es. 60–160) */
   }
 }
