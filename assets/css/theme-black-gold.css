@@ -1,0 +1,181 @@
+/* assets/css/theme-black-gold.css
+   THEME: Black & Gold Elegance
+   Palette:
+   #000000 (black), #14213D (navy), #FCA311 (gold), #E5E5E5 (gray), #FFFFFF (white)
+*/
+
+/* ---------- THEME TOKENS ---------- */
+:root{
+  --bg: #E5E5E5;              /* page base */
+  --text: #000000;            /* main text */
+  --muted: rgba(0,0,0,.66);
+
+  --navy: #14213D;
+  --gold: #FCA311;
+  --black: #000000;
+  --white: #FFFFFF;
+  --gray: #E5E5E5;
+
+  /* UI */
+  --surface: rgba(255,255,255,.55);         /* glass cards */
+  --surface-strong: rgba(255,255,255,.78);
+  --surface-dark: rgba(20,33,61,.78);       /* navy glass */
+  --line: rgba(0,0,0,.10);
+
+  /* Buttons */
+  --btn-bg: #14213D;        /* primary */
+  --btn-text: #FFFFFF;
+  --btn-hover: #0f1b33;
+
+  /* Accent */
+  --accent: #FCA311;        /* gold */
+  --accent-2: #14213D;      /* navy */
+}
+
+/* ---------- GLOBAL BASE ---------- */
+html, body { background: var(--bg) !important; }
+body{
+  color: var(--text) !important;
+}
+
+/* Se hai gradient animato inline sul body nell’index: lo “spengo” e lo ricreo elegante */
+body{
+  background: radial-gradient(1200px 800px at 20% 15%, rgba(252,163,17,.22), transparent 55%),
+              radial-gradient(1000px 700px at 80% 25%, rgba(20,33,61,.18), transparent 60%),
+              linear-gradient(135deg, #FFFFFF 0%, #E5E5E5 100%) !important;
+  animation: none !important;
+}
+
+/* Texture overlay: lascio ma abbasso un filo per stile premium */
+body::before{
+  opacity: .14 !important;
+  filter: contrast(1.05) saturate(.9);
+}
+
+/* ---------- HEADER / NAV ---------- */
+.site-header{
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(229,229,229,.72)) !important;
+  border-bottom: 1px solid var(--line) !important;
+  backdrop-filter: blur(10px) !important;
+}
+.main-nav a{ color: rgba(0,0,0,.70) !important; }
+.main-nav a[aria-current="page"]{ color: var(--navy) !important; }
+
+/* Dropdown */
+.dropdown-menu{
+  background: rgba(255,255,255,.96) !important;
+  border: 1px solid rgba(0,0,0,.06) !important;
+}
+.dropdown-menu a:hover{
+  background: rgba(252,163,17,.12) !important;
+  color: var(--navy) !important;
+}
+
+/* ---------- HERO (overlay + arrows) ---------- */
+.hero-carousel-wrapper section#home{
+  background: #000 !important;
+}
+.carousel-prev, .carousel-next{
+  background: rgba(20,33,61,.35) !important;
+}
+.carousel-prev:hover, .carousel-next:hover{
+  background: rgba(252,163,17,.35) !important;
+}
+
+/* ---------- “Glass cards” (features / blocchi) ---------- */
+.feature,
+.reviews-header,
+section [style*="backdrop-filter: blur"]{
+  border-left-color: var(--accent) !important;      /* era #5d4e37 */
+}
+
+/* Feature card look: più navy + oro, stesso stile */
+.feature{
+  background: rgba(255,255,255,.40) !important;
+}
+.feature h3{ color: var(--navy) !important; }
+.feature p{ color: rgba(0,0,0,.78) !important; }
+
+/* ---------- BUTTONS ---------- */
+/* Tutti i “bottoni crema” inline li porto al tema (navy) */
+a.btn-primary,
+.btn-primary{
+  background: var(--btn-bg) !important;
+  color: var(--btn-text) !important;
+}
+a.btn-primary:hover,
+.btn-primary:hover{
+  background: var(--btn-hover) !important;
+}
+
+/* Override per i CTA inline con gradient crema (Scopri di più / Contribuisci / ecc.) */
+a[style*="linear-gradient(135deg, #f5f0e8"],
+a[style*="linear-gradient(135deg,#f5f0e8"]{
+  background: linear-gradient(135deg, rgba(20,33,61,1) 0%, rgba(15,27,51,1) 100%) !important;
+  color: #fff !important;
+}
+a[style*="linear-gradient(135deg, #f5f0e8"]:hover{
+  box-shadow: 0 18px 70px rgba(0,0,0,.35) !important;
+}
+
+/* Accent gold per micro-highlight */
+a:hover{ color: var(--navy); }
+strong{ color: var(--navy); }
+
+/* Badge “NUOVA COLLEZIONE” */
+.nc-badge{
+  background: rgba(20,33,61,.92) !important;
+  color: #fff !important;
+}
+.nc-card{
+  border-left-color: var(--accent) !important;
+}
+.nc-title{ color: var(--navy) !important; }
+
+/* CTA “Scopri la collezione” */
+.nc-cta{
+  background: linear-gradient(135deg, var(--accent) 0%, rgba(252,163,17,.82) 100%) !important;
+  color: #000 !important;
+}
+.nc-cta:hover{
+  filter: brightness(1.03);
+}
+
+/* ---------- GALLERY / MASONRY ---------- */
+.masonry-item{
+  box-shadow: 0 12px 46px rgba(0,0,0,.26) !important;
+}
+.masonry-item:hover{
+  box-shadow: 0 28px 90px rgba(0,0,0,.45) !important;
+}
+
+/* ---------- REVIEWS ---------- */
+.reviews-section{ background: transparent !important; }
+.review-card{
+  background: rgba(255,255,255,.72) !important;
+  border: 1px solid rgba(0,0,0,.06) !important;
+}
+.review-stars{ color: var(--accent) !important; }
+
+/* ---------- FOOTER ---------- */
+.site-footer{
+  background: rgba(0,0,0,.78) !important;
+  border-top: 1px solid rgba(255,255,255,.08) !important;
+}
+.site-footer, .site-footer *{
+  color: rgba(255,255,255,.88) !important;
+}
+.footer-nav a:hover{ color: var(--accent) !important; }
+
+/* ---------- WHATSAPP BUTTON ---------- */
+a[href*="wa.me"]{
+  background: var(--navy) !important;
+}
+a[href*="wa.me"]:hover{
+  background: var(--accent) !important;
+}
+
+/* ---------- FORZA IL “vecchio marrone” -> oro/navy ---------- */
+/* Se in giro resta #5d4e37 (tuo marrone), lo “copriamo” su elementi tipici */
+[style*="#5d4e37"]{ color: var(--navy) !important; }
+[style*="border-left: 4px solid #5d4e37"]{ border-left-color: var(--accent) !important; }
