@@ -1539,3 +1539,12 @@ body {
     transform: translateY(160px); /* aumenta per scendere (es. 60–160) */
   }
 }
+
+/* =========================================================
+   GALLERIA (id="catalogo") — niente riquadro dietro
+   ========================================================= */
+#catalogo.collection{
+  background: transparent !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
