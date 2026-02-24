@@ -153,33 +153,36 @@
       </div>
 
       <!-- Content Overlay -->
-      <div style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); text-align: center; color: #fff; z-index: 10; width: min(1100px, 90vw); animation: fadeInContent 1.5s ease-out;">
-        <div style="padding: 50px; border-radius: 30px;">
+<div style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); text-align: center; color: #fff; z-index: 10; width: min(1100px, 90vw); animation: fadeInContent 1.5s ease-out;">
+  <div style="padding: 50px; border-radius: 30px;">
 
-          <!-- FIX: 33GIRI usa font Fluro + classe brand-33giri -->
-         <div class="brand-33giri"
-     style="
-       font-size: clamp(64px, 12vw, 120px);
-       margin-bottom: 10px;
-       line-height: 0.95;
-       text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.8);
-     ">
-  33GIRI
+    <!-- HERO TITLE IMAGES (Reshape sopra, 33Giri sotto) -->
+    <div class="hero-title-stack">
+      <img
+        src="assets/ReshapeBiancoNoSf.png"
+        alt="Reshape the Art"
+        class="hero-title-img hero-title-reshape"
+        loading="eager"
+        decoding="async"
+      />
+      <img
+        src="assets/33BiancoNoSfondo.png"
+        alt="33Giri"
+        class="hero-title-img hero-title-33giri"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+
+    <a href="catalogo.html"
+       style="display: inline-block; background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; padding: 18px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; animation: fadeInScale 2.2s cubic-bezier(0.4,0,0.2,1) 0.9s both;"
+       onmouseover="this.style.transform='translateY(-5px) scale(1.05)'; this.style.boxShadow='0 15px 60px rgba(0,0,0,0.5)'"
+       onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.4)'">
+      Scopri di più
+    </a>
+
+  </div>
 </div>
-
-          <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 64px); font-weight: 900; margin-bottom: 25px; color: #fff; text-shadow: 0 6px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.8); line-height: 1.2; animation: fadeInScale 2.2s cubic-bezier(0.4,0,0.2,1) 0.8s both;">
-          «Reshape the Art»
-          </h1>
-
-          <p style="font-family: 'Inter', sans-serif; font-size: clamp(18px, 2.5vw, 24px); max-width: 800px; margin: 0 auto 40px; text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.8); color: #fff; line-height: 1.6; font-weight: 400; animation: fadeInScale 2.2s cubic-bezier(0.4,0,0.2,1) 0.85s both;">
-            Oggetti di design unici nati dai vinili, modellati a mano in Italia
-          </p>
-
-          <a href="catalogo.html" style="display: inline-block; background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; padding: 18px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; animation: fadeInScale 2.2s cubic-bezier(0.4,0,0.2,1) 0.9s both;" onmouseover="this.style.transform='translateY(-5px) scale(1.05)'; this.style.boxShadow='0 15px 60px rgba(0,0,0,0.5)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.4)'">
-            Scopri di più
-          </a>
-        </div>
-      </div>
     </section>
 
     <style>
