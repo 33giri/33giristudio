@@ -1503,14 +1503,14 @@ body {
 /* 1) sposto tutto un filo più su su desktop (come hai chiesto) */
 @media (min-width: 769px){
   .hero-overlay-content{
-    bottom: 44px !important; /* ✅ più su rispetto al bottone */
+    bottom: 70px !important; /* ✅ più su rispetto al bottone */
   }
 }
 
 /* 2) su mobile lo lasciamo basso */
 @media (max-width: 768px){
   .hero-overlay-content{
-    bottom: 10px !important; /* ✅ basso su mobile */
+    bottom: 30px !important; /* ✅ basso su mobile */
   }
 }
 
@@ -1569,7 +1569,7 @@ body {
     color: #fff;
 
     /* ✅ MOLTO più grande */
-    font-size: clamp(42px, 4.8vw, 86px);
+    font-size: clamp(52px, 5.6vw, 110px);
 
     /* ✅ effetto “hero” */
     text-shadow: 0 10px 30px rgba(0,0,0,0.85), 0 0 60px rgba(0,0,0,0.55);
