@@ -52,7 +52,6 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      /* i colori definitivi li gestisce theme-black-gold.css */
       position: relative;
     }
 
@@ -82,11 +81,9 @@
     @keyframes fadeInContent { from { opacity: 0; } to { opacity: 1; } }
     @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 
-    /* ✅ Carosello frecce al hover (rimasto uguale) */
     .carousel-container:hover .carousel-prev,
     .carousel-container:hover .carousel-next { opacity: 1 !important; }
 
-    /* ✅ MASONRY hover (rimasto uguale) */
     .masonry-item{
       position: relative;
       overflow: hidden;
@@ -105,7 +102,6 @@
     .masonry-item:hover img,
     .masonry-item:hover video { transform: scale(1.15); }
 
-    /* ✅ Animazioni presenti nel tuo file */
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideInLeft { from { opacity: 0; transform: translateX(-100px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes slideInRight { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
@@ -139,39 +135,42 @@
           onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-50%) scale(1)'">›</button>
       </div>
 
-      <!-- ✅ OVERLAY: ora è “ancorato in basso”, e le immagini stanno appena sopra il bottone -->
-      <div class="hero-overlay-content" style="position:absolute; left:50%; transform:translateX(-50%); bottom: 22px; width:min(1100px, 92vw); z-index:10; text-align:center; animation: fadeInContent 1.2s ease-out;">
+      <!-- OVERLAY -->
+      <div class="hero-overlay-content"
+           style="position:absolute; left:50%; transform:translateX(-50%); bottom: 22px; width:min(1100px, 92vw); z-index:10; text-align:center; animation: fadeInContent 1.2s ease-out;">
         <div class="hero-overlay-inner" style="padding: 18px 22px 8px; border-radius: 26px;">
 
-          <!-- ✅ TITOLI IMMAGINE: 33GIRI sopra, RESHAPE sotto -->
+          <!-- ✅ MOBILE: 33GIRI sopra, RESHAPE sotto (solo immagini)
+               ✅ DESKTOP: immagine 33GIRI + testo RESHAPE THE ART (Fluro) -->
           <div class="hero-title-stack">
-  <!-- ✅ MOBILE: 2 immagini (come ora) -->
-  <img
-    src="assets/33BiancoNoSfondo.png"
-    alt="33Giri"
-    class="hero-title-img hero-title-33giri hero-only-mobile"
-    loading="eager"
-    decoding="async"
-  />
-  <img
-    src="assets/ReshapeBiancoNoSf.png"
-    alt="Reshape the Art"
-    class="hero-title-img hero-title-reshape hero-only-mobile"
-    loading="eager"
-    decoding="async"
-  />
 
-  <!-- ✅ DESKTOP: immagine 33giri + testo fluro -->
-  <img
-    src="assets/33BiancoNoSfondo.png"
-    alt="33Giri"
-    class="hero-title-img hero-title-33giri hero-only-desktop"
-    loading="eager"
-    decoding="async"
-  />
+            <!-- MOBILE (solo immagini) -->
+            <img
+              src="assets/33BiancoNoSfondo.png"
+              alt="33Giri"
+              class="hero-title-img hero-title-33giri hero-only-mobile"
+              loading="eager"
+              decoding="async"
+            />
+            <img
+              src="assets/ReshapeBiancoNoSf.png"
+              alt="Reshape the Art"
+              class="hero-title-img hero-title-reshape hero-only-mobile"
+              loading="eager"
+              decoding="async"
+            />
 
-  <div class="hero-reshape-text hero-only-desktop">RESHAPE THE ART</div>
-</div>
+            <!-- DESKTOP -->
+            <img
+              src="assets/33BiancoNoSfondo.png"
+              alt="33Giri"
+              class="hero-title-img hero-title-33giri hero-only-desktop"
+              loading="eager"
+              decoding="async"
+            />
+            <div class="hero-reshape-text hero-only-desktop">RESHAPE THE ART</div>
+
+          </div>
 
           <a href="catalogo.html" class="hero-cta"
              style="display:inline-block; background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%); color: #5d4e37; padding: 18px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; animation: fadeInScale 1.2s cubic-bezier(0.4,0,0.2,1) 0.15s both;"
