@@ -1,10 +1,8 @@
-/* assets/js/reviews.js — SAFE version (no double-declare, no double-init) */
+/* assets/js/reviews.js — uses global window.__SB_CLIENT__ */
 (() => {
-  // evita inizializzazione doppia
   if (window.__REVIEWS_SYSTEM_INIT__) return;
   window.__REVIEWS_SYSTEM_INIT__ = true;
 
-  // ===== Helpers =====
   const escapeHtml = (text) => {
     const div = document.createElement("div");
     div.textContent = text ?? "";
@@ -18,17 +16,13 @@
 
   const showFormMessage = (message, type) => {
     const el = document.getElementById("formMessage");
-    if (!el) {
-      alert(message);
-      return;
-    }
+    if (!el) return alert(message);
     el.textContent = message;
     el.className = `form-message ${type}`;
     el.style.display = "block";
     setTimeout(() => (el.style.display = "none"), 6000);
   };
 
-  // ===== Config =====
   const MAX_IMAGES = 5;
   const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
   const MAX_COMMENT_LENGTH = 500;
@@ -36,28 +30,15 @@
 
   let selectedFiles = [];
 
-  // ===== Supabase client singleton =====
+  // ✅ usa client globale
   const getClient = () => {
-    // già creato
-    if (window.__SB_CLIENT__) return { client: window.__SB_CLIENT__, error: null };
-
-    const SUPA = window.__SUPABASE__;
-    if (!SUPA?.url || !SUPA?.anonKey) {
-      return { client: null, error: "Config Supabase mancante: controlla assets/js/config.js (url + anonKey)." };
+    const client = window.__SB_CLIENT__;
+    if (!client) {
+      return { client: null, error: "Supabase client non inizializzato. Controlla ordine script: supabase-js → config.js → reviews.js" };
     }
-    if (!window.supabase?.createClient) {
-      return { client: null, error: "Libreria Supabase non caricata: manca lo script @supabase/supabase-js." };
-    }
-
-    try {
-      window.__SB_CLIENT__ = window.supabase.createClient(SUPA.url, SUPA.anonKey);
-      return { client: window.__SB_CLIENT__, error: null };
-    } catch (e) {
-      return { client: null, error: "Errore inizializzazione Supabase (createClient)." };
-    }
+    return { client, error: null };
   };
 
-  // ===== Data fetch =====
   const fetchAllReviews = async (limit = 200) => {
     const { client, error } = getClient();
     if (!client) {
@@ -78,7 +59,6 @@
     return data || [];
   };
 
-  // ===== Upload images =====
   const uploadImages = async (files) => {
     if (!files?.length) return [];
 
@@ -92,7 +72,6 @@
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-
       const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
       const safeExt = ext.replace(/[^a-z0-9]/g, "") || "jpg";
       const path = `public/${Date.now()}-${Math.random().toString(16).slice(2)}-${i}.${safeExt}`;
@@ -110,7 +89,6 @@
     return urls;
   };
 
-  // ===== Render: Home compact =====
   const createCompactCard = (r) => `
     <div class="r2-card" data-open="false">
       <button class="r2-btn" type="button" data-review-toggle="1" aria-expanded="false">
@@ -138,7 +116,6 @@
         ? rows.map(createCompactCard).join("")
         : `<p style="color:#666; padding:8px 6px;">Le recensioni stanno arrivando...</p>`;
 
-      // accordion: una aperta alla volta
       if (!strip.__boundClick) {
         strip.addEventListener("click", (e) => {
           const btn = e.target.closest('[data-review-toggle="1"]');
@@ -163,7 +140,6 @@
       return;
     }
 
-    // fallback vecchio
     if (oldGrid) {
       oldGrid.innerHTML = rows.slice(0, 6).map((r) => `
         <div class="review-card">
@@ -177,7 +153,6 @@
     }
   };
 
-  // ===== Render: pagina recensioni (recenti) =====
   const createFullCard = (r) => {
     const date = new Date(r.created_at);
     const formattedDate = date.toLocaleDateString("it-IT", { year: "numeric", month: "long", day: "numeric" });
@@ -213,7 +188,6 @@
       : `<p style="text-align:center; color:#999;">Nessuna recensione ancora. Sii il primo!</p>`;
   };
 
-  // ===== Form wiring =====
   const initForm = () => {
     const form = document.getElementById("reviewForm");
     if (!form) return;
@@ -222,18 +196,15 @@
     const charCount = document.getElementById("charCount");
     const ratingValue = document.getElementById("ratingValue");
     const starInputs = document.querySelectorAll('.star-rating input[type="radio"]');
-
     const reviewImages = document.getElementById("reviewImages");
     const imagePreview = document.getElementById("imagePreview");
 
-    // stelle
     starInputs.forEach((input) => {
       input.addEventListener("change", function () {
         if (ratingValue) ratingValue.textContent = `${this.value} ${this.value === "1" ? "stella" : "stelle"} selezionate`;
       });
     });
 
-    // contatore
     reviewComment?.addEventListener("input", function () {
       const length = this.value.length;
       if (charCount) charCount.textContent = length;
@@ -243,7 +214,6 @@
       }
     });
 
-    // upload
     reviewImages?.addEventListener("change", (e) => {
       const files = Array.from(e.target.files || []);
 
@@ -285,9 +255,9 @@
       e.target.value = "";
     });
 
-    // submit
     form.addEventListener("submit", async (e) => {
-      e.preventDefault(); // ✅ evita querystring
+      e.preventDefault();
+
       const { client, error } = getClient();
       if (!client) return showFormMessage(error, "error");
 
@@ -303,7 +273,6 @@
       if (!comment) return showFormMessage("Scrivi un commento", "error");
       if (!privacyOk) return showFormMessage("Accetta l'informativa sulla privacy", "error");
 
-      // loading
       const btnText = document.querySelector(".btn-text");
       const btnLoader = document.querySelector(".btn-loader");
       if (btnText && btnLoader) {
@@ -324,7 +293,6 @@
 
         if (insErr) throw insErr;
 
-        // reset
         form.reset();
         if (imagePreview) imagePreview.innerHTML = "";
         selectedFiles = [];
@@ -338,7 +306,7 @@
 
       } catch (err) {
         console.error(err);
-        showFormMessage("Errore invio recensione. Controlla tabella/policy Supabase e riprova.", "error");
+        showFormMessage("Errore invio recensione. Controlla tabella/policy Supabase.", "error");
       } finally {
         const btnText2 = document.querySelector(".btn-text");
         const btnLoader2 = document.querySelector(".btn-loader");
@@ -350,7 +318,6 @@
     });
   };
 
-  // ===== Boot =====
   document.addEventListener("DOMContentLoaded", async () => {
     initForm();
     await renderRecent();
