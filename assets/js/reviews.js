@@ -6,7 +6,7 @@ const MAX_COMMENT_LENGTH = 500;
 
 // Recensioni base (ufficiali)
 const BASE_REVIEWS = [
-  {
+  { 
     id: 1,
     name: "Corrado Pisoni",
     email: "",
