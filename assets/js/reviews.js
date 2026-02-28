@@ -411,6 +411,6 @@ function displayReviewsOnHomepage() {
 }
 
 // Se siamo nella homepage, carica le recensioni
-if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+if (window.location.pathname.includes('index.html') || window.location.pathname === '/index.html') {
   document.addEventListener('DOMContentLoaded', displayReviewsOnHomepage);
 }
