@@ -1548,3 +1548,178 @@ body {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+/* ===========================
+   REVIEWS V2 (Home) — Compact + accordion + horizontal scroll
+   =========================== */
+
+.reviews-v2 {
+  background: transparent;
+}
+
+.reviews-v2-inner {
+  max-width: 1200px;
+}
+
+.reviews-v2-head {
+  max-width: 920px;
+  margin: 0 auto 26px auto;
+  text-align: left;
+}
+
+.reviews-v2-eyebrow {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.70);
+}
+
+.reviews-v2-title {
+  margin: 0 0 10px 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 900;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.08;
+  color: #000;
+  text-shadow: 0 3px 14px rgba(255,255,255,0.18);
+}
+
+.reviews-v2-sub {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.78);
+}
+
+.reviews-v2-shell{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px;
+  border-radius: 28px;
+  background: rgba(0,0,0,0.06);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 14px 45px rgba(0,0,0,0.12);
+}
+
+.reviews-v2-scroll{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 4px 10px;
+}
+
+.reviews-v2-scroll::-webkit-scrollbar { height: 6px; }
+.reviews-v2-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.22);
+  border-radius: 999px;
+}
+.reviews-v2-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* strip orizzontale */
+.reviews-strip{
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 6px 2px;
+}
+
+/* card */
+.r2-card{
+  flex: 0 0 auto;
+  width: 320px;
+  border-radius: 22px;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.26);
+  box-shadow: 0 16px 55px rgba(0,0,0,0.16);
+  border-left: 4px solid #5d4e37;
+  transition: transform .35s ease, box-shadow .35s ease;
+  overflow: hidden;
+}
+
+.r2-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 24px 72px rgba(0,0,0,0.22);
+}
+
+.r2-btn{
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 18px 18px 16px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.r2-name{
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: #2c2416;
+  line-height: 1.2;
+}
+
+.r2-stars{
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: 14px;
+  line-height: 1;
+  color: #5d4e37; /* coerente con palette */
+  white-space: nowrap;
+  opacity: 0.95;
+}
+
+/* freccia */
+.r2-chev{
+  margin-left: 10px;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.55;
+  transform: rotate(0deg);
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+.r2-card[data-open="true"] .r2-chev{
+  transform: rotate(180deg);
+  opacity: 0.85;
+}
+
+/* body “accordion” */
+.r2-body{
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease;
+}
+
+.r2-card[data-open="true"] .r2-body{
+  max-height: 220px; /* abbastanza per commenti medi */
+}
+
+.r2-comment{
+  margin: 0;
+  padding: 0 0 16px 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(44,36,22,0.88);
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 14px;
+}
+
+/* CTA */
+.reviews-v2-cta{
+  display: flex;
+  justify-content: center;
+  padding-top: 18px;
+}
+
+@media (max-width: 768px){
+  .reviews-v2-shell{ padding: 16px; }
+  .r2-card{ width: 280px; }
+}
