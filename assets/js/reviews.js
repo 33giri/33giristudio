@@ -4,6 +4,7 @@ const MAX_IMAGES = 5;
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 const MAX_COMMENT_LENGTH = 500;
 
+// Recensioni base (ufficiali)
 const BASE_REVIEWS = [
   {
     id: 1,
@@ -12,7 +13,7 @@ const BASE_REVIEWS = [
     rating: 5,
     comment: "Ottimo svuota-tasche in vinile, ben rifinito e con un design dipinto a mano davvero curato. ogni pezzo è unico e si vede la qualità del lavoro artigianale, molto bello e utile da avere in casa😁",
     images: [],
-    date: new Date('2025-11-15').toISOString(),
+    date: new Date("2025-11-15").toISOString(),
     verified: true
   },
   {
@@ -22,7 +23,7 @@ const BASE_REVIEWS = [
     rating: 4.5,
     comment: "Il 33giri è molto comodo e ha un'estetica curata e piacevole",
     images: [],
-    date: new Date('2025-11-22').toISOString(),
+    date: new Date("2025-11-22").toISOString(),
     verified: true
   },
   {
@@ -32,7 +33,7 @@ const BASE_REVIEWS = [
     rating: 4,
     comment: "Bellissimo oggetto di design. Io personalmente lo uso come porta vasi e da eeffetto wow. Consigliatissimo!",
     images: [],
-    date: new Date('2025-11-25').toISOString(),
+    date: new Date("2025-11-25").toISOString(),
     verified: true
   },
   {
@@ -42,81 +43,87 @@ const BASE_REVIEWS = [
     rating: 5,
     comment: "Ho comprato da 33giristudio al mercatino dei gaulenti. I ragazzi sono stati disponibili , il progetto è interessante ,creativo ed  estremente contemporaneo . Al prezzo di 20 euro ho ricevuto il disco  personalizzato con la copertina originale  e lo sticker dello studio , il tutto contenuto nella loro scatola personalizzata . Sarà il primo di molti ",
     images: [],
-    date: new Date('2025-11-27').toISOString(),
+    date: new Date("2025-11-27").toISOString(),
     verified: true
   }
 ];
 
 let reviews = [];
 
+/* =========================
+   LOAD / SAVE
+   ========================= */
 function loadReviews() {
   let userReviews = [];
   try {
-    const saved = localStorage.getItem('33giri_user_reviews');
+    const saved = localStorage.getItem("33giri_user_reviews");
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed)) userReviews = parsed;
+      if (Array.isArray(parsed)) {
+        // ✅ tagghiamo le recensioni utente per distinguerle
+        userReviews = parsed.map(r => ({ ...r, __source: "user" }));
+      }
     }
   } catch (e) {
-    console.warn('Errore nel leggere le recensioni utente dal localStorage', e);
+    console.warn("Errore nel leggere le recensioni utente dal localStorage", e);
   }
 
-  reviews = [...userReviews, ...BASE_REVIEWS];
+  // user prima, poi base
+  reviews = [...userReviews, ...BASE_REVIEWS.map(r => ({ ...r, __source: "base" }))];
   return reviews;
 }
 
 function saveUserReviews(userReviews) {
   try {
-    localStorage.setItem('33giri_user_reviews', JSON.stringify(userReviews));
+    // salviamo solo i dati puliti (senza __source)
+    const cleaned = userReviews.map(({ __source, ...rest }) => rest);
+    localStorage.setItem("33giri_user_reviews", JSON.stringify(cleaned));
   } catch (e) {
-    console.warn('Impossibile salvare le recensioni utente', e);
+    console.warn("Impossibile salvare le recensioni utente", e);
   }
 }
 
 /* =========================
-   BOOTSTRAP UNIFICATO
+   BOOTSTRAP
    ========================= */
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   loadReviews();
 
-  // Pagina recensioni (form)
-  const reviewForm = document.getElementById('reviewForm');
+  // pagina recensioni
+  const reviewForm = document.getElementById("reviewForm");
   if (reviewForm) {
     initializeForm();
     displayRecentReviews();
   }
 
-  // Homepage: nuova strip (V2) oppure fallback vecchio grid
-  const homeStrip = document.querySelector('.reviews-strip');
-  const oldGrid = document.querySelector('.reviews-grid');
-
-  if (homeStrip || oldGrid) {
-    displayReviewsOnHomepage();
-  }
+  // homepage: V2 (reviews-strip) o fallback vecchio (reviews-grid)
+  const strip = document.querySelector(".reviews-strip");
+  const oldGrid = document.querySelector(".reviews-grid");
+  if (strip || oldGrid) displayReviewsOnHomepage();
 });
 
 /* =========================
    PAGINA RECENSIONI (FORM)
    ========================= */
 function initializeForm() {
-  const reviewForm = document.getElementById('reviewForm');
+  const reviewForm = document.getElementById("reviewForm");
   const starInputs = document.querySelectorAll('.star-rating input[type="radio"]');
-  const ratingValue = document.getElementById('ratingValue');
-  const reviewComment = document.getElementById('reviewComment');
-  const charCount = document.getElementById('charCount');
-  const reviewImages = document.getElementById('reviewImages');
-  const imagePreview = document.getElementById('imagePreview');
+  const ratingValue = document.getElementById("ratingValue");
+  const reviewComment = document.getElementById("reviewComment");
+  const charCount = document.getElementById("charCount");
+  const reviewImages = document.getElementById("reviewImages");
+  const imagePreview = document.getElementById("imagePreview");
 
   // stelle
   starInputs.forEach(input => {
-    input.addEventListener('change', function () {
+    input.addEventListener("change", function () {
       const rating = this.value;
-      if (ratingValue) ratingValue.textContent = `${rating} ${rating === '1' ? 'stella' : 'stelle'} selezionate`;
+      if (ratingValue) ratingValue.textContent = `${rating} ${rating === "1" ? "stella" : "stelle"} selezionate`;
     });
   });
 
-  // contatore
-  reviewComment.addEventListener('input', function () {
+  // contatore caratteri
+  reviewComment.addEventListener("input", function () {
     const length = this.value.length;
     if (charCount) charCount.textContent = length;
 
@@ -129,61 +136,58 @@ function initializeForm() {
   // upload immagini
   let selectedFiles = [];
 
-  reviewImages.addEventListener('change', function (e) {
+  reviewImages.addEventListener("change", function (e) {
     const files = Array.from(e.target.files);
 
     if (selectedFiles.length + files.length > MAX_IMAGES) {
-      showFormMessage(`Puoi caricare massimo ${MAX_IMAGES} immagini`, 'error');
+      showFormMessage(`Puoi caricare massimo ${MAX_IMAGES} immagini`, "error");
       return;
     }
 
     files.forEach(file => {
       if (file.size > MAX_IMAGE_SIZE) {
-        showFormMessage(`L'immagine ${file.name} supera i 5MB`, 'error');
+        showFormMessage(`L'immagine ${file.name} supera i 5MB`, "error");
         return;
       }
-      if (!file.type.startsWith('image/')) {
-        showFormMessage(`${file.name} non è un'immagine valida`, 'error');
+      if (!file.type.startsWith("image/")) {
+        showFormMessage(`${file.name} non è un'immagine valida`, "error");
         return;
       }
-
       selectedFiles.push(file);
       displayImagePreview(file);
     });
 
-    e.target.value = '';
+    e.target.value = "";
   });
 
-  // drag drop
-  const fileInputLabel = document.querySelector('.file-input-label');
+  const fileInputLabel = document.querySelector(".file-input-label");
   if (fileInputLabel) {
-    fileInputLabel.addEventListener('dragover', function (e) {
+    fileInputLabel.addEventListener("dragover", function (e) {
       e.preventDefault();
-      this.style.borderColor = '#1a1a1a';
-      this.style.background = '#f0f0f0';
+      this.style.borderColor = "#1a1a1a";
+      this.style.background = "#f0f0f0";
     });
 
-    fileInputLabel.addEventListener('dragleave', function (e) {
+    fileInputLabel.addEventListener("dragleave", function (e) {
       e.preventDefault();
-      this.style.borderColor = '#ccc';
-      this.style.background = '#fafafa';
+      this.style.borderColor = "#ccc";
+      this.style.background = "#fafafa";
     });
 
-    fileInputLabel.addEventListener('drop', function (e) {
+    fileInputLabel.addEventListener("drop", function (e) {
       e.preventDefault();
-      this.style.borderColor = '#ccc';
-      this.style.background = '#fafafa';
+      this.style.borderColor = "#ccc";
+      this.style.background = "#fafafa";
 
-      const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
-
+      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith("image/"));
       if (selectedFiles.length + files.length > MAX_IMAGES) {
-        showFormMessage(`Puoi caricare massimo ${MAX_IMAGES} immagini`, 'error');
+        showFormMessage(`Puoi caricare massimo ${MAX_IMAGES} immagini`, "error");
         return;
       }
 
       files.forEach(file => {
         if (file.size > MAX_IMAGE_SIZE) {
-          showFormMessage(`L'immagine ${file.name} supera i 5MB`, 'error');
+          showFormMessage(`L'immagine ${file.name} supera i 5MB`, "error");
           return;
         }
         selectedFiles.push(file);
@@ -195,16 +199,16 @@ function initializeForm() {
   function displayImagePreview(file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      const previewItem = document.createElement('div');
-      previewItem.className = 'preview-item';
+      const previewItem = document.createElement("div");
+      previewItem.className = "preview-item";
       previewItem.innerHTML = `
         <img src="${e.target.result}" alt="Preview">
         <button type="button" class="preview-remove" data-filename="${escapeHtml(file.name)}">×</button>
       `;
       imagePreview.appendChild(previewItem);
 
-      previewItem.querySelector('.preview-remove').addEventListener('click', function () {
-        const filename = this.getAttribute('data-filename');
+      previewItem.querySelector(".preview-remove").addEventListener("click", function () {
+        const filename = this.getAttribute("data-filename");
         selectedFiles = selectedFiles.filter(f => f.name !== filename);
         previewItem.remove();
       });
@@ -213,33 +217,33 @@ function initializeForm() {
   }
 
   // submit
-  reviewForm.addEventListener('submit', function (e) {
+  reviewForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const checked = document.querySelector('.star-rating input[type="radio"]:checked');
 
     const formData = {
-      name: document.getElementById('reviewerName').value.trim(),
-      email: document.getElementById('reviewerEmail').value.trim(),
+      name: document.getElementById("reviewerName").value.trim(),
+      email: document.getElementById("reviewerEmail").value.trim(),
       rating: checked ? parseFloat(checked.value) : 0,
-      comment: document.getElementById('reviewComment').value.trim(),
+      comment: document.getElementById("reviewComment").value.trim(),
       images: [],
       date: new Date().toISOString(),
       verified: false
     };
 
-    if (!formData.name) return showFormMessage('Inserisci il tuo nome', 'error');
-    if (!formData.rating) return showFormMessage('Seleziona una valutazione', 'error');
-    if (!formData.comment) return showFormMessage('Scrivi un commento', 'error');
-    if (!document.getElementById('privacyConsent').checked) {
-      return showFormMessage("Accetta l'informativa sulla privacy", 'error');
+    if (!formData.name) return showFormMessage("Inserisci il tuo nome", "error");
+    if (!formData.rating) return showFormMessage("Seleziona una valutazione", "error");
+    if (!formData.comment) return showFormMessage("Scrivi un commento", "error");
+    if (!document.getElementById("privacyConsent").checked) {
+      return showFormMessage("Accetta l'informativa sulla privacy", "error");
     }
 
-    const btnText = document.querySelector('.btn-text');
-    const btnLoader = document.querySelector('.btn-loader');
+    const btnText = document.querySelector(".btn-text");
+    const btnLoader = document.querySelector(".btn-loader");
     if (btnText && btnLoader) {
-      btnText.style.display = 'none';
-      btnLoader.style.display = 'inline';
+      btnText.style.display = "none";
+      btnLoader.style.display = "inline";
     }
 
     const imagePromises = selectedFiles.map(file => new Promise((resolve) => {
@@ -256,56 +260,60 @@ function initializeForm() {
         ...formData
       };
 
+      // carica user reviews esistenti
       let userReviews = [];
       try {
-        const saved = localStorage.getItem('33giri_user_reviews');
+        const saved = localStorage.getItem("33giri_user_reviews");
         if (saved) {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed)) userReviews = parsed;
         }
       } catch (e) {
-        console.warn('Errore nel leggere le recensioni utente dal localStorage', e);
+        console.warn("Errore nel leggere le recensioni utente dal localStorage", e);
       }
 
       userReviews.unshift(newReview);
       saveUserReviews(userReviews);
-      reviews = [...userReviews, ...BASE_REVIEWS];
 
+      // aggiorna stato globale
+      loadReviews();
+
+      // reset UI
       reviewForm.reset();
-      imagePreview.innerHTML = '';
+      imagePreview.innerHTML = "";
       selectedFiles = [];
-      if (ratingValue) ratingValue.textContent = '';
-      if (charCount) charCount.textContent = '0';
+      if (ratingValue) ratingValue.textContent = "";
+      if (charCount) charCount.textContent = "0";
 
       if (btnText && btnLoader) {
-        btnText.style.display = 'inline';
-        btnLoader.style.display = 'none';
+        btnText.style.display = "inline";
+        btnLoader.style.display = "none";
       }
 
-      showFormMessage('Grazie per la tua recensione! Sarà pubblicata dopo la verifica.', 'success');
+      showFormMessage("Grazie per la tua recensione! Sarà pubblicata dopo la verifica.", "success");
       displayRecentReviews();
 
-      const formMessage = document.getElementById('formMessage');
-      if (formMessage) formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // ✅ se vuoi, aggiorna anche la home se sei sulla home e la strip esiste
+      displayReviewsOnHomepage();
     });
   });
 }
 
 function showFormMessage(message, type) {
-  const formMessage = document.getElementById('formMessage');
+  const formMessage = document.getElementById("formMessage");
   if (!formMessage) return;
 
   formMessage.textContent = message;
   formMessage.className = `form-message ${type}`;
-  formMessage.style.display = 'block';
+  formMessage.style.display = "block";
 
   setTimeout(() => {
-    formMessage.style.display = 'none';
+    formMessage.style.display = "none";
   }, 5000);
 }
 
 function displayRecentReviews() {
-  const recentReviewsList = document.getElementById('recentReviewsList');
+  const recentReviewsList = document.getElementById("recentReviewsList");
   if (!recentReviewsList) return;
 
   const recentReviews = reviews.slice(0, 6);
@@ -315,26 +323,23 @@ function displayRecentReviews() {
     return;
   }
 
-  recentReviewsList.innerHTML = recentReviews.map(review => createReviewCardFull(review)).join('');
+  // usa la tua card full già esistente (pagina recensioni)
+  recentReviewsList.innerHTML = recentReviews.map(review => createReviewCardFull(review)).join("");
 }
 
 function createReviewCardFull(review) {
   const date = new Date(review.date);
-  const formattedDate = date.toLocaleDateString('it-IT', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+  const formattedDate = date.toLocaleDateString("it-IT", { year: "numeric", month: "long", day: "numeric" });
 
-  const ratingNum = typeof review.rating === 'number' ? review.rating : parseFloat(review.rating) || 0;
+  const ratingNum = typeof review.rating === "number" ? review.rating : parseFloat(review.rating) || 0;
   const safeRating = Math.max(0, Math.min(5, Math.round(ratingNum)));
-  const stars = '★'.repeat(safeRating) + '☆'.repeat(5 - safeRating);
+  const stars = "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
 
   const imagesHTML = review.images && review.images.length > 0
     ? `<div class="review-images">
-        ${review.images.map(img => `<img src="${img}" alt="Foto recensione" loading="lazy">`).join('')}
+        ${review.images.map(img => `<img src="${img}" alt="Foto recensione" loading="lazy">`).join("")}
        </div>`
-    : '';
+    : "";
 
   return `
     <div class="review-card">
@@ -352,65 +357,93 @@ function createReviewCardFull(review) {
 }
 
 /* =========================
-   HOMEPAGE — V2 compact + accordion
+   HOMEPAGE — V2 (reviews-strip)
+   ✅ QUI IL FIX: mostra anche le user reviews (verified:false) con badge
    ========================= */
 function displayReviewsOnHomepage() {
-  const strip = document.querySelector('.reviews-strip');
-  const oldGrid = document.querySelector('.reviews-grid');
+  const strip = document.querySelector(".reviews-strip");
+  const oldGrid = document.querySelector(".reviews-grid");
+  if (!strip && !oldGrid) return;
 
   if (!Array.isArray(reviews) || reviews.length === 0) loadReviews();
 
-  const topReviews = reviews
-    .filter(r => r.verified && (parseFloat(r.rating) || 0) >= 4)
-    .slice(0, 10);
+  // ✅ includi: tutte le verified + le user reviews (anche se non verificate)
+  const eligible = reviews.filter(r => {
+    const rating = parseFloat(r.rating) || 0;
+    const isUser = r.__source === "user";
+    const isOk = rating >= 4;
+    return isOk && (r.verified === true || isUser);
+  });
 
-  // V2
+  const top = eligible.slice(0, 12);
+
+  // V2 strip
   if (strip) {
-    if (topReviews.length === 0) {
+    if (top.length === 0) {
       strip.innerHTML = '<p style="color:#666; padding:8px 6px;">Le recensioni stanno arrivando...</p>';
       return;
     }
 
-    strip.innerHTML = topReviews.map(r => createReviewCardCompact(r)).join('');
+    strip.innerHTML = top.map(r => createReviewCardCompact(r)).join("");
 
-    // click delegation: apri/chiudi
-    strip.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-review-toggle="1"]');
-      if (!btn) return;
+    // click delegation (evita doppio listener)
+    if (!strip.__boundClick) {
+      strip.addEventListener("click", (e) => {
+        const btn = e.target.closest('[data-review-toggle="1"]');
+        if (!btn) return;
 
-      const card = btn.closest('.r2-card');
-      if (!card) return;
+        const card = btn.closest(".r2-card");
+        if (!card) return;
 
-      const isOpen = card.getAttribute('data-open') === 'true';
+        const isOpen = card.getAttribute("data-open") === "true";
 
-      // (opzionale) chiudi le altre per avere “una aperta alla volta”
-      strip.querySelectorAll('.r2-card[data-open="true"]').forEach(c => {
-        c.setAttribute('data-open', 'false');
-        const b = c.querySelector('.r2-btn');
-        if (b) b.setAttribute('aria-expanded', 'false');
+        // chiudi altre (una aperta per volta)
+        strip.querySelectorAll('.r2-card[data-open="true"]').forEach(c => {
+          c.setAttribute("data-open", "false");
+          const b = c.querySelector(".r2-btn");
+          if (b) b.setAttribute("aria-expanded", "false");
+        });
+
+        card.setAttribute("data-open", (!isOpen).toString());
+        btn.setAttribute("aria-expanded", (!isOpen).toString());
       });
-
-      card.setAttribute('data-open', (!isOpen).toString());
-      btn.setAttribute('aria-expanded', (!isOpen).toString());
-    });
+      strip.__boundClick = true;
+    }
 
     return;
   }
 
-  // fallback vecchio layout (se lo usi ancora in altre pagine)
+  // fallback vecchio grid
   if (oldGrid) {
-    if (topReviews.length === 0) {
+    if (top.length === 0) {
       oldGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Le recensioni stanno arrivando...</p>';
       return;
     }
-    oldGrid.innerHTML = topReviews.slice(0, 6).map(r => createReviewCardFull(r)).join('');
+    oldGrid.innerHTML = top.slice(0, 6).map(r => createReviewCardFull(r)).join("");
   }
 }
 
 function createReviewCardCompact(review) {
-  const ratingNum = typeof review.rating === 'number' ? review.rating : parseFloat(review.rating) || 0;
+  const ratingNum = typeof review.rating === "number" ? review.rating : parseFloat(review.rating) || 0;
   const safeRating = Math.max(0, Math.min(5, Math.round(ratingNum)));
-  const stars = '★'.repeat(safeRating) + '☆'.repeat(5 - safeRating);
+  const stars = "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
+
+  const isUser = review.__source === "user";
+  const badge = isUser && !review.verified
+    ? `<span style="
+          display:inline-block;
+          margin-top:6px;
+          font-size:11px;
+          letter-spacing:.14em;
+          text-transform:uppercase;
+          font-weight:800;
+          padding:6px 10px;
+          border-radius:999px;
+          background: rgba(0,0,0,0.55);
+          color:#fff;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+        ">IN VERIFICA</span>`
+    : "";
 
   return `
     <div class="r2-card" data-open="false">
@@ -418,11 +451,12 @@ function createReviewCardCompact(review) {
         <div>
           <div class="r2-name">${escapeHtml(review.name)}</div>
           <div class="r2-stars">${stars}</div>
+          ${badge}
         </div>
         <span class="r2-chev">⌄</span>
       </button>
 
-      <div class="r2-body" aria-hidden="true">
+      <div class="r2-body">
         <p class="r2-comment">${escapeHtml(review.comment)}</p>
       </div>
     </div>
@@ -433,7 +467,7 @@ function createReviewCardCompact(review) {
    UTIL
    ========================= */
 function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text ?? '';
+  const div = document.createElement("div");
+  div.textContent = text ?? "";
   return div.innerHTML;
 }
