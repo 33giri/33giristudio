@@ -6,15 +6,16 @@ const MAX_COMMENT_LENGTH = 500;
 
 // Recensioni base (ufficiali)
 const BASE_REVIEWS = [
-  { 
+  {
     id: 1,
     name: "Corrado Pisoni",
     email: "",
     rating: 5,
-    comment: "Ottimo svuota-tasche in vinile, ben rifinito e con un design dipinto a mano davvero curato. ogni pezzo è unico e si vede la qualità del lavoro artigianale, molto bello e utile da avere in casa😁",
+    comment:
+      "Ottimo svuota-tasche in vinile, ben rifinito e con un design dipinto a mano davvero curato. ogni pezzo è unico e si vede la qualità del lavoro artigianale, molto bello e utile da avere in casa😁",
     images: [],
     date: new Date("2025-11-15").toISOString(),
-    verified: true
+    verified: true,
   },
   {
     id: 2,
@@ -24,28 +25,30 @@ const BASE_REVIEWS = [
     comment: "Il 33giri è molto comodo e ha un'estetica curata e piacevole",
     images: [],
     date: new Date("2025-11-22").toISOString(),
-    verified: true
+    verified: true,
   },
   {
     id: 3,
     name: "Claudia Bortolotti",
     email: "",
     rating: 4,
-    comment: "Bellissimo oggetto di design. Io personalmente lo uso come porta vasi e da eeffetto wow. Consigliatissimo!",
+    comment:
+      "Bellissimo oggetto di design. Io personalmente lo uso come porta vasi e da eeffetto wow. Consigliatissimo!",
     images: [],
     date: new Date("2025-11-25").toISOString(),
-    verified: true
+    verified: true,
   },
   {
     id: 4,
     name: "Vittoria Tretter",
     email: "",
     rating: 5,
-    comment: "Ho comprato da 33giristudio al mercatino dei gaulenti. I ragazzi sono stati disponibili , il progetto è interessante ,creativo ed  estremente contemporaneo . Al prezzo di 20 euro ho ricevuto il disco  personalizzato con la copertina originale  e lo sticker dello studio , il tutto contenuto nella loro scatola personalizzata . Sarà il primo di molti ",
+    comment:
+      "Ho comprato da 33giristudio al mercatino dei gaulenti. I ragazzi sono stati disponibili , il progetto è interessante ,creativo ed  estremente contemporaneo . Al prezzo di 20 euro ho ricevuto il disco  personalizzato con la copertina originale  e lo sticker dello studio , il tutto contenuto nella loro scatola personalizzata . Sarà il primo di molti ",
     images: [],
     date: new Date("2025-11-27").toISOString(),
-    verified: true
-  }
+    verified: true,
+  },
 ];
 
 let reviews = [];
@@ -59,25 +62,20 @@ function loadReviews() {
     const saved = localStorage.getItem("33giri_user_reviews");
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed)) {
-        // ✅ tagghiamo le recensioni utente per distinguerle
-        userReviews = parsed.map(r => ({ ...r, __source: "user" }));
-      }
+      if (Array.isArray(parsed)) userReviews = parsed;
     }
   } catch (e) {
     console.warn("Errore nel leggere le recensioni utente dal localStorage", e);
   }
 
   // user prima, poi base
-  reviews = [...userReviews, ...BASE_REVIEWS.map(r => ({ ...r, __source: "base" }))];
+  reviews = [...userReviews, ...BASE_REVIEWS];
   return reviews;
 }
 
 function saveUserReviews(userReviews) {
   try {
-    // salviamo solo i dati puliti (senza __source)
-    const cleaned = userReviews.map(({ __source, ...rest }) => rest);
-    localStorage.setItem("33giri_user_reviews", JSON.stringify(cleaned));
+    localStorage.setItem("33giri_user_reviews", JSON.stringify(userReviews));
   } catch (e) {
     console.warn("Impossibile salvare le recensioni utente", e);
   }
@@ -99,7 +97,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // homepage: V2 (reviews-strip) o fallback vecchio (reviews-grid)
   const strip = document.querySelector(".reviews-strip");
   const oldGrid = document.querySelector(".reviews-grid");
-  if (strip || oldGrid) displayReviewsOnHomepage();
+  if (strip || oldGrid) {
+    displayReviewsOnHomepage();
+  }
 });
 
 /* =========================
@@ -115,10 +115,12 @@ function initializeForm() {
   const imagePreview = document.getElementById("imagePreview");
 
   // stelle
-  starInputs.forEach(input => {
+  starInputs.forEach((input) => {
     input.addEventListener("change", function () {
       const rating = this.value;
-      if (ratingValue) ratingValue.textContent = `${rating} ${rating === "1" ? "stella" : "stelle"} selezionate`;
+      if (ratingValue) {
+        ratingValue.textContent = `${rating} ${rating === "1" ? "stella" : "stelle"} selezionate`;
+      }
     });
   });
 
@@ -144,7 +146,7 @@ function initializeForm() {
       return;
     }
 
-    files.forEach(file => {
+    files.forEach((file) => {
       if (file.size > MAX_IMAGE_SIZE) {
         showFormMessage(`L'immagine ${file.name} supera i 5MB`, "error");
         return;
@@ -160,6 +162,7 @@ function initializeForm() {
     e.target.value = "";
   });
 
+  // drag & drop (se presente)
   const fileInputLabel = document.querySelector(".file-input-label");
   if (fileInputLabel) {
     fileInputLabel.addEventListener("dragover", function (e) {
@@ -179,13 +182,14 @@ function initializeForm() {
       this.style.borderColor = "#ccc";
       this.style.background = "#fafafa";
 
-      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith("image/"));
+      const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith("image/"));
+
       if (selectedFiles.length + files.length > MAX_IMAGES) {
         showFormMessage(`Puoi caricare massimo ${MAX_IMAGES} immagini`, "error");
         return;
       }
 
-      files.forEach(file => {
+      files.forEach((file) => {
         if (file.size > MAX_IMAGE_SIZE) {
           showFormMessage(`L'immagine ${file.name} supera i 5MB`, "error");
           return;
@@ -205,11 +209,12 @@ function initializeForm() {
         <img src="${e.target.result}" alt="Preview">
         <button type="button" class="preview-remove" data-filename="${escapeHtml(file.name)}">×</button>
       `;
+
       imagePreview.appendChild(previewItem);
 
       previewItem.querySelector(".preview-remove").addEventListener("click", function () {
         const filename = this.getAttribute("data-filename");
-        selectedFiles = selectedFiles.filter(f => f.name !== filename);
+        selectedFiles = selectedFiles.filter((f) => f.name !== filename);
         previewItem.remove();
       });
     };
@@ -229,7 +234,7 @@ function initializeForm() {
       comment: document.getElementById("reviewComment").value.trim(),
       images: [],
       date: new Date().toISOString(),
-      verified: false
+      verified: false, // resta non verificata
     };
 
     if (!formData.name) return showFormMessage("Inserisci il tuo nome", "error");
@@ -246,21 +251,23 @@ function initializeForm() {
       btnLoader.style.display = "inline";
     }
 
-    const imagePromises = selectedFiles.map(file => new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target.result);
-      reader.readAsDataURL(file);
-    }));
+    const imagePromises = selectedFiles.map(
+      (file) =>
+        new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.readAsDataURL(file);
+        })
+    );
 
-    Promise.all(imagePromises).then(images => {
+    Promise.all(imagePromises).then((images) => {
       formData.images = images;
 
       const newReview = {
         id: Date.now(),
-        ...formData
+        ...formData,
       };
 
-      // carica user reviews esistenti
       let userReviews = [];
       try {
         const saved = localStorage.getItem("33giri_user_reviews");
@@ -275,7 +282,7 @@ function initializeForm() {
       userReviews.unshift(newReview);
       saveUserReviews(userReviews);
 
-      // aggiorna stato globale
+      // aggiorna memoria runtime
       loadReviews();
 
       // reset UI
@@ -293,7 +300,7 @@ function initializeForm() {
       showFormMessage("Grazie per la tua recensione! Sarà pubblicata dopo la verifica.", "success");
       displayRecentReviews();
 
-      // ✅ se vuoi, aggiorna anche la home se sei sulla home e la strip esiste
+      // ✅ in home NON apparirà finché non è verified=true (quindi niente “in verifica”)
       displayReviewsOnHomepage();
     });
   });
@@ -312,6 +319,9 @@ function showFormMessage(message, type) {
   }, 5000);
 }
 
+/* =========================
+   RECENT (pagina recensioni)
+   ========================= */
 function displayRecentReviews() {
   const recentReviewsList = document.getElementById("recentReviewsList");
   if (!recentReviewsList) return;
@@ -319,12 +329,12 @@ function displayRecentReviews() {
   const recentReviews = reviews.slice(0, 6);
 
   if (recentReviews.length === 0) {
-    recentReviewsList.innerHTML = '<p style="text-align:center; color:#999;">Nessuna recensione ancora. Sii il primo a lasciarne una!</p>';
+    recentReviewsList.innerHTML =
+      '<p style="text-align:center; color:#999;">Nessuna recensione ancora. Sii il primo a lasciarne una!</p>';
     return;
   }
 
-  // usa la tua card full già esistente (pagina recensioni)
-  recentReviewsList.innerHTML = recentReviews.map(review => createReviewCardFull(review)).join("");
+  recentReviewsList.innerHTML = recentReviews.map((review) => createReviewCardFull(review)).join("");
 }
 
 function createReviewCardFull(review) {
@@ -335,11 +345,12 @@ function createReviewCardFull(review) {
   const safeRating = Math.max(0, Math.min(5, Math.round(ratingNum)));
   const stars = "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
 
-  const imagesHTML = review.images && review.images.length > 0
-    ? `<div class="review-images">
-        ${review.images.map(img => `<img src="${img}" alt="Foto recensione" loading="lazy">`).join("")}
-       </div>`
-    : "";
+  const imagesHTML =
+    review.images && review.images.length > 0
+      ? `<div class="review-images">
+          ${review.images.map((img) => `<img src="${img}" alt="Foto recensione" loading="lazy">`).join("")}
+         </div>`
+      : "";
 
   return `
     <div class="review-card">
@@ -357,8 +368,7 @@ function createReviewCardFull(review) {
 }
 
 /* =========================
-   HOMEPAGE — V2 (reviews-strip)
-   ✅ QUI IL FIX: mostra anche le user reviews (verified:false) con badge
+   HOMEPAGE — SOLO VERIFICATE
    ========================= */
 function displayReviewsOnHomepage() {
   const strip = document.querySelector(".reviews-strip");
@@ -367,12 +377,10 @@ function displayReviewsOnHomepage() {
 
   if (!Array.isArray(reviews) || reviews.length === 0) loadReviews();
 
-  // ✅ includi: tutte le verified + le user reviews (anche se non verificate)
-  const eligible = reviews.filter(r => {
+  // ✅ SOLO recensioni verificate (niente “in verifica”)
+  const eligible = reviews.filter((r) => {
     const rating = parseFloat(r.rating) || 0;
-    const isUser = r.__source === "user";
-    const isOk = rating >= 4;
-    return isOk && (r.verified === true || isUser);
+    return rating >= 4 && r.verified === true;
   });
 
   const top = eligible.slice(0, 12);
@@ -384,9 +392,9 @@ function displayReviewsOnHomepage() {
       return;
     }
 
-    strip.innerHTML = top.map(r => createReviewCardCompact(r)).join("");
+    strip.innerHTML = top.map((r) => createReviewCardCompact(r)).join("");
 
-    // click delegation (evita doppio listener)
+    // click delegation (una aperta alla volta)
     if (!strip.__boundClick) {
       strip.addEventListener("click", (e) => {
         const btn = e.target.closest('[data-review-toggle="1"]');
@@ -397,8 +405,7 @@ function displayReviewsOnHomepage() {
 
         const isOpen = card.getAttribute("data-open") === "true";
 
-        // chiudi altre (una aperta per volta)
-        strip.querySelectorAll('.r2-card[data-open="true"]').forEach(c => {
+        strip.querySelectorAll('.r2-card[data-open="true"]').forEach((c) => {
           c.setAttribute("data-open", "false");
           const b = c.querySelector(".r2-btn");
           if (b) b.setAttribute("aria-expanded", "false");
@@ -416,10 +423,11 @@ function displayReviewsOnHomepage() {
   // fallback vecchio grid
   if (oldGrid) {
     if (top.length === 0) {
-      oldGrid.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">Le recensioni stanno arrivando...</p>';
+      oldGrid.innerHTML =
+        '<p style="text-align:center; color:#999; grid-column: 1/-1;">Le recensioni stanno arrivando...</p>';
       return;
     }
-    oldGrid.innerHTML = top.slice(0, 6).map(r => createReviewCardFull(r)).join("");
+    oldGrid.innerHTML = top.slice(0, 6).map((r) => createReviewCardFull(r)).join("");
   }
 }
 
@@ -428,30 +436,12 @@ function createReviewCardCompact(review) {
   const safeRating = Math.max(0, Math.min(5, Math.round(ratingNum)));
   const stars = "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
 
-  const isUser = review.__source === "user";
-  const badge = isUser && !review.verified
-    ? `<span style="
-          display:inline-block;
-          margin-top:6px;
-          font-size:11px;
-          letter-spacing:.14em;
-          text-transform:uppercase;
-          font-weight:800;
-          padding:6px 10px;
-          border-radius:999px;
-          background: rgba(0,0,0,0.55);
-          color:#fff;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-        ">IN VERIFICA</span>`
-    : "";
-
   return `
     <div class="r2-card" data-open="false">
       <button class="r2-btn" type="button" data-review-toggle="1" aria-expanded="false">
         <div>
           <div class="r2-name">${escapeHtml(review.name)}</div>
           <div class="r2-stars">${stars}</div>
-          ${badge}
         </div>
         <span class="r2-chev">⌄</span>
       </button>
