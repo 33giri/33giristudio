@@ -5,7 +5,7 @@ const SUPA = window.__SUPABASE__;
 if (!SUPA?.url || !SUPA?.anonKey) {
   console.warn("Supabase config mancante: controlla assets/js/config.js");
 }
-
+ 
 const supabase = window.supabase?.createClient?.(SUPA.url, SUPA.anonKey);
 
 // Config
