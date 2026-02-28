@@ -6,7 +6,7 @@ if (!SUPA?.url || !SUPA?.anonKey) {
   console.warn("Supabase config mancante: controlla assets/js/config.js");
 }
  
-const supabase = window.supabase?.createClient?.(SUPA.url, SUPA.anonKey);
+const supabase = window.supabase?.createClient?.(SUPA.url, SUPA.anonKey); 
 
 // Config
 const MAX_IMAGES = 5;
