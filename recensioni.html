@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="it">
-<head> 
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lascia una Recensione — 33Giri</title>
 
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/theme-black-gold.css">
-
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* sfondo texture come home (se ce l’hai già globale, puoi rimuoverlo) */
+    /* ===== Background texture ===== */
     body{
       font-family: 'Inter', sans-serif;
       position: relative;
@@ -32,20 +31,17 @@
       to{ background-position: 0 -1000px; }
     }
 
-    /* layout pagina */
+    /* ===== Page spacing ===== */
     .review-page{
       position: relative;
       z-index: 1;
-      padding: 140px 20px 90px; /* spazio per header fixed */
-    }
-    .review-page .wrap{
-      max-width: 1100px;
+      padding: 140px 20px 90px; /* spazio header fixed */
     }
 
-    /* headline */
+    /* ===== Headline ===== */
     .review-hero{
-      max-width: 900px;
-      margin: 0 auto 22px;
+      max-width: 1100px;
+      margin: 0 auto 18px;
       text-align: left;
     }
     .review-eyebrow{
@@ -69,42 +65,39 @@
       font-size: 16px;
       line-height: 1.75;
       color: rgba(0,0,0,0.78);
-      max-width: 70ch;
+      max-width: 72ch;
     }
 
-    /* shell + card (stile Contribuisci / NC) */
-    .review-shell{
-      max-width: 1100px;
-      margin: 18px auto 0;
+    /* ===== Form section shell (larga su desktop) ===== */
+    .form-shell{
+      max-width: 1100px;   /* desktop: largo */
+      margin: 18px auto 44px;
       padding: 24px;
       border-radius: 28px;
       background: rgba(0,0,0,0.06);
       backdrop-filter: blur(6px);
       box-shadow: 0 14px 45px rgba(0,0,0,0.12);
     }
-
-    .review-card{
+    .form-card{
       border-radius: 26px;
       padding: clamp(18px, 2.6vw, 34px);
       backdrop-filter: blur(12px);
       background: rgba(255,255,255,0.26);
       box-shadow: 0 16px 55px rgba(0,0,0,0.18);
-      border-left: 4px solid #5d4e37; /* gold/brown */
+      border-left: 4px solid #5d4e37;
     }
 
-    /* form */
+    /* form (usa classi esistenti senza rompere styles.css) */
     .review-form{
       background: transparent !important;
       box-shadow: none !important;
       border-radius: 0 !important;
       padding: 0 !important;
     }
-
     .review-form .form-group label{
       font-weight: 700;
       color: #2c2416;
     }
-
     .review-form .form-group input[type="text"],
     .review-form .form-group input[type="email"],
     .review-form .form-group textarea{
@@ -114,7 +107,6 @@
       padding: 14px 16px !important;
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
-
     .review-form .form-group input:focus,
     .review-form .form-group textarea:focus{
       outline: none !important;
@@ -123,23 +115,15 @@
       transform: translateY(-1px);
     }
 
-    /* star rating più “premium” */
-    .star-rating{
-      gap: 10px !important;
-      font-size: 42px !important;
-    }
+    .star-rating{ gap: 10px !important; font-size: 42px !important; }
     .star-rating label:hover,
     .star-rating label:hover ~ label,
     .star-rating input[type="radio"]:checked ~ label{
       color: #5d4e37 !important;
       transform: scale(1.1);
     }
-    .rating-value{
-      color: rgba(0,0,0,0.65) !important;
-      font-weight: 600;
-    }
+    .rating-value{ color: rgba(0,0,0,0.65) !important; font-weight: 600; }
 
-    /* upload */
     .file-input-label{
       border-radius: 18px !important;
       background: rgba(255,255,255,0.40) !important;
@@ -150,15 +134,11 @@
       background: rgba(255,255,255,0.52) !important;
     }
 
-    /* checkbox */
-    .checkbox-label span{
-      color: rgba(0,0,0,0.70) !important;
-    }
+    .checkbox-label span{ color: rgba(0,0,0,0.70) !important; }
 
-    /* bottone (stile sito) */
     .btn-submit{
       width: 100%;
-      max-width: 340px;
+      max-width: 380px;
       border-radius: 999px !important;
       padding: 16px 28px !important;
       font-weight: 800 !important;
@@ -171,40 +151,88 @@
       transform: translateY(-3px) scale(1.02);
       box-shadow: 0 18px 60px rgba(0,0,0,0.30) !important;
     }
+    .form-message{ border-radius: 16px !important; }
 
-    /* messaggi */
-    .form-message{
-      border-radius: 16px !important;
+    /* ===== Reviews section (sotto) ===== */
+    .reviews-shell{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(0,0,0,0.06);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 14px 45px rgba(0,0,0,0.12);
+    }
+    .reviews-card{
+      border-radius: 26px;
+      padding: 22px 22px 18px;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.26);
+      box-shadow: 0 16px 55px rgba(0,0,0,0.18);
+      border-left: 4px solid #5d4e37;
+    }
+    .reviews-title{
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(24px, 3vw, 34px);
+      color: #000;
+      margin: 0 0 14px 0;
+    }
+    .reviews-hint{
+      margin: 0 0 18px 0;
+      font-size: 14px;
+      color: rgba(0,0,0,0.65);
+      line-height: 1.6;
     }
 
-    /* recent reviews */
-    .recent-reviews{
-      margin-top: 42px !important;
-      padding-top: 34px !important;
-      border-top: 1px solid rgba(0,0,0,0.10) !important;
+    /* ✅ il trucco: rendiamo #recentReviewsList un carosello orizzontale */
+    #recentReviewsList{
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 8px 4px 16px;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
     }
-    .recent-reviews h2{
-      font-family: 'Playfair Display', serif !important;
-      font-weight: 900 !important;
-      font-size: clamp(24px, 3vw, 34px) !important;
-      color: #000 !important;
-      margin-bottom: 22px !important;
-      text-align: left !important;
+    #recentReviewsList::-webkit-scrollbar{ height: 6px; }
+    #recentReviewsList::-webkit-scrollbar-thumb{
+      background: rgba(0,0,0,0.20);
+      border-radius: 999px;
     }
+    #recentReviewsList::-webkit-scrollbar-track{ background: transparent; }
 
-    /* cards recenti: sfrutta .review-card esistente ma rendila più “glass” */
-    .reviews-list .review-card{
+    /* le card generate da reviews.js sono .review-card → le trasformiamo in “slide” */
+    #recentReviewsList .review-card{
+      flex: 0 0 auto;
+      min-width: 320px;
+      max-width: 360px;
+      scroll-snap-align: start;
       background: rgba(255,255,255,0.40) !important;
       border-radius: 18px !important;
       border-left: 4px solid #5d4e37 !important;
       box-shadow: 0 14px 45px rgba(0,0,0,0.12) !important;
     }
 
+    /* desktop: card un po’ più larghe */
+    @media (min-width: 980px){
+      #recentReviewsList .review-card{
+        min-width: 380px;
+        max-width: 420px;
+      }
+    }
+
+    /* ===== Mobile: deve restare come foto (colonna più stretta) ===== */
     @media (max-width: 768px){
       .review-page{ padding: 110px 16px 70px; }
-      .review-shell{ padding: 16px; }
+      .form-shell, .reviews-shell{ padding: 16px; }
       .star-rating{ font-size: 36px !important; }
       .btn-submit{ max-width: 100%; }
+
+      /* su mobile le slide più strette */
+      #recentReviewsList .review-card{
+        min-width: 260px;
+        max-width: 300px;
+      }
     }
   </style>
 </head>
@@ -213,132 +241,109 @@
   <header id="header"></header>
 
   <main class="review-page">
-    <div class="wrap">
-      <div class="review-hero">
-        <p class="review-eyebrow">33Giri • Recensioni</p>
-        <h1 class="review-title">La tua opinione conta.</h1>
-        <p class="review-subtitle">
-          Condividi la tua esperienza con 33Giri: ci aiuta a migliorare e a far capire cosa rende speciali i nostri pezzi.
-        </p>
-      </div>
+    <!-- HEAD -->
+    <div class="review-hero">
+      <p class="review-eyebrow">33Giri • Recensioni</p>
+      <h1 class="review-title">La tua opinione conta.</h1>
+      <p class="review-subtitle">
+        Condividi la tua esperienza con 33Giri: ci aiuta a migliorare e a far capire cosa rende speciali i nostri pezzi.
+      </p>
+    </div>
 
-      <div class="review-shell">
-        <div class="review-card">
-
-          <form id="reviewForm" class="review-form">
-            <!-- Nome -->
-            <div class="form-group">
-              <label for="reviewerName">Il tuo nome *</label>
-              <input
-                type="text"
-                id="reviewerName"
-                name="reviewerName"
-                required
-                placeholder="es. Mario Rossi"
-              />
-            </div>
-
-            <!-- Email (opzionale) -->
-            <div class="form-group">
-              <label for="reviewerEmail">Email (opzionale)</label>
-              <input
-                type="email"
-                id="reviewerEmail"
-                name="reviewerEmail"
-                placeholder="mario.rossi@email.com"
-              />
-            </div>
-
-            <!-- Rating -->
-            <div class="form-group">
-              <label>Valutazione *</label>
-              <div class="star-rating">
-                <input type="radio" name="rating" value="5" id="star5" required />
-                <label for="star5" title="5 stelle">★</label>
-
-                <input type="radio" name="rating" value="4" id="star4" />
-                <label for="star4" title="4 stelle">★</label>
-
-                <input type="radio" name="rating" value="3" id="star3" />
-                <label for="star3" title="3 stelle">★</label>
-
-                <input type="radio" name="rating" value="2" id="star2" />
-                <label for="star2" title="2 stelle">★</label>
-
-                <input type="radio" name="rating" value="1" id="star1" />
-                <label for="star1" title="1 stella">★</label>
-              </div>
-              <div id="ratingValue" class="rating-value"></div>
-            </div>
-
-            <!-- Commento -->
-            <div class="form-group">
-              <label for="reviewComment">Il tuo commento *</label>
-              <textarea
-                id="reviewComment"
-                name="reviewComment"
-                rows="5"
-                required
-                placeholder="Raccontaci la tua esperienza con i nostri prodotti..."
-              ></textarea>
-              <small class="char-count"><span id="charCount">0</span>/500 caratteri</small>
-            </div>
-
-            <!-- Upload -->
-            <div class="form-group">
-              <label for="reviewImages">Aggiungi foto (opzionale)</label>
-              <div class="image-upload-area">
-                <input
-                  type="file"
-                  id="reviewImages"
-                  name="reviewImages"
-                  accept="image/*"
-                  multiple
-                  class="file-input"
-                />
-                <label for="reviewImages" class="file-input-label">
-                  <span class="upload-icon">📷</span>
-                  <span class="upload-text">Clicca per caricare o trascina le immagini qui</span>
-                  <span class="upload-info">Massimo 5 immagini (JPG, PNG, max 5MB ciascuna)</span>
-                </label>
-              </div>
-              <div id="imagePreview" class="image-preview"></div>
-            </div>
-
-            <!-- Privacy -->
-            <div class="form-group checkbox-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="privacyConsent" name="privacyConsent" required />
-                <span>
-                  Acconsento al trattamento dei dati personali secondo l'
-                  <a href="informativa-privacy.html" target="_blank">informativa sulla privacy</a> *
-                </span>
-              </label>
-            </div>
-
-            <!-- Submit -->
-            <div class="form-actions" style="margin-top: 20px; display:flex; justify-content:center;">
-              <button type="submit" class="btn btn-primary btn-submit">
-                <span class="btn-text">Invia recensione</span>
-                <span class="btn-loader" style="display:none;">⏳ Invio in corso...</span>
-              </button>
-            </div>
-
-            <div id="formMessage" class="form-message" style="display:none;"></div>
-          </form>
-
-          <!-- Recensioni recenti -->
-          <div class="recent-reviews">
-            <h2>Recensioni recenti</h2>
-            <div id="recentReviewsList" class="reviews-list">
-              <!-- caricate da reviews.js -->
-            </div>
+    <!-- FORM (desktop largo, centrato) -->
+    <section class="form-shell">
+      <div class="form-card">
+        <form id="reviewForm" class="review-form">
+          <!-- Nome -->
+          <div class="form-group">
+            <label for="reviewerName">Il tuo nome *</label>
+            <input type="text" id="reviewerName" name="reviewerName" required placeholder="es. Mario Rossi" />
           </div>
 
+          <!-- Email -->
+          <div class="form-group">
+            <label for="reviewerEmail">Email (opzionale)</label>
+            <input type="email" id="reviewerEmail" name="reviewerEmail" placeholder="mario.rossi@email.com" />
+          </div>
+
+          <!-- Rating -->
+          <div class="form-group">
+            <label>Valutazione *</label>
+            <div class="star-rating">
+              <input type="radio" name="rating" value="5" id="star5" required />
+              <label for="star5" title="5 stelle">★</label>
+
+              <input type="radio" name="rating" value="4" id="star4" />
+              <label for="star4" title="4 stelle">★</label>
+
+              <input type="radio" name="rating" value="3" id="star3" />
+              <label for="star3" title="3 stelle">★</label>
+
+              <input type="radio" name="rating" value="2" id="star2" />
+              <label for="star2" title="2 stelle">★</label>
+
+              <input type="radio" name="rating" value="1" id="star1" />
+              <label for="star1" title="1 stella">★</label>
+            </div>
+            <div id="ratingValue" class="rating-value"></div>
+          </div>
+
+          <!-- Commento -->
+          <div class="form-group">
+            <label for="reviewComment">Il tuo commento *</label>
+            <textarea id="reviewComment" name="reviewComment" rows="5" required
+              placeholder="Raccontaci la tua esperienza con i nostri prodotti..."></textarea>
+            <small class="char-count"><span id="charCount">0</span>/500 caratteri</small>
+          </div>
+
+          <!-- Upload -->
+          <div class="form-group">
+            <label for="reviewImages">Aggiungi foto (opzionale)</label>
+            <div class="image-upload-area">
+              <input type="file" id="reviewImages" name="reviewImages" accept="image/*" multiple class="file-input" />
+              <label for="reviewImages" class="file-input-label">
+                <span class="upload-icon">📷</span>
+                <span class="upload-text">Clicca per caricare o trascina le immagini qui</span>
+                <span class="upload-info">Massimo 5 immagini (JPG, PNG, max 5MB ciascuna)</span>
+              </label>
+            </div>
+            <div id="imagePreview" class="image-preview"></div>
+          </div>
+
+          <!-- Privacy -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="privacyConsent" name="privacyConsent" required />
+              <span>
+                Acconsento al trattamento dei dati personali secondo l'
+                <a href="informativa-privacy.html" target="_blank">informativa sulla privacy</a> *
+              </span>
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-actions" style="margin-top: 20px; display:flex; justify-content:center;">
+            <button type="submit" class="btn btn-primary btn-submit">
+              <span class="btn-text">Invia recensione</span>
+              <span class="btn-loader" style="display:none;">⏳ Invio in corso...</span>
+            </button>
+          </div>
+
+          <div id="formMessage" class="form-message" style="display:none;"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- RECENSIONI (sotto, scroll orizzontale) -->
+    <section class="reviews-shell">
+      <div class="reviews-card">
+        <h2 class="reviews-title">Recensioni recenti</h2>
+        <p class="reviews-hint">Scorri a destra e sinistra per leggere le ultime recensioni.</p>
+        <div id="recentReviewsList" class="reviews-list">
+          <!-- Popolato da reviews.js -->
         </div>
       </div>
-
-    </div>
+    </section>
   </main>
 
   <footer id="footer"></footer>
