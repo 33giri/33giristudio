@@ -677,6 +677,43 @@
 
   <!-- NEWSLETTER POPUP e resto dei tuoi script (lasciati invariati nel tuo file originale) -->
   <!-- (Se vuoi, puoi incollare qui il blocco newsletter che avevi già: non l'ho rimosso, ho solo lavorato sulle parti richieste.) -->
+   <!-- NEWSLETTER POPUP (BIG) -->
+<div id="nlOverlay" class="nl-overlay" aria-hidden="true">
+  <div class="nl-modal" role="dialog" aria-modal="true" aria-labelledby="nlTitle">
+    <button class="nl-close" id="nlClose" aria-label="Chiudi">×</button>
+
+    <div class="nl-head">
+      <div class="nl-kicker">Iscriviti alla nostra</div>
+      <div class="nl-title" id="nlTitle">NEWSLETTER</div>
+    </div>
+
+    <div class="nl-box">
+      <p class="nl-line">
+        Riceverai subito <br />
+        un codice sconto del
+      </p>
+
+      <div class="nl-percent">10%</div>
+
+      <p class="nl-line">
+        da utilizzare sul tuo <br />
+        primo acquisto!
+      </p>
+
+      <p class="nl-footnote">
+        Potrai disiscriverti <br />
+        in qualsiasi momento!
+      </p>
+    </div>
+
+    <form id="nlForm" class="nl-form">
+      <input id="nlEmail" type="email" placeholder="Inserisci la tua email" autocomplete="email" required />
+      <button id="nlSubmit" type="submit" class="nl-btn nl-btn-primary">OTTIENI LO SCONTO DEL 10%</button>
+      <button id="nlNoThanks" type="button" class="nl-btn nl-btn-ghost">NO GRAZIE</button>
+      <div id="nlMsg" class="nl-msg" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>
