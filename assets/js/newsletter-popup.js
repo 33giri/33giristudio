@@ -1,4 +1,4 @@
-<script>
+
 (function () {
   const overlay   = document.getElementById("nlOverlay");
   const closeBtn  = document.getElementById("nlClose"); 
@@ -105,4 +105,4 @@
     }
   });
 })();
-</script>
+
