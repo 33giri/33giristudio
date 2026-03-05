@@ -1,7 +1,7 @@
 <script>
 (function () {
   const overlay   = document.getElementById("nl0verlay");
-  const closeBtn  = document.getElementById("nlClose");
+  const closeBtn  = document.getElementById("nlClose"); 
   const noThanks  = document.getElementById("nlNoThanks");
   const form      = document.getElementById("nlForm");
   const emailIn   = document.getElementById("nlEmail");
