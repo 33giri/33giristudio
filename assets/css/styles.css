@@ -1723,3 +1723,173 @@ body {
   .reviews-v2-shell{ padding: 16px; }
   .r2-card{ width: 280px; }
 }
+/* =========================
+   Newsletter Popup - BIG (stile screenshot)
+   ========================= */
+
+.nl-overlay{
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 2vw, 26px);
+  background: rgba(0,0,0,0.70);
+  backdrop-filter: blur(10px);
+  z-index: 99999;
+}
+
+.nl-overlay.is-open{ display: flex; }
+
+.nl-modal{
+  position: relative;
+  width: min(980px, 94vw);
+  min-height: min(780px, 92vh);
+  border-radius: 28px;
+  padding: clamp(18px, 3vw, 34px);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 40px 140px rgba(0,0,0,0.55);
+  display: grid;
+  align-content: start;
+  gap: 22px;
+  overflow: hidden;
+}
+
+/* X chiudi */
+.nl-close{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  background: rgba(0,0,0,0.12);
+  color: #111;
+  transition: transform .2s ease, background .2s ease;
+}
+.nl-close:hover{ transform: scale(1.05); background: rgba(0,0,0,0.18); }
+
+/* Header */
+.nl-head{
+  text-align: center;
+  margin-top: 4px;
+}
+.nl-kicker{
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 700;
+  color: #151515;
+  letter-spacing: 0.01em;
+}
+.nl-title{
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: clamp(54px, 7vw, 104px);
+  line-height: 0.95;
+  color: #0f1115;
+  margin-top: 10px;
+}
+
+/* Box centrale come “card” nello screenshot */
+.nl-box{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(18px, 2.2vw, 26px);
+  border-radius: 22px;
+  border: 2px solid rgba(20, 110, 105, 0.35);
+  background: rgba(255,255,255,0.70);
+  text-align: center;
+}
+
+.nl-line{
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 800;
+  color: #0f1115;
+  line-height: 1.15;
+}
+
+.nl-percent{
+  margin: 8px 0 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: clamp(58px, 8vw, 110px);
+  line-height: 1;
+  color: #2c8a83; /* verde/teal come screenshot */
+}
+
+.nl-footnote{
+  margin: 18px 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 700;
+  color: rgba(15,17,21,0.88);
+  line-height: 1.2;
+}
+
+/* Form + bottoni */
+.nl-form{
+  width: min(720px, 92%);
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+  text-align: center;
+}
+
+.nl-form input{
+  height: 56px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.95);
+  padding: 0 18px;
+  font-size: 16px;
+  outline: none;
+}
+
+.nl-btn{
+  height: 58px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.nl-btn-primary{
+  background: #2c8a83;
+  color: #fff;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.22);
+}
+.nl-btn-primary:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.30);
+}
+
+.nl-btn-ghost{
+  background: rgba(44, 138, 131, 0.18);
+  color: rgba(15,17,21,0.70);
+}
+.nl-btn-ghost:hover{
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.nl-msg{
+  min-height: 20px;
+  font-size: 14px;
+  color: rgba(15,17,21,0.75);
+}
+
+/* Mobile: resta grande ma più compatto */
+@media (max-width: 640px){
+  .nl-modal{ min-height: min(740px, 94vh); }
+  .nl-form{ width: 96%; }
+}
