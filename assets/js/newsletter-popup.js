@@ -1,6 +1,6 @@
 <script>
 (function () {
-  const overlay   = document.getElementById("nl0verlay");
+  const overlay   = document.getElementById("nlOverlay");
   const closeBtn  = document.getElementById("nlClose"); 
   const noThanks  = document.getElementById("nlNoThanks");
   const form      = document.getElementById("nlForm");
