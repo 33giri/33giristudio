@@ -1,575 +1,519 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>33Giri — Idee regalo</title>
-
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/vinyl-3d.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Idee Regalo & Corporate — 33GIRI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <style>
-    /* ===== BASE (tuo stile) ===== */
-    body{
-      font-family:'Inter', sans-serif;
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      color:#2c2416;
-      position:relative;
-      margin:0;
-      overflow-x:hidden;
-
-      /* ✅ FIX SPLIT: crea un contesto isolato (aiuta con rendering/zoom) */
-      isolation: isolate;
-    }
-
-    /* ✅ FIX texture: niente “cuciture” a qualsiasi zoom */
-    body::before{
-      content:'';
-      position:fixed;
-      inset:0;
-      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') center top / cover no-repeat;
-      opacity:.22;
-      z-index:0;
-      pointer-events:none;
-
-      /* ✅ FIX SPLIT: niente animazione sulla texture (evita artefatti di compositing) */
-      animation: none !important;
-
-      /* ✅ FIX SPLIT: forza layer GPU stabile */
-      transform: translate3d(0,0,0);
-      will-change: transform;
-    }
-
-    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-
-    h1,h2,h3{font-family:'Playfair Display', serif;font-weight:900;}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes slideInLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
-
-    /* ✅ IMPORTANT: nessun “fondo” sulle sezioni (sfondo unico = body) */
-    main, section, footer { background: transparent !important; }
-
-    /* ✅ FIX SPLIT: assicura che tutto il contenuto stia sopra la texture */
-    main{ position:relative; z-index:1; }
-
-    /* ===== HEADER (come il tuo) ===== */
-    .site-header{
-      position:relative;
-      z-index:100;
-      background: rgba(255,255,255,0.78);
-      /* ✅ FIX SPLIT: rimuovi blur */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      border-bottom: 1px solid rgba(255,255,255,0.35);
-    }
-    .wrap.header-inner{display:flex; align-items:center; gap:24px; padding:10px 20px;}
-    .nav-toggle,.mobile-menu-btn{display:none;}
-    .main-nav{margin-left:16px;}
-    .main-nav ul{display:flex; align-items:center; gap:18px; list-style:none; margin:0; padding:0;}
-    .main-nav a{display:block; padding:6px 8px; color:#111; text-decoration:none; border-radius:6px; font-weight:600;}
-    .main-nav a:hover{background:#f2f2f2;}
-    .header-actions{margin-left:auto;}
-
-    @media (max-width:768px){
-      .wrap.header-inner{gap:12px;}
-      .mobile-menu-btn{display:inline-flex; align-items:center; justify-content:center; font-size:22px; background:transparent; border:none; cursor:pointer;}
-      .main-nav{
-        position:absolute; top:100%; left:0; right:0;
-        background: rgba(255,255,255,.92);
-        /* ✅ FIX SPLIT: rimuovi blur */
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        box-shadow:0 6px 18px rgba(0,0,0,0.08);
-        max-height:0; overflow:hidden; transition:max-height .25s ease-out;
-        border-bottom-left-radius:10px; border-bottom-right-radius:10px;
-        z-index:2100;
-      }
-      .main-nav ul{flex-direction:column; gap:8px; padding:12px 16px;}
-      .nav-toggle:checked + .mobile-menu-btn + .main-nav{max-height:360px;}
-      .logo{margin:0 auto;}
-    }
-
-    /* ===== LAYOUT ===== */
-    .corp-wrap{width:min(1200px, 92vw); margin:0 auto; position:relative; z-index:1;}
-    .corp-section{padding:70px 0;}
-    .corp-kicker{letter-spacing:.18em; text-transform:uppercase; font-weight:800; font-size:.95rem; opacity:.95;}
-    .corp-title{font-family:'Playfair Display', serif; font-weight:900; letter-spacing:-0.02em;}
-
-    /* ===== HERO ===== */
-    .corp-hero{
-      position:relative;
-      min-height:78vh;
-      display:grid;
-      align-items:center;
-      overflow:hidden;
-      background: transparent !important;
-    }
-    .corp-hero::before{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.58) 48%, rgba(0,0,0,.18) 100%);
-      z-index:2;
-    }
-    .corp-hero-media{position:absolute; inset:0; z-index:1;}
-    .corp-hero-media img{width:100%; height:100%; object-fit:cover; filter:brightness(.78);}
-    .corp-hero-inner{z-index:3; padding:90px 0 40px;}
-    .corp-hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 26px;
-      align-items:end;
-    }
-    .corp-hero h1{
-      font-size:clamp(36px, 6.2vw, 70px);
-      line-height:1.06;
-      margin:12px 0 14px;
-      color:#fff;
-      text-shadow:0 10px 26px rgba(0,0,0,.75);
-    }
-    .corp-hero p{
-      color:rgba(255,255,255,.92);
-      font-size:clamp(16px, 2.2vw, 20px);
-      line-height:1.6;
-      margin:0 0 16px;
-      text-shadow:0 6px 18px rgba(0,0,0,.75);
-      max-width:58ch;
-    }
-
-    .cta-row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:16px;}
-    .btn-cta{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:14px 22px;
-      border-radius:999px;
-      font-weight:900;
-      text-decoration:none;
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
-      box-shadow:0 14px 40px rgba(0,0,0,.38);
-      border:1px solid rgba(255,255,255,.22);
-      gap:10px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn-primary{
-      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
-      color:#5d4e37;
-    }
-    .btn-ghost{
-      background: rgba(255,255,255,.12);
-      color:#fff;
-      /* ✅ FIX SPLIT: rimuovi blur */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-    }
-    .btn-cta:hover{transform:translateY(-2px); box-shadow:0 18px 50px rgba(0,0,0,.48);}
-
-    .corp-badges{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
-    .badge{
-      padding:10px 14px;
-      border-radius:999px;
-      background: rgba(255,255,255,.14);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.22);
-      /* ✅ FIX SPLIT: rimuovi blur */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      font-weight:800;
-      font-size:.92rem;
-    }
-
-    @media (max-width:900px){
-      .corp-hero-grid{grid-template-columns:1fr;}
-      .corp-badges{justify-content:flex-start;}
-    }
-
-    /* ===== PANNELLI: riquadri con colore variabile per sezione ===== */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --panel-bg: rgba(255,255,255,.55);
-      --panel-border: rgba(255,255,255,.28);
-      --panel-shadow: 0 18px 60px rgba(0,0,0,.18);
+      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
+      --cream:#f5f0e8;--warm:#e8e2d9;--navy:#0f1522;--white:#fff;
+      --text:#1a1a1a;--muted:#6b6560;--header-h:80px;
+      --fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
     }
+    html{scroll-behavior:smooth}
+    body{background:var(--navy);color:var(--white);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
 
-    #idee{ --panel-bg: rgba(255,255,255,.52); }
-    #aziende{ --panel-bg: rgba(245,240,232,.58); }
+    /* HEADER */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
+      background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,62,.18)}
+    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
+      display:flex;align-items:center;justify-content:space-between;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    .main-nav ul{list-style:none;display:flex;gap:36px}
+    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
+    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
+    .main-nav a.active{color:var(--gold)}.main-nav a.active::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:20px}
+    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+    .header-actions a:hover{color:var(--gold)}
 
-    .block{
-      background: var(--panel-bg);
-      /* ✅ FIX SPLIT: rimuovi blur (qui è il colpevole più comune) */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+    /* ── HERO "BENTO" ── */
+    .corp-hero{
+      padding-top:var(--header-h);
+      display:grid;grid-template-columns:1.5fr 1fr;
+      min-height:100vh;background:var(--black)}
+    /* Colonna testo */
+    .corp-hero-text{
+      padding:80px 72px;display:flex;flex-direction:column;justify-content:center;
+      position:relative;overflow:hidden}
+    /* Pattern sottile */
+    .corp-hero-text::before{content:'';position:absolute;inset:0;
+      background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(184,150,62,.04) 80px,rgba(184,150,62,.04) 81px);
+      pointer-events:none}
+    .corp-hero-text-inner{position:relative;z-index:1}
+    .corp-hero-kicker{font-size:10px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:24px;opacity:0;animation:slideUp .8s var(--ease) .2s forwards}
+    .corp-hero-title{font-family:var(--fd);font-size:clamp(44px,5.5vw,80px);font-weight:300;
+      line-height:1;letter-spacing:-.01em;margin-bottom:24px;
+      opacity:0;animation:slideUp .9s var(--ease) .4s forwards}
+    .corp-hero-title em{font-style:italic;color:var(--gold-lt)}
+    .corp-hero-body{font-size:14px;font-weight:300;line-height:1.9;
+      color:rgba(255,255,255,.55);max-width:440px;margin-bottom:44px;
+      opacity:0;animation:slideUp .9s var(--ease) .6s forwards}
+    .corp-hero-ctas{display:flex;gap:16px;flex-wrap:wrap;
+      opacity:0;animation:slideUp .9s var(--ease) .8s forwards}
+    /* Badge */
+    .corp-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:40px;
+      opacity:0;animation:slideUp .9s var(--ease) 1s forwards}
+    .badge{padding:8px 16px;background:rgba(184,150,62,.1);
+      border:1px solid rgba(184,150,62,.25);color:rgba(255,255,255,.7);
+      font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
+    /* Griglia immagini lato destro */
+    .corp-hero-grid{display:grid;grid-template-rows:1fr 1fr;gap:2px}
+    .corp-hero-img{overflow:hidden;position:relative}
+    .corp-hero-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);
+      transition:transform .7s var(--ease),filter .5s}
+    .corp-hero-img:hover img{transform:scale(1.05);filter:brightness(.9)}
+    @keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
-      border:1px solid var(--panel-border);
-      border-radius:24px;
-      box-shadow: var(--panel-shadow);
-      overflow:hidden;
-    }
-    .block-pad{padding:22px;}
+    /* ── TICKER ── */
+    .ticker{background:var(--gold);overflow:hidden;padding:13px 0}
+    .ticker-track{display:flex;white-space:nowrap;animation:ticker 28s linear infinite}
+    .ticker-item{flex-shrink:0;padding:0 48px;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--black)}
+    .ticker-sep{flex-shrink:0;padding:0 12px;color:rgba(0,0,0,.35);font-size:10px}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-    .grid-2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-      align-items:center;
-    }
-    @media (max-width:980px){ .grid-2{grid-template-columns:1fr;} }
+    /* ── IDEE REGALO ── */
+    .gift-ideas{background:var(--navy);padding:120px 60px;
+      border-top:1px solid rgba(184,150,62,.15)}
+    .gift-inner{max-width:1280px;margin:0 auto}
+    .gift-header{display:flex;align-items:flex-end;justify-content:space-between;
+      margin-bottom:72px;border-bottom:1px solid rgba(184,150,62,.2);padding-bottom:32px}
+    .gift-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .gift-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--white);letter-spacing:-.01em;line-height:1.1}
+    .gift-title em{font-style:italic;color:var(--gold-lt)}
+    .gift-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,.4);max-width:240px;text-align:right;line-height:1.7}
+    /* Grid asimmetrica */
+    .gift-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto;gap:2px}
+    .gift-card{position:relative;overflow:hidden;background:var(--black);cursor:pointer}
+    .gift-card img{width:100%;height:320px;object-fit:cover;
+      filter:brightness(.7) saturate(.8);transition:transform .7s var(--ease),filter .5s}
+    .gift-card:hover img{transform:scale(1.06);filter:brightness(.55)}
+    .gift-card-overlay{position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(10,10,10,.85) 0%,transparent 55%)}
+    .gift-card-body{position:absolute;bottom:0;left:0;right:0;padding:24px}
+    .gift-card-tag{display:inline-block;font-size:9px;font-weight:700;
+      letter-spacing:.22em;text-transform:uppercase;
+      background:var(--gold);color:var(--black);padding:4px 10px;margin-bottom:10px}
+    .gift-card-name{font-family:var(--fd);font-size:22px;font-weight:400;color:var(--white);margin-bottom:6px}
+    .gift-card-desc{font-size:12px;font-weight:300;color:rgba(255,255,255,.55);
+      opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s}
+    .gift-card:hover .gift-card-desc{opacity:1;transform:translateY(0)}
+    /* card evidenziata (span 2) */
+    .gift-card--wide{grid-column:span 2}
+    .gift-card--wide img{height:280px}
 
-    .card-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:18px;
-    }
-    .card{
-      background: var(--panel-bg);
-      /* ✅ FIX SPLIT: rimuovi blur anche qui */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+    /* ── CORPORATE ── */
+    .corp-section{background:var(--black);padding:120px 60px}
+    .corp-inner{max-width:1280px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .corp-text-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+    .corp-text-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--white);line-height:1.1;letter-spacing:-.01em;margin-bottom:28px}
+    .corp-text-title em{font-style:italic;color:var(--gold-lt)}
+    .corp-text-body{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.5);margin-bottom:36px}
+    .corp-text-body p+p{margin-top:16px}
+    /* Checklist */
+    .corp-checklist{display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+    .corp-check{display:flex;gap:12px;align-items:flex-start}
+    .corp-check-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);margin-top:9px;flex-shrink:0}
+    .corp-check-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.7}
+    .corp-check-text strong{color:var(--white);font-weight:500}
+    /* Immagine */
+    .corp-img-wrap{position:relative;overflow:hidden}
+    .corp-img-wrap img{width:100%;height:520px;object-fit:cover;filter:brightness(.75);
+      transition:transform .7s var(--ease)}
+    .corp-img-wrap:hover img{transform:scale(1.04)}
+    /* Gold frame */
+    .corp-img-wrap::before{content:'';position:absolute;
+      bottom:-16px;left:-16px;width:120px;height:120px;
+      border-bottom:1px solid rgba(184,150,62,.5);border-left:1px solid rgba(184,150,62,.5);
+      z-index:1;pointer-events:none}
 
-      border-radius:22px;
-      border:1px solid var(--panel-border);
-      box-shadow: var(--panel-shadow);
-      overflow:hidden;
-    }
-    .card img{width:100%; height:220px; object-fit:cover; display:block;}
-    .card .card-body{padding:18px 18px 20px;}
-    .card h3{margin:0 0 8px; color:#2c2416; font-size:1.25rem;}
-    .card p{margin:0; color:#2c2416; line-height:1.65; opacity:.92;}
-    @media (max-width:980px){
-      .card-grid{grid-template-columns:1fr;}
-      .card img{height:240px;}
-    }
+    /* ── FORM CONTATTO ── */
+    .corp-contact{background:var(--navy);padding:120px 60px;
+      border-top:1px solid rgba(184,150,62,.15);border-bottom:1px solid rgba(184,150,62,.15)}
+    .corp-contact-inner{max-width:1280px;margin:0 auto}
+    .corp-contact-header{margin-bottom:60px;text-align:center}
+    .corp-contact-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--white);line-height:1.1;letter-spacing:-.01em;margin-bottom:12px}
+    .corp-contact-title em{font-style:italic;color:var(--gold-lt)}
+    .corp-contact-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.7}
+    .corp-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;
+      background:rgba(184,150,62,.05);border:1px solid rgba(184,150,62,.12)}
+    .corp-form-left{padding:60px;background:rgba(255,255,255,.03)}
+    .corp-form-right{padding:60px;background:rgba(255,255,255,.02)}
+    .form-field{margin-bottom:20px}
+    .form-field label{display:block;font-size:10px;font-weight:600;letter-spacing:.15em;
+      text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px}
+    .form-field input,.form-field select,.form-field textarea{
+      width:100%;padding:14px 16px;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+      color:var(--white);font-family:var(--fb);font-size:14px;
+      transition:border-color .25s,background .25s;outline:none}
+    .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,.22)}
+    .form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+      border-color:var(--gold);background:rgba(184,150,62,.06)}
+    .form-field select option{background:var(--navy);color:var(--white)}
+    .form-field textarea{resize:vertical;min-height:120px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .btn-gold{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;
+      background:var(--gold);color:var(--black);font-size:11px;font-weight:700;
+      letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .25s,transform .25s}
+    .btn-gold:hover{background:var(--gold-lt);transform:translateY(-2px)}
+    .btn-outline-w{display:inline-flex;align-items:center;gap:10px;padding:13px 34px;
+      background:transparent;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;
+      letter-spacing:.18em;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);
+      cursor:pointer;transition:border-color .25s,color .25s}
+    .btn-outline-w:hover{border-color:var(--gold);color:var(--gold)}
+    /* Info box */
+    .corp-info-boxes{display:flex;flex-direction:column;gap:20px}
+    .corp-info-box{padding:28px;background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.1)}
+    .corp-info-box-title{font-family:var(--fd);font-size:18px;font-weight:400;
+      color:var(--white);margin-bottom:8px}
+    .corp-info-box-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.7}
 
-    /* Form (riquadro dark) */
-    .contact-form-wrapper{
-      background: rgba(0,0,0,0.45);
-      /* ✅ FIX SPLIT: rimuovi blur */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+    /* WA */
+    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
+      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
+    .wa-float svg{width:24px;height:24px;fill:var(--black)}
 
-      padding: 38px 28px;
-      border-radius: 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.28);
-      max-width: 900px;
-      margin: 0 auto;
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-    .form-group{margin-bottom:18px; text-align:left;}
-    .form-group label{
-      display:block; font-weight:800; margin-bottom:10px;
-      color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5);
-    }
-    .form-control{
-      width:100%;
-      padding:14px 16px;
-      border-radius:16px;
-      border: 2px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.9);
-      font-family:'Inter', sans-serif;
-      font-size:16px;
-      transition: all .25s ease;
-      box-sizing:border-box;
-    }
-    .form-control:focus{
-      outline:none;
-      background:#fff;
-      border-color:#e8dfd5;
-      box-shadow:0 0 18px rgba(255,255,255,0.35);
-    }
+    /* FOOTER */
+    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
+      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
+    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
+    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
 
-    /* Sticky CTA bottom (solo mobile) */
-    .sticky-cta{
-      position: fixed;
-      left: 14px; right: 14px; bottom: 14px;
-      z-index: 9999;
-      display: none;
-    }
-    .sticky-cta a{
-      width:100%;
-      padding: 14px 18px;
-      border-radius: 999px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight: 900;
-      text-decoration:none;
-      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
-      color:#5d4e37;
-      box-shadow: 0 18px 55px rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.2);
-    }
-    @media (max-width: 768px){
-      .sticky-cta{display:block;}
-      main{padding-bottom:90px;}
-    }
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .reveal--d1{transition-delay:.1s}.reveal--d2{transition-delay:.2s}.reveal--d3{transition-delay:.3s}
 
-    /* Footer: sezione senza sfondo + pannello dentro */
-    .site-footer{
-      position: relative;
-      z-index: 1;
-      padding: 34px 20px 46px;
-      background: transparent !important;
-    }
-    .footer-panel{
-      max-width: 1200px;
-      margin: 0 auto;
-      border-radius: 22px;
-      padding: 18px 18px;
-      background: rgba(0,0,0,0.55);
-      /* ✅ FIX SPLIT: rimuovi blur */
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+    .sticky-cta{position:fixed;left:14px;right:14px;bottom:14px;z-index:9998;display:none}
+    .sticky-cta a{width:100%;padding:14px 18px;border-radius:999px;display:flex;
+      align-items:center;justify-content:center;font-weight:700;text-decoration:none;
+      background:var(--gold);color:var(--black);box-shadow:0 18px 55px rgba(0,0,0,.35);font-size:13px}
+    @media(max-width:768px){.sticky-cta{display:block}}
 
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow: 0 18px 60px rgba(0,0,0,0.18);
+    @media(max-width:1100px){
+      .corp-hero{grid-template-columns:1fr}
+      .corp-hero-grid{display:none}
+      .corp-inner{grid-template-columns:1fr}
+      .corp-form-grid{grid-template-columns:1fr}
+      .gift-grid{grid-template-columns:1fr 1fr}
+      .gift-card--wide{grid-column:span 2}
+      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+    }
+    @media(max-width:768px){
+      :root{--header-h:64px}
+      .corp-hero-text,.gift-ideas,.corp-section,.corp-contact{padding:60px 20px}
+      .corp-form-left,.corp-form-right{padding:32px 20px}
+      .gift-grid{grid-template-columns:1fr}
+      .gift-card--wide{grid-column:span 1}
+      .form-row{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px}
+      .main-nav{display:none}
     }
   </style>
 </head>
-
 <body>
 
-  <!-- HEADER -->
-  <header id="header" class="site-header">
-    <div class="wrap header-inner">
-      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
-      <label for="nav-toggle" class="mobile-menu-btn" aria-label="Apri menu">☰</label>
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="corporate.html" class="active">Regalo</a></li>
+      </ul>
+    </nav>
+    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
+    <div class="header-actions">
+      <a href="chi_siamo.html">Chi siamo</a>
+      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
+    </div>
+  </div>
+</header>
 
-      <nav class="main-nav" id="main-nav" role="navigation">
-        <ul id="main-nav-list">
+<!-- HERO BENTO -->
+<section class="corp-hero">
+  <div class="corp-hero-text">
+    <div class="corp-hero-text-inner">
+      <div class="corp-hero-kicker">33GIRI · Idee Regalo · Corporate</div>
+      <h1 class="corp-hero-title">
+        Un regalo<br>che si <em>usa.</em><br>
+        Un gesto che<br>si <em>ricorda.</em>
+      </h1>
+      <p class="corp-hero-body">
+        Oggetti di design realizzati a mano con vinili riciclati. Per amici, famiglia, scrivania e — sì — per le aziende che vogliono fare regali che non finiscono in un cassetto.
+      </p>
+      <div class="corp-hero-ctas">
+        <a href="#idee-regalo" class="btn-gold">Idee regalo</a>
+        <a href="#aziende" class="btn-outline-w">Regali aziendali</a>
+        <a href="#contatti" class="btn-outline-w">Preventivo</a>
+      </div>
+      <div class="corp-badges">
+        <div class="badge">Fatto a mano</div>
+        <div class="badge">Pezzi unici</div>
+        <div class="badge">Personalizzabile</div>
+        <div class="badge">Made in Italy</div>
+      </div>
+    </div>
+  </div>
+  <div class="corp-hero-grid">
+    <div class="corp-hero-img">
+      <img src="assets/atelier 33 giri/20251110-IMG_4743.jpg" alt="Regalo 33GIRI" loading="eager">
+    </div>
+    <div class="corp-hero-img">
+      <img src="assets/atelier 33 giri/20251110-IMG_4734.jpg" alt="Oggetto design 33GIRI" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Idee Regalo</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Corporate</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Personalizzabile</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Handmade</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Made in Italy</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Pezzi Unici</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Idee Regalo</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Corporate</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Personalizzabile</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Handmade</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Made in Italy</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Pezzi Unici</span><span class="ticker-sep">·</span>
+  </div>
+</div>
+
+<!-- IDEE REGALO -->
+<section class="gift-ideas" id="idee-regalo">
+  <div class="gift-inner">
+    <div class="gift-header">
+      <div>
+        <div class="gift-label reveal">Per chiunque</div>
+        <h2 class="gift-title reveal reveal--d1">Idee regalo<br><em>che funzionano.</em></h2>
+      </div>
+      <p class="gift-sub reveal">Utili ogni giorno, belli da esporre, con una storia dietro. Il classico "wow" immediato.</p>
+    </div>
+    <div class="gift-grid">
+      <div class="gift-card gift-card--wide reveal">
+        <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Per la casa" loading="lazy">
+        <div class="gift-card-overlay"></div>
+        <div class="gift-card-body">
+          <div class="gift-card-tag">Per la casa</div>
+          <div class="gift-card-name">Svuotatasche · Posacenere</div>
+          <div class="gift-card-desc">Design che sta bene ovunque: ingresso, soggiorno, comodino, scrivania. Un oggetto quotidiano con carattere.</div>
+        </div>
+      </div>
+      <div class="gift-card reveal reveal--d1">
+        <img src="assets/atelier 33 giri/20251110-IMG_4810.jpg" alt="Per i music lover" loading="lazy">
+        <div class="gift-card-overlay"></div>
+        <div class="gift-card-body">
+          <div class="gift-card-tag">Per chi ama la musica</div>
+          <div class="gift-card-name">Vinile trasformato</div>
+          <div class="gift-card-desc">Per chi ha ancora il giradischi. O per chi lo vorrebbe.</div>
+        </div>
+      </div>
+      <div class="gift-card reveal reveal--d2">
+        <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Per scrivania" loading="lazy">
+        <div class="gift-card-overlay"></div>
+        <div class="gift-card-body">
+          <div class="gift-card-tag">Per la scrivania</div>
+          <div class="gift-card-name">Studio · Ufficio</div>
+          <div class="gift-card-desc">Funzionale ogni giorno, sempre fotogenico.</div>
+        </div>
+      </div>
+      <div class="gift-card reveal reveal--d3">
+        <img src="assets/atelier 33 giri/20251110-IMG_4734.jpg" alt="Collab artist" loading="lazy">
+        <div class="gift-card-overlay"></div>
+        <div class="gift-card-body">
+          <div class="gift-card-tag">Edizione artistica</div>
+          <div class="gift-card-name">Collab · Da collezione</div>
+          <div class="gift-card-desc">Per chi apprezza l'arte. Pezzi dipinti a mano da artisti.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORPORATE -->
+<section class="corp-section" id="aziende">
+  <div class="corp-inner">
+    <div>
+      <div class="corp-text-label reveal">Regali aziendali</div>
+      <h2 class="corp-text-title reveal reveal--d1">
+        Corporate<br><em>pronti,</em><br>ma su misura.
+      </h2>
+      <div class="corp-text-body reveal reveal--d2">
+        <p>Per clienti, team, partner ed eventi. Scegli un prodotto iconico — svuotatasche o posacenere — e aggiungi logo e messaggio personalizzato. Ci occupiamo di selezione vinili, produzione, packaging e spedizione.</p>
+      </div>
+      <div class="corp-checklist reveal reveal--d2">
+        <div class="corp-check"><div class="corp-check-dot"></div><div class="corp-check-text"><strong>Packaging personalizzato</strong> — scatola con logo aziendale</div></div>
+        <div class="corp-check"><div class="corp-check-dot"></div><div class="corp-check-text"><strong>Etichetta dedicata</strong> — messaggio o incisione a richiesta</div></div>
+        <div class="corp-check"><div class="corp-check-dot"></div><div class="corp-check-text"><strong>Quantità flessibile</strong> — da 5 a 200+ pezzi</div></div>
+        <div class="corp-check"><div class="corp-check-dot"></div><div class="corp-check-text"><strong>Consegna coordinata</strong> — anche in più città</div></div>
+        <div class="corp-check"><div class="corp-check-dot"></div><div class="corp-check-text"><strong>Preventivo in 24h</strong> — compila il form sotto</div></div>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap" class="reveal reveal--d3">
+        <a href="#contatti" class="btn-gold">Richiedi preventivo</a>
+        <a href="https://wa.me/393925430575?text=Ciao!%20Vorrei%20un%20preventivo%20per%20regali%20aziendali%2033GIRI" target="_blank" class="btn-outline-w">WhatsApp diretto</a>
+      </div>
+    </div>
+    <div class="corp-img-wrap reveal">
+      <img src="assets/atelier 33 giri/expo/IMG_4597.jpg" alt="Regalo aziendale 33GIRI" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="corp-contact" id="contatti">
+  <div class="corp-contact-inner">
+    <div class="corp-contact-header">
+      <h2 class="corp-contact-title reveal"><em>Scrivici</em> e ti<br>consigliamo noi.</h2>
+      <p class="corp-contact-sub reveal reveal--d1">Privato o azienda: dicci per chi è il regalo, quanti pezzi, e la data. Ti rispondiamo con proposta e prezzi in giornata.</p>
+    </div>
+    <div class="corp-form-grid">
+      <div class="corp-form-left">
+        <form action="https://formsubmit.co/33giristudios@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nuova richiesta regalo — 33GIRI">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" style="display:none">
+          <div class="form-row">
+            <div class="form-field"><label>Nome *</label><input type="text" name="nome" required placeholder="Mario Rossi"></div>
+            <div class="form-field"><label>Azienda</label><input type="text" name="azienda" placeholder="Nome Azienda Srl"></div>
+          </div>
+          <div class="form-field"><label>Email *</label><input type="email" name="email" required placeholder="email@esempio.com"></div>
+          <div class="form-row">
+            <div class="form-field"><label>Per...</label>
+              <select name="tipo">
+                <option>Regalo singolo</option>
+                <option>Regali aziendali</option>
+                <option>Evento / gadget</option>
+                <option>Welcome kit</option>
+                <option>Altro</option>
+              </select>
+            </div>
+            <div class="form-field"><label>Quantità</label><input type="text" name="quantita" placeholder="es. 1 / 20 / 100"></div>
+          </div>
+          <div class="form-field"><label>Messaggio *</label>
+            <textarea name="messaggio" required placeholder="Per chi è il regalo, data, personalizzazione desiderata..."></textarea>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button type="submit" class="btn-gold">Invia richiesta</button>
+            <a href="https://wa.me/393925430575" target="_blank" class="btn-outline-w">WhatsApp →</a>
+          </div>
+        </form>
+      </div>
+      <div class="corp-form-right">
+        <div class="corp-info-boxes">
+          <div class="corp-info-box reveal">
+            <div class="corp-info-box-title">Risposta in giornata</div>
+            <div class="corp-info-box-text">Ti rispondiamo entro 24 ore con proposta concreta e prezzi. Nessuna attesa, nessun call inutile.</div>
+          </div>
+          <div class="corp-info-box reveal reveal--d1">
+            <div class="corp-info-box-title">Da 1 a 200+ pezzi</div>
+            <div class="corp-info-box-text">Gestiamo ordini singoli e commesse aziendali. Il pricing cambia con la quantità — chiedici il preventivo.</div>
+          </div>
+          <div class="corp-info-box reveal reveal--d2">
+            <div class="corp-info-box-title">Consegna a mano</div>
+            <div class="corp-info-box-text">A Bologna, Milano e Trento consegniamo direttamente. Per altre destinazioni organizziamo spedizione corriere.</div>
+          </div>
+          <div class="corp-info-box reveal reveal--d3">
+            <div class="corp-info-box-title">Email diretta</div>
+            <div class="corp-info-box-text">
+              <a href="mailto:33giristudios@gmail.com" style="color:var(--gold)">33giristudios@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">33GIRI</div>
+        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Naviga</div>
+        <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="catalogo.html">Catalogo</a></li>
-          <li><a href="quiz.html">33Quiz</a></li>
+          <li><a href="chi_siamo.html">Chi siamo</a></li>
           <li><a href="collaborazioni.html">Collaborazioni</a></li>
-          <li><a href="corporate.html">Corporate</a></li>
-          <li><a href="chi_siamo.html">Chi Siamo</a></li>
         </ul>
-      </nav>
-
-      <a class="logo" href="index.html" aria-label="33giri logo">
-        <img src="assets/logo/33_GIRI._logo-removebg-preview.png" alt="33giri" style="height:120px;">
-      </a>
-
-      <div class="header-actions" style="display:flex;align-items:center;gap:18px;">
-        <a class="icon-btn" aria-label="Account" href="account.html" role="button" style="text-decoration:none; font-size: 1.2rem;">👤</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Info</div>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="resi-rimborsi.html">Resi</a></li>
+          <li><a href="informativa-privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+          <li><a href="contribuisci.html">Dona un vinile</a></li>
+        </ul>
       </div>
     </div>
-  </header>
-
-  <main>
-
-    <!-- HERO -->
-    <section class="corp-hero">
-      <div class="corp-hero-media">
-        <img src="assets/atelier 33 giri/20251110-IMG_4743.jpg" alt="Idee regalo 33Giri">
-      </div>
-
-      <div class="corp-hero-inner">
-        <div class="corp-wrap" style="animation: fadeInUp 1s ease-out;">
-          <div class="corp-hero-grid">
-            <div>
-              <div class="corp-kicker" style="color: rgba(255,255,255,.92);">33GIRI • IDEE REGALO</div>
-              <h1 class="corp-title">Un regalo che si usa.<br>Un gesto che si ricorda.</h1>
-              <p>
-                Oggetti di design realizzati a mano con vinili riciclati: svuotatasche, bowl e pezzi unici.
-                Perfetti per <b>amici</b>, <b>famiglia</b>, <b>casa</b> e <b>scrivania</b>.
-                E sì: abbiamo anche una sezione dedicata ai <b>regali aziendali</b> 👇
-              </p>
-
-              <div class="cta-row">
-               <a class="btn-cta btn-primary" href="catalogo.html#collezione">Scopri le idee regalo</a>
-                <a class="btn-cta btn-ghost" href="#aziende">Regali aziendali</a>
-                <a class="btn-cta btn-ghost" href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a>
-              </div>
-            </div>
-
-            <div class="corp-badges">
-              <div class="badge">Fatto a mano</div>
-              <div class="badge">Pezzi unici</div>
-              <div class="badge">Upcycling vinili</div>
-              <div class="badge">Personalizzabile</div>
-              <div class="badge">Idea regalo pronta</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- IDEE REGALO -->
-    <section id="idee" class="corp-section">
-      <div class="corp-wrap">
-        <div style="text-align:center; margin-bottom:18px;">
-          <h2 class="corp-title" style="font-size: clamp(30px, 4.6vw, 52px); margin: 0 0 10px;">Idee regalo per tutti</h2>
-          <p style="margin:0; max-width:72ch; margin-inline:auto; opacity:.95; line-height:1.7;">
-            Regali utili, belli da vedere e con una storia: perfetti quando vuoi fare centro senza impazzire.
-          </p>
-        </div>
-
-        <div class="card-grid">
-          <div class="card">
-            <img src="assets/foto /sfondo bianco /IMG_3466.png" alt="Regalo per la casa">
-            <div class="card-body">
-              <h3>Per la casa</h3>
-              <p>Un pezzo di design che sta bene ovunque: ingresso, soggiorno, comodino.</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <img src="assets/atelier 33 giri/20251110-IMG_4810.jpg" alt="Regalo per chi ama la musica">
-            <div class="card-body">
-              <h3>Per chi ama la musica</h3>
-              <p>Vinili riciclati, vibe vintage, risultato moderno: il classico “wow” immediato.</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <img src="assets/atelier 33 giri/20251110-IMG_4734.jpg" alt="Regalo da scrivania">
-            <div class="card-body">
-              <h3>Per scrivania & studio</h3>
-              <p>Perfetto per chi lavora/ studia: utile ogni giorno e sempre fotogenico.</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="text-align:center; margin-top:18px;">
-          <a class="btn-cta btn-primary" href="#contatti">Chiedi consigli / disponibilità</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- AZIENDE -->
-    <section id="aziende" class="corp-section" style="padding-top: 10px;">
-      <div class="corp-wrap">
-        <div class="block">
-          <div class="block-pad grid-2">
-            <div style="animation: slideInLeft .9s ease-out;">
-              <div class="corp-kicker">Regali aziendali</div>
-              <h2 class="corp-title" style="font-size: clamp(28px, 4vw, 44px); margin: 10px 0 10px;">Corporate pronti, ma su misura.</h2>
-              <p style="margin:0; line-height:1.75; opacity:.95;">
-                Per <b>clienti</b>, <b>team</b>, <b>partner</b> ed <b>eventi</b>.
-                Scegli un prodotto iconico (svuotatasche / bowl), aggiungi logo e messaggio:
-                ci occupiamo di selezione vinili, produzione, confezione e spedizione.
-              </p>
-
-              <div class="cta-row" style="margin-top:18px;">
-                <a class="btn-cta btn-primary" href="#contatti">Richiedi un preventivo</a>
-                <a class="btn-cta btn-primary" href="mailto:33giristudios@gmail.com">Scrivi una mail</a>
-              </div>
-
-              <p class="mini-note" style="margin:14px 0 0; color: rgba(44,36,22,.72);">
-                Tip: nel messaggio indica <b>quantità</b>, <b>data</b> e se vuoi <b>logo/packaging</b>.
-              </p>
-            </div>
-
-            <div>
-              <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Esempio regalo aziendale" style="width:100%; border-radius:22px; box-shadow:0 18px 60px rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.25); display:block;">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTATTI -->
-    <section id="contatti" class="corp-section" style="padding-bottom: 110px;">
-      <div class="corp-wrap">
-        <div class="contact-form-wrapper">
-          <h2 class="corp-title" style="font-size: clamp(30px, 4.8vw, 50px); text-align:center; margin: 0 0 8px; color:#fff; text-shadow:0 4px 15px rgba(0,0,0,0.6);">
-            Scrivici e ti consigliamo noi
-          </h2>
-          <p style="text-align:center; color: rgba(255,255,255,0.92); margin: 0 auto 26px; max-width: 70ch; line-height:1.6;">
-            Privato o azienda: dicci per chi è il regalo, quantità e data. Ti rispondiamo con proposta e prezzi.
-          </p>
-
-          <!-- ✅ FORM MODIFICATO: FormSubmit (HTTPS) -->
-          <form action="https://formsubmit.co/33giristudios@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="Nuova richiesta dal form — 33Giri Idee regalo">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="text" name="_honey" style="display:none">
-
-            <div style="display:flex; gap:14px; flex-wrap:wrap;">
-              <div class="form-group" style="flex:1; min-width:240px;">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" class="form-control" placeholder="Mario Rossi" required>
-              </div>
-              <div class="form-group" style="flex:1; min-width:240px;">
-                <label for="azienda">Azienda (se c’è)</label>
-                <input type="text" id="azienda" name="azienda" class="form-control" placeholder="Nome Azienda Srl">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" class="form-control" placeholder="email@esempio.com" required>
-            </div>
-
-            <div style="display:flex; gap:14px; flex-wrap:wrap;">
-              <div class="form-group" style="flex:1; min-width:240px;">
-                <label for="tipo">Mi serve per…</label>
-                <select id="tipo" name="tipo" class="form-control">
-                  <option value="regalo_singolo">Regalo singolo (privato)</option>
-                  <option value="regali_aziendali">Regali aziendali (Natale / ricorrenze)</option>
-                  <option value="eventi">Gadget per eventi</option>
-                  <option value="welcome_kit">Welcome kit</option>
-                  <option value="altro">Altro</option>
-                </select>
-              </div>
-              <div class="form-group" style="flex:1; min-width:240px;">
-                <label for="quantita">Quantità (stima)</label>
-                <input type="text" id="quantita" name="quantita" class="form-control" placeholder="Es. 1 / 5 / 50 / 100">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="messaggio">Messaggio (per chi è, data, urgenza, logo/packaging)</label>
-              <textarea id="messaggio" name="messaggio" rows="4" class="form-control" placeholder="È un regalo per…, vorrei… entro il…, se possibile personalizzato…" required></textarea>
-            </div>
-
-            <div style="text-align:center; margin-top:18px;">
-              <button type="submit" class="btn-cta btn-primary" style="border:none; padding: 16px 28px;">
-                Invia richiesta
-              </button>
-              <div style="margin-top:12px;">
-                <a class="btn-cta btn-ghost" href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" style="padding: 14px 22px;">
-                  WhatsApp diretto
-                </a>
-              </div>
-            </div>
-
-            <p style="text-align:center; margin-top:18px; color: rgba(255,255,255,0.85); font-size: 0.92rem;">
-              Oppure scrivici: <a href="mailto:33giristudios@gmail.com" style="color:#fff; font-weight:900; text-decoration:underline;">33giristudios@gmail.com</a>
-            </p>
-          </form>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER (senza sfondo, con riquadro) -->
-  <footer id="footer" class="site-footer">
-    <div class="footer-panel">
-      <div class="wrap footer-inner" style="color:#f5f0e8; text-shadow:0 2px 10px rgba(0,0,0,0.8); font-size:1.05rem; font-weight:600; display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;">
-        <div>© 33Giri — Made in Italy</div>
-        <div style="opacity:.9;">Idee regalo • Corporate • Personalizzazioni</div>
-      </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+      <span class="footer-claim">Reshape the Art</span>
     </div>
-  </footer>
-
-  <!-- Sticky CTA mobile -->
-  <div class="sticky-cta">
-    <a href="#contatti">Scrivici ora</a>
   </div>
+</footer>
 
-  <!-- WhatsApp floating (tuo) -->
-  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer"
-     style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow:0 4px 20px rgba(0,0,0,0.5); z-index:10000; transition: all 0.3s ease; text-decoration:none;"
-     onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 30px rgba(0, 0, 0, 0.7)'"
-     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.5)'">
-    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
-    </svg>
-  </a>
+<div class="sticky-cta"><a href="#contatti">Scrivici ora</a></div>
 
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/main.js"></script>
+<a class="wa-float" href="https://wa.me/393925430575" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  (function(){
+    const header=document.getElementById('site-header');
+    window.addEventListener('scroll',()=>{header.style.background=window.scrollY>40?'rgba(10,10,10,.98)':'rgba(10,10,10,.94)';},{passive:true});
+    const els=document.querySelectorAll('.reveal');
+    const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.1});
+    els.forEach(el=>io.observe(el));
+  })();
+</script>
 </body>
 </html>

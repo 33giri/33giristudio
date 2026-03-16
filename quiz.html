@@ -1,579 +1,445 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>33Giri — Quiz</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>33Quiz — 33GIRI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <style>
-    /* Background generale in linea con index */
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      color: #2c2416;
-      position: relative;
-      min-height: 100vh;
-      overflow-x: hidden;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
+      --cream:#f5f0e8;--navy:#0f1522;--white:#fff;--text:#1a1a1a;--muted:#6b6560;
+      --header-h:80px;--fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
     }
+    html{scroll-behavior:smooth}
+    body{background:var(--black);color:var(--white);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
-      background-size: 100% auto;
-      opacity: 0.25;
-      z-index: 0;
-      pointer-events: none;
-      animation: textureMove 30s linear infinite;
-    }
+    /* HEADER */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
+      background:rgba(10,10,10,.0);backdrop-filter:blur(12px);
+      transition:background .3s}
+    .site-header.scrolled{background:rgba(10,10,10,.94);border-bottom:1px solid rgba(184,150,62,.18)}
+    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
+      display:flex;align-items:center;justify-content:space-between;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    .main-nav ul{list-style:none;display:flex;gap:36px}
+    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
+    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
+    .main-nav a.active{color:var(--gold)}.main-nav a.active::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:20px}
+    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+    .header-actions a:hover{color:var(--gold)}
 
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-    }
+    /* ── HERO FULLSCREEN ── */
+    .quiz-hero{
+      position:relative;min-height:100vh;
+      display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+    /* Immagine sfondo */
+    .quiz-hero-bg{position:absolute;inset:0}
+    .quiz-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.2) saturate(.5);
+      animation:kenBurns 16s ease-out forwards}
+    @keyframes kenBurns{from{transform:scale(1.06)}to{transform:scale(1)}}
+    .quiz-hero-bg-overlay{position:absolute;inset:0;
+      background:linear-gradient(to right,rgba(10,10,10,.9) 0%,rgba(10,10,10,.5) 50%,rgba(10,10,10,.1) 100%)}
+    /* Colonna sinistra testo */
+    .quiz-hero-left{
+      padding:160px 80px 80px;display:flex;flex-direction:column;
+      justify-content:center;position:relative;z-index:2}
+    .quiz-hero-badge{display:inline-flex;align-items:center;gap:8px;
+      font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;
+      color:var(--gold);border:1px solid rgba(184,150,62,.35);padding:7px 14px;
+      margin-bottom:32px;width:fit-content;
+      opacity:0;animation:slideUp .8s var(--ease) .3s forwards}
+    .quiz-hero-title{font-family:var(--fd);font-size:clamp(56px,8vw,110px);font-weight:300;
+      line-height:.95;letter-spacing:-.02em;margin-bottom:24px;
+      opacity:0;animation:slideUp .9s var(--ease) .5s forwards}
+    .quiz-hero-title em{font-style:italic;color:var(--gold-lt)}
+    .quiz-hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.5);
+      max-width:380px;line-height:1.8;margin-bottom:48px;
+      opacity:0;animation:slideUp .9s var(--ease) .7s forwards}
+    .quiz-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;
+      opacity:0;animation:slideUp .9s var(--ease) .85s forwards}
+    .quiz-chip{font-size:10px;font-weight:500;letter-spacing:.1em;
+      padding:7px 14px;border:1px solid rgba(255,255,255,.15);
+      color:rgba(255,255,255,.55);border-radius:999px}
+    .quiz-hero-cta{opacity:0;animation:slideUp .9s var(--ease) 1s forwards}
+    .btn-quiz{display:inline-flex;align-items:center;gap:14px;padding:18px 44px;
+      background:var(--gold);color:var(--black);font-size:11px;font-weight:700;
+      letter-spacing:.22em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .25s,transform .25s;position:relative;overflow:hidden}
+    .btn-quiz::after{content:'→';font-size:16px;transition:transform .25s}
+    .btn-quiz:hover{background:var(--gold-lt);transform:translateY(-2px)}
+    .btn-quiz:hover::after{transform:translateX(4px)}
+    .quiz-hero-note{margin-top:16px;font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.06em}
+    /* Colonna destra: card info */
+    .quiz-hero-right{
+      padding:160px 80px 80px 40px;
+      position:relative;z-index:2;
+      display:flex;flex-direction:column;justify-content:center;gap:20px}
+    @keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes textureMove {
-      from { background-position: 0 0; }
-      to { background-position: 0 -1000px; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes fadeInContent {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes floatAnimation {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-14px); }
-    }
-
-    @keyframes kenBurns {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.1); }
-    }
-
-    /* HERO QUIZ */
-    .quiz-page-wrapper {
-      position: relative;
-      z-index: 1;
-    }
-
-    #quiz-hero-section {
-      position: relative;
-      min-height: 100vh;
-      padding: 140px 20px 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .quiz-hero-bg {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .quiz-hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      filter: brightness(0.45);
-      animation: kenBurns 24s ease-in-out infinite alternate;
-      transform-origin: center;
-    }
-
-    .quiz-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(0,0,0,0.6) 0, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0.95) 100%);
-      z-index: 1;
-    }
-
-    .quiz-hero-inner {
-      position: relative;
-      z-index: 2;
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 40px;
-      align-items: center;
-      animation: fadeInContent 1.2s ease-out both;
-    }
-
-    .quiz-hero-text {
-      color: #fff;
-      animation: fadeInUp 1.2s ease-out both;
-    }
-
-    .quiz-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      background: rgba(245, 240, 232, 0.16);
-      border: 1px solid rgba(245, 240, 232, 0.4);
-      margin-bottom: 18px;
-      backdrop-filter: blur(12px);
-    }
-
-    .quiz-badge-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: #f5f0e8;
-      box-shadow: 0 0 10px rgba(245,240,232,0.9);
-    }
-
-    .quiz-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(40px, 6vw, 72px);
-      font-weight: 900;
-      margin-bottom: 16px;
-      color: #fff;
-      text-shadow: 0 6px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.8);
-    }
-
-    .quiz-subtitle {
-      font-size: clamp(18px, 2.1vw, 22px);
-      line-height: 1.7;
-      color: #f5f0e8;
-      margin-bottom: 26px;
-      text-shadow: 0 3px 14px rgba(0,0,0,0.8);
-      max-width: 480px;
-    }
-
-    .quiz-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-
-    .quiz-chip {
-      font-size: 0.9rem;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: #f5f0e8;
-      backdrop-filter: blur(10px);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Card info quiz in stile glassmorphism */
-    .quiz-info-card {
-      background: radial-gradient(circle at top left, rgba(255,255,255,0.22), rgba(13,18,26,0.75));
-      border-radius: 28px;
-      padding: 30px 30px 34px;
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow:
-        0 22px 60px rgba(0,0,0,0.75),
-        0 0 40px rgba(0,0,0,0.6);
-      backdrop-filter: blur(18px);
-      color: #fff;
-      animation: floatAnimation 12s ease-in-out infinite;
-      animation-delay: 0.3s;
-    }
-
-    .quiz-info-card p {
-      font-size: 0.98rem;
-      line-height: 1.75;
-      margin: 0 0 20px 0;
-      text-align: left;
-    }
-
-    .quiz-info-card b {
-      font-weight: 600;
-    }
-
-    .quiz-info-list {
-      margin: 0;
-      padding-left: 18px;
-      font-size: 0.98rem;
-      line-height: 1.7;
-    }
-
-    .quiz-info-list li {
-      margin-bottom: 8px;
-    }
-
-    .quiz-cta-wrapper {
-      margin-top: 26px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .quiz-cta-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
-      color: #5d4e37;
-      padding: 15px 40px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 18px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      border: none;
-    }
-
-    .quiz-cta-btn:hover {
-      transform: translateY(-4px) scale(1.04);
-      box-shadow: 0 16px 60px rgba(0,0,0,0.6);
-    }
-
-    .quiz-cta-btn:active {
-      transform: translateY(-1px) scale(0.99);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    }
-
-    .quiz-cta-btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -30%;
-      width: 30%;
-      height: 100%;
-      background: linear-gradient(to right, rgba(255,255,255,0.3), transparent);
-      opacity: 0;
-      transform: skewX(-20deg);
-      transition: all 0.5s ease;
-    }
-
-    .quiz-cta-btn:hover::after {
-      opacity: 1;
-      transform: translateX(260%) skewX(-20deg);
-    }
-
-    .quiz-cta-note {
-      font-size: 0.9rem;
-      color: #f5f0e8;
-      opacity: 0.85;
-    }
-
-    .quiz-cta-note span {
-      opacity: 0.7;
-    }
+    /* Card info come "tape" */
+    .quiz-info-card{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(184,150,62,.15);
+      padding:28px;
+      opacity:0;animation:slideUp .9s var(--ease) var(--delay,.6s) forwards}
+    .quiz-info-card:nth-child(1){--delay:.6s}
+    .quiz-info-card:nth-child(2){--delay:.75s}
+    .quiz-info-card:nth-child(3){--delay:.9s}
+    .quiz-info-card:nth-child(4){--delay:1.05s}
+    .quiz-info-label{font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:10px}
+    .quiz-info-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.7}
+    .quiz-info-text ol{padding-left:16px;margin-top:6px}
+    .quiz-info-text li{margin-bottom:4px}
 
     /* Scroll hint */
-    .quiz-scroll-hint {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      color: #f5f0e8;
-      font-size: 0.85rem;
-      opacity: 0.85;
-      animation: fadeInUp 1.6s ease-out both;
-      z-index: 2;
+    .scroll-hint{position:absolute;bottom:32px;left:80px;z-index:2;
+      display:flex;align-items:center;gap:12px;
+      opacity:0;animation:fadeIn 1s ease 1.4s forwards}
+    .scroll-hint span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+    .scroll-line{width:48px;height:1px;background:linear-gradient(to right,var(--gold),transparent)}
+    @keyframes fadeIn{to{opacity:1}}
+
+    /* ── COME FUNZIONA ── */
+    .how-quiz{background:var(--navy);padding:120px 60px;
+      border-top:1px solid rgba(184,150,62,.15)}
+    .how-quiz-inner{max-width:1280px;margin:0 auto}
+    .how-quiz-header{max-width:600px;margin-bottom:72px}
+    .how-quiz-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .how-quiz-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--white);line-height:1.1;letter-spacing:-.01em}
+    .how-quiz-title em{font-style:italic;color:var(--gold-lt)}
+    /* Timeline orizzontale */
+    .quiz-timeline{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+    .quiz-timeline::before{content:'';position:absolute;top:28px;left:0;right:0;height:1px;
+      background:linear-gradient(to right,var(--gold),rgba(184,150,62,.2));z-index:0}
+    .qt-step{position:relative;z-index:1;padding:0 20px 0 0;text-align:left}
+    .qt-dot{width:56px;height:56px;border-radius:50%;background:var(--black);
+      border:1px solid rgba(184,150,62,.3);display:flex;align-items:center;justify-content:center;
+      font-family:var(--fd);font-size:20px;font-weight:400;color:var(--gold);
+      margin-bottom:24px;transition:background .3s,border-color .3s}
+    .qt-step:hover .qt-dot{background:rgba(184,150,62,.1);border-color:var(--gold)}
+    .qt-title{font-family:var(--fd);font-size:18px;font-weight:400;color:var(--white);margin-bottom:10px}
+    .qt-desc{font-size:12px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.7}
+
+    /* ── PROFILI VINILE ── */
+    .vinyl-profiles{background:var(--black);padding:120px 60px}
+    .vp-inner{max-width:1280px;margin:0 auto}
+    .vp-header{display:flex;align-items:flex-end;justify-content:space-between;
+      margin-bottom:72px;padding-bottom:32px;border-bottom:1px solid rgba(184,150,62,.2)}
+    .vp-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .vp-title{font-family:var(--fd);font-size:clamp(36px,4vw,52px);font-weight:300;
+      color:var(--white);letter-spacing:-.01em;line-height:1.1}
+    .vp-title em{font-style:italic;color:var(--gold-lt)}
+    .vp-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,.35);max-width:240px;text-align:right}
+    .vp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+    .vp-card{padding:40px 32px;background:rgba(255,255,255,.03);
+      border:1px solid rgba(184,150,62,.08);
+      transition:background .3s,border-color .3s;cursor:pointer}
+    .vp-card:hover{background:rgba(184,150,62,.06);border-color:rgba(184,150,62,.25)}
+    .vp-card-icon{font-size:40px;margin-bottom:20px;line-height:1}
+    .vp-card-name{font-family:var(--fd);font-size:22px;font-weight:400;color:var(--white);margin-bottom:10px}
+    .vp-card-desc{font-size:12px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8;margin-bottom:18px}
+    .vp-card-tag{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--gold)}
+
+    /* ── CTA FINALE ── */
+    .quiz-final{background:var(--gold);padding:120px 60px;text-align:center;
+      position:relative;overflow:hidden}
+    .quiz-final::before{content:'33QUIZ';position:absolute;
+      font-family:var(--fd);font-size:280px;font-weight:700;
+      color:rgba(0,0,0,.06);top:50%;left:50%;transform:translate(-50%,-50%);
+      line-height:1;user-select:none;pointer-events:none;white-space:nowrap}
+    .quiz-final-inner{position:relative;z-index:1}
+    .quiz-final-label{font-size:10px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;
+      color:rgba(0,0,0,.45);margin-bottom:24px}
+    .quiz-final-title{font-family:var(--fd);font-size:clamp(44px,6vw,88px);font-weight:300;
+      color:var(--black);line-height:1.05;letter-spacing:-.02em;margin-bottom:16px}
+    .quiz-final-title em{font-style:italic}
+    .quiz-final-sub{font-size:14px;font-weight:300;color:rgba(0,0,0,.55);margin-bottom:44px;
+      max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7}
+    .btn-black{display:inline-flex;align-items:center;gap:10px;padding:18px 44px;
+      background:var(--black);color:var(--white);font-size:11px;font-weight:700;
+      letter-spacing:.22em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .25s,transform .25s}
+    .btn-black:hover{background:#1a1a1a;transform:translateY(-2px)}
+
+    /* WA */
+    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
+      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
+    .wa-float svg{width:24px;height:24px;fill:var(--black)}
+
+    /* FOOTER */
+    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
+      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
+    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
+    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .reveal--d1{transition-delay:.1s}.reveal--d2{transition-delay:.2s}.reveal--d3{transition-delay:.3s}.reveal--d4{transition-delay:.4s}
+
+    @media(max-width:1100px){
+      .quiz-hero{grid-template-columns:1fr}
+      .quiz-hero-right{display:none}
+      .quiz-hero-left{padding:140px 32px 80px}
+      .quiz-timeline{grid-template-columns:1fr 1fr;gap:32px}
+      .quiz-timeline::before{display:none}
+      .vp-grid{grid-template-columns:1fr 1fr}
+      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
     }
-
-    .quiz-scroll-hint span {
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-    }
-
-    .quiz-scroll-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(245,240,232,0.7);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quiz-scroll-dot::after {
-      content: '';
-      position: absolute;
-      top: -6px;
-      left: 50%;
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: #f5f0e8;
-      transform: translateX(-50%);
-      animation: quizScrollDotMove 1.6s ease-in-out infinite;
-    }
-
-    @keyframes quizScrollDotMove {
-      0% { top: -6px; opacity: 0; }
-      30% { top: 0; opacity: 1; }
-      70% { top: 6px; opacity: 1; }
-      100% { top: 12px; opacity: 0; }
-    }
-
-    /* Sezione breve sotto al hero (facoltativa ma carina) */
-    .quiz-secondary {
-      position: relative;
-      z-index: 1;
-      padding: 70px 20px 110px;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .quiz-secondary-inner {
-      max-width: 1050px;
-      margin: 0 auto;
-      backdrop-filter: blur(16px);
-      background: rgba(255,255,255,0.22);
-      border-radius: 26px;
-      padding: 32px 28px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.6);
-    }
-
-    .quiz-secondary-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(22px, 3vw, 28px);
-      margin-bottom: 16px;
-      color: #2c2416;
-    }
-
-    .quiz-secondary-text {
-      font-size: 1rem;
-      line-height: 1.7;
-      color: #2c2416;
-      margin-bottom: 14px;
-    }
-
-    .quiz-secondary-highlight {
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    /* WhatsApp Floating Button (in linea con index) */
-    .whatsapp-floating {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      background: #000;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      z-index: 10000;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .whatsapp-floating:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.7);
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .quiz-hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 32px;
-      }
-
-      #quiz-hero-section {
-        padding: 120px 20px 90px;
-      }
-
-      .quiz-hero-text {
-        text-align: left;
-      }
-
-      .quiz-subtitle {
-        max-width: none;
-      }
-
-      .quiz-info-card {
-        animation: fadeInScale 0.9s ease-out both;
-      }
-    }
-
-    @media (max-width: 640px) {
-      #quiz-hero-section {
-        padding-top: 110px;
-      }
-
-      .quiz-hero-inner {
-        gap: 28px;
-      }
-
-      .quiz-title {
-        font-size: clamp(34px, 9vw, 44px);
-      }
-
-      .quiz-secondary-inner {
-        padding: 24px 20px;
-      }
-
-      .quiz-cta-btn {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-      }
-
-      .quiz-cta-wrapper {
-        align-items: flex-start;
-      }
+    @media(max-width:768px){
+      :root{--header-h:64px}
+      .quiz-hero-left{padding:120px 20px 60px}
+      .how-quiz,.vinyl-profiles,.quiz-final{padding:60px 20px}
+      .quiz-timeline{grid-template-columns:1fr}
+      .vp-grid{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px}
+      .main-nav{display:none}
     }
   </style>
 </head>
-
 <body>
-  <!-- Include Header -->
-  <header id="header"></header>
 
-  <main class="quiz-page-wrapper">
-    <!-- HERO QUIZ -->
-    <section id="quiz-hero-section">
-      <!-- Background immagine + overlay scuro -->
-      <div class="quiz-hero-bg">
-        <img src="assets/pagina quiz/record-vinyl-playing-music (2).jpg" alt="Vinile che gira">
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="quiz.html" class="active">33Quiz</a></li>
+      </ul>
+    </nav>
+    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
+    <div class="header-actions">
+      <a href="chi_siamo.html">Chi siamo</a>
+      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="quiz-hero">
+  <div class="quiz-hero-bg">
+    <img src="assets/atelier 33 giri/20251110-IMG_4895.jpg" alt="33Quiz" loading="eager">
+    <div class="quiz-hero-bg-overlay"></div>
+  </div>
+
+  <!-- Sinistra -->
+  <div class="quiz-hero-left">
+    <div class="quiz-hero-badge">Match tra te e un vinile reale</div>
+    <h1 class="quiz-hero-title">33<br><em>Quiz.</em></h1>
+    <p class="quiz-hero-sub">Non ti chiediamo cosa ascolti. Ti chiediamo come vivi, cosa senti, cosa cerchi. Da lì, troviamo il vinile che ti assomiglia.</p>
+    <div class="quiz-chips">
+      <div class="quiz-chip">⏱ 3 minuti</div>
+      <div class="quiz-chip">✦ Nessuna risposta sbagliata</div>
+      <div class="quiz-chip">◉ Vinile reale come risultato</div>
+    </div>
+    <div class="quiz-hero-cta">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd1NBB4C48Dndnd_ps1CBNXSUL2FhI3fEar7zbDo9haBPIAZw/viewform" target="_blank" class="btn-quiz">
+        Fai il quiz
+      </a>
+      <p class="quiz-hero-note">Si apre su Google Forms · Nessun login richiesto</p>
+    </div>
+  </div>
+
+  <!-- Destra: cards -->
+  <div class="quiz-hero-right">
+    <div class="quiz-info-card">
+      <div class="quiz-info-label">Come funziona</div>
+      <div class="quiz-info-text">Rispondi a domande su atmosfere, emozioni, ritmo. Non su generi musicali — su come stai al mondo. Le risposte creano un profilo unico.</div>
+    </div>
+    <div class="quiz-info-card">
+      <div class="quiz-info-label">Il matching</div>
+      <div class="quiz-info-text">Il tuo profilo viene confrontato con i vinili reali in studio. Troviamo quello che ti assomiglia di più — per estetica, energia, storia.</div>
+    </div>
+    <div class="quiz-info-card">
+      <div class="quiz-info-label">Il risultato</div>
+      <div class="quiz-info-text">Ti scriviamo in DM o via mail con la proposta: un vinile specifico, con foto e spiegazione del perché. Non un'etichetta generica.</div>
+    </div>
+    <div class="quiz-info-card">
+      <div class="quiz-info-label">Poi decidi tu</div>
+      <div class="quiz-info-text">Nessun obbligo d'acquisto. Se il match ti convince, procedi. Se no, ci dici cosa non torna e rifacciamo insieme la selezione.</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scopri di più</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- COME FUNZIONA TIMELINE -->
+<section class="how-quiz">
+  <div class="how-quiz-inner">
+    <div class="how-quiz-header">
+      <div class="how-quiz-label reveal">Il processo</div>
+      <h2 class="how-quiz-title reveal reveal--d1">Dal quiz al tuo<br><em>vinile personale.</em></h2>
+    </div>
+    <div class="quiz-timeline">
+      <div class="qt-step reveal">
+        <div class="qt-dot">1</div>
+        <div class="qt-title">Compila</div>
+        <div class="qt-desc">Rispondi al form su Google Forms. Ci vuole 3 minuti. Non serve creare un account.</div>
       </div>
-      <div class="quiz-hero-overlay"></div>
-
-      <div class="wrap quiz-hero-inner">
-        <!-- Testo sinistra -->
-        <div class="quiz-hero-text">
-          <div class="quiz-badge">
-            <div class="quiz-badge-dot"></div>
-            <span>Match tra te e un vinile reale</span>
-          </div>
-
-          <h1 class="quiz-title">33Quiz</h1>
-          <p class="quiz-subtitle">
-            Un quiz veloce per scoprire il vinile che ti assomiglia di più — non per genere musicale,
-            ma per atmosfere, vibrazioni e modo di stare al mondo.
-          </p>
-
-          <div class="quiz-chips">
-            <div class="quiz-chip">⏱️ 3 minuti</div>
-            <div class="quiz-chip">✨ Nessuna risposta giusta o sbagliata</div>
-            <div class="quiz-chip">🎧 Ogni risultato è un vinile reale</div>
-          </div>
-
-          <div class="quiz-cta-wrapper">
-            <!-- Pulsante che apre il Google Form -->
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSd1NBB4C48Dndnd_ps1CBNXSUL2FhI3fEar7zbDo9haBPIAZw/viewform?usp=header"
-              target="_blank"
-              class="quiz-cta-btn">
-              Fai il quiz
-            </a>
-            <p class="quiz-cta-note">
-              Nessun login richiesto. 
-            </p>
-          </div>
-        </div>
-
-        <!-- Card descrizione/destra -->
-        <div class="quiz-info-card">
-          <p>
-            <b>🎵 Scopri il tuo vinile ideale</b><br><br>
-            Ogni vinile racchiude una storia: un suono, un momento, un frammento di vita che continua a parlare nel tempo.
-            Con questo quiz puoi scoprire il disco che più ti rappresenta, quello che risuona con la tua personalità
-            e il tuo modo di vedere il mondo.
-          </p>
-          <p>
-            Rispondi in modo spontaneo: non ci sono risposte giuste o sbagliate. Il risultato sarà un vinile unico,
-            scelto per affinità con ciò che trasmettono le tue risposte.
-          </p>
-
-          <p><b>🎧 Come funziona</b></p>
-          <ol class="quiz-info-list">
-            <li>All’inizio del form ti chiediamo una mail o il contatto dove preferisci essere ricontattato/a.</li>
-            <li>Ti facciamo alcune domande su ciò che ascolti, su come vivi la musica e sull’atmosfera che vuoi nel tuo spazio. </li>
-            <li>Ogni risposta crea un profilo unico: generi, mood, energia, emozioni.</li>
-            <li>Confrontiamo questo profilo con le caratteristiche dei vinili reali che abbiamo in studio.</li>
-            <li>Troviamo il vinile che ti assomiglia di più – il tuo 33Giri personale – e ti scriviamo in DM o via mail con la proposta e una piccola spiegazione del perché l’abbiamo scelto per te.</li>
-          </ol>
-
-          <p style="margin-top: 16px;">
-            <b>✨ Il risultato</b><br>
-            Alla fine del quiz non ricevi un semplice titolo a caso, ma un vinile vero, con una storia e un’estetica pensate per te. Un pezzo che parla della tua musica, ma anche del tuo modo di stare al mondo.
-          </p>
-        </div>
+      <div class="qt-step reveal reveal--d1">
+        <div class="qt-dot">2</div>
+        <div class="qt-title">Analizziamo</div>
+        <div class="qt-desc">Leggiamo le tue risposte e le confrontiamo con i vinili disponibili in studio in quel momento.</div>
       </div>
-
-      <!-- Hint scroll -->
-      <div class="quiz-scroll-hint">
-        <span>Scorri</span>
-        <div class="quiz-scroll-dot"></div>
+      <div class="qt-step reveal reveal--d2">
+        <div class="qt-dot">3</div>
+        <div class="qt-title">Selezioniamo</div>
+        <div class="qt-desc">Scegliamo il vinile che meglio rispecchia il tuo profilo — per estetica, storia e carattere.</div>
       </div>
-    </section>
-
-    <!-- Sezione breve di testo sotto il hero per chi vuole leggere altro -->
-    <section class="quiz-secondary">
-      <div class="wrap quiz-secondary-inner">
-        <h2 class="quiz-secondary-title">Un piccolo rituale per scegliere il tuo 33Giri</h2>
-        <p class="quiz-secondary-text">
-          Il quiz non serve a “indovinare” i tuoi gusti musicali, ma a tradurre le tue risposte in atmosfere:
-          colori, intensità, ritmo, energia. Da lì, colleghiamo il tuo profilo a un vinile reale della nostra
-          selezione, già trasformato in oggetto di design.
-        </p>
-        <p class="quiz-secondary-highlight">
-          Puoi usare il risultato per scegliere il tuo pezzo preferito, per farti fare un regalo o per iniziare
-          una collezione che ti rappresenti davvero.
-        </p>
+      <div class="qt-step reveal reveal--d3">
+        <div class="qt-dot">4</div>
+        <div class="qt-title">Ti scriviamo</div>
+        <div class="qt-desc">Ti mandiamo in DM o via mail la proposta con foto e motivazione. Di solito entro 24h.</div>
       </div>
-    </section>
-  </main>
+      <div class="qt-step reveal reveal--d4">
+        <div class="qt-dot">5</div>
+        <div class="qt-title">Decidi</div>
+        <div class="qt-desc">Nessuna pressione. Se il match funziona, procedi con l'ordine. Se no, ripartiamo insieme.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Footer caricato da layout.js (come sulle altre pagine) -->
-  <div id="footer"></div>
+<!-- PROFILI VINILE -->
+<section class="vinyl-profiles">
+  <div class="vp-inner">
+    <div class="vp-header">
+      <div>
+        <div class="vp-label reveal">I profili possibili</div>
+        <h2 class="vp-title reveal reveal--d1">A quale<br><em>assomigli?</em></h2>
+      </div>
+      <p class="vp-sub reveal">Non è un test di personalità. È un modo per trovare il pezzo più giusto per te tra quelli che abbiamo.</p>
+    </div>
+    <div class="vp-grid">
+      <div class="vp-card reveal">
+        <div class="vp-card-icon">◯</div>
+        <div class="vp-card-name">Normal</div>
+        <div class="vp-card-desc">Essenziale. Il vinile nella sua forma più pura, senza decorazioni aggiuntive. Per chi cerca design sobrio e autentico.</div>
+        <div class="vp-card-tag">Standard · 20€</div>
+      </div>
+      <div class="vp-card reveal reveal--d1">
+        <div class="vp-card-icon">✦</div>
+        <div class="vp-card-name">Splash</div>
+        <div class="vp-card-desc">Esplosivo. Colore che irrompe sul nero. Per chi vuole un pezzo che dice qualcosa prima ancora che lo tocchi.</div>
+        <div class="vp-card-tag">Colorato · 25€</div>
+      </div>
+      <div class="vp-card reveal reveal--d2">
+        <div class="vp-card-icon">◎</div>
+        <div class="vp-card-name">Spiral</div>
+        <div class="vp-card-desc">Ipnotico. Motivi a spirale che richiamano i solchi del disco. Per chi vuole design che si guarda e si rigira in mano.</div>
+        <div class="vp-card-tag">Decorato · 25€</div>
+      </div>
+      <div class="vp-card reveal reveal--d3">
+        <div class="vp-card-icon">♦</div>
+        <div class="vp-card-name">Artistico</div>
+        <div class="vp-card-desc">Unico nel vero senso. Dipinto a mano da un artista, parte di una collab. Per chi cerca un pezzo da collezione.</div>
+        <div class="vp-card-tag">Collab · Prezzo variabile</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" class="whatsapp-floating">
-    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
-    </svg>
-  </a>
+<!-- CTA FINALE -->
+<section class="quiz-final">
+  <div class="quiz-final-inner">
+    <div class="quiz-final-label reveal">Tre minuti</div>
+    <h2 class="quiz-final-title reveal reveal--d1">
+      Trovare il tuo<br><em>33GIRI.</em>
+    </h2>
+    <p class="quiz-final-sub reveal reveal--d2">Rispondi al quiz, ti scriviamo entro 24 ore con la proposta. Nessun login, nessun obbligo d'acquisto.</p>
+    <div class="reveal reveal--d3">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd1NBB4C48Dndnd_ps1CBNXSUL2FhI3fEar7zbDo9haBPIAZw/viewform" target="_blank" class="btn-black">
+        Fai il quiz →
+      </a>
+    </div>
+  </div>
+</section>
 
-  <!-- Script -->
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/quiz.js"></script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">33GIRI</div>
+        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Naviga</div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Info</div>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="resi-rimborsi.html">Resi</a></li>
+          <li><a href="informativa-privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+      <span class="footer-claim">Reshape the Art</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/393925430575" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  (function(){
+    const header=document.getElementById('site-header');
+    window.addEventListener('scroll',()=>{
+      if(window.scrollY>60){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}
+    },{passive:true});
+    const els=document.querySelectorAll('.reveal');
+    const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.1});
+    els.forEach(el=>io.observe(el));
+  })();
+</script>
 </body>
 </html>

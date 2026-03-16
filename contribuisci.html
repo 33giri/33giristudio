@@ -1,204 +1,493 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Contribuisci — 33GIRI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <style>
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
+      --cream:#f5f0e8;--warm:#e8e2d9;--navy:#0f1522;--white:#fff;
+      --text:#1a1a1a;--muted:#6b6560;--header-h:80px;
+      --fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
     }
-    @keyframes floatAnimation {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+    html{scroll-behavior:smooth}
+    body{background:var(--cream);color:var(--text);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
+
+    /* HEADER */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
+      background:rgba(10,10,10,.94);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(184,150,62,.18)}
+    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
+      display:flex;align-items:center;justify-content:space-between;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    .main-nav ul{list-style:none;display:flex;gap:36px}
+    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
+    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:20px}
+    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+    .header-actions a:hover{color:var(--gold)}
+
+    /* ── SPLIT HERO ── */
+    .split-hero{
+      padding-top:var(--header-h);
+      display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+    /* Lato immagine */
+    .split-hero-media{position:relative;overflow:hidden;background:var(--black)}
+    .split-hero-media img{width:100%;height:100%;object-fit:cover;
+      filter:brightness(.55) saturate(.8);
+      transition:transform .7s var(--ease)}
+    .split-hero-media:hover img{transform:scale(1.03)}
+    /* Overlay */
+    .split-hero-media-overlay{position:absolute;inset:0;
+      background:linear-gradient(to right,rgba(10,10,10,.6) 0%,rgba(10,10,10,.1) 100%)}
+    /* Tag flotante */
+    .split-hero-tag{position:absolute;top:40px;left:40px;
+      font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      background:var(--gold);color:var(--black);padding:8px 16px}
+    /* Counter */
+    .split-hero-counter{position:absolute;bottom:40px;left:40px;
+      font-family:var(--fd);font-size:80px;font-weight:300;color:rgba(255,255,255,.15);line-height:1}
+    /* Lato contenuto */
+    .split-hero-content{
+      display:flex;flex-direction:column;justify-content:center;
+      padding:80px 72px;background:var(--cream)}
+    .split-hero-kicker{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:24px;
+      opacity:0;animation:slideUp .8s var(--ease) .2s forwards}
+    .split-hero-title{font-family:var(--fd);font-size:clamp(44px,5vw,72px);font-weight:300;
+      line-height:1.05;color:var(--black);letter-spacing:-.01em;margin-bottom:24px;
+      opacity:0;animation:slideUp .9s var(--ease) .4s forwards}
+    .split-hero-title em{font-style:italic;color:var(--gold-dk)}
+    .split-hero-body{font-size:14px;font-weight:300;line-height:1.9;color:var(--muted);
+      max-width:400px;margin-bottom:40px;
+      opacity:0;animation:slideUp .9s var(--ease) .6s forwards}
+    .split-hero-ctas{display:flex;gap:16px;flex-wrap:wrap;
+      opacity:0;animation:slideUp .9s var(--ease) .8s forwards}
+    @keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── IMPACT SECTION ── */
+    .impact-section{background:var(--black);padding:120px 60px;position:relative;overflow:hidden}
+    .impact-section::before{content:'';position:absolute;inset:0;
+      background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(184,150,62,.04) 80px,rgba(184,150,62,.04) 81px);
+      pointer-events:none}
+    .impact-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+    .impact-header{max-width:640px;margin-bottom:72px}
+    .impact-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .impact-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--white);line-height:1.1;letter-spacing:-.01em}
+    .impact-title em{font-style:italic;color:var(--gold-lt)}
+    .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+    .impact-card{padding:48px 40px;background:rgba(255,255,255,.03);
+      border:1px solid rgba(184,150,62,.08);transition:background .3s,border-color .3s}
+    .impact-card:hover{background:rgba(184,150,62,.05);border-color:rgba(184,150,62,.25)}
+    .impact-card-num{font-family:var(--fd);font-size:72px;font-weight:300;
+      color:var(--gold);line-height:1;margin-bottom:16px}
+    .impact-card-unit{font-size:14px;color:rgba(184,150,62,.6);margin-left:4px}
+    .impact-card-title{font-family:var(--fd);font-size:20px;font-weight:400;
+      color:var(--white);margin-bottom:10px}
+    .impact-card-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8}
+
+    /* ── COME FUNZIONA ── */
+    .how-contrib{background:var(--warm);padding:120px 60px}
+    .how-contrib-inner{max-width:1280px;margin:0 auto}
+    .how-contrib-header{display:grid;grid-template-columns:1fr 1fr;gap:60px;
+      align-items:end;margin-bottom:72px;padding-bottom:32px;
+      border-bottom:1px solid rgba(0,0,0,.1)}
+    .how-contrib-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--black);line-height:1.1;letter-spacing:-.01em}
+    .how-contrib-title em{font-style:italic;color:var(--gold-dk)}
+    .how-contrib-sub{font-size:14px;font-weight:300;line-height:1.9;color:var(--muted)}
+    .how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+    .how-step{background:var(--cream);padding:40px 32px;border:1px solid rgba(0,0,0,.06);
+      position:relative;transition:box-shadow .3s}
+    .how-step:hover{box-shadow:0 20px 60px rgba(0,0,0,.1)}
+    .how-step-n{font-family:var(--fd);font-size:60px;font-weight:300;
+      color:rgba(184,150,62,.2);line-height:1;position:absolute;top:16px;right:20px}
+    .how-step-bar{width:28px;height:1px;background:var(--gold);margin-bottom:20px}
+    .how-step-title{font-family:var(--fd);font-size:18px;font-weight:400;
+      color:var(--black);margin-bottom:10px}
+    .how-step-desc{font-size:12px;font-weight:300;color:var(--muted);line-height:1.8}
+
+    /* ── COSA ACCETTIAMO ── */
+    .accept-section{background:var(--black);padding:120px 60px}
+    .accept-inner{max-width:1280px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+    .accept-left{}
+    .accept-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+    .accept-title{font-family:var(--fd);font-size:clamp(36px,4vw,52px);font-weight:300;
+      color:var(--white);line-height:1.1;letter-spacing:-.01em;margin-bottom:32px}
+    .accept-title em{font-style:italic;color:var(--gold-lt)}
+    .accept-list{display:flex;flex-direction:column;gap:0}
+    .accept-item{display:grid;grid-template-columns:20px 1fr;gap:16px;align-items:start;
+      padding:20px 0;border-top:1px solid rgba(255,255,255,.07)}
+    .accept-item:last-child{border-bottom:1px solid rgba(255,255,255,.07)}
+    .accept-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:7px}
+    .accept-item-text{font-size:14px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.7}
+    .accept-item-text strong{color:var(--white);font-weight:500}
+    /* Form */
+    .contrib-form-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.15);padding:48px}
+    .contrib-form-title{font-family:var(--fd);font-size:28px;font-weight:400;
+      color:var(--white);margin-bottom:8px}
+    .contrib-form-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,.4);
+      margin-bottom:32px;line-height:1.7}
+    .form-field{margin-bottom:20px}
+    .form-field label{display:block;font-size:10px;font-weight:600;letter-spacing:.15em;
+      text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px}
+    .form-field input,.form-field select,.form-field textarea{
+      width:100%;padding:14px 16px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--white);font-family:var(--fb);font-size:14px;
+      transition:border-color .25s,background .25s;outline:none}
+    .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,.25)}
+    .form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+      border-color:var(--gold);background:rgba(184,150,62,.06)}
+    .form-field select option{background:var(--black);color:var(--white)}
+    .form-field textarea{resize:vertical;min-height:100px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .btn-gold{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;
+      background:var(--gold);color:var(--black);font-size:11px;font-weight:700;
+      letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .25s,transform .25s}
+    .btn-gold:hover{background:var(--gold-lt);transform:translateY(-2px)}
+    .btn-outline{display:inline-flex;align-items:center;gap:10px;padding:13px 34px;
+      background:transparent;color:var(--text);font-size:11px;font-weight:500;
+      letter-spacing:.18em;text-transform:uppercase;border:1px solid rgba(0,0,0,.25);
+      cursor:pointer;transition:border-color .25s,color .25s}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold-dk)}
+
+    /* CTA finale */
+    .contrib-cta{background:var(--gold);padding:80px 60px;text-align:center;position:relative;overflow:hidden}
+    .contrib-cta::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.2) 0%,transparent 60%)}
+    .contrib-cta-inner{position:relative;z-index:1}
+    .contrib-cta-text{font-family:var(--fd);font-size:clamp(32px,5vw,64px);font-weight:300;
+      color:var(--black);line-height:1.1;letter-spacing:-.01em;margin-bottom:32px}
+    .contrib-cta-text em{font-style:italic}
+    .contrib-cta-sub{font-size:10px;font-weight:600;letter-spacing:.35em;
+      text-transform:uppercase;color:rgba(0,0,0,.45);margin-top:16px}
+
+    /* WA */
+    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
+      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
+    .wa-float svg{width:24px;height:24px;fill:var(--black)}
+
+    /* FOOTER */
+    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
+      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
+    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
+    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .reveal--d1{transition-delay:.1s}.reveal--d2{transition-delay:.2s}.reveal--d3{transition-delay:.3s}
+
+    @media(max-width:1100px){
+      .split-hero{grid-template-columns:1fr}
+      .split-hero-media{display:none}
+      .split-hero-content{padding:80px 32px}
+      .impact-grid{grid-template-columns:1fr 1fr}
+      .how-contrib-header{grid-template-columns:1fr}
+      .how-steps{grid-template-columns:1fr 1fr}
+      .accept-inner{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
     }
-    .fade-in-up {
-      animation: fadeInUp 1.2s ease-out;
-    }
-    .float {
-      animation: floatAnimation 3s ease-in-out infinite;
-    }
-    .feature-box {
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,0.4);
-      border-radius: 20px;
-      padding: 50px 40px;
-      transition: all 0.4s ease;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-      border-left: 4px solid #5d4e37;
-    }
-    .feature-box:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    }
-  </style>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contribuisci — 33Giri</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/vinyl-3d.css">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      color: #2c2416;
-      overflow-x: hidden;
-      position: relative;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
-      background-size: 100% auto;
-      opacity: 0.25;
-      z-index: 0;
-      pointer-events: none;
-      animation: textureMove 30s linear infinite;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes textureMove {
-      from { background-position: 0 0; }
-      to { background-position: 0 -1000px; }
-    }
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
+    @media(max-width:768px){
+      :root{--header-h:64px}
+      .impact-section,.how-contrib,.accept-section,.contrib-cta{padding:60px 20px}
+      .impact-grid,.how-steps{grid-template-columns:1fr}
+      .form-row{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px}
+      .main-nav{display:none}
     }
   </style>
 </head>
-<body style="--bg:#e8dfd5">
-  <!-- Include Header -->
-  <header id="header"></header>
+<body>
 
-  <main>
-    <!-- Hero Section -->
-    <section style="padding: 120px 20px 80px 20px; background: #e8dfd5; text-align: center;">
-  <div style="max-width: 900px; margin: 0 auto;" class="fade-in-up float">
-  <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 56px); font-weight: 900; margin-bottom: 18px; color: #222;">
-          Dai nuova vita ai tuoi vinili
-        </h1>
-  <p style="font-size: clamp(18px, 2.5vw, 22px); line-height: 1.7; color: #222; max-width: 700px; margin: 0 auto 10px auto; background: rgba(255,255,255,0.25); padding: 18px; border-radius: 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.08);">
-          Quando un vinile finisce nei rifiuti, il suo viaggio non è neutro: un disco da circa 140 g, se incenerito, può generare intorno a 200 g di CO₂, gas acidi e oltre 100 g di scorie da smaltire in discarica. Con 33Giri quel percorso può essere diverso: i dischi dimenticati diventano oggetti di design, la plastica non si trasforma in rifiuto e l’impatto dello smaltimento si riduce, dando alla stessa materia una nuova forma e un senso più consapevole
-        </p>
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="chi_siamo.html">Chi siamo</a></li>
+      </ul>
+    </nav>
+    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
+    <div class="header-actions">
+      <a href="quiz.html">33Quiz</a>
+      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
+    </div>
+  </div>
+</header>
+
+<!-- SPLIT HERO -->
+<section class="split-hero">
+  <div class="split-hero-media">
+    <img src="assets/atelier 33 giri/20251110-IMG_4926.jpg" alt="Dona un vinile" loading="eager">
+    <div class="split-hero-media-overlay"></div>
+    <div class="split-hero-tag">Upcycling reale</div>
+    <div class="split-hero-counter">33</div>
+  </div>
+  <div class="split-hero-content">
+    <div class="split-hero-kicker">Dona · Contribuisci · Riusa</div>
+    <h1 class="split-hero-title">
+      Hai un vinile<br>
+      che non gira<br>
+      <em>più?</em>
+    </h1>
+    <p class="split-hero-body">
+      Non buttarlo. Mandacelo e diventerà qualcosa di nuovo — un posacenere, uno svuotatasche, un oggetto di design che continua a vivere. Ogni disco che recuperiamo è plastica che non finisce nell'inceneritore.
+    </p>
+    <div class="split-hero-ctas">
+      <a href="#form-contribuisci" class="btn-gold">Contribuisci ora</a>
+      <a href="#come-funziona" class="btn-outline">Come funziona</a>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact-section">
+  <div class="impact-inner">
+    <div class="impact-header">
+      <div class="impact-label reveal">L'impatto reale</div>
+      <h2 class="impact-title reveal reveal--d1">
+        Non sono solo<br><em>numeri.</em>
+      </h2>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <div class="impact-card-num">140<span class="impact-card-unit">g</span></div>
+        <div class="impact-card-title">Peso medio di un vinile 33 giri</div>
+        <div class="impact-card-desc">140 grammi di PVC che, se incenerito, possono generare circa 200g di CO₂, gas acidi e oltre 100g di scorie da smaltire in discarica.</div>
       </div>
-    </section>
+      <div class="impact-card reveal reveal--d1">
+        <div class="impact-card-num">0</div>
+        <div class="impact-card-title">Plastica vergine usata</div>
+        <div class="impact-card-desc">Non utilizziamo mai plastica nuova. Ogni oggetto che produciamo parte da materiale già esistente — recuperato, selezionato, trasformato.</div>
+      </div>
+      <div class="impact-card reveal reveal--d2">
+        <div class="impact-card-num">100<span class="impact-card-unit">%</span></div>
+        <div class="impact-card-title">Vinili donati riutilizzati</div>
+        <div class="impact-card-desc">Quello che non diventa prodotto finito torna in studio per futuri esperimenti, collezionismo o viene donato a laboratori creativi locali.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Content Section -->
-    <section style="padding: 60px 20px; background: #e8dfd5;">
-  <div style="max-width: 800px; margin: 30px auto 0 auto;" class="fade-in-up">
-        <h2 style="font-family: 'Inter', sans-serif; font-size: clamp(28px, 4vw, 36px); font-weight: 700; margin-bottom: 24px; color: #222;">
-          Come funziona
-        </h2>
-        <div style="font-size: 18px; line-height: 1.8; color: #555; margin-bottom: 48px;">
-          <div class="feature-box fade-in-up">
-            <p style="margin-bottom: 20px;">
-              Se hai vinili usati, fuori catalogo o che semplicemente non ascolti più, non buttarli. Inviaceli e li trasformeremo in pezzi di design unici: ciotole, sottobicchieri, lampade o altri oggetti d'arredo modellati a caldo.
-            </p>
-            <p style="margin-bottom: 20px;">
-              Ogni vinile ha una storia e con 33Giri quella storia continua in una nuova forma. Contribuire significa partecipare attivamente a un progetto di riuso creativo e sostenibile: dai una seconda vita ai tuoi dischi, riduci gli sprechi e sostieni un modo di produrre più consapevole verso l'ambiente.
-            </p>
-            <p style="margin-bottom: 20px;">
-              <strong>Cosa puoi inviarci:</strong>
-            </p>
-            <ul style="margin-left: 30px; margin-bottom: 20px;">
-              <li style="margin-bottom: 12px;">Vinili 33 giri che non usi più</li>
-              <li style="margin-bottom: 12px;">Dischi rovinati o graffiati</li>
-              <li style="margin-bottom: 12px;">Vinili senza custodia o di scarso valore commerciale</li>
-              <li style="margin-bottom: 12px;">Qualsiasi disco in vinile destinato allo scarto</li>
-            </ul>
-            <p style="margin-bottom: 20px;">
-              Contattaci per scoprire come inviarci i tuoi vinili e ricevere in cambio uno sconto speciale su un pezzo 33Giri personalizzato creato proprio con i tuoi dischi.
-            </p>
+<!-- COME FUNZIONA -->
+<section class="how-contrib" id="come-funziona">
+  <div class="how-contrib-inner">
+    <div class="how-contrib-header">
+      <div>
+        <h2 class="how-contrib-title reveal"><em>Come</em><br>funziona.</h2>
+      </div>
+      <div class="how-contrib-sub reveal reveal--d1">
+        Il processo è semplice. Non hai bisogno di consegnare i vinili in perfette condizioni — anzi, i più rovinati spesso diventano i pezzi più interessanti.
+      </div>
+    </div>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-step-n">01</div>
+        <div class="how-step-bar"></div>
+        <div class="how-step-title">Compila il form</div>
+        <div class="how-step-desc">Dicci quanti vinili hai e in che condizioni sono. Non serve essere precisi — bastano due righe.</div>
+      </div>
+      <div class="how-step reveal reveal--d1">
+        <div class="how-step-n">02</div>
+        <div class="how-step-bar"></div>
+        <div class="how-step-title">Ti rispondiamo</div>
+        <div class="how-step-desc">Entro 24 ore ti contattiamo per organizzare la consegna. A Bologna, Milano e Trento ritiriamo noi a mano.</div>
+      </div>
+      <div class="how-step reveal reveal--d2">
+        <div class="how-step-n">03</div>
+        <div class="how-step-bar"></div>
+        <div class="how-step-title">Trasformiamo</div>
+        <div class="how-step-desc">I tuoi vinili entrano in studio e diventano oggetti di design. Ogni pezzo prodotto con i tuoi dischi porta un po' della tua storia.</div>
+      </div>
+      <div class="how-step reveal reveal--d3">
+        <div class="how-step-n">04</div>
+        <div class="how-step-bar"></div>
+        <div class="how-step-title">Sconto per te</div>
+        <div class="how-step-desc">Chi contribuisce riceve uno sconto speciale sul prossimo acquisto. Perché il gesto merita un riconoscimento.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COSA ACCETTIAMO + FORM -->
+<section class="accept-section" id="form-contribuisci">
+  <div class="accept-inner">
+    <div class="accept-left">
+      <div class="accept-label reveal">Cosa accettiamo</div>
+      <h2 class="accept-title reveal reveal--d1">
+        Non serve che<br>siano <em>perfetti.</em>
+      </h2>
+      <div class="accept-list">
+        <div class="accept-item reveal">
+          <div class="accept-dot"></div>
+          <div class="accept-item-text"><strong>Vinili 33 giri</strong> usati o non più ascoltati — qualsiasi genere, qualsiasi anno</div>
+        </div>
+        <div class="accept-item reveal reveal--d1">
+          <div class="accept-dot"></div>
+          <div class="accept-item-text"><strong>Dischi graffiati o rovinati</strong> — le imperfezioni diventano parte del design</div>
+        </div>
+        <div class="accept-item reveal reveal--d2">
+          <div class="accept-dot"></div>
+          <div class="accept-item-text"><strong>Vinili senza custodia</strong> o di scarso valore commerciale</div>
+        </div>
+        <div class="accept-item reveal reveal--d3">
+          <div class="accept-dot"></div>
+          <div class="accept-item-text"><strong>45 giri</strong> — usati per i posacenere, il formato iconico della linea</div>
+        </div>
+        <div class="accept-item reveal">
+          <div class="accept-dot"></div>
+          <div class="accept-item-text"><strong>Anche grandi quantità</strong> — collezioni, eredità, magazzini. Organizziamo il ritiro</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="contrib-form-wrap reveal">
+      <div class="contrib-form-title">Scrivi due righe</div>
+      <div class="contrib-form-sub">Dicci di cosa disponi. Ti rispondiamo entro 24h per organizzare tutto.</div>
+      <form id="contributeForm" onsubmit="handleContrib(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <label>Nome *</label>
+            <input type="text" name="nome" required placeholder="Mario Rossi">
+          </div>
+          <div class="form-field">
+            <label>Email *</label>
+            <input type="email" name="email" required placeholder="mario@email.com">
           </div>
         </div>
-
-        <!-- Contact Form -->
-        <div style="background: #f8f8f8; padding: 40px; border-radius: 16px; margin-top: 48px;">
-          <h3 style="font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #222;">
-            Contattaci per contribuire
-          </h3>
-          <form id="contributeForm" style="display: flex; flex-direction: column; gap: 20px;">
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Nome *</label>
-              <input type="text" name="name" required style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
-            </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Email *</label>
-              <input type="email" name="email" required style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
-            </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Telefono</label>
-              <input type="tel" name="phone" style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
-            </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Quanti vinili hai da inviarci? *</label>
-              <select name="quantity" required style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif;">
-                <option value="">Seleziona...</option>
-                <option value="1-5">1-5 vinili</option>
-                <option value="6-10">6-10 vinili</option>
-                <option value="11-20">11-20 vinili</option>
-                <option value="20+">Più di 20 vinili</option>
-              </select>
-            </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333;">Raccontaci di più (condizioni, generi musicali, ecc.) *</label>
-              <textarea name="message" required rows="6" style="width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: 'Inter', sans-serif; resize: vertical;" placeholder="Esempio: Ho 10 vinili rock degli anni '70, alcuni graffiati ma con belle copertine..."></textarea>
-            </div>
-            <button type="submit" style="background: #222; color: #fff; padding: 16px 40px; border: none; border-radius: 24px; font-weight: 600; font-size: 18px; cursor: pointer; transition: transform 0.2s; font-family: 'Inter', sans-serif;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-              Invia richiesta
-            </button>
-          </form>
+        <div class="form-field">
+          <label>Telefono</label>
+          <input type="tel" name="telefono" placeholder="+39 333 000 0000">
         </div>
-
-        <!-- Contact Info -->
+        <div class="form-field">
+          <label>Quanti vinili hai?</label>
+          <select name="quantita">
+            <option value="">Seleziona...</option>
+            <option>1–5 vinili</option>
+            <option>6–10 vinili</option>
+            <option>11–20 vinili</option>
+            <option>Più di 20 vinili</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Raccontaci (condizioni, generi, epoca...)</label>
+          <textarea name="messaggio" required placeholder="Ho 8 vinili rock degli anni '70, alcuni graffiati ma etichette leggibili..."></textarea>
+        </div>
+        <button type="submit" class="btn-gold" style="width:100%;justify-content:center">
+          Invia richiesta
+        </button>
+      </form>
+      <div id="contrib-msg" style="display:none;margin-top:16px;font-size:13px;color:var(--gold-lt);text-align:center">
+        Grazie! Ti risponderemo entro 24 ore.
       </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer id="footer" class="site-footer">
-    <div class="wrap footer-inner">
-      <div>© 33Giri — Made in Italy</div>
-      <nav class="footer-nav"></nav>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer" 
-     style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); z-index: 9999; transition: all 0.3s ease; text-decoration: none;"
-     onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 30px rgba(0, 0, 0, 0.6)'"
-     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.4)'">
-    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
-    </svg>
-  </a>
+<!-- CTA FINALE -->
+<section class="contrib-cta">
+  <div class="contrib-cta-inner">
+    <p class="contrib-cta-text reveal">
+      <em>La materia non si butta.</em><br>
+      Si trasforma.
+    </p>
+    <div class="contrib-cta-sub reveal reveal--d1">33GIRI · Reshape the Art</div>
+  </div>
+</section>
 
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/layout.js"></script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">33GIRI</div>
+        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Naviga</div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Info</div>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="resi-rimborsi.html">Resi</a></li>
+          <li><a href="informativa-privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+      <span class="footer-claim">Reshape the Art</span>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    // Form submission handler
-    document.getElementById('contributeForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData);
-      
-      // Here you would normally send the data to a server
-      console.log('Form data:', data);
-      
-      // Show success message
-      alert('Grazie per il tuo interesse! Ti contatteremo al più presto per organizzare l\'invio dei tuoi vinili.');
-      this.reset();
-    });
-  </script>
+<a class="wa-float" href="https://wa.me/393925430575" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  function handleContrib(e){
+    e.preventDefault();
+    const btn=e.target.querySelector('button[type="submit"]');
+    const msg=document.getElementById('contrib-msg');
+    btn.textContent='Inviato ✓';btn.disabled=true;
+    msg.style.display='block';
+    const wa='https://wa.me/393925430575?text='+encodeURIComponent('Ciao! Voglio contribuire con dei vinili.\n\nNome: '+e.target.nome.value+'\nQuantità: '+e.target.quantita.value+'\n\n'+e.target.messaggio.value);
+    setTimeout(()=>window.open(wa,'_blank'),800);
+  }
+  (function(){
+    const header=document.getElementById('site-header');
+    window.addEventListener('scroll',()=>{header.style.background=window.scrollY>40?'rgba(10,10,10,.98)':'rgba(10,10,10,.94)';},{passive:true});
+    const els=document.querySelectorAll('.reveal');
+    const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.1});
+    els.forEach(el=>io.observe(el));
+  })();
+</script>
 </body>
 </html>

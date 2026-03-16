@@ -1,783 +1,454 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Collaborazioni - 33Giri</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Collaborazioni — 33GIRI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      color: #2c2416;
-      overflow-x: hidden;
-      position: relative;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
+      --cream:#f5f0e8;--navy:#0f1522;--white:#fff;--text:#1a1a1a;--muted:#6b6560;
+      --header-h:80px;--fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
     }
+    html{scroll-behavior:smooth}
+    body{background:var(--black);color:var(--white);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
 
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
+    /* ── HEADER ── */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
+      background:rgba(10,10,10,.94);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(184,150,62,.18)}
+    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
+      display:flex;align-items:center;justify-content:space-between;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    .main-nav ul{list-style:none;display:flex;gap:36px}
+    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
+    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
+    .main-nav a.active{color:var(--gold)}.main-nav a.active::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:20px}
+    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+    .header-actions a:hover{color:var(--gold)}
+
+    /* ── HERO FULLSCREEN ── */
+    .collab-hero{
+      padding-top:var(--header-h);
+      position:relative;height:100vh;min-height:600px;
+      display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .collab-hero-bg{position:absolute;inset:0}
+    .collab-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.3) saturate(.7);
+      animation:kenBurns 14s ease-out forwards}
+    @keyframes kenBurns{from{transform:scale(1.06)}to{transform:scale(1)}}
+    .collab-hero-overlay{position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.5) 50%,rgba(10,10,10,.2) 100%)}
+    .collab-hero-inner{position:relative;z-index:2;text-align:center;padding:0 32px;max-width:900px}
+    .collab-hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.4em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:28px;
+      opacity:0;animation:slideUp .8s var(--ease) .3s forwards}
+    .collab-hero-title{font-family:var(--fd);font-size:clamp(56px,9vw,120px);font-weight:300;
+      line-height:.95;color:var(--white);letter-spacing:-.02em;margin-bottom:24px;
+      opacity:0;animation:slideUp .9s var(--ease) .5s forwards}
+    .collab-hero-title em{font-style:italic;color:var(--gold-lt)}
+    .collab-hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.55);max-width:500px;
+      margin:0 auto 40px;line-height:1.8;
+      opacity:0;animation:slideUp .9s var(--ease) .7s forwards}
+    /* Scroll indicator */
+    .scroll-ind{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+      z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;
+      opacity:0;animation:fadeIn 1s ease 1.2s forwards}
+    .scroll-ind span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+    .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease infinite}
+    @keyframes scrollPulse{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.6)}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{to{opacity:1}}
+
+    /* ── FILOSOFIA COLLAB ── */
+    .collab-intro{background:var(--black);padding:120px 60px;
+      border-top:1px solid rgba(184,150,62,.15)}
+    .collab-intro-inner{max-width:1280px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;gap:120px;align-items:center}
+    .collab-intro-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+    .collab-intro-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      line-height:1.1;letter-spacing:-.01em;margin-bottom:32px}
+    .collab-intro-title em{font-style:italic;color:var(--gold-lt)}
+    .collab-intro-body{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.5)}
+    .collab-intro-body p+p{margin-top:16px}
+    /* stat blocks */
+    .collab-stats{display:flex;flex-direction:column;gap:0}
+    .collab-stat{border-top:1px solid rgba(184,150,62,.2);padding:32px 0}
+    .collab-stat-num{font-family:var(--fd);font-size:64px;font-weight:300;color:var(--gold);line-height:1}
+    .collab-stat-label{font-size:11px;font-weight:400;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;margin-top:6px}
+
+    /* ── METAMORFOSI FEATURED ── */
+    .featured-collab{background:var(--navy);padding:0;position:relative;overflow:hidden}
+    /* pattern diagonale */
+    .featured-collab::before{content:'';position:absolute;inset:0;
+      background-image:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(184,150,62,.03) 40px,rgba(184,150,62,.03) 41px);
+      pointer-events:none}
+    .featured-inner{max-width:1440px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;min-height:80vh}
+    /* Immagine lato */
+    .featured-media{position:relative;overflow:hidden}
+    .featured-media img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.8);
+      transition:transform .7s var(--ease)}
+    .featured-media:hover img{transform:scale(1.04)}
+    /* gold corner */
+    .featured-media::after{content:'';position:absolute;top:0;right:0;
+      width:100px;height:100px;
+      border-top:1px solid rgba(184,150,62,.6);border-right:1px solid rgba(184,150,62,.6)}
+    /* Contenuto lato */
+    .featured-content{padding:80px 72px;display:flex;flex-direction:column;justify-content:center;
+      position:relative;z-index:1}
+    .featured-badge{display:inline-flex;align-items:center;gap:8px;
+      font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      border:1px solid rgba(184,150,62,.35);color:var(--gold);padding:6px 14px;
+      margin-bottom:28px;width:fit-content}
+    .featured-title{font-family:var(--fd);font-size:clamp(44px,5vw,72px);font-weight:300;
+      line-height:1;letter-spacing:-.01em;margin-bottom:12px}
+    .featured-title em{font-style:italic;color:var(--gold-lt)}
+    .featured-subtitle{font-family:var(--fd);font-size:20px;font-weight:300;
+      color:rgba(255,255,255,.5);font-style:italic;margin-bottom:36px}
+    .featured-desc{font-size:14px;font-weight:300;line-height:1.9;
+      color:rgba(255,255,255,.55);max-width:440px;margin-bottom:48px}
+    .featured-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:48px}
+    .featured-gallery-item{aspect-ratio:1;overflow:hidden}
+    .featured-gallery-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);
+      transition:transform .5s,filter .5s}
+    .featured-gallery-item:hover img{transform:scale(1.08);filter:brightness(1)}
+    .featured-sold{display:inline-flex;align-items:center;gap:10px;
+      font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.1);padding:12px 20px}
+
+    /* ── PROSSIMA COLLAB ── */
+    .next-collab{background:var(--black);padding:120px 60px}
+    .next-inner{max-width:1280px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:center}
+    .next-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+    .next-title{font-family:var(--fd);font-size:clamp(44px,5vw,72px);font-weight:300;
+      line-height:1;letter-spacing:-.01em;margin-bottom:28px}
+    .next-title em{font-style:italic;color:var(--gold-lt)}
+    .next-body{font-size:14px;font-weight:300;line-height:1.9;
+      color:rgba(255,255,255,.5);margin-bottom:40px}
+    /* TBA card */
+    .tba-card{background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.15);
+      padding:40px;position:relative;overflow:hidden}
+    .tba-card::before{content:'?';position:absolute;right:24px;top:16px;
+      font-family:var(--fd);font-size:120px;font-weight:700;
+      color:rgba(184,150,62,.06);line-height:1}
+    .tba-tag{font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--gold);border:1px solid var(--gold);padding:4px 10px;
+      display:inline-block;margin-bottom:20px}
+    .tba-title{font-family:var(--fd);font-size:28px;font-weight:400;
+      color:var(--white);margin-bottom:12px}
+    .tba-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.8}
+
+    /* Come funziona */
+    .how-section{background:var(--navy);padding:120px 60px;position:relative}
+    .how-section::before{content:'';position:absolute;inset:0;
+      background-image:repeating-linear-gradient(0deg,transparent,transparent 62px,rgba(184,150,62,.04) 62px,rgba(184,150,62,.04) 63px);
+      pointer-events:none}
+    .how-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+    .how-header{margin-bottom:72px;text-align:center}
+    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+    .how-step{padding:52px 40px;background:rgba(255,255,255,.03);border:1px solid rgba(184,150,62,.08);
+      transition:background .3s,border-color .3s;text-align:center}
+    .how-step:hover{background:rgba(184,150,62,.06);border-color:rgba(184,150,62,.25)}
+    .how-step-icon{font-family:var(--fd);font-size:72px;font-weight:300;color:var(--gold);
+      line-height:1;margin-bottom:24px;display:block}
+    .how-step-title{font-family:var(--fd);font-size:22px;font-weight:400;color:var(--white);margin-bottom:14px}
+    .how-step-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8}
+
+    /* CTA collab proposta */
+    .collab-cta{background:var(--gold);padding:100px 60px;text-align:center;position:relative;overflow:hidden}
+    .collab-cta::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.2) 0%,transparent 60%)}
+    .collab-cta-inner{position:relative;z-index:1}
+    .collab-cta-label{font-size:10px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:rgba(0,0,0,.45);margin-bottom:24px}
+    .collab-cta-title{font-family:var(--fd);font-size:clamp(40px,6vw,80px);font-weight:300;
+      color:var(--black);line-height:1.05;letter-spacing:-.02em;margin-bottom:12px}
+    .collab-cta-title em{font-style:italic}
+    .collab-cta-sub{font-size:14px;font-weight:300;color:rgba(0,0,0,.6);margin-bottom:44px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7}
+    .collab-cta-btns{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+    .btn-black{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;
+      background:var(--black);color:var(--white);font-size:11px;font-weight:600;
+      letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .25s,transform .25s}
+    .btn-black:hover{background:#1a1a1a;transform:translateY(-2px)}
+    .btn-outline-dark{display:inline-flex;align-items:center;gap:10px;padding:13px 34px;
+      background:transparent;color:var(--black);font-size:11px;font-weight:500;
+      letter-spacing:.18em;text-transform:uppercase;border:1px solid rgba(0,0,0,.3);
+      cursor:pointer;transition:border-color .25s}
+    .btn-outline-dark:hover{border-color:var(--black)}
+
+    /* WA */
+    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
+      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
+    .wa-float svg{width:24px;height:24px;fill:var(--black)}
+
+    /* FOOTER */
+    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
+      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
+    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
+    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .reveal--d1{transition-delay:.1s}.reveal--d2{transition-delay:.2s}.reveal--d3{transition-delay:.3s}
+    .section-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+    .section-title-lrg{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      line-height:1.1;letter-spacing:-.01em;color:var(--white)}
+    .section-title-lrg em{font-style:italic;color:var(--gold-lt)}
+
+    @media(max-width:1100px){
+      .featured-inner,.collab-intro-inner,.next-inner,.how-grid{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
     }
-
-    /* HERO DESKTOP: immagine di sfondo */
-    .artist-hero-fullscreen {
-      position: relative;
-      z-index: 1;
-      animation: fadeIn 1.5s ease-out;
-      min-height: 70vh;
-      background-image: url('assets/iris foto/Screenshot 2025-11-13 alle 16.21.38.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    /* Sfondo dinamico solo dalla gallery in poi (DESKTOP) */
-    .dual-gallery-section {
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      position: relative;
-      z-index: 1;
-    }
-    .dual-gallery-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%), url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
-      background-size: 400% 400%, 100% auto;
-      background-position: 0% 50%, 0 0;
-      opacity: 0.25;
-      z-index: 0;
-      pointer-events: none;
-      animation: gradientShift 15s ease infinite, textureMove 30s linear infinite;
-    }
-
-    /* Immagini “scattered” – stessa resa per opere e vinili su DESKTOP */
-    .scattered-gallery .scattered-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      border-radius: 8px;
-      border: 8px solid #ffffff;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes textureMove {
-      from { background-position: 0 0; }
-      to { background-position: 0 -1000px; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-100px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(100px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* freccia transizione */
-    @keyframes arrowBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
-    }
-
-    /* overlay mobile sul hero */
-    .hero-mobile-content {
-      display: none;
-    }
-
-    /* transizione tra opere e vinili – di base nascosta (solo mobile) */
-    .gallery-transition {
-      display: none;
-    }
-
-    .artist-quote-section {
-      position: relative;
-      z-index: 1;
-      animation: fadeInUp 1s ease-out 0.3s both;
-    }
-
-    .artist-bio-section {
-      position: relative;
-      z-index: 1;
-      animation: fadeInUp 1s ease-out 0.6s both;
-    }
-
-    .dual-gallery-section {
-      position: relative;
-      z-index: 1;
-      animation: fadeIn 1s ease-out 0.9s both;
-    }
-
-    .bio-image-container {
-      animation: slideInLeft 1s ease-out 0.8s both;
-    }
-
-    .bio-text-container {
-      animation: slideInRight 1s ease-out 1s both;
-    }
-
-    /* ====== SOLO MOBILE ====== */
-    @media (max-width: 768px) {
-
-      html, body {
-        max-width: 100%;
-        overflow-x: hidden;
-      }
-
-      /* HERO MOBILE: usa lo stesso dipinto dell’ultima opera di Iris */
-      .artist-hero-fullscreen {
-        min-height: 55vh;
-        background-image: url('assets/iris foto/Screenshot 2025-11-14 alle 16.14.32.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        position: relative;
-      }
-
-      .hero-mobile-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        position: absolute;
-        inset: 0;
-        padding: 24px 18px 40px;
-        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.0) 55%);
-        color: #fff;
-      }
-
-      .hero-mobile-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: rgba(0,0,0,0.35);
-        margin-bottom: 8px;
-      }
-
-      .hero-mobile-tag span {
-        width: 6px;
-        height: 6px;
-        border-radius: 999px;
-        background: #fff;
-      }
-
-      .hero-mobile-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 2rem;
-        line-height: 1.2;
-        max-width: 14ch;
-      }
-
-      /* Citazione */
-      .artist-quote-section {
-        padding: 40px 16px !important;
-      }
-      .artist-quote-section > div {
-        padding: 30px 20px !important;
-      }
-      .artist-quote-section p {
-        font-size: 1.1em !important;
-        line-height: 1.6 !important;
-      }
-
-      /* Bio */
-      .artist-bio-section {
-        padding: 50px 16px !important;
-      }
-      .artist-bio-section h2 {
-        font-size: 2.2em !important;
-        margin-bottom: 30px !important;
-      }
-      .artist-bio-section > div > div[style*="display: flex"] {
-        gap: 30px !important;
-      }
-      .bio-image-container,
-      .bio-text-container {
-        flex: 0 0 100% !important;
-        max-width: 100% !important;
-      }
-      .bio-text-container {
-        margin-top: 10px !important;
-      }
-      .bio-text-container > div {
-        padding: 25px 20px !important;
-      }
-      .bio-text-container p {
-        font-size: 1em !important;
-        line-height: 1.7 !important;
-      }
-
-      /* Gallery: stack verticale ordinata */
-      .dual-gallery-section {
-        padding: 50px 16px !important;
-      }
-      .dual-gallery-section > div > div {
-        min-width: 100% !important;
-        padding: 20px 0 !important;
-      }
-
-      /* nascondo il divisore centrale su mobile */
-      .creative-divider {
-        display: none !important;
-      }
-
-      /* le immagini scattered diventano blocchi ordinati */
-      .scattered-gallery {
-        min-height: auto !important;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-      }
-      .scattered-item {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        transform: none !important;
-        width: 100% !important;
-        margin: 0 !important;
-      }
-      .scattered-item img {
-        width: 100% !important;
-        height: auto !important;
-        display: block;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.18);
-        border-radius: 18px;
-        border-width: 0 !important;
-      }
-
-      /* titoletti delle due sezioni immagini */
-      .dual-gallery-section h3 {
-        font-size: 1.4em !important;
-        margin-bottom: 18px !important;
-        text-align: left !important;
-      }
-
-      /* transizione tra le due gallerie – dinamica */
-      .gallery-transition {
-        display: block;
-        max-width: 520px;
-        margin: 32px auto 20px auto;
-        padding: 16px 18px;
-        border-radius: 22px;
-        background: linear-gradient(135deg,
-          rgba(90,127,160,0.22),
-          rgba(139,115,85,0.18)
-        );
-        background-size: 200% 200%;
-        animation: gradientShift 12s ease infinite;
-        color: #2c2416;
-        font-size: 0.95rem;
-        line-height: 1.7;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .gallery-transition::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.45), transparent 60%);
-        mix-blend-mode: screen;
-        opacity: 0.8;
-      }
-      .gallery-transition-inner {
-        position: relative;
-        z-index: 1;
-      }
-      .gallery-transition-inner p {
-        margin: 0 0 8px 0;
-      }
-      .gallery-transition-cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.82rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        opacity: 0.9;
-        margin-top: 4px;
-      }
-      .gallery-transition-arrow {
-        display: inline-block;
-        animation: arrowBounce 1.2s infinite ease-in-out;
-      }
-
-      /* Bottone "Acquista ora" più compatto su mobile */
-      .purchase-cta a {
-        padding: 12px 30px !important;
-        font-size: 1em !important;
-      }
-    }
-
-    /* ==============================
-       LAUNCH OVERLAY + COUNTDOWN
-       ============================== */
-
-    #site-content.is-hidden {
-      display: none !important;
-    }
-
-    #launch-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 999999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.08), transparent 40%),
-        radial-gradient(circle at 90% 90%, rgba(255,255,255,0.08), transparent 40%),
-        linear-gradient(135deg, #0f1115 0%, #111827 40%, #0b0f14 100%);
-      color: #ffffff;
-      text-align: center;
-    }
-
-    #launch-overlay.is-hidden {
-      display: none !important;
-    }
-
-    .launch-box {
-      width: min(680px, 92vw);
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(14px);
-      border-radius: 22px;
-      padding: 48px 34px 40px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-    }
-
-    .launch-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      margin-bottom: 14px;
-    }
-    .launch-tag-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #ffffff;
-      opacity: 0.9;
-    }
-
-    .launch-title {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      line-height: 1.15;
-      margin-bottom: 12px;
-    }
-
-    .launch-sub {
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.78);
-      margin-bottom: 28px;
-    }
-
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin: 0 auto 18px auto;
-    }
-
-    .countdown-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px;
-      padding: 16px 10px 14px;
-    }
-
-    .countdown-number {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: clamp(1.6rem, 3vw, 2.1rem);
-      letter-spacing: 0.02em;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .countdown-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      opacity: 0.75;
-    }
-
-    .launch-foot {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.7);
-      margin-top: 10px;
-    }
-
-    @media (max-width: 520px) {
-      .launch-box {
-        padding: 38px 22px 32px;
-      }
-      .countdown-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    /* ✅ NUOVO: CTA centrata subito sotto le immagini (desktop + mobile) */
-    .purchase-cta{
-      margin-top: 28px;
-      text-align: center;
-      position: relative;
-      z-index: 2;
+    @media(max-width:768px){
+      :root{--header-h:64px}
+      .collab-intro,.featured-content,.next-collab,.how-section,.collab-cta{padding:60px 20px}
+      .featured-content{padding:48px 24px}
+      .how-grid{gap:2px}
+      .collab-stats{display:grid;grid-template-columns:1fr 1fr}
+      .footer-top{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px}
+      .main-nav{display:none}
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================
-       LAUNCH OVERLAY
-       ========================= -->
-  <div id="launch-overlay" data-target="2025-12-09T14:00:00+01:00">
-    <div class="launch-box">
-      <div class="launch-tag">
-        <span class="launch-tag-dot"></span>
-        In arrivo
-      </div>
-      <div class="launch-title">Metamorfosi</div>
-      <div class="launch-sub">
-        <strong>9 dicembre 2025</strong> alle <strong>14:00</strong>.<br>
-        La nuova collezione Metamorfosi — Iris Shero x 33Giri.
-      </div>
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="collaborazioni.html" class="active">Collaborazioni</a></li>
+      </ul>
+    </nav>
+    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
+    <div class="header-actions">
+      <a href="chi_siamo.html">Chi siamo</a>
+      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
+    </div>
+  </div>
+</header>
 
-      <div class="countdown-grid" aria-live="polite">
-        <div class="countdown-card">
-          <div class="countdown-number" id="cd-days">--</div>
-          <div class="countdown-label">Giorni</div>
-        </div>
-        <div class="countdown-card">
-          <div class="countdown-number" id="cd-hours">--</div>
-          <div class="countdown-label">Ore</div>
-        </div>
-        <div class="countdown-card">
-          <div class="countdown-number" id="cd-mins">--</div>
-          <div class="countdown-label">Minuti</div>
-        </div>
-        <div class="countdown-card">
-          <div class="countdown-number" id="cd-secs">--</div>
-          <div class="countdown-label">Secondi</div>
-        </div>
-      </div>
+<!-- HERO -->
+<section class="collab-hero">
+  <div class="collab-hero-bg"><img src="assets/atelier 33 giri/20251110-IMG_4743.jpg" alt="Collaborazioni 33GIRI" loading="eager"></div>
+  <div class="collab-hero-overlay"></div>
+  <div class="collab-hero-inner">
+    <div class="collab-hero-eyebrow">Arte · Vinile · Design · Unicità</div>
+    <h1 class="collab-hero-title">Quando l'arte<br>incontra il <em>vinile.</em></h1>
+    <p class="collab-hero-sub">Ogni collaborazione porta un artista sul vinile. Il disco diventa tela, l'oggetto diventa opera. Edizioni limitate, pezzi da collezione.</p>
+  </div>
+  <div class="scroll-ind">
+    <span>Scorri</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
 
-      <div class="launch-foot">
-        Presto disponibile su 33Giri.
+<!-- FILOSOFIA -->
+<section class="collab-intro">
+  <div class="collab-intro-inner">
+    <div>
+      <div class="collab-intro-label reveal">La filosofia</div>
+      <h2 class="collab-intro-title reveal reveal--d1">
+        Ogni artista<br>porta una storia<br><em>nuova sul disco.</em>
+      </h2>
+      <div class="collab-intro-body reveal reveal--d2">
+        <p>Le edizioni collab nascono da un'idea semplice: il vinile non è solo materia, è già un'opera in sé. Quando un artista interviene su di lui — con pennelli, pigmenti, tecnica — crea qualcosa di doppiamente irripetibile: la storia del disco originale incontra la firma di un essere umano preciso, in un momento preciso.</p>
+        <p>Collaboriamo con pittori, illustratori, street artist. Ogni collab è trattata come un progetto a sé: concept definito, edizione numerata, pricing che rispetta il lavoro di entrambi — l'artigiano e l'artista.</p>
+        <p>Il risultato non è un gadget. È un pezzo da collezione che vive sul tavolo, sulla scrivania, sul comodino — e racconta qualcosa di vero.</p>
+      </div>
+    </div>
+    <div class="collab-stats">
+      <div class="collab-stat reveal">
+        <div class="collab-stat-num">1</div>
+        <div class="collab-stat-label">Collab completata — Metamorfosi × Iris Shero</div>
+      </div>
+      <div class="collab-stat reveal reveal--d1">
+        <div class="collab-stat-num">8</div>
+        <div class="collab-stat-label">Pezzi prodotti — tutti sold out</div>
+      </div>
+      <div class="collab-stat reveal reveal--d2">
+        <div class="collab-stat-num">∞</div>
+        <div class="collab-stat-label">Prossime collaborazioni in cantiere</div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- =========================
-       CONTENUTO DEL SITO
-       ========================= -->
-  <div id="site-content">
-
-    <div id="header-include"></div>
-
-    <section class="artist-hero-fullscreen">
-      <div class="hero-mobile-content">
-        <div class="hero-mobile-tag">
-          <span></span> Collaborazione
-        </div>
-        <h1 class="hero-mobile-title">Metamorfosi</h1>
+<!-- METAMORFOSI FEATURED -->
+<section class="featured-collab">
+  <div class="featured-inner">
+    <div class="featured-media">
+      <img src="IMG_3986.jpeg" alt="Metamorfosi — Iris Shero × 33GIRI" loading="lazy">
+    </div>
+    <div class="featured-content">
+      <div class="featured-badge reveal">Edizione I · Sold Out</div>
+      <h2 class="featured-title reveal reveal--d1">Metamorfosi<br><em>× Iris Shero</em></h2>
+      <div class="featured-subtitle reveal reveal--d2">Dicembre 2025 · 8 pezzi · Bologna</div>
+      <p class="featured-desc reveal reveal--d2">
+        La prima collab 33GIRI. Iris Shero — pittrice di 22 anni — ha dipinto a mano 8 vinili, ognuno ispirato al tema della metamorfosi: la trasformazione come atto creativo, la materia che diventa qualcosa di nuovo pur restando se stessa. Ogni pezzo è accompagnato da una card firmata dall'artista.
+      </p>
+      <div class="featured-gallery reveal reveal--d3">
+        <div class="featured-gallery-item"><img src="IMG_3962.jpeg" alt="Metamorfosi 1" loading="lazy"></div>
+        <div class="featured-gallery-item"><img src="IMG_3963.jpeg" alt="Metamorfosi 2" loading="lazy"></div>
+        <div class="featured-gallery-item"><img src="IMG_3971.jpeg" alt="Metamorfosi 3" loading="lazy"></div>
       </div>
-    </section>
-
-    <!-- Artist Quote Section -->
-    <section class="artist-quote-section wrap" style="padding: 100px 20px; position: relative; z-index: 1; background: transparent !important;">
-      <div style="max-width: 900px; margin: 0 auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); padding: 60px 50px; border-radius: 16px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);">
-        <blockquote style="margin: 0; padding: 0; border: none;">
-          <p style="font-family: 'Playfair Display', serif; font-size: 1.5em; line-height: 1.8; color: #2c2416; font-style: italic; text-align: center; font-weight: 500; margin-bottom: 35px;">
-            "METAMORFOSI
-Metamorfosi nasce con l’intenzione di valorizzare tutto quello che si trasforma e si costruisce nel corso del
-tempo..."
-          </p>
-          <footer style="text-align: center; margin-top: 30px;">
-            <div style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, rgba(90, 127, 160, 0.15) 0%, rgba(90, 127, 160, 0.05) 100%); border-radius: 30px;">
-              <p style="font-family: 'Playfair Display', serif; font-size: 1.2em; color: #5a7fa0; font-weight: 700; margin: 0;">— Iris Shero</p>
-            </div>
-          </footer>
-        </blockquote>
-      </div>
-    </section>
-
-    <!-- Artist Bio Section -->
-    <section class="artist-bio-section wrap" style="padding: 80px 20px; position: relative; z-index: 1;">
-      <div style="max-width: 1200px; margin: 0 auto;">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; text-align: center; margin-bottom: 60px; color: #2c2416; font-weight: 900;">L'Artista</h2>
-
-        <div style="display: flex; gap: 80px; align-items: flex-start; flex-wrap: wrap;">
-          <div class="bio-image-container" style="flex: 0 0 350px;">
-            <img src="assets/iris foto/PHOTO-2025-11-13-17-09-41.jpg" alt="Iris Shero" style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);">
-          </div>
-
-          <div class="bio-text-container" style="flex: 1; min-width: 300px;">
-            <div style="background: rgba(255, 255, 255, 0.5); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
-              <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8em; color: #2c2416; margin-bottom: 25px; font-weight: 700;">La Visione Artistica</h3>
-              <p style="font-family: 'Inter', sans-serif; font-size: 1.15em; line-height: 1.9; color: #3a3a3a; margin-bottom: 25px; font-weight: 400;">
-                <strong style="color: #5a7fa0;">Iris Shero</strong>, giovane artista di 22 anni...
-              </p>
-            </div>
-          </div>
+      <div class="reveal">
+        <div class="featured-sold">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-opacity=".4"/></svg>
+          Collezione esaurita — Nuovo drop in arrivo
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Gallery Section: Opere + Vinili -->
-    <section class="dual-gallery-section" style="padding: 80px 20px; position: relative; z-index: 1;">
-      <div style="max-width: 1600px; margin: 0 auto;">
-        
-        <!-- ✅ ROW 2 COLONNE -->
-        <div style="display: flex; gap: 60px; align-items: stretch; flex-wrap: wrap;">
-
-          <!-- Left Side: Opere di Iris -->
-          <div style="flex: 1; min-width: 400px; position: relative; padding: 40px;">
-            <h3 style="font-family: Georgia, serif; font-size: 1.6em; font-style: italic; margin-bottom: 50px; color: #2c2c2c; text-align: center;">Le opere di Iris</h3>
-
-            <!-- ✅ ridotta altezza: prima 800px (ok), la lascio uguale -->
-            <div class="scattered-gallery" style="position: relative; min-height: 800px;">
-              <div class="scattered-item" style="position: absolute; top: 0; left: 5%; width: 220px; transform: rotate(-3deg); transition: all 0.4s ease;">
-                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.16.51.png" alt="Opera Iris 1">
-              </div>
-
-              <div class="scattered-item" style="position: absolute; top: 180px; right: 10%; width: 280px; transform: rotate(5deg); transition: all 0.4s ease;">
-                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.52.png" alt="Opera Iris 2">
-              </div>
-
-              <div class="scattered-item" style="position: absolute; top: 320px; left: 15%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
-                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.15.34.png" alt="Opera Iris 3">
-              </div>
-
-              <div class="scattered-item" style="position: absolute; top: 580px; right: 5%; width: 260px; transform: rotate(-4deg); transition: all 0.4s ease;">
-                <img src="assets/iris foto/Screenshot 2025-11-14 alle 16.14.32.png" alt="Opera Iris 4">
-              </div>
-            </div>
-          </div>
-
-          <!-- Creative Divider (desktop) -->
-          <div class="creative-divider" style="width: 2px; position: relative; min-height: 800px; align-self: stretch;">
-            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%;">
-              <svg width="100" height="100%" style="position: absolute; left: -49px; top: 0;">
-                <defs>
-                  <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#5a7fa0;stop-opacity:0.3" />
-                    <stop offset="50%" style="stop-color:#5a7fa0;stop-opacity:0.8" />
-                    <stop offset="100%" style="stop-color:#5a7fa0;stop-opacity:0.3" />
-                  </linearGradient>
-                </defs>
-                <path d="M 50 0 Q 60 100, 50 200 T 50 400 T 50 600 T 50 800 T 50 1000" 
-                      stroke="url(#lineGradient)" 
-                      stroke-width="3" 
-                      fill="none" 
-                      stroke-linecap="round"/>
-              </svg>
-
-              <div style="position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #5a7fa0; border-radius: 50%; opacity: 0.6;"></div>
-              <div style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #5a7fa0; border-radius: 50%; opacity: 0.4;"></div>
-              <div style="position: absolute; top: 80%; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; background: #5a7fa0; border-radius: 50%; opacity: 0.5;"></div>
-            </div>
-          </div>
-
-          <!-- Transizione solo mobile -->
-          <div class="gallery-transition">
-            <div class="gallery-transition-inner">
-              <p>
-                Da questi dipinti nasce la serie di <strong>vinili unici</strong> realizzati insieme a 33Giri:
-                ogni disco viene modellato e dipinto a mano, trasformando l’opera di Iris in un oggetto da usare e da esporre.
-              </p>
-              <div class="gallery-transition-cta">
-                <span class="gallery-transition-arrow">↓</span>
-                <span>I vinili per 33Giri</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Side: Vinili per 33Giri -->
-          <div style="flex: 1; min-width: 400px; position: relative; padding: 40px;">
-            <h3 style="font-family: Georgia, serif; font-size: 1.6em; font-style: italic; margin-bottom: 50px; color: #2c2c2c; text-align: center;">I vinili per 33Giri</h3>
-
-            <!-- ✅ IMPORTANTISSIMO: prima era min-height:1500px → ti buttava giù il bottone -->
-            <div class="scattered-gallery" style="position: relative; min-height: 820px;">
-              <div class="scattered-item" style="position: absolute; top: 50px; left: 10%; width: 220px; transform: rotate(4deg); transition: all 0.4s ease;">
-                <img src="IMG_3962.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 1">
-              </div>
-
-              <div class="scattered-item" style="position: absolute; top: 260px; right: 8%; width: 280px; transform: rotate(-3deg); transition: all 0.4s ease;">
-                <img src="IMG_3963.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 2">
-              </div>
-
-              <div class="scattered-item" style="position: absolute; top: 470px; left: 12%; width: 200px; transform: rotate(2deg); transition: all 0.4s ease;">
-                <img src="IMG_3971.jpeg" alt="Ciotola in vinile Iris Shero x 33Giri 3">
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /row -->
-
-        <!-- ✅ CTA CENTRALE SUBITO SOTTO LE IMMAGINI -->
-        <div class="purchase-cta">
-          <a href="catalogo.html#contatti"
-             onclick="localStorage.setItem('contactMessage', 'Ciao, vorrei acquistare un pezzo della collezione Metamorfosi');"
-             style="display: inline-block; background-color: #5a7fa0; color: white; padding: 15px 40px; font-family: Georgia, serif; font-size: 1.1em; text-decoration: none; border-radius: 30px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(90, 127, 160, 0.3);">
-            Sold Out
-          </a>
-          <p style="margin-top: 12px; font-family: Georgia, serif; font-size: 0.85em; color: #2c2c2c; font-style: italic;">
-            (per le collaborazioni puoi chiedere il modello specifico o farti consigliare il pezzo giusto)
-          </p>
-        </div>
-
+<!-- PROSSIMA COLLAB -->
+<section class="next-collab">
+  <div class="next-inner">
+    <div>
+      <div class="next-label reveal">Prossimo drop</div>
+      <h2 class="next-title reveal reveal--d1">
+        Il prossimo<br>artista è <em>TBA.</em>
+      </h2>
+      <p class="next-body reveal reveal--d2">
+        Stiamo lavorando alla seconda collab. Artista, concept e data da annunciare. Se vuoi essere tra i primi a sapere — scrivici su WhatsApp o segui il profilo Instagram. I pezzi delle prossime edizioni saranno disponibili in pre-order esclusivo per chi è già in lista.
+      </p>
+      <div class="collab-cta-btns reveal reveal--d3" style="justify-content:flex-start;display:flex;gap:16px;flex-wrap:wrap">
+        <a href="https://wa.me/393925430575?text=Ciao!%20Voglio%20essere%20aggiornato%20sulla%20prossima%20collab%2033GIRI" target="_blank" class="btn-black">Avvisami su WhatsApp</a>
+        <a href="https://instagram.com/33giri.studio" target="_blank" class="btn-outline-dark" style="color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2)">Instagram →</a>
       </div>
-    </section>
+    </div>
+    <div class="tba-card reveal">
+      <div class="tba-tag">Coming Soon</div>
+      <div class="tba-title">Collab II — Artista TBA</div>
+      <div class="tba-desc">Edizione limitata. Numero pezzi da definire. Ogni disco sarà dipinto o illustrato a mano. Pre-order esclusivo per chi è in lista d'attesa.</div>
+    </div>
+  </div>
+</section>
 
-    <div id="footer-include"></div>
+<!-- COME FUNZIONA -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="how-header">
+      <div class="section-label reveal">Il processo</div>
+      <h2 class="section-title-lrg reveal reveal--d1">Come nasce<br><em>una collab.</em></h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-step reveal">
+        <span class="how-step-icon">I.</span>
+        <div class="how-step-title">Concept condiviso</div>
+        <div class="how-step-desc">Artista e 33GIRI sviluppano insieme il tema della collab. Il vinile non è solo supporto — è parte integrante del concept narrativo.</div>
+      </div>
+      <div class="how-step reveal reveal--d1">
+        <span class="how-step-icon">II.</span>
+        <div class="how-step-title">Produzione manuale</div>
+        <div class="how-step-desc">L'artista dipinge o illustra ogni disco individualmente. Niente stampa, niente serializzazione. Ogni pezzo richiede ore di lavoro diretto.</div>
+      </div>
+      <div class="how-step reveal reveal--d2">
+        <span class="how-step-icon">III.</span>
+        <div class="how-step-title">Edizione numerata</div>
+        <div class="how-step-desc">Ogni pezzo è numerato, fotografato, documentato. Include card firmata dall'artista. Il ricavato è diviso in modo trasparente tra artista e 33GIRI.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  </div><!-- /#site-content -->
+<!-- CTA SEI UN ARTISTA? -->
+<section class="collab-cta">
+  <div class="collab-cta-inner">
+    <div class="collab-cta-label reveal">Per gli artisti</div>
+    <h2 class="collab-cta-title reveal reveal--d1">
+      Sei un artista?<br>
+      <em>Parliamoci.</em>
+    </h2>
+    <p class="collab-cta-sub reveal reveal--d2">Pittori, illustratori, street artist, graphic designer — se hai un'idea che si sposa col vinile come materiale, scrivici. Valutiamo ogni proposta seria.</p>
+    <div class="collab-cta-btns reveal reveal--d3">
+      <a href="https://wa.me/393925430575?text=Ciao!%20Sono%20un%20artista%20e%20vorrei%20proporre%20una%20collaborazione%20con%2033GIRI" target="_blank" class="btn-black">Proponi una collab</a>
+      <a href="mailto:33giristudios@gmail.com" class="btn-outline-dark">Email</a>
+    </div>
+  </div>
+</section>
 
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/main.js"></script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">33GIRI</div>
+        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Naviga</div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Info</div>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="resi-rimborsi.html">Resi</a></li>
+          <li><a href="informativa-privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+          <li><a href="contribuisci.html">Dona un vinile</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+      <span class="footer-claim">Reshape the Art</span>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    (function() {
-      const overlay = document.getElementById('launch-overlay');
-      const content = document.getElementById('site-content');
+<a class="wa-float" href="https://wa.me/393925430575" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
-      if (!overlay || !content) return;
-
-      const targetStr = overlay.getAttribute('data-target');
-      const targetDate = new Date(targetStr);
-
-      const daysEl = document.getElementById('cd-days');
-      const hoursEl = document.getElementById('cd-hours');
-      const minsEl = document.getElementById('cd-mins');
-      const secsEl = document.getElementById('cd-secs');
-
-      function pad(n) {
-        return String(n).padStart(2, '0');
-      }
-
-      function showOverlay() {
-        overlay.classList.remove('is-hidden');
-        content.classList.add('is-hidden');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function hideOverlay() {
-        overlay.classList.add('is-hidden');
-        content.classList.remove('is-hidden');
-        document.body.style.overflow = '';
-      }
-
-      function tick() {
-        const now = new Date();
-        let diff = targetDate - now;
-
-        if (isNaN(targetDate.getTime())) {
-          hideOverlay();
-          return;
-        }
-
-        if (diff <= 0) {
-          if (daysEl) daysEl.textContent = '00';
-          if (hoursEl) hoursEl.textContent = '00';
-          if (minsEl) minsEl.textContent = '00';
-          if (secsEl) secsEl.textContent = '00';
-          hideOverlay();
-          return;
-        }
-
-        showOverlay();
-
-        const totalSeconds = Math.floor(diff / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const mins = Math.floor((totalSeconds % 3600) / 60);
-        const secs = totalSeconds % 60;
-
-        if (daysEl) daysEl.textContent = pad(days);
-        if (hoursEl) hoursEl.textContent = pad(hours);
-        if (minsEl) minsEl.textContent = pad(mins);
-        if (secsEl) secsEl.textContent = pad(secs);
-      }
-
-      tick();
-      setInterval(tick, 1000);
-    })();
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const scatteredItems = document.querySelectorAll('.scattered-item');
-
-      scatteredItems.forEach(item => {
-        const originalTransform = window.getComputedStyle(item).transform;
-
-        item.addEventListener('mouseenter', function() {
-          this.style.transform = 'scale(1.35) rotate(0deg)';
-          this.style.zIndex = '100';
-          this.style.cursor = 'pointer';
-        });
-
-        item.addEventListener('mouseleave', function() {
-          this.style.transform = originalTransform;
-          this.style.zIndex = '1';
-        });
-      });
-
-      const purchaseBtn = document.querySelector('.purchase-cta a[href="catalogo.html#contatti"]');
-      if (purchaseBtn) {
-        purchaseBtn.addEventListener('mouseenter', function() {
-          this.style.backgroundColor = '#4a6a85';
-          this.style.transform = 'translateY(-2px)';
-          this.style.boxShadow = '0 6px 20px rgba(90, 127, 160, 0.5)';
-        });
-
-        purchaseBtn.addEventListener('mouseleave', function() {
-          this.style.backgroundColor = '#5a7fa0';
-          this.style.transform = 'translateY(0)';
-          this.style.boxShadow = '0 4px 15px rgba(90, 127, 160, 0.3)';
-        });
-      }
-    });
-  </script>
+<script>
+  (function(){
+    const header=document.getElementById('site-header');
+    window.addEventListener('scroll',()=>{header.style.background=window.scrollY>40?'rgba(10,10,10,.98)':'rgba(10,10,10,.94)';},{passive:true});
+    const els=document.querySelectorAll('.reveal');
+    const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.1});
+    els.forEach(el=>io.observe(el));
+  })();
+</script>
 </body>
 </html>

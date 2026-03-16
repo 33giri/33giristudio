@@ -1,196 +1,505 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chi Siamo — 33Giri</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Chi Siamo — 33GIRI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
+      --cream:#f5f0e8;--warm:#e8e2d9;--navy:#0f1522;--white:#fff;
+      --text:#1a1a1a;--muted:#6b6560;--header-h:80px;
+      --fd:'Cormorant Garamond',Georgia,serif;
+      --fb:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
     }
-    
-    .split-layout {
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
+    html{scroll-behavior:smooth;font-size:16px}
+    body{background:var(--cream);color:var(--text);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    /* noise */
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
+
+    /* ── HEADER ── */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
+      background:rgba(10,10,10,.94);backdrop-filter:blur(12px) saturate(120%);
+      border-bottom:1px solid rgba(184,150,62,.18)}
+    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
+      display:flex;align-items:center;justify-content:space-between;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    .main-nav ul{list-style:none;display:flex;gap:36px}
+    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
+    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
+    .main-nav a.active{color:var(--gold)}.main-nav a.active::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:20px}
+    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+    .header-actions a:hover{color:var(--gold)}
+
+    /* ── PAGE HERO ── */
+    .page-hero{
+      padding-top:var(--header-h);
+      position:relative;height:55vh;min-height:420px;
+      background:var(--navy);overflow:hidden;display:flex;align-items:flex-end}
+    .page-hero-bg{position:absolute;inset:0}
+    .page-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.35) saturate(.7)}
+    .page-hero-overlay{position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(10,10,10,.92) 0%,rgba(10,10,10,.1) 70%)}
+    .page-hero-inner{position:relative;z-index:2;padding:0 80px 56px;width:100%;
+      display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+    .page-hero-kicker{font-size:10px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:14px}
+    .page-hero-title{font-family:var(--fd);font-size:clamp(52px,7vw,96px);font-weight:300;
+      line-height:1;color:var(--white);letter-spacing:-.01em}
+    .page-hero-title em{font-style:italic;color:var(--gold-lt)}
+    .page-hero-right{text-align:right;max-width:320px}
+    .page-hero-right p{font-size:13px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.8;letter-spacing:.04em}
+
+    /* ── TICKER ── */
+    .ticker{background:var(--gold);overflow:hidden;padding:13px 0}
+    .ticker-track{display:flex;white-space:nowrap;animation:ticker 28s linear infinite}
+    .ticker-item{flex-shrink:0;padding:0 48px;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--black)}
+    .ticker-sep{flex-shrink:0;padding:0 12px;color:rgba(0,0,0,.35);font-size:10px}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ── LAYOUT PRINCIPALE: 3 colonne ── */
+    .about-layout{max-width:1440px;margin:0 auto;padding:120px 60px}
+
+    /* Sezione numerata */
+    .about-row{
+      display:grid;
+      grid-template-columns:80px 1fr 480px;
+      gap:60px;
+      align-items:start;
+      padding:80px 0;
+      border-top:1px solid rgba(0,0,0,.08);
+      position:relative}
+    .about-row:first-child{border-top:none;padding-top:0}
+    .about-row:nth-child(even) .about-img-col{order:unset}
+
+    /* Numero grande */
+    .about-num{
+      font-family:var(--fd);font-size:80px;font-weight:300;
+      color:rgba(184,150,62,.15);line-height:1;padding-top:6px;
+      letter-spacing:-.02em}
+
+    /* Testo colonna */
+    .about-text-col{}
+    .about-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:18px}
+    .about-title{font-family:var(--fd);font-size:clamp(36px,4vw,52px);font-weight:300;
+      line-height:1.1;color:var(--black);letter-spacing:-.01em;margin-bottom:28px}
+    .about-title em{font-style:italic;color:var(--gold-dk)}
+    .about-body{font-size:14px;font-weight:300;line-height:1.9;color:var(--muted)}
+    .about-body p+p{margin-top:16px}
+
+    /* Immagine colonna */
+    .about-img-col{position:relative}
+    .about-img-wrap{overflow:hidden;position:relative}
+    .about-img-wrap img{width:100%;height:360px;object-fit:cover;
+      filter:brightness(.9) saturate(.9);transition:transform .7s var(--ease)}
+    .about-img-wrap:hover img{transform:scale(1.04)}
+    .about-img-tag{
+      position:absolute;bottom:-1px;left:-1px;
+      background:var(--gold);color:var(--black);
+      font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+      padding:8px 16px}
+    /* immagine offset nella riga pari */
+    .about-row:nth-child(even) .about-img-col{padding-top:60px}
+    .about-row:nth-child(3n) .about-img-col{padding-top:0;padding-bottom:60px}
+
+    /* ── SEZIONE TEAM ── */
+    .team-section{background:var(--black);padding:120px 60px}
+    .team-inner{max-width:1280px;margin:0 auto}
+    .team-header{display:flex;align-items:flex-end;justify-content:space-between;
+      margin-bottom:72px;border-bottom:1px solid rgba(184,150,62,.2);padding-bottom:32px}
+    .team-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .team-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--white);letter-spacing:-.01em;line-height:1.1}
+    .team-title em{font-style:italic;color:var(--gold-lt)}
+    .team-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,.4);max-width:240px;text-align:right;line-height:1.7}
+
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+    .team-card{background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.08);
+      padding:40px 32px 36px;position:relative;
+      transition:background .3s,border-color .3s}
+    .team-card:hover{background:rgba(184,150,62,.06);border-color:rgba(184,150,62,.25)}
+    .team-card-num{font-family:var(--fd);font-size:56px;font-weight:300;
+      color:rgba(184,150,62,.1);line-height:1;position:absolute;top:16px;right:20px}
+    .team-card-role{font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:16px}
+    .team-card-name{font-family:var(--fd);font-size:26px;font-weight:400;
+      color:var(--white);line-height:1.2;margin-bottom:14px}
+    .team-card-city{font-size:11px;font-weight:300;color:rgba(255,255,255,.35);letter-spacing:.1em}
+
+    /* ── VALORI STRIP ── */
+    .values-section{background:var(--gold);padding:100px 60px;position:relative;overflow:hidden}
+    .values-section::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.18) 0%,transparent 60%)}
+    .values-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:64px;align-items:start}
+    .value-item{}
+    .value-num{font-family:var(--fd);font-size:72px;font-weight:300;
+      color:rgba(0,0,0,.12);line-height:1;margin-bottom:16px}
+    .value-title{font-family:var(--fd);font-size:28px;font-weight:400;
+      color:var(--black);margin-bottom:12px;line-height:1.2}
+    .value-body{font-size:13px;font-weight:300;line-height:1.9;color:rgba(0,0,0,.65)}
+
+    /* ── CTA FINALE ── */
+    .about-cta{background:var(--cream);padding:140px 60px;text-align:center;position:relative;overflow:hidden}
+    .about-cta::before{content:'33';position:absolute;
+      font-family:var(--fd);font-size:480px;font-weight:700;
+      color:rgba(0,0,0,.03);top:50%;left:50%;transform:translate(-50%,-50%);
+      line-height:1;user-select:none;pointer-events:none}
+    .about-cta-inner{position:relative;z-index:1}
+    .about-cta-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+    .about-cta-title{font-family:var(--fd);font-size:clamp(44px,6vw,80px);font-weight:300;
+      color:var(--black);line-height:1.05;letter-spacing:-.02em;margin-bottom:40px}
+    .about-cta-title em{font-style:italic;color:var(--gold-dk)}
+    .about-cta-btns{display:flex;align-items:center;justify-content:center;gap:20px}
+
+    /* ── BUTTONS ── */
+    .btn-gold{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;
+      background:var(--gold);color:var(--black);font-size:11px;font-weight:700;
+      letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .25s,transform .25s}
+    .btn-gold:hover{background:var(--gold-lt);transform:translateY(-2px)}
+    .btn-outline{display:inline-flex;align-items:center;gap:10px;padding:13px 34px;
+      background:transparent;color:var(--text);font-size:11px;font-weight:500;
+      letter-spacing:.18em;text-transform:uppercase;border:1px solid rgba(0,0,0,.25);
+      cursor:pointer;transition:border-color .25s,color .25s}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold-dk)}
+
+    /* ── WA FLOAT ── */
+    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
+      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
+    .wa-float svg{width:24px;height:24px;fill:var(--black)}
+
+    /* ── FOOTER ── */
+    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
+      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;
+      color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
+    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;
+      color:rgba(255,255,255,.25);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
+    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
+
+    /* ── REVEAL ── */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .reveal--d1{transition-delay:.1s}.reveal--d2{transition-delay:.2s}.reveal--d3{transition-delay:.3s}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1100px){
+      .about-layout{padding:80px 32px}
+      .about-row{grid-template-columns:60px 1fr;gap:32px}
+      .about-img-col{display:none}
+      .team-grid{grid-template-columns:repeat(2,1fr)}
+      .values-grid{grid-template-columns:1fr 1fr;gap:40px}
+      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
     }
-    
-    .left-column {
-      flex: 0 0 50%;
-      position: relative;
-      overflow: hidden;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .left-column img {
-      width: 50%;
-      height: 100vh;
-      object-fit: cover;
-      position: fixed;
-      left: 0;
-      top: 0;
-    }
-    
-    .right-column {
-      flex: 0 0 50%;
-      background: #e8dfd5;
-      color: #2c2c2c;
-      overflow-y: auto;
-      padding: 80px 60px;
-    }
-    
-    .content-section {
-      max-width: 600px;
-      margin-bottom: 40px;
-      background: #d4c4af;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    
-    .section-number {
-      font-size: 0.9rem;
-      color: #7a6b5d;
-      margin-bottom: 20px;
-      font-weight: 400;
-    }
-    
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 400;
-      margin-bottom: 30px;
-      line-height: 1.2;
-      color: #2c2c2c;
-    }
-    
-    .section-text {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: #3d3d3d;
-      margin-bottom: 20px;
-    }
-    
-    @media (max-width: 900px) {
-      .split-layout {
-        flex-direction: column;
-        height: auto;
-      }
-      
-      .left-column {
-        flex: 0 0 50vh;
-        min-height: 50vh;
-      }
-      
-      .left-column img {
-        position: relative;
-        width: 100%;
-      }
-      
-      .right-column {
-        flex: 1;
-        padding: 40px 30px;
-      }
-      
-      .section-title {
-        font-size: 2rem;
-      }
+    @media(max-width:768px){
+      :root{--header-h:64px}
+      .page-hero-inner{padding:0 24px 48px;flex-direction:column;gap:16px}
+      .page-hero-right{display:none}
+      .about-layout{padding:60px 20px}
+      .about-row{grid-template-columns:40px 1fr;gap:20px}
+      .team-section,.values-section,.about-cta{padding:80px 20px}
+      .team-grid{grid-template-columns:1fr}
+      .values-grid{grid-template-columns:1fr;gap:40px}
+      .about-cta-btns{flex-direction:column}
+      .footer-top{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px}
+      .main-nav{display:none}
     }
   </style>
 </head>
-<body style="--bg:#e8dfd5">
-  <!-- Include Header -->
-  <header id="header"></header>
+<body>
 
-  <main style="padding-top: 80px;">
-    <div class="split-layout">
-      <!-- Left Column: Fixed Image -->
-      <div class="left-column">
-        <img src="4.png" alt="33Giri">
-      </div>
-      
-      <!-- Right Column: Scrollable Content -->
-      <div class="right-column">
-        
-        <!-- Section 1.0: Chi Siamo -->
-        <div class="content-section">
-          <div class="section-number">1.0</div>
-          <h2 class="section-title">Chi Siamo</h2>
-          <p class="section-text">
-            33Giri è un progetto che nasce dalla passione per la musica, il design e la sostenibilità. Ogni pezzo che creiamo è unico, un incontro tra artigianato e creatività, ispirato dalla bellezza senza tempo dei vinili.
-          </p>
-          <p class="section-text">
-            Siamo 4 ragazzi, amici che hanno scelto di mettersi in gioco e mettere in pratica le proprie abilità e conoscenze. 33Giri è anche un luogo di sperimentazione: progettazione, prototipi, miglioramento continuo. Metodo semplice, risultati concreti.
-          </p>
-        </div>
+<!-- HEADER -->
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="chi_siamo.html" class="active">Chi Siamo</a></li>
+      </ul>
+    </nav>
+    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
+    <div class="header-actions">
+      <a href="quiz.html">33Quiz</a>
+      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
+    </div>
+  </div>
+</header>
 
-        <!-- Section 2.0: Filosofia -->
-        <div class="content-section">
-          <div class="section-number">2.0</div>
-          <h2 class="section-title">Filosofia</h2>
-          <p class="section-text">
-            33Giri non è solo un brand: è un modo di pensare e di vivere, in cui il passato incontra il presente e il design diventa una forma di espressione autentica.
-          </p>
-          <p class="section-text">
-            Crediamo in un design consapevole, fatto di gesti veri, materiali autentici e scelte che raccontano chi siamo. Ogni curva, colore e imperfezione riflette la filosofia che ci guida: creare bellezza con coscienza, un pezzo alla volta.
-          </p>
-          <p class="section-text">
-            Meno spreco, più senso. Partiamo da risorse esistenti e le trasformiamo in oggetti duraturi. Riduciamo l'inutile e progettiamo per restare.
-          </p>
-        </div>
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg"><img src="assets/atelier 33 giri/20251110-IMG_4557.jpg" alt="Chi siamo 33GIRI" loading="eager"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-inner">
+    <div>
+      <div class="page-hero-kicker">Il progetto · Le persone · La visione</div>
+      <h1 class="page-hero-title">Chi<br><em>siamo.</em></h1>
+    </div>
+    <div class="page-hero-right">
+      <p>Quattro ragazzi di 20 anni.<br>Bologna, Milano, Trento.<br>Vinili, mani, design.</p>
+    </div>
+  </div>
+</section>
 
-        <!-- Section 3.0: Mission Statement -->
-        <div class="content-section">
-          <div class="section-number">3.0</div>
-          <h2 class="section-title">Mission Statement</h2>
-          <p class="section-text">
-            La nostra missione è costruire un ponte tra musica, arte e sostenibilità: dare una seconda vita al vinile, riducendo gli sprechi e creando oggetti che durano nel tempo.
-          </p>
-          <p class="section-text">
-            Coltiviamo un ambiente inclusivo nel nostro studio: uno spazio in cui chi progetta e chi acquista possono incontrarsi, confrontarsi e partecipare alla creatività in modo concreto e accessibile. Coltiviamo relazioni con realtà di zona e aggiorniamo il progetto in modo costante.
-          </p>
-        </div>
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">33GIRI</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Made in Italy</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Handmade</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Reshape the Art</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Upcycling design</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Pezzi Unici</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">33GIRI</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Made in Italy</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Handmade</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Reshape the Art</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Upcycling design</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">Pezzi Unici</span><span class="ticker-sep">·</span>
+  </div>
+</div>
 
-        <!-- Section 4.0: Materia Prima -->
-        <div class="content-section">
-          <div class="section-number">4.0</div>
-          <h2 class="section-title">Materia Prima</h2>
-          <p class="section-text">
-            Usiamo vinili già esistenti — usati, fuori catalogo o difettosi — senza plastica vergine. Nati a fine anni '40 come nuovo standard di ascolto domestico, oggi tornano utili con una funzione diversa. Valorizziamo ciò che già c'è, riducendo scarti e stoccaggi inutili.
-          </p>
-        </div>
+<!-- LAYOUT PRINCIPALE -->
+<div class="about-layout">
 
-        <!-- Section 5.0: Il Team -->
-        <div class="content-section">
-          <div class="section-number">5.0</div>
-          <h2 class="section-title">Il Team</h2>
-          <p class="section-text" style="margin-bottom: 40px;">
-            Il team è orizzontale: quattro persone che si alternano tra progetto, immagine, prototipi e amministrazione. Non esistono ruoli fissi, ma responsabilità condivise. Le proposte di ciascuno vengono ascoltate e testate prima di arrivare al pezzo finito.
-          </p>
-          
-          <!-- Team members -->
-          <div style="margin-top: 30px;">
-            <h3 style="font-size: 1.3rem; margin-bottom: 15px; font-weight: 500; color: #2c2c2c;">Riccardo Civico</h3>
-            <h3 style="font-size: 1.3rem; margin-bottom: 15px; font-weight: 500; color: #2c2c2c;">Martino Fontana</h3>
-            <h3 style="font-size: 1.3rem; margin-bottom: 0; font-weight: 500; color: #2c2c2c;">Sebastiano Pisoni</h3>
-            <h3 style="font-size: 1.3rem; margin-bottom: 0; font-weight: 500; color: #2c2c2c;">Giovanni Bax</h3>
-          </div>
-        </div>
-
+  <!-- 1.0 Chi Siamo -->
+  <div class="about-row">
+    <div class="about-num reveal">1.0</div>
+    <div class="about-text-col">
+      <div class="about-label reveal">Il progetto</div>
+      <h2 class="about-title reveal reveal--d1">Nati da una<br><em>domanda semplice.</em></h2>
+      <div class="about-body reveal reveal--d2">
+        <p>33GIRI nasce nel 2024 da una domanda banale quanto concreta: cosa fa un vinile quando smette di girare? Il disco non è distrutto, la materia è ancora lì — nera, lucida, con tutta la sua storia incisa nei solchi.</p>
+        <p>Siamo quattro ragazzi di vent'anni che hanno deciso di rispondere a quella domanda con le mani. Senza fabbriche, senza stampi, senza replicare ciò che già esiste. Solo calore, forma e attenzione.</p>
+        <p>33GIRI è un progetto artigianale nato tra Bologna, Milano e Trento. Ogni pezzo che produciamo parte da un vinile reale — usato, rovinato o dimenticato — e arriva a casa tua come oggetto di design con una storia doppia: quella del disco e quella di chi l'ha trasformato.</p>
       </div>
     </div>
-  </main>
+    <div class="about-img-col reveal reveal--d3">
+      <div class="about-img-wrap">
+        <img src="assets/atelier 33 giri/20251110-IMG_4940.jpg" alt="Atelier 33GIRI">
+        <div class="about-img-tag">Atelier · Bologna</div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Include Footer -->
-  <footer id="footer"></footer>
+  <!-- 2.0 Filosofia -->
+  <div class="about-row">
+    <div class="about-num reveal">2.0</div>
+    <div class="about-text-col">
+      <div class="about-label reveal">Filosofia</div>
+      <h2 class="about-title reveal reveal--d1">Design <em>consapevole,</em><br>non slogan.</h2>
+      <div class="about-body reveal reveal--d2">
+        <p>Crediamo che la sostenibilità abbia senso solo se è concreta. Per noi significa usare solo vinili già esistenti — usati, fuori catalogo o difettosi — senza mai toccare plastica vergine. Il PVC dei dischi è progettato per durare decenni: trasformato in oggetto di design, dura altrettanto.</p>
+        <p>Non c'è niente di decorativo nell'upcycling che facciamo. Ogni curva è strutturale, ogni graffiatura fa parte del pezzo, ogni imperfezione racconta qualcosa. Non cerchiamo la perfezione industriale — cerchiamo l'autenticità artigianale.</p>
+        <p>Meno spreco, più senso. Il nostro processo non genera scarti: quello che non diventa posacenere diventa svuotatasche, quello che non diventa svuotatasche diventa qualcos'altro. Niente finisce nel cestino.</p>
+      </div>
+    </div>
+    <div class="about-img-col reveal reveal--d3">
+      <div class="about-img-wrap">
+        <img src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Processo artigianale">
+        <div class="about-img-tag">Processo · Handmade</div>
+      </div>
+    </div>
+  </div>
 
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/main.js"></script>
+  <!-- 3.0 Mission -->
+  <div class="about-row">
+    <div class="about-num reveal">3.0</div>
+    <div class="about-text-col">
+      <div class="about-label reveal">Mission</div>
+      <h2 class="about-title reveal reveal--d1">Costruire un ponte<br>tra <em>musica e spazio.</em></h2>
+      <div class="about-body reveal reveal--d2">
+        <p>La nostra missione è dare una seconda vita al vinile riducendo gli sprechi e creando oggetti che durano nel tempo — oggetti con cui si vive, non solo si espone.</p>
+        <p>Coltiviamo un ambiente inclusivo nel nostro studio: uno spazio dove chi progetta e chi acquista si incontrano. Siamo aperti alle collaborazioni con artisti, designer e chiunque voglia portare un'idea nuova sul vinile come materiale.</p>
+        <p>Siamo un progetto giovane che cresce lentamente, con intenzione. Non vogliamo essere il brand più grande — vogliamo essere quello che fa le cose meglio, pezzo per pezzo.</p>
+      </div>
+    </div>
+    <div class="about-img-col reveal reveal--d3">
+      <div class="about-img-wrap">
+        <img src="assets/atelier 33 giri/expo/IMG_4675.jpg" alt="Mission 33GIRI">
+        <div class="about-img-tag">Studio · Italia</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4.0 Materia Prima -->
+  <div class="about-row">
+    <div class="about-num reveal">4.0</div>
+    <div class="about-text-col">
+      <div class="about-label reveal">Materia Prima</div>
+      <h2 class="about-title reveal reveal--d1">Il vinile<br><em>come già esiste.</em></h2>
+      <div class="about-body reveal reveal--d2">
+        <p>Usiamo vinili già esistenti. Fine. Nati a fine anni '40 come standard di ascolto domestico, i 33 e 45 giri hanno attraversato decenni di cultura musicale — poi sono finiti negli scaffali, nelle cantine, nei mercatini.</p>
+        <p>Noi li raccogliamo, li selezioniamo, li lavoriamo. Il PVC è lo stesso materiale che ha resistito a 50 anni di manipolazione quotidiana. Trasformato, continua a resistere. Non è usa-e-getta: è oggetto permanente.</p>
+        <p>Ogni etichetta originale, ogni graffiatura, ogni imperfezione superficiale rimane parte del design finale. Non le nascondiamo — le celebriamo. Sono la firma del disco, la prova che quella materia ha già vissuto.</p>
+      </div>
+    </div>
+    <div class="about-img-col reveal reveal--d3">
+      <div class="about-img-wrap">
+        <img src="assets/atelier 33 giri/20251110-IMG_4734.jpg" alt="Materia prima vinile">
+        <div class="about-img-tag">PVC · Zero vergine</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /about-layout -->
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="team-inner">
+    <div class="team-header">
+      <div>
+        <div class="team-label reveal">Le persone</div>
+        <h2 class="team-title reveal reveal--d1">Il <em>team.</em></h2>
+      </div>
+      <p class="team-sub reveal">4 persone, 3 città, 1 progetto. Ruoli condivisi, responsabilità orizzontali.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-card-num">01</div>
+        <div class="team-card-role">Design · Produzione</div>
+        <div class="team-card-name">Riccardo<br>Civico</div>
+        <div class="team-card-city">Bologna</div>
+      </div>
+      <div class="team-card reveal reveal--d1">
+        <div class="team-card-num">02</div>
+        <div class="team-card-role">Immagine · Contenuti</div>
+        <div class="team-card-name">Martino<br>Fontana</div>
+        <div class="team-card-city">Milano</div>
+      </div>
+      <div class="team-card reveal reveal--d2">
+        <div class="team-card-num">03</div>
+        <div class="team-card-role">Produzione · Logistica</div>
+        <div class="team-card-name">Sebastiano<br>Pisoni</div>
+        <div class="team-card-city">Trento</div>
+      </div>
+      <div class="team-card reveal reveal--d3">
+        <div class="team-card-num">04</div>
+        <div class="team-card-role">Sviluppo · Strategia</div>
+        <div class="team-card-name">Giovanni<br>Bax</div>
+        <div class="team-card-city">Bologna</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORI -->
+<section class="values-section">
+  <div class="values-inner">
+    <div class="values-grid">
+      <div class="value-item reveal">
+        <div class="value-num">I.</div>
+        <div class="value-title">Artigianalità reale</div>
+        <div class="value-body">Ogni pezzo è fatto a mano. Non per marketing, ma perché non esiste altro modo per fare quello che facciamo. Le macchine non possono replicare il gesto che dà forma a ogni singolo vinile.</div>
+      </div>
+      <div class="value-item reveal reveal--d1">
+        <div class="value-num">II.</div>
+        <div class="value-title">Upcycling concreto</div>
+        <div class="value-body">Non vendiamo storie di sostenibilità. Non usiamo plastica vergine, non produciamo scarti inutili, non importiamo materiali. La nostra catena produttiva è corta e controllata.</div>
+      </div>
+      <div class="value-item reveal reveal--d2">
+        <div class="value-num">III.</div>
+        <div class="value-title">Design con storia</div>
+        <div class="value-body">Ogni oggetto porta con sé la storia del disco da cui proviene. Non è estetica generica — è un pezzo unico con un'identità precisa, irripetibile per definizione.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+  <div class="about-cta-inner">
+    <div class="about-cta-label reveal">Vuoi un pezzo?</div>
+    <h2 class="about-cta-title reveal reveal--d1">
+      Conosci il brand.<br>
+      <em>Ora scegli il tuo.</em>
+    </h2>
+    <div class="about-cta-btns reveal reveal--d2">
+      <a href="catalogo.html" class="btn-gold">Vai al catalogo</a>
+      <a href="collaborazioni.html" class="btn-outline">Collaborazioni</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">33GIRI</div>
+        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Naviga</div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Info</div>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="resi-rimborsi.html">Resi e rimborsi</a></li>
+          <li><a href="informativa-privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+          <li><a href="contribuisci.html">Dona un vinile</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+      <span class="footer-claim">Reshape the Art</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/393925430575" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  (function(){
+    const header=document.getElementById('site-header');
+    window.addEventListener('scroll',()=>{header.style.background=window.scrollY>40?'rgba(10,10,10,.98)':'rgba(10,10,10,.94)';},{passive:true});
+    const els=document.querySelectorAll('.reveal');
+    const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.1});
+    els.forEach(el=>io.observe(el));
+  })();
+</script>
 </body>
 </html>

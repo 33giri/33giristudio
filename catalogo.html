@@ -1,1233 +1,1441 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Catalogo - 33Giri</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="33GIRI Catalogo — Svuotatasche e posacenere handmade da vinili reali. Pezzi unici Made in Italy." />
+  <title>Catalogo — 33GIRI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    } 
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 25%, #C4B5A0 50%, #9FB4B8 75%, #B8D4D8 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      color: #2c2416;
-      overflow-x: hidden;
-      position: relative;
+    /* ─────────────────────────────────
+       RESET & ROOT (identico a index)
+    ───────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:     #0a0a0a;
+      --gold:      #b8963e;
+      --gold-lt:   #d4af6a;
+      --gold-dk:   #8a6d28;
+      --cream:     #f5f0e8;
+      --warm-grey: #e8e2d9;
+      --navy:      #0f1522;
+      --text:      #1a1a1a;
+      --text-muted:#6b6560;
+      --white:     #ffffff;
+      --header-h:  80px;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+      --wrap:  1280px;
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* Noise texture */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('assets/Screenshot 2025-11-15 alle 01.33.19.png') repeat;
-      background-size: 100% auto;
-      opacity: 0.25;
-      z-index: 0;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat: repeat;
       pointer-events: none;
-      animation: textureMove 30s linear infinite;
+      z-index: 9999;
+      opacity: 0.6;
     }
-    
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+
+    /* ─────────────────────────────────
+       HEADER
+    ───────────────────────────────── */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--header-h);
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(12px) saturate(120%);
+      border-bottom: 1px solid rgba(184,150,62,0.18);
+      transition: background 0.3s var(--ease-smooth);
     }
-    
-    @keyframes textureMove {
-      from { background-position: 0 0; }
-      to { background-position: 0 -1000px; }
-    }
-    
-    /* Typography */
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-    }
-    
-    /* Hero Section Redesign */
-    .hero-section {
-      position: relative;
-      min-height: 100vh;
+    .header-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 120px 20px 60px;
-      z-index: 1;
+      justify-content: space-between;
+      position: relative;
     }
-    
-    .hero-content {
-      max-width: 1400px;
+    .logo-wrap {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .logo-mark {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .main-nav ul { list-style: none; display: flex; gap: 36px; }
+    .main-nav a {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      transition: color 0.25s;
+      position: relative;
+    }
+    .main-nav a::after {
+      content: ''; position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s var(--ease-smooth);
+    }
+    .main-nav a:hover { color: var(--gold-lt); }
+    .main-nav a:hover::after { width: 100%; }
+    .main-nav a.is-active { color: var(--gold); }
+    .main-nav a.is-active::after { width: 100%; }
+
+    .header-actions {
+      display: flex; align-items: center; gap: 20px;
+    }
+    .header-actions a {
+      font-size: 11px; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+    }
+    .header-actions a:hover { color: var(--gold); }
+
+    /* ─────────────────────────────────
+       BUTTONS
+    ───────────────────────────────── */
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 36px;
+      background: var(--gold); color: var(--black);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+    .btn-outline-dark {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 34px;
+      background: transparent; color: var(--text);
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      border: 1px solid rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .btn-outline-dark:hover {
+      border-color: var(--gold); color: var(--gold-dk);
+    }
+
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 36px;
+      background: var(--black); color: var(--white);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .btn-wa:hover { background: #1a1a1a; transform: translateY(-2px); }
+
+    /* ─────────────────────────────────
+       HERO CATALOGO
+    ───────────────────────────────── */
+    .cat-hero {
+      position: relative;
+      height: 60vh;
+      min-height: 480px;
+      background: var(--navy);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      margin-top: var(--header-h);
+    }
+    .cat-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .cat-hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45) saturate(0.8);
+      transform: scale(1.04);
+      animation: kenBurns 12s ease-out forwards;
+    }
+    @keyframes kenBurns {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1.0); }
+    }
+    .cat-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.15) 70%);
+    }
+    /* Gold vertical accent */
+    .cat-hero-line {
+      position: absolute;
+      left: 48px; top: 30%; bottom: 30%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+    .cat-hero-inner {
+      position: relative;
+      z-index: 2;
+      padding: 0 80px 60px;
       width: 100%;
+    }
+    .cat-hero-kicker {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: slideUp 0.8s var(--ease-smooth) 0.2s forwards;
+    }
+    .cat-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: slideUp 0.9s var(--ease-smooth) 0.4s forwards;
+    }
+    .cat-hero-title em { font-style: italic; color: var(--gold-lt); }
+    .cat-hero-sub {
+      font-size: 13px; font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.06em;
+      margin-top: 18px;
+      opacity: 0;
+      animation: slideUp 0.9s var(--ease-smooth) 0.6s forwards;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─────────────────────────────────
+       TICKER
+    ───────────────────────────────── */
+    .ticker {
+      background: var(--gold); overflow: hidden; padding: 13px 0;
+    }
+    .ticker-track {
+      display: flex; white-space: nowrap;
+      animation: ticker 28s linear infinite;
+    }
+    .ticker-item {
+      flex-shrink: 0; padding: 0 48px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--black);
+    }
+    .ticker-sep { flex-shrink: 0; padding: 0 12px; color: rgba(0,0,0,0.35); font-size: 10px; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─────────────────────────────────
+       FILTRI NAVIGAZIONE
+    ───────────────────────────────── */
+    .filters-bar {
+      background: var(--black);
+      position: sticky;
+      top: var(--header-h);
+      z-index: 900;
+      border-bottom: 1px solid rgba(184,150,62,0.15);
+    }
+    .filters-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filters-inner::-webkit-scrollbar { display: none; }
+    .filter-tab {
+      flex-shrink: 0;
+      padding: 18px 28px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.40);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.25s, border-color 0.25s;
+      white-space: nowrap;
+    }
+    .filter-tab:hover { color: rgba(255,255,255,0.75); }
+    .filter-tab.is-active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    /* ─────────────────────────────────
+       INTRO TESTO EDITORIALE
+    ───────────────────────────────── */
+    .cat-intro {
+      background: var(--cream);
+      padding: 100px 32px 80px;
+    }
+    .cat-intro-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      gap: 100px;
       align-items: center;
     }
-    
-    .hero-text {
-      animation: slideInLeft 1s ease-out;
+    .cat-intro-label {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
     }
-    
-    .hero-title {
-      font-size: 5rem;
-      font-weight: 900;
-      line-height: 1.1;
-      margin-bottom: 30px;
-      background: linear-gradient(135deg, #f5f0e8 0%, #ffffff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      animation: fadeInScale 1.2s ease-out;
+    .cat-intro-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 300; line-height: 1.15;
+      color: var(--black); letter-spacing: -0.01em;
     }
-    
-    .hero-subtitle {
-      font-size: 1.5rem;
-      color: #f5f0e8;
-      margin-bottom: 26px; /* un filo più stretto perché ora ci va sotto il bottone */
-      font-weight: 300;
-      line-height: 1.6;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    .cat-intro-title em { font-style: italic; color: var(--gold-dk); }
+    .cat-intro-body {
+      font-size: 14px; font-weight: 300;
+      line-height: 1.9; color: var(--text-muted);
+    }
+    .cat-intro-body p + p { margin-top: 18px; }
+
+    /* ─────────────────────────────────
+       SEZIONE PRODOTTO
+    ───────────────────────────────── */
+    .cat-section {
+      padding: 80px 32px 120px;
+    }
+    .cat-section--dark {
+      background: var(--black);
+    }
+    .cat-section--cream {
+      background: var(--cream);
+    }
+    .cat-section--navy {
+      background: var(--navy);
     }
 
-    /* ✅ RIMOSSO: decoro sconti / natalizio */
-    .hero-xmas-decor { display: none !important; }
-
-    /* (Esplora la Collezione) nascosto */
-    .hero-cta { display: none !important; }
-
-    /* ====== PULSANTE sotto la subtitle ====== */
-    .hero-cta-secondary {
-      display: inline-block;
-      padding: 18px 50px;
-      background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd5 100%);
-      color: #5d4e37;
-      font-weight: 700;
-      font-size: 1.1rem;
-      text-decoration: none;
-      border-radius: 50px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      margin-top: 0; /* ora è già sotto la subtitle */
-    }
-
-    .hero-cta-secondary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-      transition: left 0.5s;
-    }
-
-    .hero-cta-secondary:hover::before {
-      left: 100%;
-    }
-
-    .hero-cta-secondary:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 60px rgba(0,0,0,0.3);
-    }
-    
-    .hero-images {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      animation: slideInRight 1s ease-out;
-    }
-    
-    .hero-image {
-      position: relative;
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      animation: floatIn 1s ease-out backwards;
-    }
-    
-    .hero-image:nth-child(1) { animation-delay: 0.2s; }
-    .hero-image:nth-child(2) { animation-delay: 0.4s; grid-row: span 2; }
-    .hero-image:nth-child(3) { animation-delay: 0.6s; }
-    
-    .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    
-    .hero-image:hover {
-      transform: translateY(-15px) scale(1.03);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-      z-index: 10;
-    }
-    
-    .hero-image:hover img {
-      transform: scale(1.15);
-    }
-    
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-100px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(100px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    
-    @keyframes floatIn {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* Collection Section */
-    .collection-section {
-      position: relative;
-      padding: 100px 20px;
-      background: rgba(245, 240, 232, 0.98);
-      backdrop-filter: blur(20px);
-      z-index: 1;
-      box-shadow: 0 -20px 80px rgba(0,0,0,0.1);
-    }
-
-    /* ✅ RIMOSSO: banner sconti sopra collezione */
-    .christmas-ribbon { display: none !important; }
-    
-    .section-title {
-      text-align: center;
-      font-size: 4rem;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #8B7355 0%, #5d4e37 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: fadeInUp 1s ease-out;
-    }
-    
-    .section-subtitle {
-      text-align: center;
-      font-size: 1.3rem;
-      color: #6b5d4f;
-      margin-bottom: 60px;
-      font-weight: 300;
-    }
-
-    /* NUOVI TITOLI SOTTO-SEZIONI */
-    .collection-block-title {
-      text-align: center;
-      font-size: 2.2rem;
-      margin: 0 auto 12px auto;
-      color: #2c2416;
-    }
-    .collection-block-subtitle {
-      text-align: center;
-      color: #6b5d4f;
-      margin: 0 auto 40px auto;
-      font-weight: 300;
-      max-width: 900px;
-      line-height: 1.5;
-    }
-    .collection-divider {
-      max-width: 1100px;
-      margin: 70px auto;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(139,115,85,0.55), transparent);
-      border-radius: 2px;
-    }
-    
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* Carousel Cards */
-    .carousel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 40px;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    
-    .vinyl-card {
-      position: relative;
-      border-radius: 30px;
-      overflow: hidden;
-      background: white;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
-    }
-    
-    .vinyl-card:nth-child(1) { animation-delay: 0.1s; }
-    .vinyl-card:nth-child(2) { animation-delay: 0.3s; }
-    .vinyl-card:nth-child(3) { animation-delay: 0.5s; }
-    .vinyl-card:nth-child(4) { animation-delay: 0.7s; }
-    
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
-      to { opacity: 1; transform: scale(1) rotate(0); }
-    }
-    
-    .vinyl-card:hover {
-      transform: translateY(-20px) scale(1.02);
-      box-shadow: 0 30px 80px rgba(139, 115, 85, 0.3);
-    }
-    
-    .vinyl-card-header {
-      position: relative;
-      height: 400px;
-      overflow: hidden;
-      background: linear-gradient(135deg, #C4B5A0 0%, #9FB4B8 100%);
-    }
-    
-    .vinyl-card-header img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    
-    .vinyl-card:hover .vinyl-card-header img {
-      transform: scale(1.2) rotate(5deg);
-    }
-    
-    .vinyl-badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(245, 240, 232, 0.95);
-      padding: 10px 25px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #5d4e37;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-      animation: bounce 2s ease-in-out infinite;
-    }
-    
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .vinyl-card-body {
-      padding: 40px;
-    }
-    
-    .vinyl-card-title {
-      font-size: 2rem;
-      margin-bottom: 15px;
-      color: #2c2416;
-    }
-    
-    .vinyl-card-description {
-      color: #6b5d4f;
-      line-height: 1.8;
-      margin-bottom: 30px;
-    }
-
-    /* ✅ RIMOSSO: prezzi scontati (old/new/discount) */
-    .vinyl-card-price { display: none !important; }
-    .vinyl-card-price .old-price,
-    .vinyl-card-price .new-price,
-    .vinyl-card-price .discount-tag { display: none !important; }
-    
-    .vinyl-button {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #8B7355 0%, #A5927C 100%);
-      color: #f5f0e8;
-      border: none;
-      border-radius: 15px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .vinyl-button::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-    
-    .vinyl-button:hover::before {
-      width: 400px;
-      height: 400px;
-    }
-    
-    .vinyl-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(139, 115, 85, 0.4);
-    }
-
-    /* ==============================
-       LOCK OVERLAY (METAMORFOSI)
-       ============================== */
-    .vinyl-card.is-locked .vinyl-card-header,
-    .vinyl-card.is-locked .vinyl-card-body {
-      display: none !important;
-    }
-
-    .vinyl-locked-overlay {
-      position: relative;
+    .cat-section-header {
+      max-width: var(--wrap);
+      margin: 0 auto 64px;
       display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(184,150,62,0.2);
+      padding-bottom: 32px;
+    }
+    .cat-section-label {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .cat-section-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300; line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .cat-section-title em { font-style: italic; color: var(--gold-lt); }
+    .cat-section-title--light { color: var(--white); }
+    .cat-section-title--dark  { color: var(--black); }
+
+    .cat-section-count {
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.30);
+      text-transform: uppercase;
+    }
+    .cat-section-count--dark { color: var(--text-muted); }
+
+    /* ─────────────────────────────────
+       GRIGLIA PRODOTTI
+    ───────────────────────────────── */
+    .products-grid {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .products-grid--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* ─────────────────────────────────
+       PRODUCT CARD
+    ───────────────────────────────── */
+    .p-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .p-card-img-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 400px;
+    }
+    .p-card-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s var(--ease-smooth), filter 0.5s;
+      filter: brightness(0.88);
+    }
+    .p-card:hover .p-card-img {
+      transform: scale(1.07);
+      filter: brightness(0.72);
+    }
+    /* Badge stile */
+    .p-card-badge {
+      position: absolute;
+      top: 20px; left: 20px;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      background: var(--gold); color: var(--black);
+      padding: 5px 12px;
+    }
+    .p-card-badge--locked {
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    /* Overlay locked */
+    .p-card-locked {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.72);
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 520px;
-      padding: 32px 26px;
-      border-radius: 30px;
-      background: linear-gradient(135deg, rgba(44, 36, 22, 0.96) 0%, rgba(93, 78, 55, 0.96) 100%);
-      color: #f5f0e8;
-      text-align: center;
-      box-shadow: 0 18px 60px rgba(0,0,0,0.25);
-      overflow: hidden;
+      gap: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .p-card.is-locked .p-card-locked { opacity: 1; }
+    .p-card.is-locked .p-card-img { filter: brightness(0.35) saturate(0); }
+    .p-card-locked-text {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 400;
+      color: var(--white); letter-spacing: 0.08em;
+    }
+    .p-card-locked-sub {
+      font-size: 11px; font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.12em;
     }
 
-    .vinyl-locked-overlay::after {
+    /* Info prodotto */
+    .p-card-body {
+      padding: 24px 24px 28px;
+      background: var(--black);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 1px solid rgba(184,150,62,0.1);
+      transition: border-color 0.3s;
+    }
+    .p-card:hover .p-card-body { border-color: rgba(184,150,62,0.3); }
+
+    .p-card-name {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 400;
+      color: var(--white); line-height: 1.2;
+    }
+    .p-card-desc {
+      font-size: 12px; font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+    }
+    .p-card-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .p-price-current {
+      font-family: var(--font-display);
+      font-size: 22px; font-weight: 400;
+      color: var(--gold);
+    }
+    .p-price-old {
+      font-size: 13px; font-weight: 300;
+      color: rgba(255,255,255,0.25);
+      text-decoration: line-through;
+    }
+    .p-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold);
+      transition: gap 0.25s;
+    }
+    .p-card-cta::after { content: '→'; transition: transform 0.25s; }
+    .p-card:hover .p-card-cta { gap: 14px; }
+    .p-card:hover .p-card-cta::after { transform: translateX(4px); }
+
+    /* Card su sfondo cream */
+    .p-card--light .p-card-body { background: var(--warm-grey); border-top-color: rgba(0,0,0,0.06); }
+    .p-card--light .p-card-name { color: var(--black); }
+    .p-card--light .p-card-desc { color: var(--text-muted); }
+    .p-card--light .p-card-price-row { border-top-color: rgba(0,0,0,0.06); }
+    .p-card--light .p-price-old { color: rgba(0,0,0,0.3); }
+    .p-card--light .p-card-cta { color: var(--gold-dk); }
+    .p-card--light:hover .p-card-body { border-color: var(--gold); }
+
+    /* ─────────────────────────────────
+       SEZIONE COLLAB / ARTISTICA
+    ───────────────────────────────── */
+    .collab-section {
+      background: var(--navy);
+      padding: 100px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Pattern sottile */
+    .collab-section::before {
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.06), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.05), transparent 45%);
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(184,150,62,0.03) 40px,
+        rgba(184,150,62,0.03) 41px
+      );
       pointer-events: none;
     }
-
-    .vinyl-locked-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 360px;
-    }
-
-    .vinyl-locked-badge {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(245,240,232,0.14);
-      margin-bottom: 16px;
-      font-weight: 700;
-    }
-
-    .vinyl-locked-title {
-      font-size: 1.6rem;
-      margin-bottom: 10px;
-      line-height: 1.2;
-    }
-
-    .vinyl-locked-sub {
-      font-size: 0.98rem;
-      opacity: 0.85;
-      margin-bottom: 0;
-    }
-
-    .vinyl-card:not(.is-locked) .vinyl-locked-overlay {
-      display: none;
-    }
-
-   /* BLOCCO CATALOGO CANVA SOTTO LE CARD (centrato davvero) */
-.collection-extra{
-  width: 100%;
-  max-width: 800px;
-  margin: 60px auto 0;
-  padding: 0 20px;
-  text-align: center;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.collection-extra-title{
-  font-size: 1.6rem;
-  color: #5d4e37;
-  line-height: 1.4;
-  margin: 0;
-}
-
-.collection-extra-btn{
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  max-width: 100%;
-
-  padding: 16px 40px;
-  border-radius: 40px;
-  background: linear-gradient(135deg, #8B7355 0%, #A5927C 100%);
-  color: #f5f0e8;
-  font-weight: 700;
-  font-size: 1rem;
-  text-decoration: none;
-  box-shadow: 0 10px 30px rgba(139, 115, 85, 0.4);
-  transition: all 0.3s ease;
-}
-
-.collection-extra-btn:hover{
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 14px 40px rgba(139, 115, 85, 0.5);
-}
-    
-    /* Gallery Section */
-    .gallery-section {
-      position: relative;
-      padding: 120px 20px;
-      background: linear-gradient(135deg, rgba(196, 181, 160, 0.15) 0%, rgba(159, 180, 184, 0.15) 100%);
-      z-index: 1;
-    }
-    
-    .gallery-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      max-width: 1400px;
+    .collab-inner {
+      max-width: var(--wrap);
       margin: 0 auto;
-      justify-content: center;
-    }
-    
-    .gallery-item {
-      border-radius: 20px;
-      overflow: hidden;
-      cursor: pointer;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
       position: relative;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: fadeInUp 0.8s ease-out backwards;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      z-index: 1;
     }
-    
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
+    .collab-img-wrap {
+      position: relative;
+    }
+    .collab-img {
+      width: 100%; height: 520px;
       object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease;
+      filter: brightness(0.8) saturate(0.9);
     }
-    
-    .gallery-item:hover {
-      transform: translateY(-10px) rotate(2deg);
-      box-shadow: 0 25px 50px rgba(139, 115, 85, 0.4);
-      z-index: 10;
-    }
-    
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
-    
-    /* Text Cards */
-    .text-card {
-      background: rgba(245, 240, 232, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 25px;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-      animation: fadeInUp 0.8s ease-out backwards;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .text-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 50px rgba(139, 115, 85, 0.25);
-    }
-    
-    .text-card h3 {
-      font-size: 1.6rem;
-      color: #5d4e37;
-      margin-bottom: 12px;
-      line-height: 1.2;
-    }
-    
-    .text-card p {
-      color: #6b5d4f;
-      line-height: 1.6;
-      font-size: 0.95rem;
-    }
-    
-    .text-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 12px 0 0 0;
-    }
-    
-    .text-card ul li {
-      color: #6b5d4f;
-      padding: 6px 0;
-      padding-left: 22px;
-      position: relative;
-      font-size: 0.95rem;
-    }
-    
-    .text-card ul li::before {
-      content: '•';
+    /* Gold frame offset */
+    .collab-img-wrap::after {
+      content: '';
       position: absolute;
-      left: 0;
-      color: #8B7355;
-      font-size: 1.4rem;
+      inset: -16px -16px auto auto;
+      width: 160px; height: 160px;
+      border-top: 1px solid rgba(184,150,62,0.5);
+      border-right: 1px solid rgba(184,150,62,0.5);
+      pointer-events: none;
+    }
+    .collab-label {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .collab-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300; line-height: 1.1;
+      color: var(--white); letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+    .collab-title em { font-style: italic; color: var(--gold-lt); }
+    .collab-body {
+      font-size: 14px; font-weight: 300;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.50);
+      margin-bottom: 36px;
+    }
+    .collab-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(184,150,62,0.15);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+    .collab-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .collab-card-name {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 400;
+      color: var(--white);
+    }
+    .collab-card-tag {
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(184,150,62,0.4);
+      padding: 3px 10px;
+    }
+    .collab-card-desc {
+      font-size: 12px; font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.40);
+    }
+
+    /* ─────────────────────────────────
+       CLAIM STRIP
+    ───────────────────────────────── */
+    .claim-strip {
+      background: var(--gold);
+      padding: 80px 32px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .claim-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.18) 0%, transparent 60%);
+    }
+    .claim-strip-text {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 64px);
+      font-weight: 300; line-height: 1.1;
+      color: var(--black); letter-spacing: -0.01em;
+      position: relative; z-index: 1;
+    }
+    .claim-strip-text em { font-style: italic; }
+    .claim-strip-sub {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(0,0,0,0.45);
+      margin-top: 20px;
+      position: relative; z-index: 1;
+    }
+
+    /* ─────────────────────────────────
+       COME ORDINARE
+    ───────────────────────────────── */
+    .order-section {
+      background: var(--black);
+      padding: 100px 32px;
+    }
+    .order-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
+    }
+    .order-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+    .order-step {
+      padding: 48px 40px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(184,150,62,0.08);
+      transition: background 0.3s, border-color 0.3s;
+      position: relative;
+    }
+    .order-step:hover {
+      background: rgba(184,150,62,0.05);
+      border-color: rgba(184,150,62,0.25);
+    }
+    .order-step-num {
+      font-family: var(--font-display);
+      font-size: 72px; font-weight: 300;
+      color: rgba(184,150,62,0.1);
       line-height: 1;
-      top: 3px;
+      position: absolute;
+      top: 20px; right: 24px;
     }
-    
-    /* Decorative Lines */
-    .decorative-line {
+    .order-step-bar {
+      width: 28px; height: 1px;
+      background: var(--gold);
+      margin-bottom: 24px;
+    }
+    .order-step-title {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 400;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .order-step-desc {
+      font-size: 13px; font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.40);
+    }
+    .order-cta {
+      margin-top: 64px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* ─────────────────────────────────
+       FAQ INLINE
+    ───────────────────────────────── */
+    .cat-faq {
+      background: var(--cream);
+      padding: 100px 32px;
+    }
+    .cat-faq-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    .faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .faq-q {
       width: 100%;
-      background: linear-gradient(90deg, transparent, #8B7355, transparent);
-      height: 2px;
-      border-radius: 2px;
-      animation: fadeInUp 0.8s ease-out backwards;
-      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 400;
+      color: var(--black);
+      transition: color 0.2s;
     }
-    
-    /* Grid Item Sizes - Flexbox based */
-    .item-small { 
-      width: calc(25% - 15px); 
-      height: 250px;
+    .faq-q:hover { color: var(--gold-dk); }
+    .faq-q-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border: 1px solid rgba(0,0,0,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: var(--gold);
+      transition: transform 0.3s, border-color 0.3s;
     }
-    .item-medium { 
-      width: calc(33.333% - 14px); 
-      height: 320px;
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); border-color: var(--gold); }
+    .faq-a {
+      font-size: 13px; font-weight: 300;
+      line-height: 1.9; color: var(--text-muted);
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s var(--ease-smooth), padding 0.3s;
+      padding-bottom: 0;
     }
-    .item-large { 
-      width: calc(50% - 10px); 
-      height: 400px;
+    .faq-item.is-open .faq-a {
+      max-height: 300px;
+      padding-bottom: 24px;
     }
-    
-    .text-small { 
-      width: calc(25% - 15px); 
-      min-height: 180px;
+
+    /* ─────────────────────────────────
+       FOOTER
+    ───────────────────────────────── */
+    .site-footer {
+      background: var(--black);
+      padding: 80px 32px 40px;
+      border-top: 1px solid rgba(184,150,62,0.15);
     }
-    .text-medium { 
-      width: calc(33.333% - 14px); 
-      min-height: 220px;
+    .footer-inner { max-width: var(--wrap); margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
-    .text-large { 
-      width: calc(50% - 10px); 
-      min-height: 250px;
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 600;
+      letter-spacing: 0.22em; color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
     }
-    
-    /* Responsive */
-    @media (max-width: 1200px) {
-      .hero-title { font-size: 4rem; }
-      .item-small, .item-medium { 
-        width: calc(33.333% - 14px); 
-        height: 280px;
-      }
-      .item-large { 
-        width: calc(50% - 10px); 
-        height: 350px;
-      }
-      .text-small, .text-medium { 
-        width: calc(33.333% - 14px); 
-      }
-      .text-large { 
-        width: calc(50% - 10px); 
-      }
+    .footer-brand p {
+      font-size: 12px; font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.40);
+      max-width: 240px;
     }
-    
+    .footer-col-title {
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      font-size: 13px; font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+    }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.22); letter-spacing: 0.08em; }
+    .footer-claim { font-family: var(--font-display); font-size: 13px; font-style: italic; color: var(--gold); opacity: 0.55; }
+
+    /* ─────────────────────────────────
+       WHATSAPP FLOAT
+    ───────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      z-index: 500;
+      width: 52px; height: 52px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 28px rgba(184,150,62,0.35);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .wa-float:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(184,150,62,0.50); }
+    .wa-float svg { width: 24px; height: 24px; fill: var(--black); }
+
+    /* ─────────────────────────────────
+       SCROLL REVEAL
+    ───────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .reveal--d1 { transition-delay: 0.1s; }
+    .reveal--d2 { transition-delay: 0.2s; }
+    .reveal--d3 { transition-delay: 0.3s; }
+    .reveal--d4 { transition-delay: 0.4s; }
+
+    /* ─────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────── */
+    @media (max-width: 1100px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid--4 { grid-template-columns: repeat(2, 1fr); }
+      .collab-inner { grid-template-columns: 1fr; gap: 48px; }
+      .collab-img { height: 380px; }
+      .cat-intro-inner { grid-template-columns: 1fr; gap: 48px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .order-grid { grid-template-columns: 1fr; gap: 2px; }
+    }
     @media (max-width: 768px) {
-      .hero-content { grid-template-columns: 1fr; }
-      .hero-title { font-size: 3rem; }
-      .section-title { font-size: 2.5rem; }
-      .gallery-grid { gap: 15px; }
-      .item-small, .item-medium, .item-large { 
-        width: calc(50% - 8px); 
-        height: 250px;
-      }
-      .text-small, .text-medium, .text-large { 
-        width: calc(50% - 8px); 
-        min-height: 160px;
-      }
-      .text-card { 
-        padding: 18px; 
-      }
-      .text-card h3 { font-size: 1.3rem; }
-      .text-card p { font-size: 0.85rem; }
-      .collection-extra-title {
-        font-size: 1.4rem;
-      }
-      .collection-extra-btn {
-        width: 100%;
-        max-width: 320px;
-      }
-
-      .vinyl-locked-overlay {
-        min-height: 480px;
-      }
-      .vinyl-locked-title {
-        font-size: 1.4rem;
-      }
-
-      .hero-cta-secondary{
-        width: 100%;
-        max-width: 360px;
-        text-align: center;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .gallery-grid { gap: 12px; }
-      .item-small, .item-medium, .item-large { 
-        width: 100%; 
-        height: 220px;
-      }
-      .text-small, .text-medium, .text-large { 
-        width: 100%; 
-        min-height: 140px;
-      }
-      .text-card { padding: 15px; }
-      .collection-extra {
-        margin-top: 40px;
-      }
-      .collection-extra-btn {
-        padding: 14px 26px;
-        font-size: 0.95rem;
-      }
-
-      .vinyl-locked-overlay {
-        min-height: 440px;
-        padding: 26px 18px;
-      }
+      :root { --header-h: 64px; }
+      .cat-hero-inner { padding: 0 24px 48px; }
+      .cat-hero-line { display: none; }
+      .cat-section, .collab-section, .order-section, .cat-faq, .cat-intro { padding: 60px 20px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .p-card-img-wrap { height: 300px; }
+      .cat-section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .main-nav { display: none; }
+      .order-cta { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
+
 <body>
-  <!-- Include Header -->
-  <header id="header"></header>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1 class="hero-title">Vinili Unici<br>Fatti a Mano</h1>
-        <p class="hero-subtitle">Scopri il catalogo 2026.</p>
-
-        <!-- ✅ PULSANTE SOTTO LA SUBTITLE -->
-        <a
-          href="https://www.33catalogo.it/"
-          class="hero-cta-secondary"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          33Catalogo
-        </a>
-
-        <!-- (Esplora la Collezione nascosto via CSS) -->
-        <a href="https://upcycled-vinyl.emergent.host" class="hero-cta">Esplora la Collezione</a>
-      </div>
-
-      <div class="hero-images">
-        <div class="hero-image">
-          <img src="P1070198.JPG" alt="33 Giri Atelier">
-        </div>
-        <div class="hero-image">
-          <img src="assets/atelier 33 giri/20251110-IMG_4940.jpg" alt="33 Giri Studio">
-        </div>
-        <div class="hero-image">
-          <img src="P1070299.JPG" alt="Vinile Artistico">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Collection Section -->
-  <section class="collection-section" id="collection">
-    <!-- (banner sconti rimosso) -->
-
-    <h2 class="section-title">Le Collezioni</h2>
-    <p class="section-subtitle">Svuotatasche e Posacenere: tre stili, pezzi unici, fatti a mano.</p>
-
-    <!-- =========================
-         COLLEZIONE SVUOTATASCHE
-         ========================= -->
-    <h3 class="collection-block-title">Collezione Svuotatasche</h3>
-    <p class="collection-block-subtitle">Tre stili: Normal, Splash e Spiral. Ogni pezzo è unico.</p>
-
-    <div class="carousel-grid">
-      <!-- Svuotatasche - Normal -->
-      <div class="vinyl-card">
-        <div class="vinyl-card-header">
-          <img src="assets/normal1.jpg/vinile3_cropped_1.jpeg" alt="Svuotatasche Normal">
-          <span class="vinyl-badge">NORMAL</span>
-        </div>
-        <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Svuotatasche — Normal</h3>
-          <p class="vinyl-card-price">
-            <span class="old-price">25€</span>
-            <span class="new-price">20€</span>
-            <span class="discount-tag">-20%</span>
-          </p>
-          <p class="vinyl-card-description">Design classico ed elegante. Perfetto per chi ama la semplicità senza rinunciare allo stile.</p>
-          <button class="vinyl-button" data-style="Svuotatasche - Normal">Voglio Questo Stile</button>
-        </div>
-      </div>
-
-      <!-- Svuotatasche - Splash -->
-      <div class="vinyl-card">
-        <div class="vinyl-card-header">
-          <img src="assets/iloveimg-converted/IMG_3397.jpg" alt="Svuotatasche Splash">
-          <span class="vinyl-badge">SPLASH</span>
-        </div>
-        <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Svuotatasche — Splash</h3>
-          <p class="vinyl-card-price">
-            <span class="old-price">31€</span>
-            <span class="new-price">25€</span>
-            <span class="discount-tag">-20%</span>
-          </p>
-          <p class="vinyl-card-description">Esplosioni di colore e creatività. Ogni pezzo è un'opera d'arte unica e irripetibile.</p>
-          <button class="vinyl-button" data-style="Svuotatasche - Splash">Voglio Questo Stile</button>
-        </div>
-      </div>
-
-      <!-- Svuotatasche - Spiral -->
-      <div class="vinyl-card">
-        <div class="vinyl-card-header">
-          <img src="assets/iloveimg-converted/IMG_3348.jpg" alt="Svuotatasche Spiral">
-          <span class="vinyl-badge">SPIRAL</span>
-        </div>
-        <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Svuotatasche — Spiral</h3>
-          <p class="vinyl-card-price">
-            <span class="old-price">31€</span>
-            <span class="new-price">25€</span>
-            <span class="discount-tag">-20%</span>
-          </p>
-          <p class="vinyl-card-description">Ipnotici motivi a spirale. Un design dinamico che cattura lo sguardo.</p>
-          <button class="vinyl-button" data-style="Svuotatasche - Spiral">Voglio Questo Stile</button>
-        </div>
-      </div>
-
-      <!-- METAMORFOSI (terminata) -->
-      <div class="vinyl-card is-locked" id="shero-card">
-        <div class="vinyl-locked-overlay">
-          <div class="vinyl-locked-inner">
-            <span class="vinyl-locked-badge">COMING SOON</span>
-            <h3 class="vinyl-locked-title">METAMORFOSI X 33GIRI</h3>
-            <p class="vinyl-locked-sub">Questa collezione è terminata. Nuovo drop in arrivo.</p>
-          </div>
-        </div>
-
-        <div class="vinyl-card-header">
-          <img src="IMG_3986.jpeg" alt="Metamorfosi — Iris Shero x 33Giri">
-          <span class="vinyl-badge">METAMORFOSI</span>
-        </div>
-        <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Metamorfosi — Iris Shero x 33Giri</h3>
-          <p class="vinyl-card-price">
-            <span class="old-price">60€</span>
-            <span class="new-price">45€</span>
-            <span class="discount-tag">-25%</span>
-          </p>
-          <p class="vinyl-card-description">
-            La collezione Metamorfosi firmata da Iris Shero: vinili illustrati a mano, pezzi unici da collezione.
-          </p>
-          <button class="vinyl-button" data-style="Metamorfosi - Coming Soon">Voglio Questo Stile</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="collection-divider"></div>
-
-    <!-- =========================
-         COLLEZIONE POSACENERE (45 giri)
-         ========================= -->
-    <div id="posacenere"></div>
-    <h3 class="collection-block-title">Collezione Posacenere</h3>
-    <p class="collection-block-subtitle">Posacenere in vinile 45 giri. Tre stili: Normal, Splash e Touch</p>
-
-    <div class="carousel-grid">
-      <!-- Posacenere - Normal -->
-      <div class="vinyl-card">
-        <div class="vinyl-card-header">
-          <img src="IMG_5465.jpg" alt="Posacenere 45giri Normal">
-          <span class="vinyl-badge">NORMAL</span>
-        </div>
-        <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Posacenere 45 giri — Normal</h3>
-          <p class="vinyl-card-price">
-            <span class="old-price">18,75€</span>
-            <span class="new-price">15€</span>
-            <span class="discount-tag">-20%</span>
-          </p>
-          <p class="vinyl-card-description">Compatto, pulito, iconico. Il 45 giri che diventa design da tavolo.</p>
-          <button class="vinyl-button" data-style="Posacenere 45 giri - Normal">Voglio Questo Stile</button>
-        </div>
-      </div>
-
-      <!-- Posacenere - Splash -->
-      <div class="vinyl-card">
-        <div class="vinyl-card-header">
-          <img src="IMG_5502.jpg" alt="Posacenere 45giri Splash">
-          <span class="vinyl-badge">SPLASH</span>
-        </div>
-        <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Posacenere 45 giri — Splash</h3>
-          <p class="vinyl-card-price">
-            <span class="old-price">21,25€</span>
-            <span class="new-price">17€</span>
-            <span class="discount-tag">-20%</span>
-          </p>
-          <p class="vinyl-card-description">Macchie e colpi di colore: ogni pezzo è diverso, super “statement”.</p>
-          <button class="vinyl-button" data-style="Posacenere 45 giri - Splash">Voglio Questo Stile</button>
-        </div>
-      </div>
-     
-      <!-- Posacenere - Touch -->
-      <div class="vinyl-card">
-        <div class="vinyl-card-header">
-          <img src="IMG_5509.jpg" alt="Posacenere 45giri Touch">
-          <span class="vinyl-badge">TOUCH</span>
-        </div>
-        <div class="vinyl-card-body">
-          <h3 class="vinyl-card-title">Posacenere 45 giri — Touch </h3>
-          <p class="vinyl-card-price">
-            <span class="old-price">21,25€</span>
-            <span class="new-price">17€</span>
-            <span class="discount-tag">-20%</span>
-          </p>
-          <p class="vinyl-card-description">Una superficie viva: impronte di colore, irripetibili</p>
-          <button class="vinyl-button" data-style="Posacenere 45 giri - Spiral">Voglio Questo Stile</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="collection-extra">
-      <h3 class="collection-extra-title">
-        Vuoi vedere tutti i vinili disponibili, divisi per stile e artista?
-      </h3>
-      <a 
-        href="https://www.33catalogo.it/" 
-        class="collection-extra-btn" 
-        target="_blank" 
-        rel="noopener noreferrer"
-      >
-        Apri il catalogo completo 
-      </a>
-    </div>
-  </section>
-
-  <!-- Gallery Section -->
-  <section class="gallery-section">
-    <h2 class="section-title">Scopri 33collection Made in Italy</h2>
-    <p class="section-subtitle">Artigianato italiano, qualità superiore</p>
-    
-    <div class="gallery-grid">
-      <div class="gallery-item item-medium" style="animation-delay: 0.1s;"><img src="assets/atelier 33 giri/20251110-IMG_4734.jpg" alt="Vinile 1"></div>
-      
-      <div class="text-card text-small" style="animation-delay: 0.2s;">
-        <h3>Made in Italy</h3>
-        <p>Ogni pezzo è unico e realizzato a mano</p>
-      </div>
-      
-      <div class="gallery-item item-small" style="animation-delay: 0.3s;"><img src="P1070382.JPG" alt="Vinile 2"></div>
-      
-      <div class="gallery-item item-small" style="animation-delay: 0.4s;"><img src="assets/atelier 33 giri/expo/IMG_4597.jpg" alt="Atelier"></div>
-      
-      <div class="gallery-item item-large" style="animation-delay: 0.5s;"><img src="assets/foto /sfondo nero e marrone /IMG_3324.jpg" alt="Vinile Splash"></div>
-      
-      <div class="text-card text-medium" style="animation-delay: 0.6s;">
-        <h3>Fatto a Mano</h3>
-        <p>Artigianato italiano di qualità superiore</p>
+  <!-- ══════════════ HEADER ══════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <nav class="main-nav">
         <ul>
-          <li>Resina colata a mano</li>
-          <li>Colori acrilici resistenti</li>
-          <li>Finitura lucida protettiva</li>
+          <li><a href="catalogo.html" class="is-active">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi Siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
         </ul>
+      </nav>
+
+      <a href="index.html" class="logo-wrap" aria-label="33GIRI Home">
+        <span class="logo-mark">33·GIRI</span>
+      </a>
+
+      <div class="header-actions">
+        <a href="quiz.html">33Quiz</a>
+        <a href="https://wa.me/TUONUMERO" target="_blank" style="color:var(--gold);font-weight:600;">Ordina →</a>
       </div>
-      
-      <div class="gallery-item item-medium" style="animation-delay: 0.7s;"><img src="assets/atelier 33 giri/20251110-IMG_4895.jpg" alt="Vinile 3"></div>
-      
-      <div class="gallery-item item-small" style="animation-delay: 0.8s;"><img src="assets/atelier 33 giri/20251110-IMG_4980.jpg" alt="Vinile 4"></div>
-      
-      <div class="decorative-line" style="animation-delay: 0.9s;"></div>
-      
-      <div class="gallery-item item-small" style="animation-delay: 1s;"><img src="assets/atelier 33 giri/expo/IMG_4614.jpg" alt="Vinile Spiral"></div>
-      
-      <div class="gallery-item item-medium" style="animation-delay: 1.1s;"><img src="assets/atelier 33 giri/20251110-IMG_4789.jpg" alt="Atelier 2"></div>
-      
-      <div class="text-card text-small" style="animation-delay: 1.2s;">
-        <h3>Personalizza</h3>
-        <p>Scegli colori e stile per il tuo pezzo unico</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ══════════════ HERO ══════════════ -->
+    <section class="cat-hero">
+      <div class="cat-hero-bg">
+        <img src="assets/atelier 33 giri/20251110-IMG_4940.jpg" alt="Catalogo 33GIRI" loading="eager">
       </div>
-      
-      <div class="gallery-item item-small" style="animation-delay: 1.3s;"><img src="assets/foto /sfondo nero e marrone /IMG_3331.jpg" alt="Vinile 5"></div>
-      
-      <div class="gallery-item item-large" style="animation-delay: 1.4s;"><img src="assets/atelier 33 giri/20251110-IMG_4958.jpg" alt="Vinile 6"></div>
-      
-      <div class="gallery-item item-medium" style="animation-delay: 1.5s;"><img src="IMG_5492.jpg" alt="Vinile 7"></div>
-      
-      <!-- ✅ RIMOSSO: box "Prezzi in promo" (era solo sconti) -->
-      
-      <div class="gallery-item item-small" style="animation-delay: 1.7s;"><img src="assets/atelier 33 giri/20251110-IMG_4972.jpg" alt="Vinile 8"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-line"></div>
+      <div class="cat-hero-inner">
+        <div class="cat-hero-kicker">Collezione 2026 · Pezzi Unici · Handmade</div>
+        <h1 class="cat-hero-title">La <em>collezione</em><br>completa.</h1>
+        <p class="cat-hero-sub">Svuotatasche · Posacenere · Edizioni Artistiche — tutto fatto a mano, nessun pezzo uguale.</p>
+      </div>
+    </section>
+
+    <!-- ══════════════ TICKER ══════════════ -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">Svuotatasche</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Posacenere</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Normal</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Splash</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Spiral</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Edizioni Collab</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Pezzi Unici</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Made in Italy</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Svuotatasche</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Posacenere</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Normal</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Splash</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Spiral</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Edizioni Collab</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Pezzi Unici</span><span class="ticker-sep">·</span>
+        <span class="ticker-item">Made in Italy</span><span class="ticker-sep">·</span>
+      </div>
     </div>
-  </section>
 
-  <!-- Contact Section -->
-  <section class="contact-section" id="contatti">
-    <div class="wrap">
-      <h2 class="contact-title">Contattaci per creare il tuo pezzo unico, fatto a mano, solo per te.</h2>
-      <form class="contact-form" id="contactForm">
-        <div class="form-group">
-          <label for="contactMethod">Scegli come vuoi contattarci</label>
-          <select id="contactMethod" class="form-select" required>
-            <option value="">Seleziona un metodo</option>
-            <option value="email">Email</option>
-            <option value="whatsapp">WhatsApp</option>
-            <option value="instagram">Instagram</option>
-          </select>
+    <!-- ══════════════ FILTRI ══════════════ -->
+    <nav class="filters-bar" id="filters">
+      <div class="filters-inner">
+        <button class="filter-tab is-active" data-filter="all">Tutto</button>
+        <button class="filter-tab" data-filter="svuotatasche">Svuotatasche</button>
+        <button class="filter-tab" data-filter="posacenere">Posacenere</button>
+        <button class="filter-tab" data-filter="collab">Edizioni Collab</button>
+      </div>
+    </nav>
+
+    <!-- ══════════════ INTRO EDITORIALE ══════════════ -->
+    <section class="cat-intro">
+      <div class="cat-intro-inner">
+        <div>
+          <div class="cat-intro-label reveal">Il progetto</div>
+          <h2 class="cat-intro-title reveal reveal--d1">
+            Ogni vinile<br>
+            porta già<br>
+            <em>una storia.</em>
+          </h2>
         </div>
-
-        <div class="form-group" id="contactInfoGroup" style="display: none;">
-          <label for="contactInfo" id="contactInfoLabel">La tua email</label>
-          <input type="text" id="contactInfo" class="form-input" placeholder="nome@example.com">
+        <div class="cat-intro-body reveal reveal--d2">
+          <p>
+            33GIRI recupera vinili usati, fuori catalogo o destinati al macero.
+            Non li sciogliamo, non li distruggiamo — li trasformiamo.
+            La forma cambia, ma la materia conserva tutto: graffi, etichette, solchi, il peso di decenni.
+          </p>
+          <p>
+            Ogni oggetto che vedi in questo catalogo è un pezzo unico, modellato a mano.
+            Nessuno stampo, nessuna replica. Se lo scegli, è solo tuo.
+          </p>
+          <p>
+            Design artigianale, materiale reale, processo trasparente.
+            Questo è 33GIRI.
+          </p>
         </div>
+      </div>
+    </section>
 
-        <div class="form-group">
-          <label for="message">Il tuo messaggio</label>
-          <textarea id="message" class="form-textarea" rows="5" placeholder="Scrivi qui..." required></textarea>
+    <!-- ══════════════ SEZIONE: SVUOTATASCHE ══════════════ -->
+    <section class="cat-section cat-section--dark" id="svuotatasche" data-section="svuotatasche">
+      <div class="cat-section-header reveal">
+        <div>
+          <div class="cat-section-label">Collezione principale</div>
+          <h2 class="cat-section-title cat-section-title--light">Svuotatasche<br><em>da vinile 33 giri</em></h2>
         </div>
+        <span class="cat-section-count">3 stili disponibili</span>
+      </div>
 
-        <button type="submit" class="btn btn-primary">Invia ora</button>
-        
-        <p class="contact-note">
-          Con "Email" si apre il client di posta predefinito; con "WhatsApp" l'app o il web; 
-          con "Instagram" i DM (ig.me). Il tutto solo quando clicchi su "Invia ora".
-        </p>
-      </form>
-    </div>
-  </section>
+      <div class="products-grid">
 
-  <!-- Lightbox per zoom immagini -->
-  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog">
-    <button class="lightbox-close" aria-label="Chiudi">×</button>
-    <img class="lightbox-img" src="" alt="Zoom immagine" />
-  </div>
-
-  <!-- Include Footer -->
-  <div id="footer"></div>
-
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/main.js"></script>
-
-  <script type="module">
-    // Popola il catalogo con i dati dal file content.js
-    import { COLLECTION } from './data/content.js';
-
-    const catalogWrap = document.getElementById('catalog-categories');
-    if (catalogWrap) {
-      catalogWrap.innerHTML = COLLECTION.map(item => `
-        <article class="card">
-          <div class="thumb" style="background:url('${item.image}') center/cover no-repeat"></div>
-          <div class="body">
-            <h3>${item.title}</h3>
-            <p class="price">${item.price}</p>
+        <!-- Normal -->
+        <div class="p-card reveal" data-cat="svuotatasche">
+          <div class="p-card-img-wrap">
+            <img class="p-card-img" src="assets/normal1.jpg/vinile3_cropped_1.jpeg" alt="Svuotatasche Normal" loading="lazy">
+            <div class="p-card-badge">Normal</div>
           </div>
-        </article>
-      `).join('');
-    }
+          <div class="p-card-body">
+            <div class="p-card-name">Svuotatasche — Normal</div>
+            <div class="p-card-desc">Design classico, linee pulite. Il vinile nella sua forma più riconoscibile — piegato, non tradito. Perfetto per scrivania o comodino.</div>
+            <div class="p-card-price-row">
+              <span class="p-price-current">20€</span>
+              <span class="p-price-old">25€</span>
+            </div>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Normal" target="_blank" class="p-card-cta">Ordina ora</a>
+          </div>
+        </div>
+
+        <!-- Splash -->
+        <div class="p-card reveal reveal--d1" data-cat="svuotatasche">
+          <div class="p-card-img-wrap">
+            <img class="p-card-img" src="assets/iloveimg-converted/IMG_3397.jpg" alt="Svuotatasche Splash" loading="lazy">
+            <div class="p-card-badge">Splash</div>
+          </div>
+          <div class="p-card-body">
+            <div class="p-card-name">Svuotatasche — Splash</div>
+            <div class="p-card-desc">Colore che esplode sulla superficie nera del vinile. Ogni colata è irripetibile — nessun Splash è uguale a un altro. Disponibile in colorazioni su richiesta.</div>
+            <div class="p-card-price-row">
+              <span class="p-price-current">25€</span>
+              <span class="p-price-old">31€</span>
+            </div>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Splash" target="_blank" class="p-card-cta">Ordina ora</a>
+          </div>
+        </div>
+
+        <!-- Spiral -->
+        <div class="p-card reveal reveal--d2" data-cat="svuotatasche">
+          <div class="p-card-img-wrap">
+            <img class="p-card-img" src="assets/iloveimg-converted/IMG_3348.jpg" alt="Svuotatasche Spiral" loading="lazy">
+            <div class="p-card-badge">Spiral</div>
+          </div>
+          <div class="p-card-body">
+            <div class="p-card-name">Svuotatasche — Spiral</div>
+            <div class="p-card-desc">Motivi a spirale che richiamano i solchi del vinile. Ipnotico, elegante, riconoscibile. Il design più visivamente forte della linea.</div>
+            <div class="p-card-price-row">
+              <span class="p-price-current">25€</span>
+              <span class="p-price-old">31€</span>
+            </div>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Spiral" target="_blank" class="p-card-cta">Ordina ora</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════ CLAIM STRIP ══════════════ -->
+    <div class="claim-strip">
+      <p class="claim-strip-text reveal">
+        <em>Nessuno stampo.</em><br>Solo mani, calore e tempo.
+      </p>
+      <div class="claim-strip-sub reveal reveal--d1">33GIRI · Reshape the Art</div>
+    </div>
+
+    <!-- ══════════════ SEZIONE: POSACENERE ══════════════ -->
+    <section class="cat-section cat-section--cream" id="posacenere" data-section="posacenere">
+      <div class="cat-section-header reveal">
+        <div>
+          <div class="cat-section-label">Il pezzo iconico</div>
+          <h2 class="cat-section-title cat-section-title--dark">Posacenere<br><em>da vinile 45 giri</em></h2>
+        </div>
+        <span class="cat-section-count cat-section-count--dark">3 stili disponibili</span>
+      </div>
+
+      <div class="products-grid">
+
+        <!-- Posacenere Normal -->
+        <div class="p-card p-card--light reveal" data-cat="posacenere">
+          <div class="p-card-img-wrap">
+            <img class="p-card-img" src="IMG_5465.jpg" alt="Posacenere Normal" loading="lazy">
+            <div class="p-card-badge">Normal</div>
+          </div>
+          <div class="p-card-body">
+            <div class="p-card-name">Posacenere — Normal</div>
+            <div class="p-card-desc">Compatto, pulito, iconico. Il 45 giri nella sua seconda vita: bordi piegati con precisione, etichetta originale visibile. Funzionale da usare, bello da esporre.</div>
+            <div class="p-card-price-row">
+              <span class="p-price-current" style="color:var(--gold-dk)">15€</span>
+              <span class="p-price-old">18,75€</span>
+            </div>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Normal" target="_blank" class="p-card-cta">Ordina ora</a>
+          </div>
+        </div>
+
+        <!-- Posacenere Splash -->
+        <div class="p-card p-card--light reveal reveal--d1" data-cat="posacenere">
+          <div class="p-card-img-wrap">
+            <img class="p-card-img" src="IMG_5502.jpg" alt="Posacenere Splash" loading="lazy">
+            <div class="p-card-badge">Splash</div>
+          </div>
+          <div class="p-card-body">
+            <div class="p-card-name">Posacenere — Splash</div>
+            <div class="p-card-desc">Macchie e colpi di colore sulla superficie nera. Ogni pezzo nasce diverso — una dichiarazione visiva su un formato compatto. Statement sul tavolo.</div>
+            <div class="p-card-price-row">
+              <span class="p-price-current" style="color:var(--gold-dk)">17€</span>
+              <span class="p-price-old">21,25€</span>
+            </div>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Splash" target="_blank" class="p-card-cta">Ordina ora</a>
+          </div>
+        </div>
+
+        <!-- Posacenere Touch -->
+        <div class="p-card p-card--light reveal reveal--d2" data-cat="posacenere">
+          <div class="p-card-img-wrap">
+            <img class="p-card-img" src="IMG_5509.jpg" alt="Posacenere Touch" loading="lazy">
+            <div class="p-card-badge">Touch</div>
+          </div>
+          <div class="p-card-body">
+            <div class="p-card-name">Posacenere — Touch</div>
+            <div class="p-card-desc">Impronte di colore lasciate dalla mano — letteralmente. Una superficie viva che racconta il gesto di chi l'ha creata. Irripetibile per definizione.</div>
+            <div class="p-card-price-row">
+              <span class="p-price-current" style="color:var(--gold-dk)">17€</span>
+              <span class="p-price-old">21,25€</span>
+            </div>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Touch" target="_blank" class="p-card-cta">Ordina ora</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════ SEZIONE: COLLAB ══════════════ -->
+    <section class="collab-section" id="collab" data-section="collab">
+      <div class="collab-inner">
+
+        <div class="collab-img-wrap reveal">
+          <img class="collab-img" src="IMG_3986.jpeg" alt="Metamorfosi — Iris Shero x 33GIRI" loading="lazy">
+        </div>
+
+        <div class="reveal reveal--d1">
+          <div class="collab-label">Edizioni artistiche</div>
+          <h2 class="collab-title">
+            Quando l'arte<br>incontra il <em>vinile.</em>
+          </h2>
+          <p class="collab-body">
+            Le edizioni collab nascono dalla collaborazione con artisti — pittori, illustratori, street artist.
+            Ogni disco diventa una tela. Il risultato è un pezzo da collezione, firmato, numerato,
+            con una storia doppia: quella del disco e quella dell'artista.
+          </p>
+
+          <!-- Collab terminata -->
+          <div class="collab-card">
+            <div class="collab-card-top">
+              <div class="collab-card-name">Metamorfosi × Iris Shero</div>
+              <div class="collab-card-tag">Esaurita</div>
+            </div>
+            <div class="collab-card-desc">
+              Vinili dipinti a mano da Iris Shero — 8 pezzi unici, collezione sold out.
+              Prossimo drop in arrivo: scrivici per restare aggiornato.
+            </div>
+          </div>
+
+          <!-- Prossima collab -->
+          <div class="collab-card" style="border-color: rgba(184,150,62,0.3);">
+            <div class="collab-card-top">
+              <div class="collab-card-name">Prossima collab — TBA</div>
+              <div class="collab-card-tag" style="color:var(--gold);border-color:var(--gold);">Coming Soon</div>
+            </div>
+            <div class="collab-card-desc">
+              Stiamo lavorando al prossimo drop. Artista e date da annunciare.
+              Vuoi essere tra i primi a saperlo? Scrivici su WhatsApp o Instagram.
+            </div>
+          </div>
+
+          <div style="margin-top:36px; display:flex; gap:16px; flex-wrap:wrap;">
+            <a href="collaborazioni.html" class="btn-gold">Scopri le collaborazioni</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Voglio%20essere%20aggiornato%20sulla%20prossima%20collab" target="_blank" class="btn-outline-dark" style="color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2);">Avvisami →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════ COME ORDINARE ══════════════ -->
+    <section class="order-section">
+      <div class="order-inner">
+        <div class="reveal">
+          <div class="cat-section-label">Senza complicazioni</div>
+          <h2 class="cat-section-title cat-section-title--light">Come <em>ordinare</em></h2>
+        </div>
+
+        <div class="order-grid">
+
+          <div class="order-step reveal">
+            <div class="order-step-num">01</div>
+            <div class="order-step-bar"></div>
+            <div class="order-step-title">Scegli il pezzo</div>
+            <div class="order-step-desc">
+              Seleziona stile, prodotto e — se vuoi — indicaci colori preferiti per le versioni Splash e Spiral.
+              Ogni pezzo è unico: ti mandiamo una foto prima della spedizione.
+            </div>
+          </div>
+
+          <div class="order-step reveal reveal--d1">
+            <div class="order-step-num">02</div>
+            <div class="order-step-bar"></div>
+            <div class="order-step-title">Scrivici su WhatsApp</div>
+            <div class="order-step-desc">
+              Clicca su "Ordina ora" sotto il prodotto o scrivici direttamente.
+              Risposta in meno di 24 ore. Confermiamo disponibilità e modalità di consegna.
+            </div>
+          </div>
+
+          <div class="order-step reveal reveal--d2">
+            <div class="order-step-num">03</div>
+            <div class="order-step-bar"></div>
+            <div class="order-step-title">Ricevi il tuo pezzo</div>
+            <div class="order-step-desc">
+              Consegna a mano (Bologna, Milano, Trento) o spedizione.
+              Packaging curato, certificato di autenticità incluso. Pagamento alla consegna o contactless.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="order-cta reveal">
+          <a href="https://wa.me/TUONUMERO" target="_blank" class="btn-gold">Ordina su WhatsApp</a>
+          <a href="https://instagram.com/33giri.studio" target="_blank" class="btn-outline-dark" style="color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2);">Seguici su Instagram</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ FAQ ══════════════ -->
+    <section class="cat-faq">
+      <div class="cat-faq-inner">
+        <div class="cat-section-label reveal">Dubbi?</div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--black);line-height:1.1;letter-spacing:-0.01em;margin-bottom:48px;" class="reveal reveal--d1">
+          Domande <em style="font-style:italic;color:var(--gold-dk)">frequenti.</em>
+        </h2>
+
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Ogni pezzo è davvero diverso dagli altri?
+              <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Sì, senza eccezioni. Ogni vinile ha la propria storia: etichetta diversa, graffi diversi, imperfezioni diverse.
+              Anche la curvatura e il colore variano pezzo per pezzo. Quello che ordini esiste una volta sola.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Posso scegliere i colori per Splash e Spiral?
+              <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Sì. Per Splash e Spiral puoi indicare fino a 2 colori preferiti all'ordine.
+              Ti confermiamo fattibilità prima di procedere — in alcuni casi i tempi potrebbero allungarsi leggermente.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Si rovina con il calore o il sole?
+              <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-a">
+              No, nelle normali condizioni di casa o ufficio è stabile.
+              Evita esposizione prolungata al sole diretto o vicinanza a fonti di calore (termosifoni, candele accese sotto).
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Come funziona la consegna?
+              <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-a">
+              A Bologna, Milano e Trento consegniamo a mano, senza costi aggiuntivi.
+              In media entro 2-5 giorni lavorativi dalla conferma. Per altre zone organizziamo spedizione con corriere.
+              Pagamento alla consegna, in contanti o contactless.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Da dove provengono i vinili?
+              <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Tutti da collezioni usate, dischi fuori catalogo o materiale destinato al macero.
+              Non utilizziamo mai copie nuove o in buone condizioni: il riuso è la base del progetto, non uno slogan.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Come funzionano i resi?
+              <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-a">
+              Se il pezzo arriva danneggiato o si rompe entro 30 giorni, lo ritiriamo a nostre spese (zona Bologna, Milano, Trento)
+              e puoi scegliere sostituzione o rimborso. Scrivici a 33giristudios@gmail.com con foto del pezzo.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">33GIRI</div>
+          <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Naviga</div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="catalogo.html">Catalogo</a></li>
+            <li><a href="chi_siamo.html">Chi siamo</a></li>
+            <li><a href="collaborazioni.html">Collaborazioni</a></li>
+            <li><a href="corporate.html">Corporate / Regalo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Info</div>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resi-rimborsi.html">Resi e rimborsi</a></li>
+            <li><a href="informativa-privacy.html">Privacy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contatti</div>
+          <ul>
+            <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+            <li><a href="https://wa.me/TUONUMERO" target="_blank">WhatsApp</a></li>
+            <li><a href="contribuisci.html">Dona un vinile</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+        <span class="footer-claim">Reshape the Art</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a class="wa-float" href="https://wa.me/TUONUMERO" target="_blank" aria-label="Ordina su WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ──────────── SCRIPT ──────────── -->
+  <script>
+    // ── HEADER SCROLL ──
+    (function() {
+      const header = document.getElementById('site-header');
+      window.addEventListener('scroll', () => {
+        header.style.background = window.scrollY > 40
+          ? 'rgba(10,10,10,0.98)'
+          : 'rgba(10,10,10,0.94)';
+      }, { passive: true });
+    })();
+
+    // ── SCROLL REVEAL ──
+    (function() {
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // ── FILTRI ──
+    (function() {
+      const tabs  = document.querySelectorAll('.filter-tab');
+      const cards = document.querySelectorAll('[data-cat]');
+      const sections = document.querySelectorAll('[data-section]');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+
+          const filter = tab.dataset.filter;
+
+          if (filter === 'all') {
+            cards.forEach(c => c.style.display = '');
+            sections.forEach(s => s.style.display = '');
+          } else {
+            sections.forEach(s => {
+              s.style.display = s.dataset.section === filter ? '' : 'none';
+            });
+            cards.forEach(c => {
+              c.style.display = c.dataset.cat === filter ? '' : 'none';
+            });
+          }
+
+          // Scroll alla prima sezione visibile
+          const firstVisible = document.querySelector(`[data-section="${filter}"]`);
+          if (firstVisible && filter !== 'all') {
+            setTimeout(() => {
+              firstVisible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+          }
+        });
+      });
+    })();
+
+    // ── FAQ ACCORDION ──
+    (function() {
+      document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item');
+          const isOpen = item.classList.contains('is-open');
+
+          // Chiudi tutti
+          document.querySelectorAll('.faq-item').forEach(i => {
+            i.classList.remove('is-open');
+            i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+          });
+
+          // Apri questo se era chiuso
+          if (!isOpen) {
+            item.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    })();
   </script>
 
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-
-    // Click sui bottoni -> precompila messaggio + scroll alla sezione contatti
-    const vinylButtons = document.querySelectorAll('.vinyl-button');
-    vinylButtons.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const style = this.getAttribute('data-style');
-        const messageField = document.getElementById('message');
-        const contactSection = document.querySelector('.contact-section');
-        
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => { this.style.transform = ''; }, 200);
-        
-        if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        
-        setTimeout(() => {
-          if (messageField) {
-            messageField.value = `Ciao, vorrei acquistare ${style}`;
-            messageField.focus();
-          }
-        }, 800);
-      });
-    });
-    
-    // Parallax effect sulle hero images
-    document.addEventListener('mousemove', function(e) {
-      const heroImages = document.querySelectorAll('.hero-image');
-      const mouseX = e.clientX / window.innerWidth;
-      const mouseY = e.clientY / window.innerHeight;
-      
-      heroImages.forEach((img, index) => {
-        const speed = (index + 1) * 10;
-        const x = (mouseX - 0.5) * speed;
-        const y = (mouseY - 0.5) * speed;
-        img.style.transform = `translate(${x}px, ${y}px)`;
-      });
-    });
-    
-    // Lightbox per gallery
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.querySelector('.lightbox-img');
-    const lightboxClose = document.querySelector('.lightbox-close');
-    
-    galleryItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const img = this.querySelector('img');
-        if (lightbox && lightboxImg) {
-          lightboxImg.src = img.src;
-          lightbox.style.display = 'flex';
-          lightbox.setAttribute('aria-hidden', 'false');
-        }
-      });
-    });
-    
-    if (lightboxClose) {
-      lightboxClose.addEventListener('click', function() {
-        if (lightbox) {
-          lightbox.style.display = 'none';
-          lightbox.setAttribute('aria-hidden', 'true');
-        }
-      });
-    }
-    
-    // Check localStorage message
-    const prefilledMessage = localStorage.getItem('contactMessage');
-    if (prefilledMessage) {
-      const messageField = document.getElementById('message');
-      if (messageField) {
-        messageField.value = prefilledMessage;
-        localStorage.removeItem('contactMessage');
-        const contactSection = document.getElementById('contatti');
-        if (contactSection) {
-          setTimeout(() => {
-            contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            messageField.focus();
-          }, 500);
-        }
-      }
-    }
-    
-    // Intersection Observer per animazioni scroll
-    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
-    
-    document.querySelectorAll('.vinyl-card, .gallery-item').forEach(el => observer.observe(el));
-
-    /* -------------------------
-       GESTIONE FORM CONTATTI
-       ------------------------- */
-    const form = document.getElementById('contactForm');
-    const methodSelect = document.getElementById('contactMethod');
-    const contactInfoGroup = document.getElementById('contactInfoGroup');
-    const contactInfo = document.getElementById('contactInfo');
-    const contactInfoLabel = document.getElementById('contactInfoLabel');
-    const messageField = document.getElementById('message');
-
-    if (form && methodSelect && messageField) {
-      methodSelect.addEventListener('change', () => {
-        const method = methodSelect.value;
-
-        if (method === 'email') {
-          contactInfoGroup.style.display = 'block';
-          contactInfoLabel.textContent = 'La tua email';
-          contactInfo.placeholder = 'nome@example.com';
-          contactInfo.required = true;
-        } else {
-          contactInfoGroup.style.display = 'none';
-          contactInfo.value = '';
-          contactInfo.required = false;
-        }
-      });
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const method = methodSelect.value;
-        const info = contactInfo.value.trim();
-        const message = messageField.value.trim();
-
-        if (!method) { alert('Seleziona un metodo di contatto.'); return; }
-        if (!message) { alert('Scrivi un messaggio.'); return; }
-
-        let url = '';
-
-        if (method === 'email') {
-          if (!info) { alert('Inserisci la tua email.'); return; }
-          const body = `${message}\n\nEmail di contatto: ${info}`;
-          const encodedBody = encodeURIComponent(body);
-          url = `mailto:33giristudios@gmail.com?subject=Richiesta%20pezzo%20unico&body=${encodedBody}`;
-        }
-
-        if (method === 'whatsapp') {
-          const encodedMessage = encodeURIComponent(message);
-          const numeroWhatsApp = '393471692948';
-          url = `https://wa.me/${numeroWhatsApp}?text=${encodedMessage}`;
-        }
-
-        if (method === 'instagram') {
-          const handleInstagram = '33giri.studio';
-          url = `https://ig.me/m/${handleInstagram}`;
-
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(message).then(() => {
-              alert('Si aprirà Instagram: il messaggio è stato copiato negli appunti, incollalo nella chat DM.');
-            }).catch(() => {});
-          }
-        }
-
-        if (url) window.open(url, '_blank');
-      });
-    }
-  });
-  </script> 
 </body>
 </html>
