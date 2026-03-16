@@ -1731,6 +1731,30 @@
       }, { threshold: 0.12 });
       els.forEach(el => io.observe(el));
     })();
+
+    // ── RECENSIONI ACCORDION ──
+    (function() {
+      const items = document.querySelectorAll('.rec-item');
+      items.forEach(item => {
+        const trigger = item.querySelector('.rec-trigger');
+        const body    = item.querySelector('.rec-body');
+        trigger.addEventListener('click', () => {
+          const isOpen = item.classList.contains('is-open');
+          items.forEach(i => {
+            i.classList.remove('is-open');
+            i.querySelector('.rec-trigger').setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+            setTimeout(() => {
+              body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 80);
+          }
+        });
+      });
+    })();
+    
   </script>
 
 </body>
