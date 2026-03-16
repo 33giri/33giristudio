@@ -219,32 +219,23 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.10) 100%),
-        linear-gradient(to right, rgba(10,10,10,0.20) 0%, transparent 60%);
+        linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.45) 40%, rgba(10,10,10,0.55) 100%),
+        radial-gradient(ellipse at 50% 60%, transparent 30%, rgba(10,10,10,0.35) 100%);
       z-index: 1;
     }
 
-    /* Gold line accent */
-    .hero-gold-line {
-      position: absolute;
-      left: 48px; top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 180px;
-      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-      z-index: 2;
-      opacity: 0;
-      animation: fadeInLine 1.2s ease 0.8s forwards;
-    }
-    @keyframes fadeInLine {
-      to { opacity: 0.6; }
-    }
+    /* Gold line accent — nascosta con layout centrato */
+    .hero-gold-line { display: none; }
 
     .hero-inner {
       position: relative;
       z-index: 2;
-      padding: 0 80px 80px;
+      padding: 0 80px 100px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .hero-kicker {
@@ -295,19 +286,21 @@
       font-weight: 300;
       letter-spacing: 0.06em;
       color: rgba(255,255,255,0.60);
-      max-width: 420px;
+      max-width: 480px;
       line-height: 1.8;
       margin-bottom: 44px;
       opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.7s forwards;
+      animation: slideUp 0.9s var(--ease-smooth) 0.5s forwards;
+      text-align: center;
     }
 
     .hero-ctas {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 24px;
       opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.9s forwards;
+      animation: slideUp 0.9s var(--ease-smooth) 0.7s forwards;
     }
 
     /* Dot indicators */
@@ -1016,7 +1009,7 @@
 
     @media (max-width: 768px) {
       :root { --header-h: 64px; }
-      .hero-inner { padding: 0 24px 60px; }
+      .hero-inner { padding: 0 24px 72px; }
       .hero-gold-line { display: none; }
       .hero-dots { right: 24px; }
       .hero-logo-img-el { width: clamp(220px, 72vw, 360px); }
@@ -1342,7 +1335,7 @@
       <div class="hero-inner">
         <h1 class="hero-logo-img">
           <img
-            src="Screenshot_2026-03-16_alle_02.45.18-removebg-preview.png"
+            src="assets/logo-hero.png"
             alt="33GIRI — Reshape the Art"
             class="hero-logo-img-el"
           >
