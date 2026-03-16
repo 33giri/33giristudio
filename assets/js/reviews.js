@@ -18,9 +18,11 @@
     const el = document.getElementById("formMessage");
     if (!el) return alert(message);
     el.textContent = message;
-    el.className = `form-message ${type}`;
+    el.className = `rec-msg ${type}`;
     el.style.display = "block";
-    setTimeout(() => (el.style.display = "none"), 6000);
+    setTimeout(() => {
+      el.style.display = "none";
+    }, 6000);
   };
 
   const MAX_IMAGES = 5;
@@ -30,11 +32,14 @@
 
   let selectedFiles = [];
 
-  // ✅ usa client globale
   const getClient = () => {
     const client = window.__SB_CLIENT__;
     if (!client) {
-      return { client: null, error: "Supabase client non inizializzato. Controlla ordine script: supabase-js → config.js → reviews.js" };
+      return {
+        client: null,
+        error:
+          "Supabase client non inizializzato. Controlla ordine script: supabase-js → config.js → createClient → reviews.js",
+      };
     }
     return { client, error: null };
   };
@@ -53,9 +58,10 @@
       .limit(limit);
 
     if (err) {
-      console.error(err);
+      console.error("Errore fetch recensioni:", err);
       return [];
     }
+
     return data || [];
   };
 
@@ -74,11 +80,16 @@
       const file = files[i];
       const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
       const safeExt = ext.replace(/[^a-z0-9]/g, "") || "jpg";
-      const path = `public/${Date.now()}-${Math.random().toString(16).slice(2)}-${i}.${safeExt}`;
+      const path = `public/${Date.now()}-${Math.random()
+        .toString(16)
+        .slice(2)}-${i}.${safeExt}`;
 
-      const { error: upErr } = await client.storage.from(STORAGE_BUCKET).upload(path, file, { upsert: false });
+      const { error: upErr } = await client.storage
+        .from(STORAGE_BUCKET)
+        .upload(path, file, { upsert: false });
+
       if (upErr) {
-        console.warn("Upload fallito:", upErr);
+        console.warn("Upload immagine fallito:", upErr);
         continue;
       }
 
@@ -89,93 +100,85 @@
     return urls;
   };
 
-  const createCompactCard = (r) => `
-    <div class="r2-card" data-open="false">
-      <button class="r2-btn" type="button" data-review-toggle="1" aria-expanded="false">
-        <div>
-          <div class="r2-name">${escapeHtml(r.name)}</div>
-          <div class="r2-stars">${renderStars(r.rating)}</div>
-        </div>
-        <span class="r2-chev">⌄</span>
-      </button>
-      <div class="r2-body">
-        <p class="r2-comment">${escapeHtml(r.comment)}</p>
-      </div>
-    </div>
-  `;
+  const createCompactCard = (r) => {
+    const date = new Date(r.created_at);
+    const formattedDate = date.toLocaleDateString("it-IT", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
-  const renderHome = async () => {
-    const strip = document.querySelector(".reviews-strip");
-    const oldGrid = document.querySelector(".reviews-grid");
-    if (!strip && !oldGrid) return;
-
-    const rows = await fetchAllReviews(50);
-
-    if (strip) {
-      strip.innerHTML = rows.length
-        ? rows.map(createCompactCard).join("")
-        : `<p style="color:#666; padding:8px 6px;">Le recensioni stanno arrivando...</p>`;
-
-      if (!strip.__boundClick) {
-        strip.addEventListener("click", (e) => {
-          const btn = e.target.closest('[data-review-toggle="1"]');
-          if (!btn) return;
-
-          const card = btn.closest(".r2-card");
-          if (!card) return;
-
-          const isOpen = card.getAttribute("data-open") === "true";
-
-          strip.querySelectorAll('.r2-card[data-open="true"]').forEach((c) => {
-            c.setAttribute("data-open", "false");
-            const b = c.querySelector(".r2-btn");
-            if (b) b.setAttribute("aria-expanded", "false");
-          });
-
-          card.setAttribute("data-open", (!isOpen).toString());
-          btn.setAttribute("aria-expanded", (!isOpen).toString());
-        });
-        strip.__boundClick = true;
-      }
-      return;
-    }
-
-    if (oldGrid) {
-      oldGrid.innerHTML = rows.slice(0, 6).map((r) => `
-        <div class="review-card">
-          <div class="review-header">
-            <div class="reviewer-info"><h3>${escapeHtml(r.name)}</h3></div>
-            <div class="review-stars">${renderStars(r.rating)}</div>
+    return `
+      <article class="rec-card">
+        <div class="rec-card-top">
+          <div>
+            <div class="rec-card-name">${escapeHtml(r.name || "Anonimo")}</div>
+            <div class="rec-card-date">${formattedDate}</div>
           </div>
-          <p class="review-comment">${escapeHtml(r.comment)}</p>
+          <div class="rec-card-stars">${renderStars(r.rating)}</div>
         </div>
-      `).join("");
-    }
+        <div class="rec-card-text">${escapeHtml(r.comment || "")}</div>
+      </article>
+    `;
   };
 
   const createFullCard = (r) => {
     const date = new Date(r.created_at);
-    const formattedDate = date.toLocaleDateString("it-IT", { year: "numeric", month: "long", day: "numeric" });
+    const formattedDate = date.toLocaleDateString("it-IT", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
-    const imagesHTML = (r.images && r.images.length)
-      ? `<div class="review-images">
-           ${r.images.map((img) => `<img src="${img}" alt="Foto recensione" loading="lazy">`).join("")}
-         </div>`
-      : "";
+    const imagesHTML =
+      r.images && r.images.length
+        ? `
+          <div class="review-images">
+            ${r.images
+              .map(
+                (img) =>
+                  `<img src="${img}" alt="Foto recensione" loading="lazy">`
+              )
+              .join("")}
+          </div>
+        `
+        : "";
 
     return `
-      <div class="review-card">
+      <article class="review-card">
         <div class="review-header">
           <div class="reviewer-info">
-            <h3>${escapeHtml(r.name)}</h3>
+            <h3>${escapeHtml(r.name || "Anonimo")}</h3>
             <div class="review-date">${formattedDate}</div>
           </div>
           <div class="review-stars">${renderStars(r.rating)}</div>
         </div>
-        <p class="review-comment">${escapeHtml(r.comment)}</p>
+        <p class="review-comment">${escapeHtml(r.comment || "")}</p>
         ${imagesHTML}
-      </div>
+      </article>
     `;
+  };
+
+  const renderHome = async () => {
+    const strip = document.querySelector(".reviews-strip");
+    if (!strip) return;
+
+    const rows = await fetchAllReviews(20);
+
+    strip.innerHTML = rows.length
+      ? rows.map(createCompactCard).join("")
+      : `
+        <div class="rec-card">
+          <div class="rec-card-top">
+            <div>
+              <div class="rec-card-name">Le recensioni arrivano…</div>
+              <div class="rec-card-date">nessuna recensione ancora</div>
+            </div>
+            <div class="rec-card-stars">★★★★★</div>
+          </div>
+          <div class="rec-card-text">Sii il primo a lasciare una recensione qui sotto.</div>
+        </div>
+      `;
   };
 
   const renderRecent = async () => {
@@ -183,9 +186,10 @@
     if (!list) return;
 
     const rows = await fetchAllReviews(12);
+
     list.innerHTML = rows.length
       ? rows.map(createFullCard).join("")
-      : `<p style="text-align:center; color:#999;">Nessuna recensione ancora. Sii il primo!</p>`;
+      : `<p style="text-align:center;color:#999;">Nessuna recensione ancora. Sii il primo!</p>`;
   };
 
   const initForm = () => {
@@ -195,19 +199,28 @@
     const reviewComment = document.getElementById("reviewComment");
     const charCount = document.getElementById("charCount");
     const ratingValue = document.getElementById("ratingValue");
-    const starInputs = document.querySelectorAll('.star-rating input[type="radio"]');
+    const starInputs = document.querySelectorAll(
+      '.star-rating input[type="radio"]'
+    );
     const reviewImages = document.getElementById("reviewImages");
     const imagePreview = document.getElementById("imagePreview");
+    const btnText = document.querySelector(".btn-text");
+    const btnLoader = document.querySelector(".btn-loader");
 
     starInputs.forEach((input) => {
       input.addEventListener("change", function () {
-        if (ratingValue) ratingValue.textContent = `${this.value} ${this.value === "1" ? "stella" : "stelle"} selezionate`;
+        if (ratingValue) {
+          ratingValue.textContent = `${this.value} ${
+            this.value === "1" ? "stella" : "stelle"
+          } selezionate`;
+        }
       });
     });
 
     reviewComment?.addEventListener("input", function () {
       const length = this.value.length;
       if (charCount) charCount.textContent = length;
+
       if (length > MAX_COMMENT_LENGTH) {
         this.value = this.value.substring(0, MAX_COMMENT_LENGTH);
         if (charCount) charCount.textContent = MAX_COMMENT_LENGTH;
@@ -227,6 +240,7 @@
           showFormMessage(`L'immagine ${file.name} supera i 5MB`, "error");
           return;
         }
+
         if (!file.type.startsWith("image/")) {
           showFormMessage(`${file.name} non è un'immagine valida`, "error");
           return;
@@ -240,14 +254,16 @@
           previewItem.className = "preview-item";
           previewItem.innerHTML = `
             <img src="${ev.target.result}" alt="Preview">
-            <button type="button" class="preview-remove">×</button>
+            <button type="button" class="preview-remove" aria-label="Rimuovi immagine">×</button>
           `;
           imagePreview.appendChild(previewItem);
 
-          previewItem.querySelector(".preview-remove").addEventListener("click", () => {
-            selectedFiles = selectedFiles.filter((f) => f !== file);
-            previewItem.remove();
-          });
+          previewItem
+            .querySelector(".preview-remove")
+            .addEventListener("click", () => {
+              selectedFiles = selectedFiles.filter((f) => f !== file);
+              previewItem.remove();
+            });
         };
         reader.readAsDataURL(file);
       });
@@ -263,7 +279,9 @@
 
       const name = document.getElementById("reviewerName")?.value.trim();
       const email = document.getElementById("reviewerEmail")?.value.trim();
-      const checked = document.querySelector('.star-rating input[type="radio"]:checked');
+      const checked = document.querySelector(
+        '.star-rating input[type="radio"]:checked'
+      );
       const rating = checked ? parseInt(checked.value, 10) : 0;
       const comment = document.getElementById("reviewComment")?.value.trim();
       const privacyOk = document.getElementById("privacyConsent")?.checked;
@@ -271,10 +289,13 @@
       if (!name) return showFormMessage("Inserisci il tuo nome", "error");
       if (!rating) return showFormMessage("Seleziona una valutazione", "error");
       if (!comment) return showFormMessage("Scrivi un commento", "error");
-      if (!privacyOk) return showFormMessage("Accetta l'informativa sulla privacy", "error");
+      if (!privacyOk) {
+        return showFormMessage(
+          "Accetta l'informativa sulla privacy",
+          "error"
+        );
+      }
 
-      const btnText = document.querySelector(".btn-text");
-      const btnLoader = document.querySelector(".btn-loader");
       if (btnText && btnLoader) {
         btnText.style.display = "none";
         btnLoader.style.display = "inline";
@@ -283,13 +304,15 @@
       try {
         const imageUrls = await uploadImages(selectedFiles);
 
-        const { error: insErr } = await client.from("reviews").insert([{
-          name,
-          email: email || null,
-          rating,
-          comment,
-          images: imageUrls
-        }]);
+        const { error: insErr } = await client.from("reviews").insert([
+          {
+            name,
+            email: email || null,
+            rating,
+            comment,
+            images: imageUrls,
+          },
+        ]);
 
         if (insErr) throw insErr;
 
@@ -299,20 +322,23 @@
         if (ratingValue) ratingValue.textContent = "";
         if (charCount) charCount.textContent = "0";
 
-        showFormMessage("Grazie! La tua recensione è stata pubblicata.", "success");
+        showFormMessage(
+          "Grazie! La tua recensione è stata pubblicata.",
+          "success"
+        );
 
         await renderRecent();
         await renderHome();
-
       } catch (err) {
-        console.error(err);
-        showFormMessage("Errore invio recensione. Controlla tabella/policy Supabase.", "error");
+        console.error("Errore invio recensione:", err);
+        showFormMessage(
+          "Errore invio recensione. Controlla tabella, policy RLS e bucket Supabase.",
+          "error"
+        );
       } finally {
-        const btnText2 = document.querySelector(".btn-text");
-        const btnLoader2 = document.querySelector(".btn-loader");
-        if (btnText2 && btnLoader2) {
-          btnText2.style.display = "inline";
-          btnLoader2.style.display = "none";
+        if (btnText && btnLoader) {
+          btnText.style.display = "inline";
+          btnLoader.style.display = "none";
         }
       }
     });
