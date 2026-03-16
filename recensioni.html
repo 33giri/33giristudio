@@ -1,277 +1,937 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recensioni — 33GIRI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
+
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
-      --cream:#f5f0e8;--warm:#e8e2d9;--navy:#0f1522;--white:#fff;
-      --text:#1a1a1a;--muted:#6b6560;--header-h:80px;
-      --fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
-      --ease:cubic-bezier(.4,0,.2,1);
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --gold: #b8963e;
+      --gold-lt: #d4af6a;
+      --gold-dk: #8a6d28;
+      --cream: #f5f0e8;
+      --warm: #e8e2d9;
+      --navy: #0f1522;
+      --white: #fff;
+      --text: #1a1a1a;
+      --muted: #6b6560;
+      --header-h: 80px;
+      --fd: 'Cormorant Garamond', Georgia, serif;
+      --fb: 'DM Sans', system-ui, sans-serif;
+      --ease: cubic-bezier(.4,0,.2,1);
     }
-    html{scroll-behavior:smooth}
-    body{background:var(--black);color:var(--white);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
-    a{color:inherit;text-decoration:none}
-    body::before{content:'';position:fixed;inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
 
-    /* HEADER */
-    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
-      background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,62,.18)}
-    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
-      display:flex;align-items:center;justify-content:space-between}
-    .logo-wrap{display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
-    .main-nav ul{list-style:none;display:flex;gap:36px}
-    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
-    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
-    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
-    .header-actions{display:flex;align-items:center;gap:20px}
-    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
-    .header-actions a:hover{color:var(--gold)}
-
-    /* HERO REVIEW */
-    .rec-hero{
-      padding-top:var(--header-h);
-      background:var(--black);
-      padding-left:60px;padding-right:60px;padding-bottom:0;
-      position:relative;overflow:hidden}
-    /* pattern sottile */
-    .rec-hero::before{content:'';position:absolute;inset:0;
-      background-image:repeating-linear-gradient(45deg,transparent,transparent 48px,rgba(184,150,62,.03) 48px,rgba(184,150,62,.03) 49px);
-      pointer-events:none}
-    .rec-hero-inner{
-      max-width:1280px;margin:0 auto;
-      padding:80px 0 64px;
-      display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
-      border-bottom:1px solid rgba(184,150,62,.2);
-      position:relative;z-index:1}
-    .rec-hero-left{}
-    .rec-hero-kicker{font-size:10px;font-weight:500;letter-spacing:.32em;
-      text-transform:uppercase;color:var(--gold);margin-bottom:16px;
-      opacity:0;animation:slideUp .8s var(--ease) .2s forwards}
-    .rec-hero-title{font-family:var(--fd);font-size:clamp(52px,6vw,88px);
-      font-weight:300;line-height:1;letter-spacing:-.01em;
-      opacity:0;animation:slideUp .9s var(--ease) .4s forwards}
-    .rec-hero-title em{font-style:italic;color:var(--gold-lt)}
-    .rec-hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.45);
-      max-width:420px;line-height:1.8;margin-top:18px;
-      opacity:0;animation:slideUp .9s var(--ease) .6s forwards}
-    .rec-hero-right{
-      text-align:right;
-      opacity:0;animation:slideUp .9s var(--ease) .7s forwards}
-    .rec-hero-stars{font-size:36px;color:var(--gold);margin-bottom:8px;letter-spacing:4px}
-    .rec-hero-tagline{font-family:var(--fd);font-size:18px;font-weight:300;
-      color:rgba(255,255,255,.4);font-style:italic}
-    @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-
-    /* RECENSIONI RECENTI — scroll orizzontale */
-    .rec-recent{background:var(--navy);padding:80px 60px;border-top:1px solid rgba(184,150,62,.15)}
-    .rec-recent-inner{max-width:1280px;margin:0 auto}
-    .rec-recent-header{display:flex;align-items:flex-end;justify-content:space-between;
-      margin-bottom:40px}
-    .rec-recent-label{font-size:10px;font-weight:500;letter-spacing:.3em;
-      text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-    .rec-recent-title{font-family:var(--fd);font-size:clamp(28px,3vw,44px);
-      font-weight:300;color:var(--white);letter-spacing:-.01em;line-height:1.1}
-    .rec-recent-title em{font-style:italic;color:var(--gold-lt)}
-    .rec-recent-hint{font-size:12px;font-weight:300;color:rgba(255,255,255,.3);
-      letter-spacing:.06em}
-    /* Scroll strip */
-    .rec-scroll{
-      overflow-x:auto;-webkit-overflow-scrolling:touch;
-      padding:4px 0 20px;scrollbar-width:thin;
-      scrollbar-color:rgba(184,150,62,.3) transparent}
-    .rec-scroll::-webkit-scrollbar{height:3px}
-    .rec-scroll::-webkit-scrollbar-thumb{background:rgba(184,150,62,.3);border-radius:2px}
-    .rec-strip{display:flex;gap:16px;padding:8px 0}
-    /* Card */
-    .rec-card{
-      flex:0 0 auto;width:340px;
-      background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.1);
-      padding:28px;transition:background .3s,border-color .3s}
-    .rec-card:hover{background:rgba(184,150,62,.07);border-color:rgba(184,150,62,.25)}
-    .rec-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
-    .rec-card-name{font-family:var(--fd);font-size:18px;font-weight:400;color:var(--white)}
-    .rec-card-date{font-size:11px;font-weight:300;color:rgba(255,255,255,.3);margin-top:3px}
-    .rec-card-stars{font-size:14px;color:var(--gold);letter-spacing:2px;flex-shrink:0}
-    .rec-card-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.7}
-
-    /* FORM SEZIONE */
-    .rec-form-section{background:var(--black);padding:100px 60px;
-      border-top:1px solid rgba(184,150,62,.15)}
-    .rec-form-inner{max-width:1280px;margin:0 auto;
-      display:grid;grid-template-columns:1fr 1.4fr;gap:100px;align-items:start}
-    /* Testo sinistra */
-    .rec-form-left{}
-    .rec-form-label{font-size:10px;font-weight:500;letter-spacing:.3em;
-      text-transform:uppercase;color:var(--gold);margin-bottom:20px}
-    .rec-form-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);
-      font-weight:300;color:var(--white);line-height:1.1;letter-spacing:-.01em;margin-bottom:24px}
-    .rec-form-title em{font-style:italic;color:var(--gold-lt)}
-    .rec-form-body{font-size:14px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.8;margin-bottom:32px}
-    /* Trust signals */
-    .rec-trust{display:flex;flex-direction:column;gap:12px}
-    .rec-trust-item{display:flex;gap:14px;align-items:center}
-    .rec-trust-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
-    .rec-trust-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.4)}
-    /* Form destra */
-    .rec-form-right{}
-    .rec-form-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(184,150,62,.12);padding:48px}
-    .rec-field{margin-bottom:20px}
-    .rec-field label{display:block;font-size:10px;font-weight:600;letter-spacing:.15em;
-      text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px}
-    .rec-field input,.rec-field textarea{
-      width:100%;padding:14px 16px;
-      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-      color:var(--white);font-family:var(--fb);font-size:14px;
-      transition:border-color .25s,background .25s;outline:none}
-    .rec-field input::placeholder,.rec-field textarea::placeholder{color:rgba(255,255,255,.22)}
-    .rec-field input:focus,.rec-field textarea:focus{
-      border-color:var(--gold);background:rgba(184,150,62,.06)}
-    .rec-field textarea{resize:vertical;min-height:100px}
-    .rec-field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    /* Star rating */
-    .rec-stars-wrap{display:flex;gap:8px;margin-top:4px}
-    .rec-star{font-size:32px;color:rgba(255,255,255,.2);cursor:pointer;
-      transition:color .2s,transform .2s}
-    .rec-star:hover,.rec-star.is-active{color:var(--gold);transform:scale(1.1)}
-    .rec-star-label{font-size:11px;color:rgba(255,255,255,.3);margin-top:6px}
-    /* Char count */
-    .rec-char{display:block;text-align:right;font-size:11px;
-      color:rgba(255,255,255,.25);margin-top:4px}
-    /* Privacy check */
-    .rec-privacy{display:flex;gap:12px;align-items:flex-start;margin-bottom:24px}
-    .rec-privacy input{flex-shrink:0;margin-top:2px;accent-color:var(--gold)}
-    .rec-privacy-text{font-size:12px;font-weight:300;color:rgba(255,255,255,.35);line-height:1.6}
-    .rec-privacy-text a{color:var(--gold-lt)}
-    /* Submit */
-    .rec-submit{width:100%;padding:16px;background:var(--gold);color:var(--black);
-      font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-      border:none;cursor:pointer;transition:background .25s,transform .25s}
-    .rec-submit:hover{background:var(--gold-lt);transform:translateY(-2px)}
-    /* Messages */
-    .rec-msg{margin-top:14px;padding:14px;font-size:13px;display:none}
-    .rec-msg.success{background:rgba(184,150,62,.12);color:var(--gold-lt);border:1px solid rgba(184,150,62,.25)}
-    .rec-msg.error{background:rgba(200,50,50,.1);color:#f88;border:1px solid rgba(200,50,50,.2)}
-
-    /* WA */
-    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
-      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
-      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
-    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
-    .wa-float svg{width:24px;height:24px;fill:var(--black)}
-
-    /* FOOTER */
-    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
-    .footer-inner{max-width:1280px;margin:0 auto}
-    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
-      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
-    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
-    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
-    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:20px}
-    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
-    .footer-col a:hover{color:var(--gold)}
-    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
-    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
-    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
-
-    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-    .reveal.is-visible{opacity:1;transform:translateY(0)}
-    .reveal--d1{transition-delay:.1s}.reveal--d2{transition-delay:.2s}
-
-    @media(max-width:1100px){
-      .rec-form-inner{grid-template-columns:1fr}
-      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--fb);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    @media(max-width:768px){
-      :root{--header-h:64px}
-      .rec-hero{padding:var(--header-h) 20px 0}
-      .rec-hero-inner{flex-direction:column;padding:56px 0 40px}
-      .rec-hero-right{text-align:left}
-      .rec-recent,.rec-form-section{padding:60px 20px}
-      .rec-form-wrap{padding:28px 20px}
-      .rec-field-row{grid-template-columns:1fr}
-      .footer-top{grid-template-columns:1fr;gap:32px}
-      .footer-bottom{flex-direction:column;gap:12px}
-      .main-nav{display:none}
+
+    a { color: inherit; text-decoration: none; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .6;
     }
-  
-    /* ── LOGO HEADER IMG ── */
+
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--header-h);
+      background: rgba(10,10,10,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184,150,62,.18);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    .main-nav a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      transition: color .25s;
+      position: relative;
+    }
+
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width .3s var(--ease);
+    }
+
+    .main-nav a:hover { color: var(--gold-lt); }
+    .main-nav a:hover::after { width: 100%; }
+
     .logo-img-header {
-      height: 26px; width: auto; display: block;
+      height: 26px;
+      width: auto;
+      display: block;
       filter: drop-shadow(0 1px 8px rgba(184,150,62,0.2));
     }
-    /* ── MENU MOBILE DRAWER ── */
-    .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; z-index: 1100; }
-    .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-actions a {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      transition: color .2s;
+    }
+
+    .header-actions a:hover { color: var(--gold); }
+
+    .menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      background: none;
+      border: none;
+      flex-shrink: 0;
+      z-index: 1100;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: rgba(255,255,255,0.85);
+      transition: transform .3s, opacity .3s;
+      transform-origin: center;
+    }
+
     .menu-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .menu-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
     .mobile-nav {
-      position: fixed; top: var(--header-h); left: 0; right: 0;
-      background: rgba(10,10,10,0.98); backdrop-filter: blur(16px);
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.98);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(184,150,62,0.15);
-      z-index: 999; max-height: 0; overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+      z-index: 999;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.4,0,.2,1);
     }
-    .mobile-nav.is-open { max-height: 500px; }
-    .mobile-nav ul { list-style: none; display: flex; flex-direction: column; padding: 8px 0 20px; }
-    .mobile-nav li a {
-      display: block; padding: 15px 24px;
-      font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.70); border-bottom: 1px solid rgba(255,255,255,0.05);
-      transition: color 0.2s, background 0.2s;
-    }
-    .mobile-nav li a:hover { color: var(--gold); background: rgba(184,150,62,0.06); }
-    .mobile-nav li:last-child a { border-bottom: none; }
-    .mobile-nav-ordina {
-      display: block; margin: 12px 24px 8px; padding: 13px 24px; text-align: center;
-      background: var(--gold); color: var(--black);
-      font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-      transition: background 0.2s;
-    }
-    .mobile-nav-ordina:hover { background: var(--gold-lt); }
-    @media (max-width: 768px) { .menu-btn { display: flex !important; } .main-nav { display: none !important; } }
 
-
-    /* ── LOGO HEADER IMG ── */
-    .logo-img-header { height: 26px; width: auto; display: block; filter: drop-shadow(0 1px 8px rgba(184,150,62,0.2)); }
-    /* ── HAMBURGER ── */
-    .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; z-index: 1100; }
-    .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
-    .menu-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .menu-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    /* ── DRAWER ── */
-    .mobile-nav { position: fixed; top: var(--header-h); left: 0; right: 0; background: rgba(10,10,10,0.98); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(184,150,62,0.15); z-index: 999; max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
     .mobile-nav.is-open { max-height: 520px; }
-    .mobile-nav ul { list-style: none; display: flex; flex-direction: column; padding: 8px 0 20px; }
-    .mobile-nav li a { display: block; padding: 15px 24px; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.70); border-bottom: 1px solid rgba(255,255,255,0.05); transition: color 0.2s, background 0.2s; }
-    .mobile-nav li a:hover { color: var(--gold); background: rgba(184,150,62,0.06); }
-    .mobile-nav li:last-child a { border-bottom: none; }
-    .mobile-nav-ordina { display: block; margin: 12px 24px 8px; padding: 13px 24px; text-align: center; background: var(--gold); color: var(--black); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.2s; }
-    .mobile-nav-ordina:hover { background: var(--gold-lt); }
-    @media (max-width: 768px) { .menu-btn { display: flex !important; } .main-nav { display: none !important; } }
 
+    .mobile-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 0 20px;
+    }
+
+    .mobile-nav li a {
+      display: block;
+      padding: 15px 24px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.70);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      transition: color .2s, background .2s;
+    }
+
+    .mobile-nav li a:hover {
+      color: var(--gold);
+      background: rgba(184,150,62,.06);
+    }
+
+    .mobile-nav li:last-child a { border-bottom: none; }
+
+    .mobile-nav-ordina {
+      display: block;
+      margin: 12px 24px 8px;
+      padding: 13px 24px;
+      text-align: center;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      transition: background .2s;
+    }
+
+    .mobile-nav-ordina:hover { background: var(--gold-lt); }
+
+    .rec-hero {
+      padding-top: var(--header-h);
+      background: var(--black);
+      padding-left: 60px;
+      padding-right: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rec-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 48px, rgba(184,150,62,.03) 48px, rgba(184,150,62,.03) 49px);
+      pointer-events: none;
+    }
+
+    .rec-hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 0 64px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      border-bottom: 1px solid rgba(184,150,62,.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .rec-hero-kicker {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: slideUp .8s var(--ease) .2s forwards;
+    }
+
+    .rec-hero-title {
+      font-family: var(--fd);
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -.01em;
+      opacity: 0;
+      animation: slideUp .9s var(--ease) .4s forwards;
+    }
+
+    .rec-hero-title em { font-style: italic; color: var(--gold-lt); }
+
+    .rec-hero-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,.45);
+      max-width: 420px;
+      line-height: 1.8;
+      margin-top: 18px;
+      opacity: 0;
+      animation: slideUp .9s var(--ease) .6s forwards;
+    }
+
+    .rec-hero-right {
+      text-align: right;
+      opacity: 0;
+      animation: slideUp .9s var(--ease) .7s forwards;
+    }
+
+    .rec-hero-stars {
+      font-size: 36px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      letter-spacing: 4px;
+    }
+
+    .rec-hero-tagline {
+      font-family: var(--fd);
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,.4);
+      font-style: italic;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rec-recent {
+      background: var(--navy);
+      padding: 80px 60px;
+      border-top: 1px solid rgba(184,150,62,.15);
+    }
+
+    .rec-recent-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .rec-recent-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .rec-recent-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .rec-recent-title {
+      font-family: var(--fd);
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: -.01em;
+      line-height: 1.1;
+    }
+
+    .rec-recent-title em { font-style: italic; color: var(--gold-lt); }
+
+    .rec-recent-hint {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,.3);
+      letter-spacing: .06em;
+    }
+
+    .rec-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 0 20px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(184,150,62,.3) transparent;
+    }
+
+    .rec-scroll::-webkit-scrollbar { height: 3px; }
+    .rec-scroll::-webkit-scrollbar-thumb {
+      background: rgba(184,150,62,.3);
+      border-radius: 2px;
+    }
+
+    .reviews-strip {
+      display: flex;
+      gap: 16px;
+      padding: 8px 0;
+    }
+
+    .rec-card {
+      flex: 0 0 auto;
+      width: 340px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(184,150,62,.1);
+      padding: 28px;
+      transition: background .3s, border-color .3s;
+    }
+
+    .rec-card:hover {
+      background: rgba(184,150,62,.07);
+      border-color: rgba(184,150,62,.25);
+    }
+
+    .rec-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 14px;
+    }
+
+    .rec-card-name {
+      font-family: var(--fd);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--white);
+    }
+
+    .rec-card-date {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,.3);
+      margin-top: 3px;
+    }
+
+    .rec-card-stars {
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      flex-shrink: 0;
+    }
+
+    .rec-card-text {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,.55);
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .rec-form-section {
+      background: var(--black);
+      padding: 100px 60px;
+      border-top: 1px solid rgba(184,150,62,.15);
+    }
+
+    .rec-form-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .rec-form-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .rec-form-title {
+      font-family: var(--fd);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -.01em;
+      margin-bottom: 24px;
+    }
+
+    .rec-form-title em { font-style: italic; color: var(--gold-lt); }
+
+    .rec-form-body {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,.45);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .rec-trust {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rec-trust-item {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .rec-trust-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .rec-trust-text {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,.4);
+    }
+
+    .rec-form-wrap {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(184,150,62,.12);
+      padding: 48px;
+    }
+
+    .rec-field { margin-bottom: 20px; }
+
+    .rec-field label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 8px;
+    }
+
+    .rec-field input[type="text"],
+    .rec-field input[type="email"],
+    .rec-field textarea,
+    .rec-field input[type="file"] {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--white);
+      font-family: var(--fb);
+      font-size: 14px;
+      transition: border-color .25s, background .25s;
+      outline: none;
+    }
+
+    .rec-field input::placeholder,
+    .rec-field textarea::placeholder {
+      color: rgba(255,255,255,.22);
+    }
+
+    .rec-field input:focus,
+    .rec-field textarea:focus {
+      border-color: var(--gold);
+      background: rgba(184,150,62,.06);
+    }
+
+    .rec-field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .rec-field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 34px;
+      line-height: 1;
+      cursor: pointer;
+      color: rgba(255,255,255,.2);
+      transition: color .2s, transform .2s;
+      margin-bottom: 0;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: var(--gold);
+      transform: scale(1.03);
+    }
+
+    .rating-value {
+      margin-top: 8px;
+      font-size: 11px;
+      color: rgba(255,255,255,.35);
+    }
+
+    .rec-char {
+      display: block;
+      text-align: right;
+      font-size: 11px;
+      color: rgba(255,255,255,.25);
+      margin-top: 4px;
+    }
+
+    .rec-privacy {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .rec-privacy input {
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--gold);
+    }
+
+    .rec-privacy-text {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,.35);
+      line-height: 1.6;
+    }
+
+    .rec-privacy-text a { color: var(--gold-lt); }
+
+    .rec-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background .25s, transform .25s;
+    }
+
+    .rec-submit:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+    }
+
+    .rec-submit:disabled {
+      opacity: .7;
+      cursor: wait;
+      transform: none;
+    }
+
+    .rec-msg {
+      margin-top: 14px;
+      padding: 14px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .rec-msg.success {
+      background: rgba(184,150,62,.12);
+      color: var(--gold-lt);
+      border: 1px solid rgba(184,150,62,.25);
+    }
+
+    .rec-msg.error {
+      background: rgba(200,50,50,.1);
+      color: #f88;
+      border: 1px solid rgba(200,50,50,.2);
+    }
+
+    .image-help {
+      font-size: 11px;
+      color: rgba(255,255,255,.3);
+      margin-top: 8px;
+    }
+
+    .image-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .preview-item {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgba(184,150,62,.18);
+      overflow: hidden;
+      background: rgba(255,255,255,.03);
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .preview-remove {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(10,10,10,.75);
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .reviews-full {
+      background: var(--navy);
+      padding: 80px 60px;
+      border-top: 1px solid rgba(184,150,62,.15);
+    }
+
+    .reviews-full-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .review-list-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .review-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(184,150,62,.1);
+      padding: 28px;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .reviewer-info h3 {
+      font-family: var(--fd);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .review-date {
+      font-size: 11px;
+      color: rgba(255,255,255,.35);
+      margin-top: 4px;
+    }
+
+    .review-stars {
+      color: var(--gold);
+      font-size: 14px;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    .review-comment {
+      font-size: 14px;
+      color: rgba(255,255,255,.58);
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .review-images {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
+    }
+
+    .review-images img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      border: 1px solid rgba(184,150,62,.15);
+      background: rgba(255,255,255,.03);
+    }
+
+    .wa-float {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 500;
+      width: 52px;
+      height: 52px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 28px rgba(184,150,62,.35);
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 40px rgba(184,150,62,.5);
+    }
+
+    .wa-float svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--black);
+    }
+
+    .site-footer {
+      background: var(--black);
+      padding: 80px 60px 40px;
+      border-top: 1px solid rgba(184,150,62,.15);
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .footer-logo {
+      font-family: var(--fd);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: .22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,.4);
+      max-width: 240px;
+    }
+
+    .footer-col-title {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col a {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,.45);
+      transition: color .2s;
+    }
+
+    .footer-col a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,.22);
+      letter-spacing: .08em;
+    }
+
+    .footer-claim {
+      font-family: var(--fd);
+      font-size: 13px;
+      font-style: italic;
+      color: var(--gold);
+      opacity: .55;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal--d1 { transition-delay: .1s; }
+    .reveal--d2 { transition-delay: .2s; }
+
+    @media (max-width: 1100px) {
+      .rec-form-inner { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .review-list-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --header-h: 64px; }
+
+      .menu-btn { display: flex !important; }
+      .main-nav { display: none !important; }
+
+      .rec-hero {
+        padding: var(--header-h) 20px 0;
+      }
+
+      .rec-hero-inner {
+        flex-direction: column;
+        padding: 56px 0 40px;
+      }
+
+      .rec-hero-right { text-align: left; }
+
+      .rec-recent,
+      .rec-form-section,
+      .reviews-full,
+      .site-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .rec-form-wrap { padding: 28px 20px; }
+      .rec-field-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; }
+    }
   </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
-  <!-- ══ HEADER ══ -->
   <header class="site-header" id="site-header">
-    <div class="header-inner" style="max-width:1280px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;position:relative;">
-      <!-- Nav sinistra — desktop -->
+    <div class="header-inner">
       <nav class="main-nav">
         <ul>
           <li><a href="catalogo.html">Catalogo</a></li>
@@ -279,23 +939,22 @@
           <li><a href="collaborazioni.html">Collaborazioni</a></li>
         </ul>
       </nav>
-      <!-- Hamburger — mobile only, a sinistra -->
+
       <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
-      <!-- Logo centro -->
+
       <a href="index.html" class="logo-wrap" aria-label="33GIRI Home" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;">
         <img src="Screenshot bg-preview.png" alt="33GIRI" class="logo-img-header">
       </a>
-      <!-- Azioni destra — desktop -->
-      <div class="header-actions" style="display:flex;align-items:center;gap:20px;">
-        <a href="quiz.html" style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.55);transition:color 0.2s;">33Quiz</a>
-        <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);letter-spacing:0.15em;font-size:11px;font-weight:600;">Ordina →</a>
+
+      <div class="header-actions">
+        <a href="quiz.html">33Quiz</a>
+        <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600;">Ordina →</a>
       </div>
     </div>
   </header>
 
-  <!-- Drawer mobile -->
   <nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
     <ul>
       <li><a href="catalogo.html">Catalogo</a></li>
@@ -310,314 +969,269 @@
     <a href="https://wa.me/393925430575" target="_blank" class="mobile-nav-ordina">Ordina su WhatsApp →</a>
   </nav>
 
-<!-- HERO -->
-<section class="rec-hero">
-  <div class="rec-hero-inner">
-    <div class="rec-hero-left">
-      <div class="rec-hero-kicker">Clienti reali · Esperienze autentiche</div>
-      <h1 class="rec-hero-title">La tua<br><em>opinione conta.</em></h1>
-      <p class="rec-hero-sub">Ogni recensione ci aiuta a migliorare e a far capire cosa rende speciali i nostri pezzi. Raccontaci la tua esperienza — basta un minuto.</p>
-    </div>
-    <div class="rec-hero-right">
-      <div class="rec-hero-stars">★★★★★</div>
-      <div class="rec-hero-tagline">Pezzi unici, storie vere.</div>
-    </div>
-  </div>
-</section>
-
-<!-- RECENSIONI RECENTI -->
-<section class="rec-recent">
-  <div class="rec-recent-inner">
-    <div class="rec-recent-header">
-      <div>
-        <div class="rec-recent-label reveal">Cosa dicono</div>
-        <h2 class="rec-recent-title reveal reveal--d1">Recensioni <em>recenti.</em></h2>
+  <section class="rec-hero">
+    <div class="rec-hero-inner">
+      <div class="rec-hero-left">
+        <div class="rec-hero-kicker">Clienti reali · Esperienze autentiche</div>
+        <h1 class="rec-hero-title">La tua<br><em>opinione conta.</em></h1>
+        <p class="rec-hero-sub">
+          Ogni recensione ci aiuta a migliorare e a far capire cosa rende speciali i nostri pezzi.
+          Raccontaci la tua esperienza — basta un minuto.
+        </p>
       </div>
-      <div class="rec-recent-hint reveal">← scorri →</div>
+      <div class="rec-hero-right">
+        <div class="rec-hero-stars">★★★★★</div>
+        <div class="rec-hero-tagline">Pezzi unici, storie vere.</div>
+      </div>
     </div>
-    <!-- Strip statica (le recensioni da Supabase vengono aggiunte via JS) -->
-    <div class="rec-scroll">
-      <div class="rec-strip" id="rec-strip">
-        <!-- Placeholder finché non carica Supabase -->
-        <div class="rec-card">
-          <div class="rec-card-top">
-            <div><div class="rec-card-name">Le recensioni arrivano…</div><div class="rec-card-date">in caricamento</div></div>
-            <div class="rec-card-stars">★★★★★</div>
+  </section>
+
+  <section class="rec-recent">
+    <div class="rec-recent-inner">
+      <div class="rec-recent-header">
+        <div>
+          <div class="rec-recent-label reveal">Cosa dicono</div>
+          <h2 class="rec-recent-title reveal reveal--d1">Recensioni <em>recenti.</em></h2>
+        </div>
+        <div class="rec-recent-hint reveal">← scorri →</div>
+      </div>
+
+      <div class="rec-scroll">
+        <div class="reviews-strip">
+          <div class="rec-card">
+            <div class="rec-card-top">
+              <div>
+                <div class="rec-card-name">Le recensioni arrivano…</div>
+                <div class="rec-card-date">in caricamento</div>
+              </div>
+              <div class="rec-card-stars">★★★★★</div>
+            </div>
+            <div class="rec-card-text">Sii il primo a lasciare una recensione qui sotto.</div>
           </div>
-          <div class="rec-card-text">Sii il primo a lasciare una recensione qui sotto.</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FORM -->
-<section class="rec-form-section" id="form-rec">
-  <div class="rec-form-inner">
+  <section class="rec-form-section" id="form-rec">
+    <div class="rec-form-inner">
+      <div class="rec-form-left reveal">
+        <div class="rec-form-label">La tua voce</div>
+        <h2 class="rec-form-title">Raccontaci<br>com'è<br><em>andata.</em></h2>
+        <p class="rec-form-body">
+          Hai ricevuto un pezzo? Hai regalato uno svuotatasche? Hai fatto una collab con noi?
+          Ogni esperienza è diversa — e ognuna conta.
+        </p>
 
-    <!-- Sinistra -->
-    <div class="rec-form-left reveal">
-      <div class="rec-form-label">La tua voce</div>
-      <h2 class="rec-form-title">
-        Raccontaci<br>com'è<br><em>andata.</em>
-      </h2>
-      <p class="rec-form-body">Hai ricevuto un pezzo? Hai regalato uno svuotatasche? Hai fatto una collab con noi? Ogni esperienza è diversa — e ognuna conta.</p>
-      <div class="rec-trust">
-        <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">Le recensioni vengono pubblicate direttamente</div></div>
-        <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">Nessuna moderazione: parole tue, non nostre</div></div>
-        <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">Puoi aggiungere foto del tuo pezzo</div></div>
-        <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">L'email è opzionale e non viene mostrata</div></div>
+        <div class="rec-trust">
+          <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">Le recensioni vengono pubblicate direttamente</div></div>
+          <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">Puoi aggiungere fino a 5 foto del tuo pezzo</div></div>
+          <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">L'email è opzionale e non viene mostrata</div></div>
+          <div class="rec-trust-item"><div class="rec-trust-dot"></div><div class="rec-trust-text">Commenti fino a 500 caratteri</div></div>
+        </div>
       </div>
-    </div>
 
-    <!-- Form destra -->
-    <div class="rec-form-right reveal reveal--d1">
-      <div class="rec-form-wrap">
-        <form id="reviewForm" onsubmit="submitReview(event)">
-          <div class="rec-field-row">
+      <div class="rec-form-right reveal reveal--d1">
+        <div class="rec-form-wrap">
+          <form id="reviewForm">
+            <div class="rec-field-row">
+              <div class="rec-field">
+                <label for="reviewerName">Nome *</label>
+                <input type="text" id="reviewerName" required placeholder="Mario Rossi">
+              </div>
+
+              <div class="rec-field">
+                <label for="reviewerEmail">Email (opzionale)</label>
+                <input type="email" id="reviewerEmail" placeholder="mario@email.com">
+              </div>
+            </div>
+
             <div class="rec-field">
-              <label>Nome *</label>
-              <input type="text" id="reviewerName" required placeholder="Mario Rossi">
+              <label>Valutazione *</label>
+
+              <div class="star-rating" aria-label="Valutazione da 1 a 5 stelle">
+                <input type="radio" id="star5" name="rating" value="5">
+                <label for="star5" title="5 stelle">★</label>
+
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" title="4 stelle">★</label>
+
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" title="3 stelle">★</label>
+
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" title="2 stelle">★</label>
+
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" title="1 stella">★</label>
+              </div>
+
+              <div class="rating-value" id="ratingValue"></div>
             </div>
+
             <div class="rec-field">
-              <label>Email (opzionale)</label>
-              <input type="email" id="reviewerEmail" placeholder="mario@email.com">
+              <label for="reviewComment">
+                Commento *
+                <span class="rec-char"><span id="charCount">0</span>/500</span>
+              </label>
+              <textarea
+                id="reviewComment"
+                required
+                maxlength="500"
+                placeholder="Raccontaci la tua esperienza..."
+              ></textarea>
             </div>
-          </div>
 
-          <div class="rec-field">
-            <label>Valutazione *</label>
-            <div class="rec-stars-wrap" id="stars-wrap">
-              <span class="rec-star" data-val="1">★</span>
-              <span class="rec-star" data-val="2">★</span>
-              <span class="rec-star" data-val="3">★</span>
-              <span class="rec-star" data-val="4">★</span>
-              <span class="rec-star" data-val="5">★</span>
+            <div class="rec-field">
+              <label for="reviewImages">Foto del pezzo (opzionale)</label>
+              <input type="file" id="reviewImages" accept="image/*" multiple>
+              <div class="image-help">Massimo 5 immagini, massimo 5MB ciascuna.</div>
+              <div id="imagePreview" class="image-preview"></div>
             </div>
-            <div class="rec-star-label" id="star-label">Clicca per valutare</div>
-            <input type="hidden" id="ratingVal" value="0">
-          </div>
 
-          <div class="rec-field">
-            <label>Commento * <span class="rec-char"><span id="charCount">0</span>/500</span></label>
-            <textarea id="reviewComment" required maxlength="500"
-              placeholder="Raccontaci la tua esperienza..."></textarea>
-          </div>
+            <div class="rec-privacy">
+              <input type="checkbox" id="privacyConsent" required>
+              <div class="rec-privacy-text">
+                Acconsento al trattamento dei dati personali secondo l'
+                <a href="informativa-privacy.html" target="_blank">informativa privacy</a> *
+              </div>
+            </div>
 
-          <div class="rec-privacy">
-            <input type="checkbox" id="privacyConsent" required>
-            <div class="rec-privacy-text">Acconsento al trattamento dei dati personali secondo l'<a href="informativa-privacy.html" target="_blank">informativa privacy</a> *</div>
-          </div>
+            <button type="submit" class="rec-submit">
+              <span class="btn-text">Invia recensione</span>
+              <span class="btn-loader" style="display:none;">Invio…</span>
+            </button>
 
-          <button type="submit" class="rec-submit" id="rec-submit-btn">
-            Invia recensione
-          </button>
-          <div class="rec-msg" id="rec-msg"></div>
-        </form>
+            <div class="rec-msg" id="formMessage"></div>
+          </form>
+        </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <section class="reviews-full">
+    <div class="reviews-full-inner">
+      <div class="rec-recent-label reveal">Archivio</div>
+      <h2 class="rec-recent-title reveal reveal--d1">Tutte le recensioni <em>più recenti.</em></h2>
+      <div id="recentReviewsList" class="review-list-grid"></div>
+    </div>
+  </section>
 
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">33GIRI</div>
-        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">33GIRI</div>
+          <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-col-title">Naviga</div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="catalogo.html">Catalogo</a></li>
+            <li><a href="chi_siamo.html">Chi siamo</a></li>
+            <li><a href="collaborazioni.html">Collaborazioni</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-col-title">Info</div>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="resi-rimborsi.html">Resi</a></li>
+            <li><a href="informativa-privacy.html">Privacy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-col-title">Contatti</div>
+          <ul>
+            <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+            <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Naviga</div>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="catalogo.html">Catalogo</a></li>
-          <li><a href="chi_siamo.html">Chi siamo</a></li>
-          <li><a href="collaborazioni.html">Collaborazioni</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Info</div>
-        <ul>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="resi-rimborsi.html">Resi</a></li>
-          <li><a href="informativa-privacy.html">Privacy</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Contatti</div>
-        <ul>
-          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
-          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
-        </ul>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+        <span class="footer-claim">Reshape the Art</span>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
-      <span class="footer-claim">Reshape the Art</span>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-<a class="wa-float" href="https://wa.me/393925430575" target="_blank">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+  <a class="wa-float" href="https://wa.me/393925430575" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
 
-<script>
-(function(){
-  // Header scroll
-  const header=document.getElementById('site-header');
-  window.addEventListener('scroll',()=>{header.style.background=window.scrollY>40?'rgba(10,10,10,.98)':'rgba(10,10,10,.94)';},{passive:true});
+  <script>
+    (function () {
+      const header = document.getElementById("site-header");
+      window.addEventListener("scroll", () => {
+        header.style.background =
+          window.scrollY > 40 ? "rgba(10,10,10,.98)" : "rgba(10,10,10,.94)";
+      }, { passive: true });
 
-  // Reveal
-  const els=document.querySelectorAll('.reveal');
-  const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.1});
-  els.forEach(el=>io.observe(el));
+      const els = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
 
-  // Star rating
-  let rating=0;
-  const stars=document.querySelectorAll('.rec-star');
-  const ratingVal=document.getElementById('ratingVal');
-  const starLabel=document.getElementById('star-label');
-  const labels=['','1 stella','2 stelle','3 stelle','4 stelle','5 stelle — eccellente!'];
-  stars.forEach(star=>{
-    star.addEventListener('mouseenter',()=>{
-      const v=parseInt(star.dataset.val);
-      stars.forEach((s,i)=>s.style.color=i<v?'var(--gold)':'rgba(255,255,255,.2)');
-    });
-    star.addEventListener('mouseleave',()=>{
-      stars.forEach((s,i)=>s.style.color=i<rating?'var(--gold)':'rgba(255,255,255,.2)');
-    });
-    star.addEventListener('click',()=>{
-      rating=parseInt(star.dataset.val);
-      ratingVal.value=rating;
-      stars.forEach((s,i)=>{
-        s.style.color=i<rating?'var(--gold)':'rgba(255,255,255,.2)';
-        s.classList.toggle('is-active',i<rating);
-      });
-      starLabel.textContent=labels[rating];
-    });
-  });
+      els.forEach((el) => io.observe(el));
 
+      const btn = document.getElementById("menuBtn");
+      const drawer = document.getElementById("mobileNav");
 
-  // ── HAMBURGER MENU ──
-  (function(){
-    const btn    = document.getElementById('menuBtn');
-    const drawer = document.getElementById('mobileNav');
-    if(!btn||!drawer)return;
-    btn.addEventListener('click',()=>{
-      const isOpen=drawer.classList.toggle('is-open');
-      btn.classList.toggle('is-open',isOpen);
-      btn.setAttribute('aria-expanded',isOpen);
-      document.body.style.overflow=isOpen?'hidden':'';
-    });
-    drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-      drawer.classList.remove('is-open');
-      btn.classList.remove('is-open');
-      btn.setAttribute('aria-expanded','false');
-      document.body.style.overflow='';
-    }));
-    document.addEventListener('click',(e)=>{
-      if(drawer.classList.contains('is-open')&&!drawer.contains(e.target)&&!btn.contains(e.target)){
-        drawer.classList.remove('is-open');
-        btn.classList.remove('is-open');
-        btn.setAttribute('aria-expanded','false');
-        document.body.style.overflow='';
+      if (btn && drawer) {
+        btn.addEventListener("click", () => {
+          const isOpen = drawer.classList.toggle("is-open");
+          btn.classList.toggle("is-open", isOpen);
+          btn.setAttribute("aria-expanded", String(isOpen));
+          document.body.style.overflow = isOpen ? "hidden" : "";
+        });
+
+        drawer.querySelectorAll("a").forEach((a) => {
+          a.addEventListener("click", () => {
+            drawer.classList.remove("is-open");
+            btn.classList.remove("is-open");
+            btn.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+          });
+        });
+
+        document.addEventListener("click", (e) => {
+          if (
+            drawer.classList.contains("is-open") &&
+            !drawer.contains(e.target) &&
+            !btn.contains(e.target)
+          ) {
+            drawer.classList.remove("is-open");
+            btn.classList.remove("is-open");
+            btn.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+          }
+        });
       }
-    });
-  })();
+    })();
+  </script>
 
-  // Char count
-  const comment=document.getElementById('reviewComment');
-  const cc=document.getElementById('charCount');
-  comment.addEventListener('input',()=>cc.textContent=comment.value.length);
-})();
-
-// Supabase load reviews
-(async function(){
-  try{
-    const cfg=window.__SUPABASE__;
-    if(!cfg) return;
-    const res=await fetch(`${cfg.url}/rest/v1/reviews?select=name,rating,comment,created_at&order=created_at.desc&limit=20`,{
-      headers:{'apikey':cfg.anonKey,'Authorization':'Bearer '+cfg.anonKey}
-    });
-    if(!res.ok) return;
-    const rows=await res.json();
-    if(!rows.length) return;
-    const strip=document.getElementById('rec-strip');
-    strip.innerHTML=rows.map(r=>{
-      const stars='★'.repeat(Math.max(1,Math.min(5,r.rating||5)))+'☆'.repeat(5-Math.max(1,Math.min(5,r.rating||5)));
-      const date=new Date(r.created_at).toLocaleDateString('it-IT',{year:'numeric',month:'long',day:'numeric'});
-      return `<div class="rec-card">
-        <div class="rec-card-top">
-          <div><div class="rec-card-name">${r.name||'Anonimo'}</div><div class="rec-card-date">${date}</div></div>
-          <div class="rec-card-stars">${stars}</div>
-        </div>
-        <div class="rec-card-text">${r.comment||''}</div>
-      </div>`;
-    }).join('');
-  }catch(e){}
-})();
-
-// Submit review via Supabase
-async function submitReview(e){
-  e.preventDefault();
-  const name=document.getElementById('reviewerName').value.trim();
-  const email=document.getElementById('reviewerEmail').value.trim();
-  const rating=parseInt(document.getElementById('ratingVal').value)||0;
-  const comment=document.getElementById('reviewComment').value.trim();
-  const privacy=document.getElementById('privacyConsent').checked;
-  const msg=document.getElementById('rec-msg');
-  const btn=document.getElementById('rec-submit-btn');
-
-  if(!name){showMsg('Inserisci il tuo nome.','error');return}
-  if(!rating){showMsg('Seleziona una valutazione.','error');return}
-  if(!comment){showMsg('Scrivi un commento.','error');return}
-  if(!privacy){showMsg("Accetta l'informativa privacy.","error");return}
-
-  btn.textContent='Invio…';btn.disabled=true;
-
-  try{
-    const cfg=window.__SUPABASE__;
-    if(!cfg) throw new Error('Configurazione mancante');
-    const res=await fetch(`${cfg.url}/rest/v1/reviews`,{
-      method:'POST',
-      headers:{
-        'apikey':cfg.anonKey,
-        'Authorization':'Bearer '+cfg.anonKey,
-        'Content-Type':'application/json',
-        'Prefer':'return=minimal'
-      },
-      body:JSON.stringify({name,email:email||null,rating,comment})
-    });
-    if(!res.ok) throw new Error('Errore invio');
-    showMsg('Grazie! La tua recensione è stata pubblicata. ✓','success');
-    e.target.reset();
-    document.querySelectorAll('.rec-star').forEach(s=>s.style.color='rgba(255,255,255,.2)');
-    document.getElementById('charCount').textContent='0';
-    document.getElementById('star-label').textContent='Clicca per valutare';
-  }catch(err){
-    showMsg('Errore durante l\'invio. Riprova o scrivici su WhatsApp.','error');
-  }
-  btn.textContent='Invia recensione';btn.disabled=false;
-
-  function showMsg(text,type){
-    msg.textContent=text;
-    msg.className='rec-msg '+type;
-    msg.style.display='block';
-    setTimeout(()=>msg.style.display='none',6000);
-  }
-}
-</script>
-
-<!-- Supabase SDK (opzionale se già caricato altrove) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onload="
-  if(window.__SUPABASE__&&!window.__SB_CLIENT__){
-    window.__SB_CLIENT__=window.supabase.createClient(window.__SUPABASE__.url,window.__SUPABASE__.anonKey);
-  }
-"></script>
-<script src="assets/js/config.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config.js"></script>
+  <script>
+    if (window.__SUPABASE__ && !window.__SB_CLIENT__ && window.supabase) {
+      window.__SB_CLIENT__ = window.supabase.createClient(
+        window.__SUPABASE__.url,
+        window.__SUPABASE__.anonKey
+      );
+    } else {
+      console.warn("Supabase config non trovata o SDK non caricato.");
+    }
+  </script>
+  <script src="assets/js/reviews.js"></script>
 </body>
 </html>
