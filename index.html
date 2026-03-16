@@ -6,15 +6,11 @@
   <meta name="description" content="33GIRI — Oggetti di design upcycling da vinili reali. Posacenere e svuotatasche handmade, pezzi unici Made in Italy." />
   <title>33GIRI — Reshape the Art</title>
 
-  <!-- Google Fonts: Cormorant Garamond (display elegante) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
 
   <style>
-    /* ─────────────────────────────────
-       RESET & ROOT
-    ───────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -29,1128 +25,281 @@
       --text-muted:#6b6560;
       --white:    #ffffff;
       --header-h: 80px;
-
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-body:    'DM Sans', system-ui, sans-serif;
-
       --wrap: 1280px;
-      --radius: 2px;
-
       --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     html { scroll-behavior: smooth; font-size: 16px; }
-
-    body {
-      background: var(--cream);
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
+    body { background: var(--cream); color: var(--text); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 32px; }
 
-    .wrap {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      padding: 0 32px;
-    }
-
-    /* ─────────────────────────────────
-       NOISE TEXTURE OVERLAY
-    ───────────────────────────────── */
+    /* NOISE */
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.6;
+      background-repeat: repeat; pointer-events: none; z-index: 9999; opacity: 0.6;
     }
 
-    /* ─────────────────────────────────
-       HEADER
-    ───────────────────────────────── */
-    .site-header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      height: var(--header-h);
-      background: rgba(10, 10, 10, 0.94);
-      backdrop-filter: blur(12px) saturate(120%);
-      border-bottom: 1px solid rgba(184, 150, 62, 0.18);
-      transition: background 0.3s var(--ease-smooth);
-    }
-
-    .header-inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* Logo */
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .logo-mark {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 22px;
-      letter-spacing: 0.22em;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-    .logo-dot {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--gold);
-      display: inline-block;
-      margin: 0 2px;
-    }
-
-    /* Nav */
-    .main-nav ul {
-      list-style: none;
-      display: flex;
-      gap: 36px;
-      align-items: center;
-    }
-    .main-nav a {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.72);
-      transition: color 0.25s;
-      position: relative;
-    }
-    .main-nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px; left: 0;
-      width: 0; height: 1px;
-      background: var(--gold);
-      transition: width 0.3s var(--ease-smooth);
-    }
+    /* HEADER */
+    .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--header-h); background: rgba(10,10,10,0.94); backdrop-filter: blur(12px) saturate(120%); border-bottom: 1px solid rgba(184,150,62,0.18); transition: background 0.3s var(--ease-smooth); }
+    .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .logo-wrap { display: flex; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); }
+    .logo-mark { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+    .logo-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); display: inline-block; margin: 0 2px; }
+    .main-nav ul { list-style: none; display: flex; gap: 36px; align-items: center; }
+    .main-nav a { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.72); transition: color 0.25s; position: relative; }
+    .main-nav a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s var(--ease-smooth); }
     .main-nav a:hover { color: var(--gold-lt); }
     .main-nav a:hover::after { width: 100%; }
-
-    /* Header actions */
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .header-actions a {
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      transition: color 0.2s;
-    }
+    .header-actions { display: flex; align-items: center; gap: 20px; }
+    .header-actions a { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); transition: color 0.2s; }
     .header-actions a:hover { color: var(--gold); }
+    .menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .menu-btn span { display: block; width: 24px; height: 1.5px; background: rgba(255,255,255,0.8); }
 
-    /* Hamburger mobile */
-    .nav-toggle { display: none; }
-    .menu-btn {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .menu-btn span {
-      display: block;
-      width: 24px; height: 1.5px;
-      background: rgba(255,255,255,0.8);
-      transition: transform 0.3s;
-    }
-
-    /* ─────────────────────────────────
-       HERO — FULLSCREEN CINEMATIC
-    ───────────────────────────────── */
+    /* ═══════════════════════════════
+       HERO — immagine centrata
+    ═══════════════════════════════ */
     .hero {
       position: relative;
-      height: 100vh;
-      min-height: 600px;
+      height: 100vh; min-height: 600px;
+      /* allineamento centrale sia orizzontale che verticale */
       display: flex;
-      align-items: flex-end;
+      align-items: center;
+      justify-content: center;
       background: var(--navy);
       overflow: hidden;
     }
 
-    /* Carousel immagini */
-    .hero-slides {
-      position: absolute;
-      inset: 0;
-    }
-    .hero-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 1.8s var(--ease-smooth);
-    }
+    .hero-slides { position: absolute; inset: 0; }
+    .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s var(--ease-smooth); }
     .hero-slide.is-active { opacity: 1; }
-    .hero-slide img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transform: scale(1.05);
-      animation: kenBurns 10s ease-out forwards;
-    }
+    .hero-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.05); animation: kenBurns 10s ease-out forwards; }
+    @keyframes kenBurns { from { transform: scale(1.05); } to { transform: scale(1.0); } }
 
-    @keyframes kenBurns {
-      from { transform: scale(1.05); }
-      to   { transform: scale(1.0); }
-    }
-
-    /* Gradient overlay */
     .hero-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0; z-index: 1;
       background:
-        linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.10) 100%),
-        linear-gradient(to right, rgba(10,10,10,0.20) 0%, transparent 60%);
-      z-index: 1;
+        linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.42) 45%, rgba(10,10,10,0.52) 100%),
+        radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(10,10,10,0.38) 100%);
     }
 
-    /* Gold line accent */
-    .hero-gold-line {
-      position: absolute;
-      left: 48px; top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 180px;
-      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-      z-index: 2;
-      opacity: 0;
-      animation: fadeInLine 1.2s ease 0.8s forwards;
-    }
-    @keyframes fadeInLine {
-      to { opacity: 0.6; }
-    }
-
+    /* Inner: colonna centrata */
     .hero-inner {
-      position: relative;
-      z-index: 2;
-      padding: 0 80px 80px;
+      position: relative; z-index: 2;
       width: 100%;
+      padding: 0 40px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;    /* centrato orizzontalmente */
+      text-align: center;
     }
 
-    .hero-kicker {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: slideUp 0.8s var(--ease-smooth) 0.3s forwards;
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(52px, 8vw, 110px);
-      font-weight: 300;
-      line-height: 1.0;
-      color: var(--white);
-      letter-spacing: -0.01em;
+    /* Logo immagine */
+    .hero-logo-img {
       margin-bottom: 28px;
       opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.5s forwards;
+      animation: slideUp 1s var(--ease-smooth) 0.3s forwards;
     }
-    .hero-title em {
-      font-style: italic;
-      color: var(--gold-lt);
+    .hero-logo-img-el {
+      width: clamp(260px, 40vw, 580px);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 28px rgba(184,150,62,0.22));
     }
 
+    /* Testo sotto */
     .hero-sub {
-      font-size: 14px;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.60);
-      max-width: 420px;
-      line-height: 1.8;
+      font-size: 15px; font-weight: 300;
+      letter-spacing: 0.07em;
+      color: rgba(255,255,255,0.58);
+      max-width: 480px; line-height: 1.85;
       margin-bottom: 44px;
       opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.7s forwards;
+      animation: slideUp 0.9s var(--ease-smooth) 0.6s forwards;
     }
 
+    /* Bottoni */
     .hero-ctas {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center; justify-content: center;
       gap: 24px;
       opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.9s forwards;
+      animation: slideUp 0.9s var(--ease-smooth) 0.85s forwards;
     }
 
-    /* Dot indicators */
-    .hero-dots {
-      position: absolute;
-      right: 48px;
-      bottom: 80px;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .hero-dot {
-      width: 2px; height: 32px;
-      background: rgba(255,255,255,0.2);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+    /* Dot nav */
+    .hero-dots { position: absolute; right: 48px; bottom: 48px; z-index: 3; display: flex; flex-direction: column; gap: 10px; }
+    .hero-dot { width: 2px; height: 32px; background: rgba(255,255,255,0.2); cursor: pointer; transition: background 0.3s; }
     .hero-dot.is-active { background: var(--gold); height: 48px; }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ─────────────────────────────────
-       BUTTONS
-    ───────────────────────────────── */
-    .btn-gold {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 36px;
-      background: var(--gold);
-      color: var(--black);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: background 0.25s, transform 0.25s;
-    }
-    .btn-gold:hover {
-      background: var(--gold-lt);
-      transform: translateY(-2px);
-    }
+    /* BUTTONS */
+    .btn-gold { display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; background: var(--gold); color: var(--black); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.25s, transform 0.25s; }
+    .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 13px 34px; background: transparent; color: rgba(255,255,255,0.75); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; transition: border-color 0.25s, color 0.25s; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-black { display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; background: var(--black); color: var(--white); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.25s, transform 0.25s; }
+    .btn-black:hover { background: #1a1a1a; transform: translateY(-2px); }
 
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 34px;
-      background: transparent;
-      color: rgba(255,255,255,0.75);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.25);
-      cursor: pointer;
-      transition: border-color 0.25s, color 0.25s;
-    }
-    .btn-outline:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-    }
+    /* TICKER */
+    .ticker { background: var(--gold); overflow: hidden; padding: 14px 0; position: relative; z-index: 2; }
+    .ticker-track { display: flex; white-space: nowrap; animation: ticker 28s linear infinite; }
+    .ticker-item { flex-shrink: 0; padding: 0 48px; font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--black); }
+    .ticker-sep { flex-shrink: 0; padding: 0 12px; color: rgba(0,0,0,0.35); font-size: 10px; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    .btn-black {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 36px;
-      background: var(--black);
-      color: var(--white);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: background 0.25s, transform 0.25s;
-    }
-    .btn-black:hover {
-      background: #1a1a1a;
-      transform: translateY(-2px);
-    }
-
-    /* ─────────────────────────────────
-       MARQUEE / TICKER
-    ───────────────────────────────── */
-    .ticker {
-      background: var(--gold);
-      overflow: hidden;
-      padding: 14px 0;
-      position: relative;
-      z-index: 2;
-    }
-    .ticker-track {
-      display: flex;
-      white-space: nowrap;
-      animation: ticker 28s linear infinite;
-    }
-    .ticker-item {
-      flex-shrink: 0;
-      padding: 0 48px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--black);
-    }
-    .ticker-sep {
-      flex-shrink: 0;
-      padding: 0 12px;
-      color: rgba(0,0,0,0.35);
-      font-size: 10px;
-    }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* ─────────────────────────────────
-       SEZIONE: MANIFESTO
-    ───────────────────────────────── */
-    .manifesto {
-      background: var(--black);
-      padding: 120px 32px;
-    }
-    .manifesto-inner {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: center;
-    }
-    .manifesto-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 32px;
-    }
-    .manifesto-text {
-      font-family: var(--font-display);
-      font-size: clamp(32px, 4vw, 52px);
-      font-weight: 300;
-      line-height: 1.25;
-      color: var(--white);
-      letter-spacing: -0.01em;
-    }
-    .manifesto-text em {
-      font-style: italic;
-      color: var(--gold-lt);
-    }
-    .manifesto-body {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 1.9;
-      color: rgba(255,255,255,0.55);
-      margin-top: 40px;
-    }
+    /* MANIFESTO */
+    .manifesto { background: var(--black); padding: 120px 32px; }
+    .manifesto-inner { max-width: var(--wrap); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+    .manifesto-label { font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; }
+    .manifesto-text { font-family: var(--font-display); font-size: clamp(32px,4vw,52px); font-weight: 300; line-height: 1.25; color: var(--white); letter-spacing: -0.01em; }
+    .manifesto-text em { font-style: italic; color: var(--gold-lt); }
+    .manifesto-body { font-size: 14px; font-weight: 300; line-height: 1.9; color: rgba(255,255,255,0.55); margin-top: 40px; }
     .manifesto-body p + p { margin-top: 18px; }
-    .manifesto-right {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-    .manifesto-stat {
-      border-top: 1px solid rgba(184, 150, 62, 0.2);
-      padding-top: 28px;
-    }
-    .manifesto-stat-num {
-      font-family: var(--font-display);
-      font-size: 56px;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .manifesto-stat-label {
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.45);
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
+    .manifesto-right { display: flex; flex-direction: column; gap: 32px; }
+    .manifesto-stat { border-top: 1px solid rgba(184,150,62,0.2); padding-top: 28px; }
+    .manifesto-stat-num { font-family: var(--font-display); font-size: 56px; font-weight: 300; color: var(--gold); line-height: 1; }
+    .manifesto-stat-label { font-size: 11px; font-weight: 400; letter-spacing: 0.12em; color: rgba(255,255,255,0.45); text-transform: uppercase; margin-top: 6px; }
 
-    /* ─────────────────────────────────
-       SEZIONE: PRODOTTI (GRID)
-    ───────────────────────────────── */
-    .prodotti {
-      background: var(--cream);
-      padding: 120px 32px;
-    }
-    .section-header {
-      max-width: var(--wrap);
-      margin: 0 auto 64px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-    }
-    .section-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 5vw, 64px);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--black);
-      letter-spacing: -0.01em;
-    }
-    .section-title em {
-      font-style: italic;
-      color: var(--gold-dk);
-    }
-    .prodotti-grid {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: 2px;
-    }
-
-    /* Card prodotto */
-    .prod-card {
-      position: relative;
-      overflow: hidden;
-      background: var(--black);
-      cursor: pointer;
-      group: true;
-    }
-    .prod-card-img {
-      width: 100%;
-      height: 520px;
-      object-fit: cover;
-      transition: transform 0.7s var(--ease-smooth), filter 0.5s;
-      filter: brightness(0.85);
-    }
-    .prod-card:hover .prod-card-img {
-      transform: scale(1.06);
-      filter: brightness(0.70);
-    }
-    .prod-card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%);
-      transition: opacity 0.4s;
-    }
-    .prod-card-content {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 28px 28px 32px;
-      transform: translateY(0);
-      transition: transform 0.4s var(--ease-smooth);
-    }
-    .prod-card-tag {
-      display: inline-block;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      padding: 4px 10px;
-      margin-bottom: 12px;
-    }
-    .prod-card-name {
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 400;
-      color: var(--white);
-      line-height: 1.1;
-      margin-bottom: 8px;
-    }
-    .prod-card-desc {
-      font-size: 12px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.60);
-      letter-spacing: 0.05em;
-      line-height: 1.6;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s 0.05s, transform 0.4s 0.05s var(--ease-smooth);
-    }
-    .prod-card:hover .prod-card-desc {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .prod-card-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 16px;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s 0.1s, transform 0.4s 0.1s var(--ease-smooth);
-    }
-    .prod-card:hover .prod-card-cta {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .prod-card-cta::after {
-      content: '→';
-      transition: transform 0.25s;
-    }
+    /* PRODOTTI */
+    .prodotti { background: var(--cream); padding: 120px 32px; }
+    .section-header { max-width: var(--wrap); margin: 0 auto 64px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(36px,5vw,64px); font-weight: 300; line-height: 1.1; color: var(--black); letter-spacing: -0.01em; }
+    .section-title em { font-style: italic; color: var(--gold-dk); }
+    .prodotti-grid { max-width: var(--wrap); margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2px; }
+    .prod-card { position: relative; overflow: hidden; background: var(--black); cursor: pointer; }
+    .prod-card-img { width: 100%; height: 520px; object-fit: cover; transition: transform 0.7s var(--ease-smooth), filter 0.5s; filter: brightness(0.85); }
+    .prod-card:hover .prod-card-img { transform: scale(1.06); filter: brightness(0.70); }
+    .prod-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%); }
+    .prod-card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 28px 32px; }
+    .prod-card-tag { display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 4px 10px; margin-bottom: 12px; }
+    .prod-card-name { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--white); line-height: 1.1; margin-bottom: 8px; }
+    .prod-card-desc { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.60); letter-spacing: 0.05em; line-height: 1.6; opacity: 0; transform: translateY(12px); transition: opacity 0.4s 0.05s, transform 0.4s 0.05s var(--ease-smooth); }
+    .prod-card:hover .prod-card-desc { opacity: 1; transform: translateY(0); }
+    .prod-card-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0; transform: translateY(12px); transition: opacity 0.4s 0.1s, transform 0.4s 0.1s var(--ease-smooth); }
+    .prod-card:hover .prod-card-cta { opacity: 1; transform: translateY(0); }
+    .prod-card-cta::after { content: '→'; transition: transform 0.25s; }
     .prod-card:hover .prod-card-cta::after { transform: translateX(4px); }
-
-    /* Card grande (prima) */
     .prod-card--featured .prod-card-img { height: 520px; }
     .prod-card--small .prod-card-img { height: 256px; }
+    .prod-right { display: flex; flex-direction: column; gap: 2px; }
 
-    .prod-right {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    /* ─────────────────────────────────
-   SEZIONE: RECENSIONI
-───────────────────────────────── */
-    .recensioni {
-      background: var(--black);
-      padding: 120px 32px;
-      position: relative;
-      overflow: hidden;
-    }
-    .recensioni::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        90deg,
-        transparent, transparent 80px,
-        rgba(184,150,62,0.03) 80px,
-        rgba(184,150,62,0.03) 81px
-      );
-      pointer-events: none;
-    }
-    .recensioni-inner {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-    .recensioni-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 64px;
-    }
-    .recensioni-meta {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 14px;
-    }
-    .recensioni-stars-avg {
-      font-size: 22px;
-      color: var(--gold);
-      letter-spacing: 3px;
-    }
-    .recensioni-count {
-      font-size: 12px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.08em;
-    }
-    .recensioni-cta-link {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border-bottom: 1px solid rgba(184,150,62,0.3);
-      padding-bottom: 2px;
-      transition: border-color 0.25s, color 0.25s;
-      white-space: nowrap;
-    }
-    .recensioni-cta-link:hover {
-      color: var(--gold-lt);
-      border-color: var(--gold-lt);
-    }
-    .recensioni-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-    .rec-item {
-      border-top: 1px solid rgba(184,150,62,0.12);
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-    .rec-item:last-child {
-      border-bottom: 1px solid rgba(184,150,62,0.12);
-    }
-    .rec-item:hover {
-      background: rgba(184,150,62,0.03);
-    }
-    .rec-trigger {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 220px 1fr auto auto;
-      align-items: center;
-      gap: 32px;
-      padding: 28px 0;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-    }
-    .rec-trigger-name {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--white);
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-    }
-    .rec-trigger-preview {
-      font-size: 13px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.38);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      letter-spacing: 0.03em;
-    }
-    .rec-trigger-stars {
-      font-size: 13px;
-      color: var(--gold);
-      letter-spacing: 2px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .rec-trigger-icon {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 1px solid rgba(184,150,62,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      font-size: 18px;
-      font-weight: 300;
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.3s, background 0.3s;
-    }
-    .rec-item.is-open .rec-trigger-icon {
-      transform: rotate(45deg);
-      border-color: var(--gold);
-      background: rgba(184,150,62,0.1);
-    }
+    /* RECENSIONI */
+    .recensioni { background: var(--black); padding: 120px 32px; position: relative; overflow: hidden; }
+    .recensioni::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(184,150,62,0.03) 80px, rgba(184,150,62,0.03) 81px); pointer-events: none; }
+    .recensioni-inner { max-width: var(--wrap); margin: 0 auto; position: relative; z-index: 1; }
+    .recensioni-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; }
+    .recensioni-meta { display: flex; align-items: center; gap: 16px; margin-top: 14px; }
+    .recensioni-stars-avg { font-size: 22px; color: var(--gold); letter-spacing: 3px; }
+    .recensioni-count { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; }
+    .recensioni-cta-link { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid rgba(184,150,62,0.3); padding-bottom: 2px; transition: border-color 0.25s, color 0.25s; white-space: nowrap; }
+    .recensioni-cta-link:hover { color: var(--gold-lt); border-color: var(--gold-lt); }
+    .recensioni-list { display: flex; flex-direction: column; gap: 1px; }
+    .rec-item { border-top: 1px solid rgba(184,150,62,0.12); overflow: hidden; transition: background 0.3s; }
+    .rec-item:last-child { border-bottom: 1px solid rgba(184,150,62,0.12); }
+    .rec-item:hover { background: rgba(184,150,62,0.03); }
+    .rec-trigger { width: 100%; display: grid; grid-template-columns: 220px 1fr auto auto; align-items: center; gap: 32px; padding: 28px 0; background: transparent; border: none; cursor: pointer; text-align: left; }
+    .rec-trigger-name { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--white); letter-spacing: 0.01em; white-space: nowrap; }
+    .rec-trigger-preview { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.38); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.03em; }
+    .rec-trigger-stars { font-size: 13px; color: var(--gold); letter-spacing: 2px; white-space: nowrap; flex-shrink: 0; }
+    .rec-trigger-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(184,150,62,0.25); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 18px; font-weight: 300; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.3s, background 0.3s; }
+    .rec-item.is-open .rec-trigger-icon { transform: rotate(45deg); border-color: var(--gold); background: rgba(184,150,62,0.1); }
     .rec-item.is-open .rec-trigger-preview { opacity: 0; }
-    .rec-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
-    }
+    .rec-body { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1); }
     .rec-item.is-open .rec-body { max-height: 600px; }
-    .rec-body-inner {
-      padding: 0 0 36px 0;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 32px;
-      align-items: start;
-    }
+    .rec-body-inner { padding: 0 0 36px 0; display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
     .rec-body-meta { padding-top: 4px; }
-    .rec-body-date {
-      font-size: 11px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.25);
-      letter-spacing: 0.1em;
-      margin-bottom: 10px;
-    }
-    .rec-body-product {
-      display: inline-block;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(184,150,62,0.3);
-      padding: 4px 10px;
-    }
-    .rec-body-text {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 1.95;
-      color: rgba(255,255,255,0.60);
-      letter-spacing: 0.02em;
-      max-height: 320px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(184,150,62,0.3) transparent;
-      padding-right: 12px;
-    }
+    .rec-body-date { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.25); letter-spacing: 0.1em; margin-bottom: 10px; }
+    .rec-body-product { display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(184,150,62,0.3); padding: 4px 10px; }
+    .rec-body-text { font-size: 14px; font-weight: 300; line-height: 1.95; color: rgba(255,255,255,0.60); letter-spacing: 0.02em; max-height: 320px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(184,150,62,0.3) transparent; padding-right: 12px; }
     .rec-body-text::-webkit-scrollbar { width: 3px; }
-    .rec-body-text::-webkit-scrollbar-thumb {
-      background: rgba(184,150,62,0.3);
-      border-radius: 2px;
-    }
-    .rec-body-text::-webkit-scrollbar-track { background: transparent; }
-    
-    @media (max-width: 900px) {
-      .rec-trigger { grid-template-columns: 1fr auto auto; gap: 16px; }
-      .rec-trigger-name { font-size: 17px; }
-      .rec-trigger-preview { display: none; }
-      .rec-body-inner { grid-template-columns: 1fr; gap: 14px; }
-    }
-    @media (max-width: 768px) {
-      .recensioni { padding: 80px 20px; }
-      .recensioni-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .rec-trigger { padding: 22px 0; }
-    }
+    .rec-body-text::-webkit-scrollbar-thumb { background: rgba(184,150,62,0.3); border-radius: 2px; }
 
-    /* ─────────────────────────────────
-       SEZIONE: PROCESSO ARTIGIANALE
-    ───────────────────────────────── */
-    .processo {
-      background: var(--navy);
-      padding: 120px 32px;
-      position: relative;
-      overflow: hidden;
-    }
-    /* pattern vinile sottile */
-    .processo::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 62px,
-        rgba(184,150,62,0.04) 62px,
-        rgba(184,150,62,0.04) 63px
-      );
-      pointer-events: none;
-    }
-    .processo-inner {
-      max-width: var(--wrap);
-      margin: 0 auto;
-    }
-    .processo-steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      margin-top: 72px;
-    }
-    .step {
-      padding: 48px 36px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(184,150,62,0.1);
-      position: relative;
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .step:hover {
-      background: rgba(184,150,62,0.05);
-      border-color: rgba(184,150,62,0.3);
-    }
-    .step-num {
-      font-family: var(--font-display);
-      font-size: 80px;
-      font-weight: 300;
-      color: rgba(184,150,62,0.12);
-      line-height: 1;
-      position: absolute;
-      top: 20px; right: 24px;
-    }
-    .step-icon {
-      width: 32px; height: 1px;
-      background: var(--gold);
-      margin-bottom: 28px;
-    }
-    .step-title {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 14px;
-    }
-    .step-desc {
-      font-size: 13px;
-      font-weight: 300;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.45);
-    }
+    /* PROCESSO */
+    .processo { background: var(--navy); padding: 120px 32px; position: relative; overflow: hidden; }
+    .processo::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 62px, rgba(184,150,62,0.04) 62px, rgba(184,150,62,0.04) 63px); pointer-events: none; }
+    .processo-inner { max-width: var(--wrap); margin: 0 auto; }
+    .processo-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 72px; }
+    .step { padding: 48px 36px; background: rgba(255,255,255,0.03); border: 1px solid rgba(184,150,62,0.1); position: relative; transition: background 0.3s, border-color 0.3s; }
+    .step:hover { background: rgba(184,150,62,0.05); border-color: rgba(184,150,62,0.3); }
+    .step-num { font-family: var(--font-display); font-size: 80px; font-weight: 300; color: rgba(184,150,62,0.12); line-height: 1; position: absolute; top: 20px; right: 24px; }
+    .step-icon { width: 32px; height: 1px; background: var(--gold); margin-bottom: 28px; }
+    .step-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--white); margin-bottom: 14px; }
+    .step-desc { font-size: 13px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.45); }
 
-    /* ─────────────────────────────────
-       SEZIONE: CITAZIONE / CLAIM
-    ───────────────────────────────── */
-    .claim-section {
-      background: var(--gold);
-      padding: 100px 32px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .claim-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.18) 0%, transparent 60%);
-    }
-    .claim-text {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 6vw, 80px);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--black);
-      letter-spacing: -0.02em;
-      max-width: 1000px;
-      margin: 0 auto 12px;
-      position: relative;
-      z-index: 1;
-    }
+    /* CLAIM */
+    .claim-section { background: var(--gold); padding: 100px 32px; text-align: center; position: relative; overflow: hidden; }
+    .claim-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.18) 0%, transparent 60%); }
+    .claim-text { font-family: var(--font-display); font-size: clamp(36px,6vw,80px); font-weight: 300; line-height: 1.1; color: var(--black); letter-spacing: -0.02em; max-width: 1000px; margin: 0 auto 12px; position: relative; z-index: 1; }
     .claim-text em { font-style: italic; }
-    .claim-sub {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.5);
-      margin-top: 32px;
-      position: relative;
-      z-index: 1;
-    }
+    .claim-sub { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(0,0,0,0.5); margin-top: 32px; position: relative; z-index: 1; }
 
-    /* ─────────────────────────────────
-       SEZIONE: GALLERIA EDITORIALE
-    ───────────────────────────────── */
-    .galleria {
-      background: var(--cream);
-      padding: 120px 0 0;
-    }
-    .galleria-header {
-      padding: 0 32px 64px;
-      max-width: var(--wrap);
-      margin: 0 auto;
-    }
-    .galleria-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: 280px 280px;
-      gap: 2px;
-    }
-    .g-item {
-      position: relative;
-      overflow: hidden;
-      background: var(--black);
-    }
-    .g-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.7s var(--ease-smooth), filter 0.5s;
-      filter: brightness(0.9) saturate(0.9);
-    }
-    .g-item:hover img {
-      transform: scale(1.08);
-      filter: brightness(1) saturate(1.1);
-    }
-    /* Composizione speciale griglia */
+    /* GALLERIA */
+    .galleria { background: var(--cream); padding: 120px 0 0; }
+    .galleria-header { padding: 0 32px 64px; max-width: var(--wrap); margin: 0 auto; }
+    .galleria-grid { display: grid; grid-template-columns: repeat(5,1fr); grid-template-rows: 280px 280px; gap: 2px; }
+    .g-item { position: relative; overflow: hidden; background: var(--black); }
+    .g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease-smooth), filter 0.5s; filter: brightness(0.9) saturate(0.9); }
+    .g-item:hover img { transform: scale(1.08); filter: brightness(1) saturate(1.1); }
     .g-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-    .g-item:nth-child(2) { grid-column: span 1; }
-    .g-item:nth-child(3) { grid-column: span 1; }
-    .g-item:nth-child(4) { grid-column: span 1; }
     .g-item:nth-child(5) { grid-column: span 2; }
-    .g-item:nth-child(6) { grid-column: span 1; }
 
-    
-
-    /* ─────────────────────────────────
-       SEZIONE: CTA FINALE
-    ───────────────────────────────── */
-    .cta-section {
-      background: var(--cream);
-      padding: 160px 32px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-section::before {
-      content: '33';
-      position: absolute;
-      font-family: var(--font-display);
-      font-size: 560px;
-      font-weight: 700;
-      color: rgba(0,0,0,0.035);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      line-height: 1;
-      user-select: none;
-      pointer-events: none;
-    }
-    .cta-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 28px;
-      position: relative;
-    }
-    .cta-title {
-      font-family: var(--font-display);
-      font-size: clamp(44px, 7vw, 90px);
-      font-weight: 300;
-      color: var(--black);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin-bottom: 40px;
-      position: relative;
-    }
+    /* CTA */
+    .cta-section { background: var(--cream); padding: 160px 32px; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: '33'; position: absolute; font-family: var(--font-display); font-size: 560px; font-weight: 700; color: rgba(0,0,0,0.035); top: 50%; left: 50%; transform: translate(-50%,-50%); line-height: 1; user-select: none; pointer-events: none; }
+    .cta-label { font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; position: relative; }
+    .cta-title { font-family: var(--font-display); font-size: clamp(44px,7vw,90px); font-weight: 300; color: var(--black); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 40px; position: relative; }
     .cta-title em { font-style: italic; color: var(--gold-dk); }
-    .cta-btns {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      position: relative;
-    }
+    .cta-btns { display: flex; align-items: center; justify-content: center; gap: 20px; position: relative; }
 
-    /* ─────────────────────────────────
-       FOOTER
-    ───────────────────────────────── */
-    .site-footer {
-      background: var(--black);
-      padding: 80px 32px 40px;
-      border-top: 1px solid rgba(184,150,62,0.15);
-    }
-    .footer-inner {
-      max-width: var(--wrap);
-      margin: 0 auto;
-    }
-    .footer-top {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr 1fr;
-      gap: 60px;
-      padding-bottom: 64px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .footer-brand .footer-logo {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .footer-brand p {
-      font-size: 12px;
-      font-weight: 300;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.40);
-      max-width: 240px;
-    }
-    .footer-col-title {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.30);
-      margin-bottom: 20px;
-    }
+    /* FOOTER */
+    .site-footer { background: var(--black); padding: 80px 32px 40px; border-top: 1px solid rgba(184,150,62,0.15); }
+    .footer-inner { max-width: var(--wrap); margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 64px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-brand .footer-logo { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+    .footer-brand p { font-size: 12px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.40); max-width: 240px; }
+    .footer-col-title { font-size: 9px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.30); margin-bottom: 20px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col a {
-      font-size: 13px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.50);
-      transition: color 0.2s;
-    }
+    .footer-col a { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.50); transition: color 0.2s; }
     .footer-col a:hover { color: var(--gold); }
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 32px;
-    }
-    .footer-copy {
-      font-size: 11px;
-      color: rgba(255,255,255,0.25);
-      letter-spacing: 0.08em;
-    }
-    .footer-claim {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-style: italic;
-      color: var(--gold);
-      opacity: 0.6;
-    }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.08em; }
+    .footer-claim { font-family: var(--font-display); font-size: 13px; font-style: italic; color: var(--gold); opacity: 0.6; }
 
-    /* ─────────────────────────────────
-       WHATSAPP FLOAT
-    ───────────────────────────────── */
-    .wa-float {
-      position: fixed;
-      bottom: 32px; right: 32px;
-      z-index: 500;
-      width: 52px; height: 52px;
-      background: var(--gold);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 28px rgba(184,150,62,0.35);
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-    .wa-float:hover {
-      transform: scale(1.08);
-      box-shadow: 0 12px 40px rgba(184,150,62,0.50);
-    }
-    .wa-float svg {
-      width: 24px; height: 24px;
-      fill: var(--black);
-    }
+    /* WA */
+    .wa-float { position: fixed; bottom: 32px; right: 32px; z-index: 500; width: 52px; height: 52px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 28px rgba(184,150,62,0.35); transition: transform 0.25s, box-shadow 0.25s; }
+    .wa-float:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(184,150,62,0.50); }
+    .wa-float svg { width: 24px; height: 24px; fill: var(--black); }
 
-    /* ─────────────────────────────────
-       RESPONSIVE
-    ───────────────────────────────── */
+    /* RESPONSIVE */
     @media (max-width: 1100px) {
       .prodotti-grid { grid-template-columns: 1fr 1fr; }
       .prod-card--featured { grid-column: span 2; }
       .manifesto-inner { grid-template-columns: 1fr; gap: 60px; }
-      .processo-steps { grid-template-columns: repeat(2, 1fr); }
-      .galleria-grid {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: 220px 220px;
-      }
+      .processo-steps { grid-template-columns: repeat(2,1fr); }
+      .galleria-grid { grid-template-columns: repeat(3,1fr); grid-template-rows: 220px 220px; }
       .g-item:nth-child(1) { grid-column: span 3; grid-row: span 1; }
       .g-item:nth-child(5) { grid-column: span 1; }
-      .why-inner { grid-template-columns: 1fr; gap: 60px; }
-      .why-left { position: static; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .rec-trigger { grid-template-columns: 1fr auto auto; gap: 16px; }
+      .rec-trigger-preview { display: none; }
+      .rec-body-inner { grid-template-columns: 1fr; gap: 14px; }
     }
-
     @media (max-width: 768px) {
       :root { --header-h: 64px; }
-      .hero-inner { padding: 0 24px 60px; }
-      .hero-gold-line { display: none; }
-      .hero-dots { right: 24px; }
-      .manifesto, .prodotti, .processo, .galleria, .why, .cta-section { padding: 80px 20px; }
+      .hero-inner { padding: 0 20px 64px; }
+      .hero-logo-img-el { width: clamp(200px, 70vw, 340px); }
+      .hero-dots { right: 20px; bottom: 28px; }
+      .manifesto, .prodotti, .processo, .galleria, .cta-section { padding: 80px 20px; }
+      .recensioni { padding: 80px 20px; }
+      .recensioni-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .rec-trigger { padding: 22px 0; }
       .prodotti-grid { grid-template-columns: 1fr; }
       .prod-card--featured { grid-column: span 1; }
       .processo-steps { grid-template-columns: 1fr; }
@@ -1164,18 +313,9 @@
       .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
     }
 
-    /* ─────────────────────────────────
-       SCROLL REVEAL
-    ───────────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
-    }
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
     .reveal--delay-1 { transition-delay: 0.1s; }
     .reveal--delay-2 { transition-delay: 0.2s; }
     .reveal--delay-3 { transition-delay: 0.3s; }
@@ -1184,11 +324,9 @@
 
 <body>
 
-  <!-- ══════════════ HEADER ══════════════ -->
+  <!-- HEADER -->
   <header class="site-header" id="site-header">
     <div class="wrap header-inner">
-
-      <!-- Nav sinistra -->
       <nav class="main-nav">
         <ul>
           <li><a href="catalogo.html">Catalogo</a></li>
@@ -1196,33 +334,25 @@
           <li><a href="collaborazioni.html">Collaborazioni</a></li>
         </ul>
       </nav>
-
-      <!-- Hamburger mobile -->
       <label class="menu-btn" for="nav-toggle-cb" aria-label="Menu">
         <span></span><span></span><span></span>
       </label>
       <input type="checkbox" id="nav-toggle-cb" style="display:none">
-
-      <!-- Logo centro -->
       <a href="index.html" class="logo-wrap" aria-label="33GIRI Home">
         <span class="logo-mark">33<span class="logo-dot"></span>GIRI</span>
       </a>
-
-      <!-- Azioni destra -->
       <div class="header-actions">
         <a href="quiz.html">33Quiz</a>
-        <a href="https://wa.me/3471692948" target="_blank" style="color: var(--gold); letter-spacing:0.15em; font-size:11px; font-weight:600;">Ordina →</a>
+        <a href="https://wa.me/3471692948" target="_blank" style="color:var(--gold);letter-spacing:0.15em;font-size:11px;font-weight:600;">Ordina →</a>
       </div>
-
     </div>
   </header>
 
   <main>
 
-    <!-- ══════════════ HERO ══════════════ -->
+    <!-- ════════ HERO ════════ -->
     <section class="hero" id="home">
 
-      <!-- Slides -->
       <div class="hero-slides" id="heroSlides">
         <div class="hero-slide is-active">
           <img src="assets/atelier 33 giri/20251110-IMG_4557.jpg" alt="33GIRI Posacenere design" loading="eager">
@@ -1236,14 +366,15 @@
       </div>
 
       <div class="hero-overlay"></div>
-      <div class="hero-gold-line"></div>
 
-      <!-- Contenuto hero -->
+      <!-- Contenuto: centrato sia X che Y -->
       <div class="hero-inner">
-        <div class="hero-kicker">Made in Italy · Handmade · Upcycling design</div>
-        <h1 class="hero-title">
-          Reshape<br>
-          <em>the Art.</em>
+        <h1 class="hero-logo-img">
+          <img
+            src="Screenshot_2026-03-16_alle_02.45.18-removebg-preview.png"
+            alt="33GIRI — Reshape the Art"
+            class="hero-logo-img-el"
+          >
         </h1>
         <p class="hero-sub">
           Vinili reali trasformati in oggetti di design.<br>
@@ -1255,7 +386,6 @@
         </div>
       </div>
 
-      <!-- Dot nav -->
       <div class="hero-dots" id="heroDots">
         <div class="hero-dot is-active" data-idx="0"></div>
         <div class="hero-dot" data-idx="1"></div>
@@ -1264,10 +394,9 @@
 
     </section>
 
-    <!-- ══════════════ TICKER ══════════════ -->
+    <!-- TICKER -->
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track">
-        <!-- Duplicato per loop seamless -->
         <span class="ticker-item">Reshape the Art</span><span class="ticker-sep">·</span>
         <span class="ticker-item">Pezzi Unici</span><span class="ticker-sep">·</span>
         <span class="ticker-item">Made in Italy</span><span class="ticker-sep">·</span>
@@ -1283,81 +412,45 @@
       </div>
     </div>
 
-    <!-- ══════════════ MANIFESTO ══════════════ -->
+    <!-- MANIFESTO -->
     <section class="manifesto" id="manifesto">
       <div class="manifesto-inner">
-
         <div class="manifesto-left">
           <div class="manifesto-label reveal">Il progetto</div>
           <h2 class="manifesto-text reveal reveal--delay-1">
-            Un vinile<br>non smette<br>
-            <em>mai di suonare.</em>
+            Un vinile<br>non smette<br><em>mai di suonare.</em>
           </h2>
           <div class="manifesto-body reveal reveal--delay-2">
-            <p>
-              33GIRI nasce da una domanda semplice: cosa rimane di un disco quando la musica tace?
-              La risposta è nella materia — nel nero opaco del PVC, nei solchi che tracciano storie,
-              nell'etichetta che porta un'epoca.
-            </p>
-            <p>
-              Ogni vinile che scegliamo ha già vissuto. Noi gli diamo un'altra forma:
-              posacenere, svuotatasche, oggetti che abitano gli spazi con carattere.
-              Nessun pezzo è uguale all'altro. Non può esserlo.
-            </p>
+            <p>33GIRI nasce da una domanda semplice: cosa rimane di un disco quando la musica tace? La risposta è nella materia — nel nero opaco del PVC, nei solchi che tracciano storie, nell'etichetta che porta un'epoca.</p>
+            <p>Ogni vinile che scegliamo ha già vissuto. Noi gli diamo un'altra forma: posacenere, svuotatasche, oggetti che abitano gli spazi con carattere. Nessun pezzo è uguale all'altro. Non può esserlo.</p>
           </div>
         </div>
-
         <div class="manifesto-right">
-          <div class="manifesto-stat reveal">
-            <div class="manifesto-stat-num">100%</div>
-            <div class="manifesto-stat-label">Vinili reali riciclati</div>
-          </div>
-          <div class="manifesto-stat reveal reveal--delay-1">
-            <div class="manifesto-stat-num">1:1</div>
-            <div class="manifesto-stat-label">Ogni pezzo è unico — nessuna replica</div>
-          </div>
-          <div class="manifesto-stat reveal reveal--delay-2">
-            <div class="manifesto-stat-num">3</div>
-            <div class="manifesto-stat-label">Città — Bologna, Milano, Trento</div>
-          </div>
-          <div class="manifesto-stat reveal reveal--delay-3">
-            <div class="manifesto-stat-num">0</div>
-            <div class="manifesto-stat-label">Plastica vergine utilizzata</div>
-          </div>
+          <div class="manifesto-stat reveal"><div class="manifesto-stat-num">100%</div><div class="manifesto-stat-label">Vinili reali riciclati</div></div>
+          <div class="manifesto-stat reveal reveal--delay-1"><div class="manifesto-stat-num">1:1</div><div class="manifesto-stat-label">Ogni pezzo è unico — nessuna replica</div></div>
+          <div class="manifesto-stat reveal reveal--delay-2"><div class="manifesto-stat-num">3</div><div class="manifesto-stat-label">Città — Bologna, Milano, Trento</div></div>
+          <div class="manifesto-stat reveal reveal--delay-3"><div class="manifesto-stat-num">0</div><div class="manifesto-stat-label">Plastica vergine utilizzata</div></div>
         </div>
-
       </div>
     </section>
 
-    <!-- ══════════════ PRODOTTI ══════════════ -->
+    <!-- PRODOTTI -->
     <section class="prodotti" id="catalogo">
-
       <div class="section-header reveal">
-        <div>
-          <div class="section-label">I prodotti</div>
-          <h2 class="section-title">La <em>collezione</em></h2>
-        </div>
+        <div><div class="section-label">I prodotti</div><h2 class="section-title">La <em>collezione</em></h2></div>
         <a href="catalogo.html" class="btn-black">Vedi tutto</a>
       </div>
-
       <div class="prodotti-grid">
-
-        <!-- Card grande: posacenere -->
         <div class="prod-card prod-card--featured reveal">
           <img class="prod-card-img" src="assets/atelier 33 giri/20251110-IMG_5011.jpg" alt="Posacenere 33GIRI" loading="lazy">
           <div class="prod-card-overlay"></div>
           <div class="prod-card-content">
             <div class="prod-card-tag">Icona</div>
             <div class="prod-card-name">Posacenere<br>da vinile</div>
-            <div class="prod-card-desc">
-              Il pezzo iconico di 33GIRI. Ogni vinile piegato a caldo mantiene i segni del suo passato —
-              graffi, etichette, imperfezioni. Funzionale e da esposizione.
-            </div>
+            <div class="prod-card-desc">Il pezzo iconico di 33GIRI. Ogni vinile piegato a caldo mantiene i segni del suo passato — graffi, etichette, imperfezioni. Funzionale e da esposizione.</div>
             <a href="catalogo.html" class="prod-card-cta">Scopri</a>
           </div>
         </div>
-
-        <!-- Colonna destra: 2 card small -->
         <div class="prod-right">
           <div class="prod-card prod-card--small reveal reveal--delay-1">
             <img class="prod-card-img" src="assets/atelier 33 giri/20251110-IMG_4743.jpg" alt="Svuotatasche 33GIRI" loading="lazy">
@@ -1365,95 +458,47 @@
             <div class="prod-card-content">
               <div class="prod-card-tag">Best seller</div>
               <div class="prod-card-name">Svuotatasche</div>
-              <div class="prod-card-desc">
-                Design minimalista per una scrivania con carattere.
-              </div>
+              <div class="prod-card-desc">Design minimalista per una scrivania con carattere.</div>
               <a href="catalogo.html" class="prod-card-cta">Scopri</a>
             </div>
           </div>
-
           <div class="prod-card prod-card--small reveal reveal--delay-2">
             <img class="prod-card-img" src="assets/atelier 33 giri/20251110-IMG_4557.jpg" alt="Pezzi unici 33GIRI" loading="lazy">
             <div class="prod-card-overlay"></div>
             <div class="prod-card-content">
               <div class="prod-card-tag">Coming soon</div>
               <div class="prod-card-name">Pezzi<br>artistici</div>
-              <div class="prod-card-desc">
-                Collab con artisti — edizioni limitate, tiratura 1.
-              </div>
+              <div class="prod-card-desc">Collab con artisti — edizioni limitate, tiratura 1.</div>
               <a href="collaborazioni.html" class="prod-card-cta">Collaborazioni</a>
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- ══════════════ PROCESSO ══════════════ -->
+    <!-- PROCESSO -->
     <section class="processo" id="processo">
       <div class="processo-inner">
-
         <div class="reveal">
           <div class="section-label" style="color:var(--gold)">Come nasce un pezzo</div>
           <h2 class="section-title" style="color:var(--white)">Il processo <em style="color:var(--gold-lt)">artigianale</em></h2>
         </div>
-
         <div class="processo-steps">
-
-          <div class="step reveal">
-            <div class="step-num">01</div>
-            <div class="step-icon"></div>
-            <div class="step-title">Selezione</div>
-            <div class="step-desc">
-              Recuperiamo vinili usati, fuori catalogo o difettosi.
-              Ogni disco viene ispezionato: cerchiamo materiale con storia.
-            </div>
-          </div>
-
-          <div class="step reveal reveal--delay-1">
-            <div class="step-num">02</div>
-            <div class="step-icon"></div>
-            <div class="step-title">Lavorazione</div>
-            <div class="step-desc">
-              Il vinile viene riscaldato con cura fino al punto di malleabilità.
-              Le mani modellano la forma — senza stampi, senza macchine.
-            </div>
-          </div>
-
-          <div class="step reveal reveal--delay-2">
-            <div class="step-num">03</div>
-            <div class="step-icon"></div>
-            <div class="step-title">Rifinitura</div>
-            <div class="step-desc">
-              Bordi levigati, superficie pulita, controllo qualità.
-              Ogni pezzo viene testato nella sua funzionalità prima di uscire.
-            </div>
-          </div>
-
-          <div class="step reveal reveal--delay-3">
-            <div class="step-num">04</div>
-            <div class="step-icon"></div>
-            <div class="step-title">Consegna</div>
-            <div class="step-desc">
-              Packaging curato, certificato di autenticità incluso.
-              Consegna a mano a Bologna, Milano, Trento — o spedizione.
-            </div>
-          </div>
-
+          <div class="step reveal"><div class="step-num">01</div><div class="step-icon"></div><div class="step-title">Selezione</div><div class="step-desc">Recuperiamo vinili usati, fuori catalogo o difettosi. Ogni disco viene ispezionato: cerchiamo materiale con storia.</div></div>
+          <div class="step reveal reveal--delay-1"><div class="step-num">02</div><div class="step-icon"></div><div class="step-title">Lavorazione</div><div class="step-desc">Il vinile viene riscaldato con cura fino al punto di malleabilità. Le mani modellano la forma — senza stampi, senza macchine.</div></div>
+          <div class="step reveal reveal--delay-2"><div class="step-num">03</div><div class="step-icon"></div><div class="step-title">Rifinitura</div><div class="step-desc">Bordi levigati, superficie pulita, controllo qualità. Ogni pezzo viene testato nella sua funzionalità prima di uscire.</div></div>
+          <div class="step reveal reveal--delay-3"><div class="step-num">04</div><div class="step-icon"></div><div class="step-title">Consegna</div><div class="step-desc">Packaging curato, certificato di autenticità incluso. Consegna a mano a Bologna, Milano, Trento — o spedizione.</div></div>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════ CLAIM ══════════════ -->
+    <!-- CLAIM -->
     <section class="claim-section">
-      <p class="claim-text reveal">
-        <em>La materia non si distrugge,</em><br>
-        si trasforma — in design.
-      </p>
+      <p class="claim-text reveal"><em>La materia non si distrugge,</em><br>si trasforma — in design.</p>
       <div class="claim-sub reveal reveal--delay-1">33GIRI · Reshape the Art</div>
     </section>
 
-    <!-- ══════════════ GALLERIA ══════════════ -->
+    <!-- GALLERIA -->
     <section class="galleria" id="gallery">
       <div class="galleria-header">
         <div class="section-label reveal">33Gallery</div>
@@ -1469,10 +514,9 @@
       </div>
     </section>
 
-    <!-- ══════════════ RECENSIONI ══════════════ -->
+    <!-- RECENSIONI -->
     <section class="recensioni" id="recensioni">
       <div class="recensioni-inner">
-    
         <div class="recensioni-header reveal">
           <div>
             <div class="section-label" style="color:var(--gold)">Clienti reali</div>
@@ -1484,121 +528,35 @@
           </div>
           <a href="recensioni.html" class="recensioni-cta-link">Lascia la tua →</a>
         </div>
-    
         <div class="recensioni-list">
-    
           <div class="rec-item reveal">
-            <button class="rec-trigger" aria-expanded="false">
-              <span class="rec-trigger-name">Marco T.</span>
-              <span class="rec-trigger-preview">Ho comprato lo svuotatasche Splash per me stesso, prima ancora di regalarlo…</span>
-              <span class="rec-trigger-stars">★★★★★</span>
-              <span class="rec-trigger-icon">+</span>
-            </button>
-            <div class="rec-body">
-              <div class="rec-body-inner">
-                <div class="rec-body-meta">
-                  <div class="rec-body-date">Novembre 2025</div>
-                  <div class="rec-body-product">Svuotatasche Splash</div>
-                </div>
-                <div class="rec-body-text">
-                  Ho comprato lo svuotatasche Splash per me stesso, prima ancora di regalarlo a qualcuno. L'avevo visto su Instagram, pensavo fosse una di quelle cose che sembrano meglio in foto — invece dal vivo è ancora meglio. Il colore è distribuito in modo irregolare, quindi sai già che non ne esiste un altro uguale. Lo tengo sulla scrivania da un mese e ogni giorno ci butto dentro chiavi, monetine e un accendino. Funziona benissimo. Ha anche quel peso da oggetto vero, non da gadget. Consegna veloce, imballaggio curato. Tornerò sicuro.
-                </div>
-              </div>
-            </div>
+            <button class="rec-trigger" aria-expanded="false"><span class="rec-trigger-name">Marco T.</span><span class="rec-trigger-preview">Ho comprato lo svuotatasche Splash per me stesso, prima ancora di regalarlo…</span><span class="rec-trigger-stars">★★★★★</span><span class="rec-trigger-icon">+</span></button>
+            <div class="rec-body"><div class="rec-body-inner"><div class="rec-body-meta"><div class="rec-body-date">Novembre 2025</div><div class="rec-body-product">Svuotatasche Splash</div></div><div class="rec-body-text">Ho comprato lo svuotatasche Splash per me stesso, prima ancora di regalarlo a qualcuno. L'avevo visto su Instagram, pensavo fosse una di quelle cose che sembrano meglio in foto — invece dal vivo è ancora meglio. Il colore è distribuito in modo irregolare, quindi sai già che non ne esiste un altro uguale. Lo tengo sulla scrivania da un mese e ogni giorno ci butto dentro chiavi, monetine e un accendino. Funziona benissimo. Ha anche quel peso da oggetto vero, non da gadget. Consegna veloce, imballaggio curato. Tornerò sicuro.</div></div></div>
           </div>
-    
           <div class="rec-item reveal reveal--delay-1">
-            <button class="rec-trigger" aria-expanded="false">
-              <span class="rec-trigger-name">Chiara V.</span>
-              <span class="rec-trigger-preview">Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo…</span>
-              <span class="rec-trigger-stars">★★★★★</span>
-              <span class="rec-trigger-icon">+</span>
-            </button>
-            <div class="rec-body">
-              <div class="rec-body-inner">
-                <div class="rec-body-meta">
-                  <div class="rec-body-date">Dicembre 2025</div>
-                  <div class="rec-body-product">Posacenere Normal</div>
-                </div>
-                <div class="rec-body-text">
-                  Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo che colleziona vinili — è rimasto senza parole quando ha visto che era fatto da un vero 33 giri. Si vede ancora l'etichetta originale del disco, è questo il dettaglio che rende tutto speciale. La consegna è stata puntuale e il packaging era davvero curato, con un piccolo biglietto scritto a mano. Quel tipo di attenzione fa la differenza. Lo regalo ancora.
-                </div>
-              </div>
-            </div>
+            <button class="rec-trigger" aria-expanded="false"><span class="rec-trigger-name">Chiara V.</span><span class="rec-trigger-preview">Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo…</span><span class="rec-trigger-stars">★★★★★</span><span class="rec-trigger-icon">+</span></button>
+            <div class="rec-body"><div class="rec-body-inner"><div class="rec-body-meta"><div class="rec-body-date">Dicembre 2025</div><div class="rec-body-product">Posacenere Normal</div></div><div class="rec-body-text">Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo che colleziona vinili — è rimasto senza parole quando ha visto che era fatto da un vero 33 giri. Si vede ancora l'etichetta originale del disco, è questo il dettaglio che rende tutto speciale. La consegna è stata puntuale e il packaging era davvero curato, con un piccolo biglietto scritto a mano. Quel tipo di attenzione fa la differenza. Lo regalo ancora.</div></div></div>
           </div>
-    
           <div class="rec-item reveal reveal--delay-2">
-            <button class="rec-trigger" aria-expanded="false">
-              <span class="rec-trigger-name">Luca M.</span>
-              <span class="rec-trigger-preview">Ero scettico sul prezzo all'inizio, poi l'ho tenuto in mano e ho capito tutto…</span>
-              <span class="rec-trigger-stars">★★★★★</span>
-              <span class="rec-trigger-icon">+</span>
-            </button>
-            <div class="rec-body">
-              <div class="rec-body-inner">
-                <div class="rec-body-meta">
-                  <div class="rec-body-date">Gennaio 2026</div>
-                  <div class="rec-body-product">Svuotatasche Spiral</div>
-                </div>
-                <div class="rec-body-text">
-                  Ero scettico sul prezzo all'inizio — pensavo potevo trovare qualcosa di simile a meno. Poi l'ho tenuto in mano e ho capito tutto. Non è solo la forma, è il materiale: il vinile ha un suo peso, una consistenza diversa da qualsiasi cosa in plastica o metallo. La spirale di colore è esatta, non sbavata, sembra quasi disegnata. L'ho messo sulla scrivania in ufficio e ogni persona che entra me lo nota. Ho già avuto tre persone che me ne vogliono uno.
-                </div>
-              </div>
-            </div>
+            <button class="rec-trigger" aria-expanded="false"><span class="rec-trigger-name">Luca M.</span><span class="rec-trigger-preview">Ero scettico sul prezzo all'inizio, poi l'ho tenuto in mano e ho capito tutto…</span><span class="rec-trigger-stars">★★★★★</span><span class="rec-trigger-icon">+</span></button>
+            <div class="rec-body"><div class="rec-body-inner"><div class="rec-body-meta"><div class="rec-body-date">Gennaio 2026</div><div class="rec-body-product">Svuotatasche Spiral</div></div><div class="rec-body-text">Ero scettico sul prezzo all'inizio — pensavo potevo trovare qualcosa di simile a meno. Poi l'ho tenuto in mano e ho capito tutto. Non è solo la forma, è il materiale: il vinile ha un suo peso, una consistenza diversa da qualsiasi cosa in plastica o metallo. La spirale di colore è esatta, non sbavata, sembra quasi disegnata. L'ho messo sulla scrivania in ufficio e ogni persona che entra me lo nota. Ho già avuto tre persone che me ne vogliono uno.</div></div></div>
           </div>
-    
           <div class="rec-item reveal">
-            <button class="rec-trigger" aria-expanded="false">
-              <span class="rec-trigger-name">Sara B.</span>
-              <span class="rec-trigger-preview">Li ho usati come centrotavola per un aperitivo. Tutti hanno chiesto dove li avevo presi…</span>
-              <span class="rec-trigger-stars">★★★★★</span>
-              <span class="rec-trigger-icon">+</span>
-            </button>
-            <div class="rec-body">
-              <div class="rec-body-inner">
-                <div class="rec-body-meta">
-                  <div class="rec-body-date">Febbraio 2026</div>
-                  <div class="rec-body-product">Svuotatasche × 3</div>
-                </div>
-                <div class="rec-body-text">
-                  Ne ho presi tre insieme — uno per me e due da regalare. Li ho usati come centrotavola per un aperitivo a casa prima di regalarli e tutti hanno chiesto dove li avevo presi. Il bello è che ognuno è diverso: stesso modello, ma forma leggermente diversa, etichetta diversa, segni diversi. Comunicazione velocissima su WhatsApp, consegna a mano a Milano senza problemi. Cinque stelle senza dubbi.
-                </div>
-              </div>
-            </div>
+            <button class="rec-trigger" aria-expanded="false"><span class="rec-trigger-name">Sara B.</span><span class="rec-trigger-preview">Li ho usati come centrotavola per un aperitivo. Tutti hanno chiesto dove li avevo presi…</span><span class="rec-trigger-stars">★★★★★</span><span class="rec-trigger-icon">+</span></button>
+            <div class="rec-body"><div class="rec-body-inner"><div class="rec-body-meta"><div class="rec-body-date">Febbraio 2026</div><div class="rec-body-product">Svuotatasche × 3</div></div><div class="rec-body-text">Ne ho presi tre insieme — uno per me e due da regalare. Li ho usati come centrotavola per un aperitivo a casa prima di regalarli e tutti hanno chiesto dove li avevo presi. Il bello è che ognuno è diverso: stesso modello, ma forma leggermente diversa, etichetta diversa, segni diversi. Comunicazione velocissima su WhatsApp, consegna a mano a Milano senza problemi. Cinque stelle senza dubbi.</div></div></div>
           </div>
-    
           <div class="rec-item reveal reveal--delay-1">
-            <button class="rec-trigger" aria-expanded="false">
-              <span class="rec-trigger-name">Davide R.</span>
-              <span class="rec-trigger-preview">Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni mi dà speranza…</span>
-              <span class="rec-trigger-stars">★★★★★</span>
-              <span class="rec-trigger-icon">+</span>
-            </button>
-            <div class="rec-body">
-              <div class="rec-body-inner">
-                <div class="rec-body-meta">
-                  <div class="rec-body-date">Febbraio 2026</div>
-                  <div class="rec-body-product">Posacenere Touch</div>
-                </div>
-                <div class="rec-body-text">
-                  Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni con questa cura mi dà speranza. Ho preso il posacenere Touch — la forma è più piatta rispetto agli altri, quasi un vassoio con i bordi rialzati. Lo uso sia come posacenere che come punto di appoggio per l'orologio e il telefono di notte. L'ho mostrato a mio padre che ha 60 anni e colleziona vinili dal 1975 — ha detto che avrebbe voluto averlo inventato lui.
-                </div>
-              </div>
-            </div>
+            <button class="rec-trigger" aria-expanded="false"><span class="rec-trigger-name">Davide R.</span><span class="rec-trigger-preview">Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni mi dà speranza…</span><span class="rec-trigger-stars">★★★★★</span><span class="rec-trigger-icon">+</span></button>
+            <div class="rec-body"><div class="rec-body-inner"><div class="rec-body-meta"><div class="rec-body-date">Febbraio 2026</div><div class="rec-body-product">Posacenere Touch</div></div><div class="rec-body-text">Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni con questa cura mi dà speranza. Ho preso il posacenere Touch — la forma è più piatta rispetto agli altri, quasi un vassoio con i bordi rialzati. Lo uso sia come posacenere che come punto di appoggio per l'orologio e il telefono di notte. L'ho mostrato a mio padre che ha 60 anni e colleziona vinili dal 1975 — ha detto che avrebbe voluto averlo inventato lui.</div></div></div>
           </div>
-    
         </div>
       </div>
     </section>
 
-      
-    <!-- ══════════════ CTA FINALE ══════════════ -->
+    <!-- CTA FINALE -->
     <section class="cta-section">
       <div class="cta-label reveal">Pronto a scegliere il tuo pezzo?</div>
-      <h2 class="cta-title reveal reveal--delay-1">
-        Il tuo 33GIRI<br>
-        <em>ti aspetta.</em>
-      </h2>
+      <h2 class="cta-title reveal reveal--delay-1">Il tuo 33GIRI<br><em>ti aspetta.</em></h2>
       <div class="cta-btns reveal reveal--delay-2">
         <a href="catalogo.html" class="btn-gold">Vai al catalogo</a>
         <a href="https://wa.me/3471692948" target="_blank" class="btn-black">Scrivici su WhatsApp</a>
@@ -1607,19 +565,14 @@
 
   </main>
 
-  <!-- ══════════════ FOOTER ══════════════ -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-top">
-
         <div class="footer-brand">
           <div class="footer-logo">33GIRI</div>
-          <p>
-            Oggetti di design upcycling da vinili reali.<br>
-            Handmade · Made in Italy · Reshape the Art.
-          </p>
+          <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
         </div>
-
         <div class="footer-col">
           <div class="footer-col-title">Naviga</div>
           <ul>
@@ -1630,7 +583,6 @@
             <li><a href="corporate.html">Corporate / Regalo</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <div class="footer-col-title">Info</div>
           <ul>
@@ -1639,16 +591,14 @@
             <li><a href="informativa-privacy.html">Privacy</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <div class="footer-col-title">Contatti</div>
           <ul>
-            <li><a href="https://instagram.com/33giri" target="_blank">Instagram</a></li>
-            <li><a href="https://wa.me/TUONUMERO" target="_blank">WhatsApp</a></li>
+            <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+            <li><a href="https://wa.me/3471692948" target="_blank">WhatsApp</a></li>
             <li><a href="contribuisci.html">Dona un vinile</a></li>
           </ul>
         </div>
-
       </div>
       <div class="footer-bottom">
         <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
@@ -1657,82 +607,48 @@
     </div>
   </footer>
 
-  <!-- WhatsApp Float -->
   <a class="wa-float" href="https://wa.me/3471692948" target="_blank" aria-label="Scrivici su WhatsApp">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
-  <!-- ──────────── SCRIPT ──────────── -->
   <script>
-    // ── HERO CAROUSEL ──
+    // HERO CAROUSEL
     (function() {
       const slides = document.querySelectorAll('.hero-slide');
       const dots   = document.querySelectorAll('.hero-dot');
-      let current  = 0;
-      let timer;
-
+      let current = 0, timer;
       function goTo(idx) {
         slides[current].classList.remove('is-active');
         dots[current].classList.remove('is-active');
         current = idx;
         slides[current].classList.add('is-active');
         dots[current].classList.add('is-active');
-        // Riavvia animation ken burns
         const img = slides[current].querySelector('img');
         img.style.animation = 'none';
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => { img.style.animation = ''; });
-        });
+        requestAnimationFrame(() => requestAnimationFrame(() => { img.style.animation = ''; }));
       }
-
-      function next() {
-        goTo((current + 1) % slides.length);
-      }
-
-      function startTimer() {
-        clearInterval(timer);
-        timer = setInterval(next, 6000);
-      }
-
-      dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-          goTo(parseInt(dot.dataset.idx));
-          startTimer();
-        });
-      });
-
+      function startTimer() { clearInterval(timer); timer = setInterval(() => goTo((current+1) % slides.length), 6000); }
+      dots.forEach(dot => dot.addEventListener('click', () => { goTo(parseInt(dot.dataset.idx)); startTimer(); }));
       startTimer();
     })();
 
-    // ── HEADER SCROLL ──
+    // HEADER SCROLL
     (function() {
-      const header = document.getElementById('site-header');
+      const h = document.getElementById('site-header');
       window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) {
-          header.style.background = 'rgba(10,10,10,0.98)';
-        } else {
-          header.style.background = 'rgba(10,10,10,0.94)';
-        }
+        h.style.background = window.scrollY > 40 ? 'rgba(10,10,10,0.98)' : 'rgba(10,10,10,0.94)';
       }, { passive: true });
     })();
 
-    // ── SCROLL REVEAL ──
+    // SCROLL REVEAL
     (function() {
-      const els = document.querySelectorAll('.reveal');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible');
-            io.unobserve(e.target);
-          }
-        });
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
       }, { threshold: 0.12 });
-      els.forEach(el => io.observe(el));
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     })();
 
-    // ── RECENSIONI ACCORDION ──
+    // RECENSIONI ACCORDION
     (function() {
       const items = document.querySelectorAll('.rec-item');
       items.forEach(item => {
@@ -1740,21 +656,15 @@
         const body    = item.querySelector('.rec-body');
         trigger.addEventListener('click', () => {
           const isOpen = item.classList.contains('is-open');
-          items.forEach(i => {
-            i.classList.remove('is-open');
-            i.querySelector('.rec-trigger').setAttribute('aria-expanded', 'false');
-          });
+          items.forEach(i => { i.classList.remove('is-open'); i.querySelector('.rec-trigger').setAttribute('aria-expanded','false'); });
           if (!isOpen) {
             item.classList.add('is-open');
-            trigger.setAttribute('aria-expanded', 'true');
-            setTimeout(() => {
-              body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 80);
+            trigger.setAttribute('aria-expanded','true');
+            setTimeout(() => body.scrollIntoView({ behavior:'smooth', block:'nearest' }), 80);
           }
         });
       });
     })();
-    
   </script>
 
 </body>
