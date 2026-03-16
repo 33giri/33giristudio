@@ -749,6 +749,159 @@
       });
     })();
   </script>
+  
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config.js"></script>
+  <script>
+    if (window.__SUPABASE__ && !window.__SB_CLIENT__ && window.supabase) {
+      window.__SB_CLIENT__ = window.supabase.createClient(
+        window.__SUPABASE__.url,
+        window.__SUPABASE__.anonKey
+      );
+    } else {
+      console.warn("Supabase config non trovata o SDK non caricato.");
+    }
+  </script>
+  
+  <script>
+  (() => {
+    const escapeHtml = (text) => {
+      const div = document.createElement("div");
+      div.textContent = text ?? "";
+      return div.innerHTML;
+    };
+  
+    const renderStars = (rating) => {
+      const r = Math.max(1, Math.min(5, parseInt(rating, 10) || 1));
+      return "★".repeat(r) + "☆".repeat(5 - r);
+    };
+  
+    const formatDate = (value) => {
+      if (!value) return "";
+      const date = new Date(value);
+      return date.toLocaleDateString("it-IT", {
+        year: "numeric",
+        month: "long"
+      });
+    };
+  
+    const getPreview = (text, max = 95) => {
+      const clean = (text || "").trim();
+      if (clean.length <= max) return clean;
+      return clean.slice(0, max).trim() + "…";
+    };
+  
+    const createReviewItem = (r, i = 0) => {
+      const delayClass =
+        i % 3 === 1 ? " reveal--delay-1" :
+        i % 3 === 2 ? " reveal--delay-2" : "";
+  
+      return `
+        <div class="rec-item reveal${delayClass}">
+          <button class="rec-trigger" aria-expanded="false" type="button">
+            <span class="rec-trigger-name">${escapeHtml(r.name || "Anonimo")}</span>
+            <span class="rec-trigger-preview">${escapeHtml(getPreview(r.comment || ""))}</span>
+            <span class="rec-trigger-stars">${renderStars(r.rating)}</span>
+            <span class="rec-trigger-icon">+</span>
+          </button>
+          <div class="rec-body">
+            <div class="rec-body-inner">
+              <div class="rec-body-meta">
+                <div class="rec-body-date">${escapeHtml(formatDate(r.created_at))}</div>
+                <div class="rec-body-product">Recensione verificata</div>
+              </div>
+              <div class="rec-body-text">${escapeHtml(r.comment || "")}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+  
+    const bindHomeAccordion = () => {
+      const items = document.querySelectorAll("#homeReviewsList .rec-item");
+  
+      items.forEach((item) => {
+        const trigger = item.querySelector(".rec-trigger");
+        const body = item.querySelector(".rec-body");
+        if (!trigger || !body) return;
+  
+        trigger.addEventListener("click", () => {
+          const isOpen = item.classList.contains("is-open");
+  
+          items.forEach((i) => {
+            i.classList.remove("is-open");
+            const btn = i.querySelector(".rec-trigger");
+            if (btn) btn.setAttribute("aria-expanded", "false");
+          });
+  
+          if (!isOpen) {
+            item.classList.add("is-open");
+            trigger.setAttribute("aria-expanded", "true");
+            setTimeout(() => body.scrollIntoView({ behavior: "smooth", block: "nearest" }), 80);
+          }
+        });
+      });
+    };
+  
+    const rerunRevealObserver = () => {
+      const els = document.querySelectorAll("#homeReviewsList .reveal");
+  
+      if (!("IntersectionObserver" in window)) {
+        els.forEach((el) => el.classList.add("is-visible"));
+        return;
+      }
+  
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+  
+      els.forEach((el) => io.observe(el));
+    };
+  
+    const loadHomeReviews = async () => {
+      const list = document.getElementById("homeReviewsList");
+      const count = document.getElementById("recensioniCount");
+      const client = window.__SB_CLIENT__;
+  
+      if (!list || !client) {
+        console.warn("Lista recensioni home o client Supabase non disponibile.");
+        return;
+      }
+  
+      const { data, error } = await client
+        .from("reviews")
+        .select("id,name,rating,comment,created_at")
+        .order("created_at", { ascending: false })
+        .limit(5);
+  
+      if (error) {
+        console.error("Errore caricamento recensioni home:", error);
+        if (count) count.textContent = "Recensioni non disponibili";
+        return;
+      }
+  
+      if (!data || !data.length) {
+        if (count) count.textContent = "Nessuna recensione ancora";
+        return;
+      }
+  
+      list.innerHTML = data.map((r, i) => createReviewItem(r, i)).join("");
+      if (count) count.textContent = `${data.length} recensioni verificate`;
+  
+      bindHomeAccordion();
+      rerunRevealObserver();
+    };
+  
+    document.addEventListener("DOMContentLoaded", loadHomeReviews);
+  })();
+  </script>
 
 </body>
 </html>
