@@ -1,176 +1,426 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Informativa sulla Privacy</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Privacy — 33GIRI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
+      --cream:#f5f0e8;--warm:#e8e2d9;--navy:#0f1522;--white:#fff;
+      --text:#1a1a1a;--muted:#6b6560;--header-h:80px;
+      --fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--warm);color:var(--text);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
+
+    /* HEADER */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
+      background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,62,.18)}
+    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
+      display:flex;align-items:center;justify-content:space-between;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    .main-nav ul{list-style:none;display:flex;gap:36px}
+    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
+    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:20px}
+    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+    .header-actions a:hover{color:var(--gold)}
+
+    /* HERO MINIMAL STRIP */
+    .privacy-hero{
+      padding-top:var(--header-h);
+      background:var(--black);
+      padding:var(--header-h) 60px 0;
+      position:relative}
+    .privacy-hero-inner{
+      max-width:1280px;margin:0 auto;
+      padding:72px 0 56px;
+      border-bottom:1px solid rgba(184,150,62,.2);
+      display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+    .privacy-hero-left{}
+    .privacy-hero-kicker{font-size:10px;font-weight:500;letter-spacing:.32em;
+      text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .privacy-hero-title{font-family:var(--fd);font-size:clamp(52px,6vw,88px);
+      font-weight:300;line-height:1;color:var(--white);letter-spacing:-.01em}
+    .privacy-hero-title em{font-style:italic;color:var(--gold-lt)}
+    .privacy-hero-meta{text-align:right}
+    .privacy-hero-date{font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.3);
+      text-transform:uppercase;margin-bottom:6px}
+    .privacy-hero-version{font-family:var(--fd);font-size:18px;font-weight:300;
+      color:rgba(255,255,255,.5);font-style:italic}
+
+    /* LAYOUT: indice + contenuto */
+    .privacy-layout{
+      max-width:1280px;margin:0 auto;padding:80px 60px;
+      display:grid;grid-template-columns:220px 1fr;gap:80px;align-items:start}
+
+    /* Indice fisso */
+    .privacy-toc{
+      position:sticky;top:calc(var(--header-h) + 24px)}
+    .privacy-toc-label{font-size:9px;font-weight:700;letter-spacing:.28em;
+      text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .privacy-toc-list{display:flex;flex-direction:column;gap:0}
+    .privacy-toc-item{
+      padding:10px 0;
+      border-top:1px solid rgba(0,0,0,.08);
+      font-size:12px;font-weight:400;color:var(--muted);
+      cursor:pointer;transition:color .2s;line-height:1.4}
+    .privacy-toc-item:hover{color:var(--gold-dk)}
+    .privacy-toc-item.active{color:var(--gold-dk);font-weight:600}
+    .privacy-toc-item:last-child{border-bottom:1px solid rgba(0,0,0,.08)}
+
+    /* Contenuto */
+    .privacy-content{}
+    /* Intro box */
+    .privacy-intro-box{
+      background:var(--black);padding:40px 48px;margin-bottom:56px;
+      border-left:4px solid var(--gold)}
+    .privacy-intro-box p{font-size:14px;font-weight:300;line-height:1.9;
+      color:rgba(255,255,255,.6)}
+    .privacy-intro-box p+p{margin-top:14px}
+
+    /* Sezione */
+    .privacy-section{margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid rgba(0,0,0,.08)}
+    .privacy-section:last-child{border-bottom:none}
+    .privacy-section-num{font-size:10px;font-weight:600;letter-spacing:.22em;
+      text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .privacy-section-title{font-family:var(--fd);font-size:clamp(24px,2.5vw,34px);
+      font-weight:400;color:var(--black);letter-spacing:-.01em;margin-bottom:20px;line-height:1.2}
+    .privacy-section-body{font-size:14px;font-weight:300;line-height:1.9;color:var(--muted)}
+    .privacy-section-body p+p{margin-top:14px}
+    .privacy-section-body ul{margin:14px 0 14px 0;display:flex;flex-direction:column;gap:8px}
+    .privacy-section-body li{display:flex;gap:12px;align-items:flex-start}
+    .privacy-section-body li::before{content:'—';color:var(--gold);flex-shrink:0;margin-top:2px;font-size:12px}
+    .privacy-section-body strong{color:var(--black);font-weight:500}
+    .privacy-section-body a{color:var(--gold-dk);border-bottom:1px solid rgba(184,150,62,.3);transition:border-color .2s}
+    .privacy-section-body a:hover{border-color:var(--gold)}
+
+    /* Highlight box */
+    .privacy-highlight{
+      background:rgba(184,150,62,.08);border:1px solid rgba(184,150,62,.2);
+      padding:24px 28px;margin:20px 0}
+    .privacy-highlight p{font-size:13px;font-weight:300;line-height:1.8;color:var(--text)}
+
+    /* Contatti finale */
+    .privacy-contacts{
+      background:var(--black);padding:48px;margin-top:20px;
+      display:grid;grid-template-columns:1fr 1fr;gap:32px}
+    .privacy-contact-item{}
+    .privacy-contact-label{font-size:9px;font-weight:700;letter-spacing:.25em;
+      text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+    .privacy-contact-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.7}
+    .privacy-contact-text a{color:var(--gold-lt)}
+
+    /* WA */
+    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
+      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
+    .wa-float svg{width:24px;height:24px;fill:var(--black)}
+
+    /* FOOTER */
+    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
+      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
+    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
+    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
+
+    @media(max-width:1100px){
+      .privacy-layout{grid-template-columns:1fr}
+      .privacy-toc{display:none}
+      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+    }
+    @media(max-width:768px){
+      :root{--header-h:64px}
+      .privacy-hero{padding:var(--header-h) 20px 0}
+      .privacy-hero-inner{flex-direction:column;gap:20px;padding:56px 0 40px}
+      .privacy-hero-meta{text-align:left}
+      .privacy-layout{padding:48px 20px}
+      .privacy-intro-box{padding:28px}
+      .privacy-contacts{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px}
+      .main-nav{display:none}
+    }
+  </style>
 </head>
-<body style="--bg:#e8dfd5">
-  <!-- Header statico -->
-  <!-- Include Header -->
-  <header id="header"></header>
+<body>
 
-  <main>
-    <section class="privacy-policy">
-      <h1>Informativa sulla Privacy</h1>
-      <p><strong>Ultimo aggiornamento:</strong> 28 ottobre 2025</p>
-
-      <p>
-        33giri gestisce questo negozio e il sito web, comprese le informazioni, il contenuto,
-        le funzionalità, gli strumenti, i prodotti e i servizi, al fine di fornire a te, che sei
-        il cliente, un'adeguata esperienza di acquisto (i "Servizi"). La presente Informativa
-        sulla privacy descrive il modo in cui raccogliamo, utilizziamo e divulghiamo i tuoi dati
-        personali quando visiti, utilizzi, effettui un acquisto o qualsiasi altra transazione tramite
-        i Servizi o quando comunichi con noi.
-      </p>
-
-      <p>
-        Ti preghiamo di leggere attentamente questa Informativa sulla privacy.
-        Con l'utilizzo e l'accesso ai Servizi confermi di aver letto la presente
-        Informativa sulla privacy e compreso quanto descritto in relazione alla
-        raccolta, l'utilizzo e la divulgazione delle tue informazioni.
-      </p>
-
-      <h2>I dati personali che raccogliamo o elaboriamo</h2>
-      <p>
-        Quando utilizziamo il termine "dati personali" ci riferiamo alle informazioni che
-        identificano o sono ragionevolmente collegate a te o a un'altra persona. I dati personali
-        non includono informazioni raccolte in forma anonima o anonimizzate, in modo che non
-        possano identificarti né essere collegate a te.
-      </p>
-
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <nav class="main-nav">
       <ul>
-        <li><strong>Recapiti:</strong> nome, indirizzo, indirizzo di fatturazione, indirizzo di spedizione, numero di telefono e indirizzo email.</li>
-        <li><strong>Dati finanziari:</strong> numeri di carta di credito, carta di debito, conto finanziario, dati di pagamento, dettagli delle transazioni.</li>
-        <li><strong>Dati dell'account:</strong> nome utente, password, domande di sicurezza, preferenze e impostazioni.</li>
-        <li><strong>Dati delle transazioni:</strong> articoli visualizzati, aggiunti al carrello, acquistati, resi o scambiati.</li>
-        <li><strong>Comunicazioni con noi:</strong> informazioni fornite durante le comunicazioni, come richieste o reclami.</li>
-        <li><strong>Informazioni sul dispositivo:</strong> browser, rete, indirizzo IP e altri identificatori univoci.</li>
-        <li><strong>Informazioni sull’uso:</strong> interazioni e modalità di utilizzo dei Servizi.</li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="faq.html">FAQ</a></li>
       </ul>
-
-      <h2>Fonti dei dati personali</h2>
-      <ul>
-        <li><strong>Direttamente da te:</strong> quando crei un account, utilizzi i Servizi o comunichi con noi.</li>
-        <li><strong>Automaticamente:</strong> tramite cookie e tecnologie simili quando utilizzi i nostri servizi.</li>
-        <li><strong>Dai nostri fornitori di servizi:</strong> quando raccolgono o elaborano dati per nostro conto.</li>
-        <li><strong>Da partner o terze parti.</strong></li>
-      </ul>
-
-      <h2>Come utilizziamo i tuoi dati personali</h2>
-      <ul>
-        <li><strong>Fornire, personalizzare e migliorare i Servizi:</strong> per gestire ordini, spedizioni, account e preferenze.</li>
-        <li><strong>Marketing e pubblicità:</strong> per inviarti comunicazioni promozionali e mostrarti annunci personalizzati.</li>
-        <li><strong>Sicurezza e prevenzione frodi:</strong> per autenticare gli utenti e proteggere da attività illecite.</li>
-        <li><strong>Comunicazioni con te:</strong> per fornire assistenza clienti e mantenere i rapporti commerciali.</li>
-        <li><strong>Motivi legali:</strong> per adempiere ad obblighi legali o rispondere a richieste da parte delle autorità.</li>
-      </ul>
-
-      <h2>Come divulghiamo i dati personali</h2>
-      <ul>
-        <li><strong>Con fornitori di servizi:</strong> che ci supportano in gestione IT, pagamenti, analisi e spedizioni.</li>
-        <li><strong>Con partner commerciali e di marketing:</strong> per offrirti servizi e annunci pertinenti.</li>
-        <li><strong>Con il tuo consenso:</strong> ad esempio per spedizioni o integrazioni social.</li>
-        <li><strong>Con i nostri affiliati:</strong> all’interno del nostro gruppo aziendale.</li>
-        <li><strong>In caso di operazioni societarie:</strong> come fusioni o procedure legali.</li>
-      </ul>
-
-      <h2>Siti web e link di terze parti</h2>
-      <p>
-        I Servizi potrebbero presentare link a siti web o piattaforme di terze parti.
-        Non siamo responsabili della privacy o della sicurezza di tali siti.
-        Ti invitiamo a leggere attentamente le loro informative prima di fornire qualsiasi dato personale.
-      </p>
-
-      <h2>Dati dei minori</h2>
-      <p>
-        I Servizi non sono destinati a minori. Non raccogliamo consapevolmente dati personali
-        di persone al di sotto della maggiore età. Se sei un genitore o tutore e ritieni che
-        tuo figlio ci abbia fornito dati personali, contattaci per richiederne l’eliminazione.
-      </p>
-
-      <h2>Sicurezza e conservazione dei dati</h2>
-      <p>
-        Nessuna misura di sicurezza è perfetta, ma adottiamo misure ragionevoli per proteggere i dati.
-        Ti consigliamo di usare solo canali sicuri per comunicarci informazioni riservate.
-        I dati vengono conservati per il tempo necessario a fornire i Servizi e adempiere agli obblighi legali.
-      </p>
-
-      <h2>Diritti e scelte a tua disposizione</h2>
-      <ul>
-        <li><strong>Diritto di accesso:</strong> puoi richiedere l’accesso ai dati che ti riguardano.</li>
-        <li><strong>Diritto di eliminazione:</strong> puoi richiederne la cancellazione.</li>
-        <li><strong>Diritto di correzione:</strong> puoi chiedere di aggiornare o correggere i tuoi dati.</li>
-        <li><strong>Diritto di portabilità:</strong> puoi ricevere una copia dei tuoi dati e trasferirli a terzi.</li>
-        <li><strong>Gestione comunicazioni:</strong> puoi disiscriverti dalle email promozionali in qualsiasi momento.</li>
-      </ul>
-
-      <p>
-        Se risiedi nel Regno Unito o nello Spazio economico europeo, puoi anche:
-      </p>
-
-      <ul>
-        <li><strong>Opporsi o limitare l’elaborazione</strong> dei tuoi dati per determinate finalità.</li>
-        <li><strong>Revocare il consenso</strong> in qualsiasi momento, senza pregiudicare il trattamento precedente alla revoca.</li>
-      </ul>
-
-      <p>
-        Prima di elaborare le tue richieste potremmo dover verificare la tua identità.
-        Non sarai discriminato per aver esercitato i tuoi diritti.
-      </p>
-
-      <h2>Reclami</h2>
-      <p>
-        In caso di reclami sulla gestione dei tuoi dati, puoi contattarci tramite i recapiti
-        indicati di seguito o rivolgerti all’autorità locale competente per la protezione dei dati.
-      </p>
-
-      <h2>Trasferimenti internazionali</h2>
-      <p>
-        Potremmo trasferire ed elaborare i tuoi dati personali al di fuori del tuo paese.
-        In tali casi, utilizzeremo meccanismi di trasferimento conformi alle normative europee
-        per garantire un livello adeguato di protezione.
-      </p>
-
-      <h2>Modifiche alla presente Informativa sulla privacy</h2>
-      <p>
-        La presente informativa può essere aggiornata periodicamente. Eventuali modifiche
-        verranno pubblicate sul sito con la nuova data di aggiornamento.
-      </p>
-
-      <h2>Contatti</h2>
-      <p>
-        Per qualsiasi domanda o per esercitare i tuoi diritti in materia di privacy,
-        contattaci ai seguenti recapiti:
-      </p>
-
-      <ul>
-        <li>Email: <a href="mailto:33giristudios@gmail.com">33giristudios@gmail.com</a></li>
-        <li>Indirizzo: Via Fratelli Perini 165, Trento, TN, 38122, Italia</li>
-      </ul>
-
-      <p>
-        33giri è il titolare del trattamento dei tuoi dati personali ai sensi delle leggi vigenti.
-      </p>
-    </section>
-  </main>
-
-  <!-- Footer statico -->
-  <footer id="footer" class="site-footer">
-    <div class="wrap footer-inner">
-      <div>© 33Giri — Made in Italy</div>
-      <nav class="footer-nav">
-  <a href="informativa-privacy.html">Informativa sulla Privacy</a>
-        <a href="faq.html">FAQ</a>
-        <a href="resi-rimborsi.html">Resi e Rimborsi</a>
-      </nav>
+    </nav>
+    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
+    <div class="header-actions">
+      <a href="resi-rimborsi.html">Resi</a>
+      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
     </div>
-  </footer>
+  </div>
+</header>
 
-  <!-- Script principale -->
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/privacy-translations.js"></script>
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/main.js"></script>
+<!-- HERO -->
+<section class="privacy-hero">
+  <div class="privacy-hero-inner">
+    <div class="privacy-hero-left">
+      <div class="privacy-hero-kicker">Documento legale</div>
+      <h1 class="privacy-hero-title">Informativa<br><em>Privacy.</em></h1>
+    </div>
+    <div class="privacy-hero-meta">
+      <div class="privacy-hero-date">Ultimo aggiornamento</div>
+      <div class="privacy-hero-version">28 ottobre 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="privacy-layout">
+
+  <!-- TOC -->
+  <aside class="privacy-toc">
+    <div class="privacy-toc-label">Indice</div>
+    <div class="privacy-toc-list">
+      <div class="privacy-toc-item active" onclick="jumpTo('sec-intro')">Introduzione</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-dati')">Dati raccolti</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-fonti')">Fonti dei dati</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-uso')">Come usiamo i dati</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-divulgazione')">Divulgazione</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-terzi')">Terze parti</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-minori')">Minori</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-sicurezza')">Sicurezza</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-diritti')">Tuoi diritti</div>
+      <div class="privacy-toc-item" onclick="jumpTo('sec-contatti')">Contatti</div>
+    </div>
+  </aside>
+
+  <!-- CONTENUTO -->
+  <div class="privacy-content">
+
+    <!-- Intro box -->
+    <div class="privacy-intro-box" id="sec-intro">
+      <p>33GIRI gestisce questo sito web, comprese le informazioni, il contenuto, le funzionalità, gli strumenti, i prodotti e i servizi, al fine di fornire a te, che sei il cliente, un'adeguata esperienza di acquisto (i "Servizi").</p>
+      <p>La presente Informativa descrive il modo in cui raccogliamo, utilizziamo e divulghiamo i tuoi dati personali quando visiti, utilizzi o effettui un acquisto tramite i Servizi o quando comunichi con noi. Ti preghiamo di leggerla attentamente.</p>
+    </div>
+
+    <!-- 01 Dati raccolti -->
+    <div class="privacy-section" id="sec-dati">
+      <div class="privacy-section-num">01</div>
+      <h2 class="privacy-section-title">Dati personali che raccogliamo</h2>
+      <div class="privacy-section-body">
+        <p>Quando utilizziamo il termine "dati personali" ci riferiamo alle informazioni che identificano o sono ragionevolmente collegate a te. Non includiamo informazioni raccolte in forma anonima.</p>
+        <ul>
+          <li><strong>Recapiti:</strong> nome, indirizzo, indirizzo di fatturazione e spedizione, numero di telefono, email.</li>
+          <li><strong>Dati finanziari:</strong> dati di pagamento, dettagli delle transazioni.</li>
+          <li><strong>Dati account:</strong> nome utente, password, preferenze e impostazioni.</li>
+          <li><strong>Dati transazioni:</strong> articoli visualizzati, acquistati, resi o scambiati.</li>
+          <li><strong>Comunicazioni:</strong> informazioni fornite durante le comunicazioni con noi.</li>
+          <li><strong>Informazioni dispositivo:</strong> browser, rete, indirizzo IP e identificatori univoci.</li>
+          <li><strong>Informazioni uso:</strong> interazioni e modalità di utilizzo dei Servizi.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 02 Fonti -->
+    <div class="privacy-section" id="sec-fonti">
+      <div class="privacy-section-num">02</div>
+      <h2 class="privacy-section-title">Fonti dei dati personali</h2>
+      <div class="privacy-section-body">
+        <ul>
+          <li><strong>Direttamente da te:</strong> quando crei un account, utilizzi i Servizi o comunichi con noi.</li>
+          <li><strong>Automaticamente:</strong> tramite cookie e tecnologie simili quando utilizzi i Servizi.</li>
+          <li><strong>Dai nostri fornitori:</strong> quando raccolgono o elaborano dati per nostro conto.</li>
+          <li><strong>Da partner o terze parti.</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 03 Uso -->
+    <div class="privacy-section" id="sec-uso">
+      <div class="privacy-section-num">03</div>
+      <h2 class="privacy-section-title">Come utilizziamo i tuoi dati</h2>
+      <div class="privacy-section-body">
+        <ul>
+          <li><strong>Erogare e migliorare i Servizi:</strong> gestire ordini, spedizioni, account e preferenze.</li>
+          <li><strong>Marketing:</strong> inviarti comunicazioni promozionali (solo con consenso).</li>
+          <li><strong>Sicurezza:</strong> autenticare utenti e proteggere da attività illecite.</li>
+          <li><strong>Comunicazioni:</strong> fornire assistenza clienti e mantenere rapporti commerciali.</li>
+          <li><strong>Obblighi legali:</strong> adempiere a obblighi di legge o rispondere ad autorità.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 04 Divulgazione -->
+    <div class="privacy-section" id="sec-divulgazione">
+      <div class="privacy-section-num">04</div>
+      <h2 class="privacy-section-title">Come divulghiamo i dati</h2>
+      <div class="privacy-section-body">
+        <ul>
+          <li><strong>Fornitori di servizi:</strong> IT, pagamenti, analisi, spedizioni — che elaborano i dati per nostro conto.</li>
+          <li><strong>Partner commerciali:</strong> per offrirti servizi pertinenti.</li>
+          <li><strong>Con il tuo consenso:</strong> per spedizioni o integrazioni social.</li>
+          <li><strong>Affiliati:</strong> all'interno del nostro gruppo aziendale.</li>
+          <li><strong>Operazioni societarie:</strong> in caso di fusioni o procedure legali.</li>
+        </ul>
+        <div class="privacy-highlight">
+          <p>Non vendiamo mai i tuoi dati personali a terzi per scopi di marketing esterno senza il tuo consenso esplicito.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 Terze parti -->
+    <div class="privacy-section" id="sec-terzi">
+      <div class="privacy-section-num">05</div>
+      <h2 class="privacy-section-title">Siti di terze parti</h2>
+      <div class="privacy-section-body">
+        <p>I Servizi potrebbero contenere link a siti web di terze parti. Non siamo responsabili della loro privacy o sicurezza. Ti invitiamo a leggere le rispettive informative prima di fornire qualsiasi dato personale.</p>
+      </div>
+    </div>
+
+    <!-- 06 Minori -->
+    <div class="privacy-section" id="sec-minori">
+      <div class="privacy-section-num">06</div>
+      <h2 class="privacy-section-title">Dati dei minori</h2>
+      <div class="privacy-section-body">
+        <p>I Servizi non sono destinati a persone di età inferiore alla maggiore età. Non raccogliamo consapevolmente dati personali di minori. Se sei un genitore o tutore e ritieni che tuo figlio ci abbia fornito dati, contattaci per richiederne l'eliminazione.</p>
+      </div>
+    </div>
+
+    <!-- 07 Sicurezza -->
+    <div class="privacy-section" id="sec-sicurezza">
+      <div class="privacy-section-num">07</div>
+      <h2 class="privacy-section-title">Sicurezza e conservazione</h2>
+      <div class="privacy-section-body">
+        <p>Adottiamo misure ragionevoli per proteggere i tuoi dati. Nessuna misura è perfetta, ma facciamo del nostro meglio. Ti consigliamo di usare solo canali sicuri per comunicarci informazioni riservate.</p>
+        <p>I dati vengono conservati per il tempo necessario a fornire i Servizi e adempiere agli obblighi legali.</p>
+      </div>
+    </div>
+
+    <!-- 08 Diritti -->
+    <div class="privacy-section" id="sec-diritti">
+      <div class="privacy-section-num">08</div>
+      <h2 class="privacy-section-title">I tuoi diritti</h2>
+      <div class="privacy-section-body">
+        <ul>
+          <li><strong>Accesso:</strong> richiedere l'accesso ai dati che ti riguardano.</li>
+          <li><strong>Eliminazione:</strong> richiedere la cancellazione dei tuoi dati.</li>
+          <li><strong>Correzione:</strong> aggiornare o correggere informazioni inesatte.</li>
+          <li><strong>Portabilità:</strong> ricevere una copia dei dati in formato strutturato.</li>
+          <li><strong>Opposizione:</strong> opporti al trattamento per determinate finalità (SEE/UK).</li>
+          <li><strong>Revoca consenso:</strong> in qualsiasi momento, senza pregiudizio per il trattamento precedente.</li>
+        </ul>
+        <div class="privacy-highlight">
+          <p>Per esercitare i tuoi diritti scrivici a <a href="mailto:33giristudios@gmail.com">33giristudios@gmail.com</a>. Potremmo dover verificare la tua identità prima di procedere. Non sarai mai discriminato per aver esercitato questi diritti.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 Contatti -->
+    <div class="privacy-section" id="sec-contatti">
+      <div class="privacy-section-num">09</div>
+      <h2 class="privacy-section-title">Contatti</h2>
+      <div class="privacy-section-body">
+        <p>Per qualsiasi domanda o per esercitare i tuoi diritti in materia di privacy, contattaci:</p>
+      </div>
+      <div class="privacy-contacts">
+        <div class="privacy-contact-item">
+          <div class="privacy-contact-label">Email</div>
+          <div class="privacy-contact-text"><a href="mailto:33giristudios@gmail.com">33giristudios@gmail.com</a></div>
+        </div>
+        <div class="privacy-contact-item">
+          <div class="privacy-contact-label">Indirizzo</div>
+          <div class="privacy-contact-text">Via Fratelli Perini 165<br>Trento, TN 38122 — Italia</div>
+        </div>
+        <div class="privacy-contact-item">
+          <div class="privacy-contact-label">Titolare del trattamento</div>
+          <div class="privacy-contact-text">33GIRI<br>ai sensi del GDPR e leggi vigenti</div>
+        </div>
+        <div class="privacy-contact-item">
+          <div class="privacy-contact-label">Modifiche</div>
+          <div class="privacy-contact-text">L'informativa può essere aggiornata. Eventuali modifiche saranno pubblicate su questa pagina con nuova data.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">33GIRI</div>
+        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Naviga</div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Info</div>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="resi-rimborsi.html">Resi</a></li>
+          <li><a href="informativa-privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+      <span class="footer-claim">Reshape the Art</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/393925430575" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  function jumpTo(id){
+    const el=document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelectorAll('.privacy-toc-item').forEach(i=>i.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  const header=document.getElementById('site-header');
+  window.addEventListener('scroll',()=>{header.style.background=window.scrollY>40?'rgba(10,10,10,.98)':'rgba(10,10,10,.94)';},{passive:true});
+</script>
 </body>
 </html>

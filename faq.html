@@ -1,403 +1,513 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>FAQ</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>FAQ — 33GIRI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--gold:#b8963e;--gold-lt:#d4af6a;--gold-dk:#8a6d28;
+      --cream:#f5f0e8;--warm:#e8e2d9;--navy:#0f1522;--white:#fff;
+      --text:#1a1a1a;--muted:#6b6560;--header-h:80px;
+      --fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--cream);color:var(--text);font-family:var(--fb);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-repeat:repeat;pointer-events:none;z-index:9999;opacity:.6}
+
+    /* HEADER */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-h);
+      background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,62,.18)}
+    .header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:100%;
+      display:flex;align-items:center;justify-content:space-between;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%)}
+    .logo-mark{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+    .main-nav ul{list-style:none;display:flex;gap:36px}
+    .main-nav a{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .25s;position:relative}
+    .main-nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+    .main-nav a:hover{color:var(--gold-lt)}.main-nav a:hover::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:20px}
+    .header-actions a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+    .header-actions a:hover{color:var(--gold)}
+
+    /* HERO ORIZZONTALE */
+    .faq-hero{
+      padding-top:var(--header-h);
+      background:var(--black);
+      padding-bottom:0;
+      position:relative;overflow:hidden}
+    .faq-hero-inner{
+      max-width:1440px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;
+      min-height:42vh}
+    /* Lato testo */
+    .faq-hero-text{
+      padding:72px 80px 56px;
+      display:flex;flex-direction:column;justify-content:center;
+      position:relative;z-index:1}
+    /* pattern righe */
+    .faq-hero-text::before{content:'';position:absolute;inset:0;
+      background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(184,150,62,.04) 60px,rgba(184,150,62,.04) 61px);
+      pointer-events:none}
+    .faq-hero-kicker{font-size:10px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:18px;
+      opacity:0;animation:slideUp .8s var(--ease) .2s forwards}
+    .faq-hero-title{font-family:var(--fd);font-size:clamp(52px,6vw,88px);font-weight:300;
+      line-height:1;letter-spacing:-.01em;color:var(--white);
+      opacity:0;animation:slideUp .9s var(--ease) .4s forwards}
+    .faq-hero-title em{font-style:italic;color:var(--gold-lt)}
+    .faq-hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.45);
+      max-width:380px;line-height:1.8;margin-top:20px;
+      opacity:0;animation:slideUp .9s var(--ease) .6s forwards}
+    /* Lato numeri */
+    .faq-hero-stats{
+      background:rgba(184,150,62,.06);
+      border-left:1px solid rgba(184,150,62,.15);
+      padding:72px 80px;
+      display:flex;flex-direction:column;justify-content:center;gap:40px;
+      opacity:0;animation:slideUp .9s var(--ease) .5s forwards}
+    .faq-stat{}
+    .faq-stat-num{font-family:var(--fd);font-size:72px;font-weight:300;
+      color:var(--gold);line-height:1}
+    .faq-stat-label{font-size:11px;font-weight:400;letter-spacing:.12em;
+      text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px}
+    @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+    /* FILTRI STICKY */
+    .faq-filters-bar{
+      background:var(--black);
+      position:sticky;top:var(--header-h);z-index:900;
+      border-bottom:1px solid rgba(184,150,62,.15)}
+    .faq-filters-inner{
+      max-width:1280px;margin:0 auto;padding:0 60px;
+      display:flex;align-items:center;gap:0;
+      overflow-x:auto;scrollbar-width:none}
+    .faq-filters-inner::-webkit-scrollbar{display:none}
+    .faq-filter-btn{
+      flex-shrink:0;padding:18px 28px;
+      font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(255,255,255,.35);background:transparent;border:none;
+      border-bottom:2px solid transparent;cursor:pointer;
+      transition:color .25s,border-color .25s;white-space:nowrap}
+    .faq-filter-btn:hover{color:rgba(255,255,255,.7)}
+    .faq-filter-btn.is-active{color:var(--gold);border-bottom-color:var(--gold)}
+
+    /* CORPO FAQ: 2 colonne asimmetriche */
+    .faq-body{max-width:1280px;margin:0 auto;padding:100px 60px;
+      display:grid;grid-template-columns:280px 1fr;gap:80px;align-items:start}
+
+    /* Colonna sinistra: indice */
+    .faq-sidebar{}
+    .faq-sidebar-label{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:20px}
+    .faq-index{display:flex;flex-direction:column;gap:0}
+    .faq-index-item{
+      padding:12px 0;border-top:1px solid rgba(0,0,0,.08);
+      font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;
+      transition:color .2s;letter-spacing:.04em}
+    .faq-index-item:hover{color:var(--gold-dk)}
+    .faq-index-item.is-current{color:var(--gold-dk);font-weight:600}
+    .faq-index-item:last-child{border-bottom:1px solid rgba(0,0,0,.08)}
+
+    /* Colonna destra: accordion */
+    .faq-list{display:flex;flex-direction:column;gap:0}
+    .faq-section-title{
+      font-family:var(--fd);font-size:32px;font-weight:300;
+      color:var(--black);letter-spacing:-.01em;
+      margin:48px 0 16px;padding-bottom:16px;
+      border-bottom:1px solid rgba(184,150,62,.3)}
+    .faq-section-title:first-child{margin-top:0}
+    .faq-section-title em{font-style:italic;color:var(--gold-dk)}
+
+    .faq-item{border-bottom:1px solid rgba(0,0,0,.07)}
+    .faq-item:first-of-type{border-top:1px solid rgba(0,0,0,.07)}
+    .faq-q-btn{
+      width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;
+      padding:22px 0;background:transparent;border:none;cursor:pointer;text-align:left;
+      font-family:var(--fd);font-size:20px;font-weight:400;color:var(--black);
+      transition:color .2s}
+    .faq-q-btn:hover{color:var(--gold-dk)}
+    .faq-q-icon{
+      flex-shrink:0;width:28px;height:28px;border-radius:50%;
+      border:1px solid rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;
+      font-size:16px;color:var(--gold);transition:transform .3s,border-color .3s}
+    .faq-item.is-open .faq-q-icon{transform:rotate(45deg);border-color:var(--gold)}
+    .faq-a{
+      font-size:14px;font-weight:300;line-height:1.9;color:var(--muted);
+      overflow:hidden;max-height:0;padding-bottom:0;
+      transition:max-height .4s var(--ease),padding .3s}
+    .faq-item.is-open .faq-a{max-height:400px;padding-bottom:24px}
+
+    /* SEZIONE CTA */
+    .faq-cta{background:var(--navy);padding:100px 60px;position:relative;overflow:hidden}
+    .faq-cta::before{content:'';position:absolute;inset:0;
+      background-image:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(184,150,62,.03) 40px,rgba(184,150,62,.03) 41px);
+      pointer-events:none}
+    .faq-cta-inner{max-width:1280px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+      position:relative;z-index:1}
+    .faq-cta-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .faq-cta-title{font-family:var(--fd);font-size:clamp(36px,4vw,56px);font-weight:300;
+      color:var(--white);line-height:1.1;letter-spacing:-.01em;margin-bottom:24px}
+    .faq-cta-title em{font-style:italic;color:var(--gold-lt)}
+    .faq-cta-body{font-size:14px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.8}
+    .faq-cta-right{display:flex;flex-direction:column;gap:16px}
+    .faq-contact-card{
+      padding:28px;background:rgba(255,255,255,.04);
+      border:1px solid rgba(184,150,62,.12);
+      transition:background .3s,border-color .3s}
+    .faq-contact-card:hover{background:rgba(184,150,62,.07);border-color:rgba(184,150,62,.3)}
+    .faq-contact-card-label{font-size:9px;font-weight:700;letter-spacing:.25em;
+      text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+    .faq-contact-card-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.55)}
+    .faq-contact-card a{color:var(--gold-lt)}
+
+    /* BUTTONS */
+    .btn-gold{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;
+      background:var(--gold);color:var(--black);font-size:11px;font-weight:700;
+      letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .25s,transform .25s}
+    .btn-gold:hover{background:var(--gold-lt);transform:translateY(-2px)}
+    .btn-outline-w{display:inline-flex;align-items:center;gap:10px;padding:13px 34px;
+      background:transparent;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;
+      letter-spacing:.18em;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);
+      cursor:pointer;transition:border-color .25s,color .25s}
+    .btn-outline-w:hover{border-color:var(--gold);color:var(--gold)}
+
+    /* WA */
+    .wa-float{position:fixed;bottom:32px;right:32px;z-index:500;width:52px;height:52px;
+      background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 28px rgba(184,150,62,.35);transition:transform .25s,box-shadow .25s}
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(184,150,62,.5)}
+    .wa-float svg{width:24px;height:24px;fill:var(--black)}
+
+    /* FOOTER */
+    .site-footer{background:var(--black);padding:80px 60px 40px;border-top:1px solid rgba(184,150,62,.15)}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;
+      padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .footer-logo{font-family:var(--fd);font-size:20px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .footer-brand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.4);max-width:240px}
+    .footer-col-title{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:20px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col a{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);transition:color .2s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em}
+    .footer-claim{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--gold);opacity:.55}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .reveal--d1{transition-delay:.1s}.reveal--d2{transition-delay:.2s}
+
+    @media(max-width:1100px){
+      .faq-hero-inner{grid-template-columns:1fr}
+      .faq-hero-stats{display:none}
+      .faq-body{grid-template-columns:1fr}
+      .faq-sidebar{display:none}
+      .faq-cta-inner{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+    }
+    @media(max-width:768px){
+      :root{--header-h:64px}
+      .faq-hero-text{padding:56px 20px 40px}
+      .faq-filters-inner{padding:0 20px}
+      .faq-body{padding:60px 20px}
+      .faq-cta{padding:60px 20px}
+      .footer-top{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px}
+      .main-nav{display:none}
+    }
+  </style>
 </head>
-<body style="--bg:#e8dfd5">
-  <!-- Header statico -->
-  <!-- Include Header -->
-  <header id="header"></header>
+<body>
 
-  <div id="main-content">
-    <!-- =========================
-      FAQ 33 Giri – Sezione personalizzata
-      Incolla in: Pagina > Blocco HTML personalizzato
-    ========================= -->
-    <section id="faq-33giri" class="faq-wrap" aria-labelledby="faq-title">
-      <h2 id="faq-title">Domande frequenti</h2>
-
-      <!-- Barra azioni: filtri -->
-      <div class="faq-actions" role="region" aria-label="Strumenti FAQ">
-        <div class="faq-filters" role="group" aria-label="Filtra per categoria">
-          <button class="faq-filter is-active" data-filter="tutte" aria-pressed="true">Tutte</button>
-          <button class="faq-filter" data-filter="spedizioni">Spedizioni</button>
-          <button class="faq-filter" data-filter="resi">Resi & Garanzie</button>
-          <button class="faq-filter" data-filter="prodotto">Prodotto & Materiali</button>
-          <button class="faq-filter" data-filter="personalizzazioni">Personalizzazioni</button>
-        </div>
-      </div>
-
-      <!-- FAQ list -->
-      <div class="faq-list" id="faq-list">
-        <!-- FAQ Principali -->
-        <article class="faq-item" id="faq-come-ordinare" data-category="spedizioni">
-          <details>
-            <summary><span class="q">Come posso ordinarlo?</span></summary>
-            <div class="a">
-              Scrivici su Instagram @33giri.studio, invia una mail a 33giristudios@gmail.com, compila il modulo nella sezione Galleria oppure scrivici su whatsapp tramite l'apposito pulsante nella pagina indicando il pezzo che preferisci. Ti rispondiamo entro 24 ore per confermare eventuali dilatazioni tempistiche e i dettagli dell'ordine; se è tutto ok, procediamo subito. Siamo a disposizione per qualsiasi domanda prima e dopo l'acquisto.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-spedizioni" data-category="spedizioni">
-          <details>
-            <summary><span class="q">Come funzionano le spedizioni?</span></summary>
-            <div class="a">
-              Consegnamo noi, porta a porta, a Trento e dintorni. Dopo la conferma fissiamo un appuntamento e in media arriviamo entro 2–5 giorni lavorativi. Siamo un laboratorio artigianale: produciamo internamente, quindi se la richiesta è particolare o richiede più tempo te lo diciamo subito. Non applichiamo costi di spedizione. Il pagamento avviene alla consegna, in contanti oppure contactless. Se ti trovi fuori area Trento, scrivici: troviamo insieme una soluzione (ritiro o corriere).
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-resi" data-category="resi">
-          <details>
-            <summary><span class="q">Come funzionano i resi?</span></summary>
-            <div class="a">
-              Se il pezzo arriva danneggiato o si rompe entro 30 giorni dalla consegna, lo ritiriamo senza costi su Trento e dintorni e puoi scegliere sostituzione oppure rimborso che può avvenire in contanti o tramite bonifico. Per aprire il reso scrivici a 33giristudios@gmail.com oppure su Instagram: @33giri.studio e allega almeno 2 foto. Ti confermiamo data e ora del ritiro. Se non sei in zona Trento, ti inviamo le istruzioni per il rientro con corriere.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-personalizzare-colori" data-category="personalizzazioni">
-          <details>
-            <summary><span class="q">Posso personalizzare i colori?</span></summary>
-            <div class="a">
-              Sì. Per le collezioni Splash e Spiral puoi scegliere fino a 2 colori che applicheremo sulla finitura del pezzo. Per richiederlo, includilo nell'ordine. Ti rispondiamo confermando fattibilità e tempi (eventuale dilatazione solo se previsto) prima di procedere.
-            </div>
-          </details>
-        </article>
-
-        <!-- FAQ Aggiuntive -->
-        <article class="faq-item" id="faq-provenienza-vinili" data-category="prodotto">
-          <details>
-            <summary><span class="q">Da dove provengono i vinili che utilizzate?</span></summary>
-            <div class="a">
-              Tutti i vinili provengono da collezioni usate o dischi destinati al macero. Li recuperiamo e diamo loro una seconda vita, senza mai sciogliere copie nuove o ancora in buone condizioni.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-realizzazione-svuotatasche" data-category="prodotto">
-          <details>
-            <summary><span class="q">Come vengono realizzati gli svuotatasche?</span></summary>
-            <div class="a">
-              Ogni pezzo viene scaldato e modellato a mano, uno alla volta, in laboratorio. Nessuna macchina industriale, solo calore, tempo e tanta cura.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-uso-cibo" data-category="prodotto">
-          <details>
-            <summary><span class="q">Posso usarlo per mettere cibo o frutta?</span></summary>
-            <div class="a">
-              Ti consigliamo di usarlo solo come oggetto decorativo o portaoggetti: è pur sempre vinile, quindi non adatto al contatto diretto con alimenti caldi.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-calore-sole" data-category="prodotto">
-          <details>
-            <summary><span class="q">Si rovina col caldo o con il sole?</span></summary>
-            <div class="a">
-              No, nelle normali condizioni di casa o studio non cambia forma. Basta non lasciarlo ore sotto il sole diretto o vicino a fonti di calore.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-pezzo-unico" data-category="prodotto">
-          <details>
-            <summary><span class="q">Ogni pezzo è diverso?</span></summary>
-            <div class="a">
-              Sì, ogni vinile ha la propria storia, etichetta, graffi, segni del tempo. E anche la curvatura o le colate di colore variano sempre. Nessuno è identico a un altro.
-            </div>
-          </details>
-        </article>
-
-      </div>
-
-      
-    </section>
-  </div>
-  <footer id="footer" class="site-footer">
-    <div class="wrap footer-inner">
-      <div>© 33Giri — Made in Italy</div>
-      <nav class="footer-nav">
-  <a href="informativa-privacy.html">Informativa sulla Privacy</a>
-        <a href="faq.html">FAQ</a>
-        <a href="resi-rimborsi.html">Resi e Rimborsi</a>
-      </nav>
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="chi_siamo.html">Chi Siamo</a></li>
+      </ul>
+    </nav>
+    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
+    <div class="header-actions">
+      <a href="quiz.html">33Quiz</a>
+      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
     </div>
-  </footer>
-
-  <!-- Script principale -->
-  <script src="assets/js/main.js"></script>
-
-  <!-- ====== STILI MINIMI (scoped) ====== -->
-  <style>
-    #faq-33giri { --gap: 14px; --radius: 14px; --shadow: 0 6px 18px rgba(0,0,0,.06); }
-    /* usare margin-inline per non sovrascrivere il margin-top globale della .faq-wrap */
-    #faq-33giri { max-width: 920px; margin-left: auto; margin-right: auto; padding: 24px 16px; font-family: inherit; }
-    #faq-33giri h2 { font-size: clamp(1.4rem, 1.2rem + 1.2vw, 2rem); margin: 0 0 12px; }
-    #faq-33giri .faq-actions { display: grid; gap: var(--gap); grid-template-columns: 1fr; margin-bottom: 12px; }
-    #faq-33giri .faq-filters { display: flex; flex-wrap: wrap; gap: 8px; }
-    #faq-33giri .faq-filter { padding: 8px 12px; border-radius: 999px; border: 1px solid #ddd; background:#fff; cursor:pointer; font-size:.95rem }
-    #faq-33giri .faq-filter.is-active { border-color:#111; background:#111; color:#fff }
-    #faq-33giri .faq-list { display: grid; gap: var(--gap); margin-top: 8px; }
-    #faq-33giri .faq-item details { background:#fff; border:1px solid #eee; border-radius: var(--radius); box-shadow: var(--shadow); }
-    #faq-33giri .faq-item summary { list-style:none; cursor:pointer; padding: 14px 16px; font-weight:600; }
-    #faq-33giri .faq-item summary::-webkit-details-marker { display:none; }
-    #faq-33giri .faq-item .a { padding: 0 16px 16px; line-height: 1.6; }
-    #faq-33giri .faq-item .q { display:inline-flex; align-items:center; gap:8px }
-    #faq-33giri .faq-item[hidden] { display: none !important; }
-    #faq-33giri .faq-cta { display:flex; flex-wrap:wrap; gap:8px; margin-top: 16px; }
-    #faq-33giri .faq-link { padding:8px 12px; border-radius: 10px; border:1px solid #eee; text-decoration:none }
-    #faq-33giri .contact { margin:8px 0 0 0; padding-left: 18px; }
-    @media (min-width: 720px){ #faq-33giri .faq-actions { grid-template-columns: 1fr auto } }
-  </style>
-
-  <!-- ====== JS: filtri, deeplink ====== -->
-  <script>
-  (function(){
-          <details>
-            <summary><span class="q">Come posso restituire un prodotto?</span></summary>
-            <div class="a">
-              Per restituire un prodotto, ti basta seguire la procedura di reso descritta sul nostro sito web. Generalmente, dovrai inviarci il prodotto non utilizzato, con confezione originale, e completare il modulo di reso che ti invieremo via email o potrai scaricare direttamente dalla tua area personale.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-costi-reso" data-category="resi">
-          <details>
-            <summary><span class="q">Ci sono dei costi per il reso?</span></summary>
-            <div class="a">
-              I costi di spedizione per il reso sono generalmente a carico del consumatore, salvo diversa indicazione nella nostra politica di reso. Tuttavia, se il prodotto ricevuto è difettoso o non conforme all’ordine, i costi di reso sono a nostro carico.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-tempi-rimborso" data-category="resi">
-          <details>
-            <summary><span class="q">Quando riceverò il rimborso?</span></summary>
-            <div class="a">
-              Il rimborso verrà effettuato entro 14 giorni dal ricevimento del reso. Il rimborso sarà accreditato tramite lo stesso metodo di pagamento utilizzato per l’acquisto, salvo diversa indicazione.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-danneggiato-reso" data-category="resi">
-          <details>
-            <summary><span class="q">Cosa succede se il prodotto che restituisco è danneggiato?</span></summary>
-            <div class="a">
-              Se il prodotto restituito arriva danneggiato, la legge prevede che il consumatore possa essere responsabile per una diminuzione del valore del bene. Ti consigliamo di restituire il prodotto nella sua confezione originale, ben imballato, per evitare danni durante il trasporto.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-cambio-prodotto" data-category="resi">
-          <details>
-            <summary><span class="q">Posso cambiare un prodotto acquistato?</span></summary>
-            <div class="a">
-              Se desideri cambiare il prodotto (per esempio, per una diversa taglia o colore), dovrai restituirlo e fare un nuovo acquisto. Al momento, non offriamo il servizio di cambio diretto.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-difettoso-rimborso" data-category="resi">
-          <details>
-            <summary><span class="q">Il mio prodotto è difettoso, come posso richiedere un rimborso?</span></summary>
-            <div class="a">
-              Se il prodotto che hai ricevuto è difettoso o non conforme alla descrizione, hai diritto a un rimborso completo o a una sostituzione. Puoi restituire il prodotto entro 2 anni dalla data di consegna, come previsto dalla normativa europea sulla garanzia legale dei consumatori.
-            </div>
-          </details>
-        </article>
-          <details>
-            <summary><span class="q">Perché il nome 33Giri?</span></summary>
-            <div class="a">
-              È un omaggio alla musica che ci ha ispirati: 33 giri al minuto è la velocità dei dischi in vinile, e anche il ritmo con cui diamo nuova forma a ogni storia.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-odore" data-category="prodotto">
-          <details>
-            <summary><span class="q">Ha un odore particolare?</span></summary>
-            <div class="a">
-              No, una volta raffreddato non ha alcun odore. Il processo di modellatura avviene in modo controllato e sicuro, senza bruciare il materiale.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-sicurezza-alimentare" data-category="prodotto">
-          <details>
-            <summary><span class="q">È sicuro mangiare o bere da esso?</span></summary>
-            <div class="a">
-              No, non è pensato per uso alimentare diretto. È un oggetto di design, ideale come svuotatasche, decorazione o contenitore creativo — ma non come piatto o bicchiere.
-            </div>
-          </details>
-        </article>
-
-        <article class="faq-item" id="faq-cibo-interno" data-category="prodotto">
-          <details>
-            <summary><span class="q">È sicuro metterci dentro del cibo?</span></summary>
-            <div class="a">
-              Il vinile non è un materiale alimentare, quindi non è adatto al contatto diretto con cibi. Se vuoi usarlo come fruttiera, meglio appoggiare la frutta con la buccia o utilizzare una piccola base (come un tovagliolo o carta).
-            </div>
-          </details>
-        </article>
-        <!-- FAQ aggiornate inserite nella prossima fase -->
-      </div>
-
-      
-    </section>
   </div>
-  <footer id="footer" class="site-footer">
-    <div class="wrap footer-inner">
-      <div>© 33Giri — Made in Italy</div>
-      <nav class="footer-nav">
-  <a href="informativa-privacy.html">Informativa sulla Privacy</a>
-        <a href="faq.html">FAQ</a>
-        <a href="resi-rimborsi.html">Resi e Rimborsi</a>
-      </nav>
+</header>
+
+<!-- HERO -->
+<section class="faq-hero">
+  <div class="faq-hero-inner">
+    <div class="faq-hero-text">
+      <div class="faq-hero-kicker">Hai una domanda? Abbiamo la risposta.</div>
+      <h1 class="faq-hero-title">Domande<br><em>frequenti.</em></h1>
+      <p class="faq-hero-sub">Tutto quello che devi sapere su prodotti, spedizioni, resi e personalizzazioni. Se non trovi la risposta, scrivici.</p>
     </div>
-  </footer>
+    <div class="faq-hero-stats">
+      <div class="faq-stat">
+        <div class="faq-stat-num">24h</div>
+        <div class="faq-stat-label">Tempo di risposta medio</div>
+      </div>
+      <div class="faq-stat">
+        <div class="faq-stat-num">30gg</div>
+        <div class="faq-stat-label">Politica resi</div>
+      </div>
+      <div class="faq-stat">
+        <div class="faq-stat-num">0€</div>
+        <div class="faq-stat-label">Costi spedizione locali</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Script principale -->
-  <script src="assets/js/main.js"></script>
+<!-- FILTRI -->
+<nav class="faq-filters-bar">
+  <div class="faq-filters-inner">
+    <button class="faq-filter-btn is-active" data-filter="tutte">Tutte le domande</button>
+    <button class="faq-filter-btn" data-filter="spedizioni">Spedizioni & Ordini</button>
+    <button class="faq-filter-btn" data-filter="resi">Resi & Garanzie</button>
+    <button class="faq-filter-btn" data-filter="prodotto">Prodotto & Materiali</button>
+    <button class="faq-filter-btn" data-filter="personalizzazioni">Personalizzazioni</button>
+  </div>
+</nav>
 
-  <!-- ====== STILI MINIMI (scoped) ====== -->
-  <style>
-    #faq-33giri { --gap: 14px; --radius: 14px; --shadow: 0 6px 18px rgba(0,0,0,.06); }
-    /* usare margin-inline per non sovrascrivere il margin-top globale della .faq-wrap */
-    #faq-33giri { max-width: 920px; margin-left: auto; margin-right: auto; padding: 24px 16px; font-family: inherit; }
-    #faq-33giri h2 { font-size: clamp(1.4rem, 1.2rem + 1.2vw, 2rem); margin: 0 0 12px; }
-    #faq-33giri .faq-actions { display: grid; gap: var(--gap); grid-template-columns: 1fr; margin-bottom: 12px; }
-    #faq-33giri .faq-filters { display: flex; flex-wrap: wrap; gap: 8px; }
-    #faq-33giri .faq-filter { padding: 8px 12px; border-radius: 999px; border: 1px solid #ddd; background:#fff; cursor:pointer; font-size:.95rem }
-    #faq-33giri .faq-filter.is-active { border-color:#111; background:#111; color:#fff }
-    #faq-33giri .faq-list { display: grid; gap: var(--gap); margin-top: 8px; }
-    #faq-33giri .faq-item details { background:#fff; border:1px solid #eee; border-radius: var(--radius); box-shadow: var(--shadow); }
-    #faq-33giri .faq-item summary { list-style:none; cursor:pointer; padding: 14px 16px; font-weight:600; }
-    #faq-33giri .faq-item summary::-webkit-details-marker { display:none; }
-    #faq-33giri .faq-item .a { padding: 0 16px 16px; line-height: 1.6; }
-    #faq-33giri .faq-item .q { display:inline-flex; align-items:center; gap:8px }
-    #faq-33giri .faq-item[hidden] { display: none !important; }
-    #faq-33giri .faq-cta { display:flex; flex-wrap:wrap; gap:8px; margin-top: 16px; }
-    #faq-33giri .faq-link { padding:8px 12px; border-radius: 10px; border:1px solid #eee; text-decoration:none }
-    #faq-33giri .contact { margin:8px 0 0 0; padding-left: 18px; }
-    @media (min-width: 720px){ #faq-33giri .faq-actions { grid-template-columns: 1fr auto } }
-  </style>
+<!-- CORPO FAQ -->
+<div class="faq-body">
 
-  <!-- ====== JS: filtri, deeplink ====== -->
-  <script>
-  (function(){
-    const root = document.getElementById('faq-33giri');
-    if(!root) return;
+  <!-- Sidebar indice -->
+  <aside class="faq-sidebar">
+    <div class="faq-sidebar-label">Categorie</div>
+    <div class="faq-index">
+      <div class="faq-index-item is-current" data-jump="sec-ordini">Spedizioni & Ordini</div>
+      <div class="faq-index-item" data-jump="sec-resi">Resi & Garanzie</div>
+      <div class="faq-index-item" data-jump="sec-prodotto">Prodotto & Materiali</div>
+      <div class="faq-index-item" data-jump="sec-personalizzazioni">Personalizzazioni</div>
+    </div>
+  </aside>
 
-    const filters = Array.from(root.querySelectorAll('.faq-filter'));
-    const items = Array.from(root.querySelectorAll('.faq-item'));
-    let currentFilter = 'tutte';
+  <!-- Accordion -->
+  <div class="faq-list" id="faq-list">
 
-    function apply(){
+    <h2 class="faq-section-title" id="sec-ordini">Spedizioni &amp; <em>Ordini</em></h2>
+
+    <div class="faq-item" data-cat="spedizioni">
+      <button class="faq-q-btn"><span>Come posso ordinare?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Scrivici su Instagram @33giri.studio, manda una mail a 33giristudios@gmail.com, oppure usa il pulsante WhatsApp. Ti rispondiamo entro 24 ore per confermare disponibilità e dettagli. Se è tutto ok, procediamo subito.</div>
+    </div>
+    <div class="faq-item" data-cat="spedizioni">
+      <button class="faq-q-btn"><span>Come funzionano le spedizioni?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Consegnamo a mano a Bologna, Milano e Trento — senza costi aggiuntivi. In media arriviamo entro 2–5 giorni lavorativi dalla conferma. Per altre zone organizziamo spedizione con corriere: scrivici e troviamo la soluzione. Il pagamento avviene alla consegna, contanti o contactless.</div>
+    </div>
+    <div class="faq-item" data-cat="spedizioni">
+      <button class="faq-q-btn"><span>Quanto tempo dalla conferma alla consegna?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Solitamente 2–5 giorni lavorativi. Se hai una richiesta particolare o un'urgenza, dimmelo nell'ordine: ci organizziamo. Siamo un laboratorio artigianale — produciamo internamente, quindi se ci vuole più tempo te lo diciamo subito prima di procedere.</div>
+    </div>
+
+    <h2 class="faq-section-title" id="sec-resi">Resi &amp; <em>Garanzie</em></h2>
+
+    <div class="faq-item" data-cat="resi">
+      <button class="faq-q-btn"><span>Come funzionano i resi?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Se il pezzo arriva danneggiato o si rompe entro 30 giorni dalla consegna, lo ritiriamo senza costi su Bologna, Milano e Trento. Puoi scegliere sostituzione o rimborso (contanti o bonifico). Scrivi a 33giristudios@gmail.com con almeno 2 foto del problema.</div>
+    </div>
+    <div class="faq-item" data-cat="resi">
+      <button class="faq-q-btn"><span>Posso restituire un acquisto online?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Sì. Secondo la normativa europea hai 14 giorni dalla ricezione per restituire un prodotto acquistato a distanza, senza dover fornire motivazione. L'articolo deve essere nelle stesse condizioni originali. I prodotti personalizzati su commissione sono esclusi.</div>
+    </div>
+    <div class="faq-item" data-cat="resi">
+      <button class="faq-q-btn"><span>Quando ricevo il rimborso?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Entro 14 giorni dal ricevimento del reso. Il rimborso avviene tramite lo stesso metodo di pagamento usato per l'acquisto. Se passano più di 15 giorni lavorativi dall'approvazione senza notizie, scrivici.</div>
+    </div>
+    <div class="faq-item" data-cat="resi">
+      <button class="faq-q-btn"><span>Posso cambiare il prodotto?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Al momento non offriamo il cambio diretto. Puoi restituire il pezzo e fare un nuovo ordine separato. Considera però che ogni vinile è unico — se hai dubbi prima di scegliere, scrivici: ti mandiamo foto dettagliate del pezzo prima dell'acquisto.</div>
+    </div>
+
+    <h2 class="faq-section-title" id="sec-prodotto">Prodotto &amp; <em>Materiali</em></h2>
+
+    <div class="faq-item" data-cat="prodotto">
+      <button class="faq-q-btn"><span>Da dove provengono i vinili?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Tutti da collezioni usate o dischi destinati al macero. Non utilizziamo mai copie nuove o ancora in buone condizioni per l'ascolto. Il recupero è la base del progetto — non uno slogan.</div>
+    </div>
+    <div class="faq-item" data-cat="prodotto">
+      <button class="faq-q-btn"><span>Come vengono realizzati gli oggetti?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Ogni pezzo viene scaldato e modellato a mano, uno alla volta. Nessuna macchina industriale, nessuno stampo. Solo calore, tempo e attenzione. Per questo nessun pezzo è identico a un altro — la forma dipende dalla temperatura, dalla pressione, dal disco specifico.</div>
+    </div>
+    <div class="faq-item" data-cat="prodotto">
+      <button class="faq-q-btn"><span>Si rovina con il caldo o il sole?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">No, nelle normali condizioni di casa o ufficio è stabile. Il PVC dei vinili è progettato per decenni di uso. Evita solo esposizione prolungata al sole diretto o vicinanza a fonti di calore intenso (termosifoni, candele a contatto diretto).</div>
+    </div>
+    <div class="faq-item" data-cat="prodotto">
+      <button class="faq-q-btn"><span>Ogni pezzo è davvero diverso?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Sì, senza eccezioni. Ogni vinile ha la propria storia, etichetta, graffi, segni del tempo. La curvatura varia, il colore varia, la distribuzione delle imperfezioni varia. Non esiste un secondo esemplare identico — questo è il valore del pezzo unico.</div>
+    </div>
+    <div class="faq-item" data-cat="prodotto">
+      <button class="faq-q-btn"><span>Ha un odore particolare?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">No. Il processo avviene in modo controllato, senza bruciare il materiale. Una volta raffreddato il pezzo non ha nessun odore. Se noti qualcosa di strano alla ricezione, scrivici: non dovrebbe succedere.</div>
+    </div>
+    <div class="faq-item" data-cat="prodotto">
+      <button class="faq-q-btn"><span>È sicuro metterci cibo?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">No, non è un materiale alimentare. È un oggetto di design — ideale come svuotatasche, decorazione o portaoggetti, non come contenitore per alimenti. Se vuoi usarlo come fruttiera, appoggia la frutta con la buccia o metti sotto un tovagliolo.</div>
+    </div>
+
+    <h2 class="faq-section-title" id="sec-personalizzazioni">Personaliz&shy;<em>zazioni</em></h2>
+
+    <div class="faq-item" data-cat="personalizzazioni">
+      <button class="faq-q-btn"><span>Posso scegliere i colori?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Sì. Per Splash e Spiral puoi indicare fino a 2 colori preferiti all'ordine. Ti confermiamo fattibilità e tempi prima di procedere. In alcuni casi la personalizzazione può richiedere qualche giorno in più.</div>
+    </div>
+    <div class="faq-item" data-cat="personalizzazioni">
+      <button class="faq-q-btn"><span>Posso richiedere un disegno su misura?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Per disegni e illustrazioni specifiche collaboriamo con artisti nell'ambito delle edizioni collab. Se hai un'idea concreta, scrivici — valutiamo ogni proposta. Per personalizzazioni semplici (colori, etichetta) gestiamo direttamente noi.</div>
+    </div>
+    <div class="faq-item" data-cat="personalizzazioni">
+      <button class="faq-q-btn"><span>Posso inviare un mio vinile da trasformare?</span><span class="faq-q-icon">+</span></button>
+      <div class="faq-a">Sì! Vai alla pagina "Contribuisci" per scoprire come funziona. Chi ci manda vinili riceve uno sconto sul prossimo acquisto. Se il disco ha un valore sentimentale particolare, parliamone prima: possiamo organizzare qualcosa di speciale.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="faq-cta">
+  <div class="faq-cta-inner">
+    <div>
+      <div class="faq-cta-label reveal">Non hai trovato la risposta?</div>
+      <h2 class="faq-cta-title reveal reveal--d1">
+        Scrivici.<br><em>Rispondiamo.</em>
+      </h2>
+      <p class="faq-cta-body reveal reveal--d2">
+        Ti rispondiamo entro 24 ore. Per ordini, personalizzazioni, collaborazioni o qualsiasi altra cosa — siamo sempre disponibili su WhatsApp, Instagram o email.
+      </p>
+    </div>
+    <div class="faq-cta-right">
+      <div class="faq-contact-card reveal">
+        <div class="faq-contact-card-label">WhatsApp</div>
+        <div class="faq-contact-card-text">Il canale più veloce. <a href="https://wa.me/393925430575" target="_blank">Scrivici ora →</a></div>
+      </div>
+      <div class="faq-contact-card reveal reveal--d1">
+        <div class="faq-contact-card-label">Instagram</div>
+        <div class="faq-contact-card-text">DM aperti. <a href="https://instagram.com/33giri.studio" target="_blank">@33giri.studio →</a></div>
+      </div>
+      <div class="faq-contact-card reveal reveal--d2">
+        <div class="faq-contact-card-label">Email</div>
+        <div class="faq-contact-card-text"><a href="mailto:33giristudios@gmail.com">33giristudios@gmail.com</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">33GIRI</div>
+        <p>Oggetti di design upcycling da vinili reali.<br>Handmade · Made in Italy · Reshape the Art.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Naviga</div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Info</div>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="resi-rimborsi.html">Resi</a></li>
+          <li><a href="informativa-privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="https://instagram.com/33giri.studio" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/393925430575" target="_blank">WhatsApp</a></li>
+          <li><a href="contribuisci.html">Dona un vinile</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 33GIRI — Made in Italy</span>
+      <span class="footer-claim">Reshape the Art</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/393925430575" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+(function(){
+  // Header scroll
+  const header=document.getElementById('site-header');
+  window.addEventListener('scroll',()=>{header.style.background=window.scrollY>40?'rgba(10,10,10,.98)':'rgba(10,10,10,.94)';},{passive:true});
+
+  // Reveal
+  const els=document.querySelectorAll('.reveal');
+  const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.1});
+  els.forEach(el=>io.observe(el));
+
+  // Accordion
+  document.querySelectorAll('.faq-q-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=btn.closest('.faq-item');
+      const isOpen=item.classList.contains('is-open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('is-open'));
+      if(!isOpen) item.classList.add('is-open');
+    });
+  });
+
+  // Filtri
+  const filterBtns=document.querySelectorAll('.faq-filter-btn');
+  const items=document.querySelectorAll('.faq-item');
+  const sections=document.querySelectorAll('.faq-section-title');
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      filterBtns.forEach(b=>b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const f=btn.dataset.filter;
       items.forEach(it=>{
-        const inCat = (currentFilter==='tutte') || it.dataset.category===currentFilter;
-        it.hidden = !inCat;
+        it.style.display=(f==='tutte'||it.dataset.cat===f)?'':'none';
       });
-    }
-
-    // Filtri
-    filters.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        filters.forEach(b=>{ b.classList.remove('is-active'); b.setAttribute('aria-pressed','false'); });
-        btn.classList.add('is-active'); btn.setAttribute('aria-pressed','true');
-        currentFilter = btn.dataset.filter;
-        apply();
-      });
+      sections.forEach(s=>s.style.display=(f==='tutte')?'':'none');
     });
+  });
 
-    // Deeplink: se c'è #faq-xxx, apre quel details
-    if(location.hash && location.hash.startsWith('#faq-')){
-      const target = root.querySelector(location.hash);
-      if(target){
-        const det = target.querySelector('details');
-        if(det) det.open = true;
-        target.scrollIntoView({behavior:'smooth', block:'start'});
-      }
-    }
-
-    // Apri/chiudi un solo pannello per volta (opzionale: commenta per multiple)
-    root.querySelectorAll('.faq-item details summary').forEach(sum=>{
-      sum.addEventListener('click', (e)=>{
-        const det = sum.parentElement;
-        const openNow = !det.open; // stato dopo il click
-        // Chiudi tutti
-        root.querySelectorAll('.faq-item details[open]').forEach(d=>{ if(d!==det) d.open=false; });
-        // Se l'utente sta aprendo, lasciare che si apra; se sta chiudendo, permetti default
-        // Niente preventDefault: lasciamo il comportamento nativo
-        setTimeout(()=>{ // aggiorna hash per link condivisibili
-          if(det.open) history.replaceState(null,'', '#'+det.closest('.faq-item').id);
-          else history.replaceState(null,'', ' ');
-        }, 0);
-      });
+  // Sidebar jump
+  document.querySelectorAll('.faq-index-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      const target=document.getElementById(item.dataset.jump);
+      if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+      document.querySelectorAll('.faq-index-item').forEach(i=>i.classList.remove('is-current'));
+      item.classList.add('is-current');
     });
+  });
+})();
+</script>
 
-    // Accessibilità: tastiera su summary già gestita dal nativo <details>
-  })();
-  </script>
-
-  <!-- ====== SEO: FAQPage JSON-LD (includi le 8–10 Q/A principali) ====== -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Da dove provengono i vinili che utilizzate?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Tutti i vinili provengono da collezioni usate o dischi destinati al macero. Li recuperiamo e diamo loro una seconda vita, senza mai sciogliere copie nuove o ancora in buone condizioni."}
-      },
-      {
-        "@type": "Question",
-        "name": "Come vengono realizzati gli svuotatasche?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Ogni pezzo viene scaldato e modellato a mano, uno alla volta, in laboratorio. Nessuna macchina industriale, solo calore, tempo e tanta cura."}
-      },
-      {
-        "@type": "Question",
-        "name": "Posso usarlo per mettere cibo o frutta?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Ti consigliamo di usarlo solo come oggetto decorativo o portaoggetti: è pur sempre vinile, quindi non adatto al contatto diretto con alimenti caldi."}
-      },
-      {
-        "@type": "Question",
-        "name": "Ogni pezzo è diverso?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Sì, ogni vinile ha la propria storia, etichetta, graffi, segni del tempo. E anche la curvatura o le colate di colore variano sempre. Nessuno è identico a un altro."}
-      },
-      {
-        "@type": "Question",
-        "name": "È ancora ascoltabile il disco?",
-        "acceptedAnswer": {"@type": "Answer", "text": "No, il processo di modellatura lo trasforma completamente: non potrai più metterlo sul giradischi… ma potrai guardarlo tutti i giorni."}
-      },
-      {
-        "@type": "Question",
-        "name": "Posso richiedere un colore o un disegno personalizzato?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Certo! Con la collezione Painted collaboriamo con artisti che decorano ogni vinile a mano. Puoi anche scriverci per una personalizzazione su misura."}
-      },
-      {
-        "@type": "Question",
-        "name": "Quanto tempo serve per la spedizione?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Ogni pezzo viene preparato e controllato a mano. In genere spediamo entro 3-5 giorni lavorativi, in un packaging sostenibile e protettivo."}
-      },
-      {
-        "@type": "Question",
-        "name": "Ha un odore particolare?",
-        "acceptedAnswer": {"@type": "Answer", "text": "No, una volta raffreddato non ha alcun odore. Il processo di modellatura avviene in modo controllato e sicuro, senza bruciare il materiale."}
-      }
-    ]
-  }
-  </script>
-
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/faq-translations.js"></script>
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/main.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"Come posso ordinare?","acceptedAnswer":{"@type":"Answer","text":"Scrivici su Instagram, WhatsApp o email. Ti rispondiamo entro 24 ore."}},
+  {"@type":"Question","name":"Ogni pezzo è davvero diverso?","acceptedAnswer":{"@type":"Answer","text":"Sì, ogni vinile è unico per etichetta, graffi, curvatura. Nessun pezzo identico a un altro."}}
+]}
+</script>
 </body>
 </html>
