@@ -234,26 +234,75 @@
       .footer-bottom{flex-direction:column;gap:12px}
       .main-nav{display:none}
     }
+  
+    /* ── LOGO HEADER IMG ── */
+    .logo-img-header {
+      height: 26px; width: auto; display: block;
+      filter: drop-shadow(0 1px 8px rgba(184,150,62,0.2));
+    }
+    /* ── MENU MOBILE DRAWER ── */
+    .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; z-index: 1100; }
+    .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
+    .menu-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-nav {
+      position: fixed; top: var(--header-h); left: 0; right: 0;
+      background: rgba(10,10,10,0.98); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(184,150,62,0.15);
+      z-index: 999; max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-nav.is-open { max-height: 500px; }
+    .mobile-nav ul { list-style: none; display: flex; flex-direction: column; padding: 8px 0 20px; }
+    .mobile-nav li a {
+      display: block; padding: 15px 24px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.70); border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-nav li a:hover { color: var(--gold); background: rgba(184,150,62,0.06); }
+    .mobile-nav li:last-child a { border-bottom: none; }
+    .mobile-nav-ordina {
+      display: block; margin: 12px 24px 8px; padding: 13px 24px; text-align: center;
+      background: var(--gold); color: var(--black);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .mobile-nav-ordina:hover { background: var(--gold-lt); }
+    @media (max-width: 768px) { .menu-btn { display: flex !important; } .main-nav { display: none !important; } }
+ 
   </style>
 </head>
 <body>
-
-<header class="site-header" id="site-header">
-  <div class="header-inner">
-    <nav class="main-nav">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="catalogo.html">Catalogo</a></li>
-        <li><a href="collaborazioni.html" class="active">Collaborazioni</a></li>
-      </ul>
-    </nav>
-    <a href="index.html" class="logo-wrap"><span class="logo-mark">33·GIRI</span></a>
-    <div class="header-actions">
-      <a href="chi_siamo.html">Chi siamo</a>
-      <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);font-weight:600">Ordina →</a>
+ 
+<!-- ══ HEADER ══ -->
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner" style="max-width:1280px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;position:relative;">
+      <!-- Nav sinistra — desktop -->
+      <nav class="main-nav">
+        <ul>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi Siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </nav>
+      <!-- Hamburger — mobile only, a sinistra -->
+      <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <!-- Logo centro -->
+      <a href="index.html" class="logo-wrap" aria-label="33GIRI Home" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;">
+        <img src="assets/logo-header.png" alt="33GIRI" class="logo-img-header">
+      </a>
+      <!-- Azioni destra — desktop -->
+      <div class="header-actions" style="display:flex;align-items:center;gap:20px;">
+        <a href="quiz.html" style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.55);transition:color 0.2s;">33Quiz</a>
+        <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);letter-spacing:0.15em;font-size:11px;font-weight:600;">Ordina →</a>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
 <!-- HERO -->
 <section class="collab-hero">
