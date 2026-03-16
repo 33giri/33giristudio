@@ -244,7 +244,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-
+   
     /* ─────────────────────────────────
        FILTRI NAVIGAZIONE
     ───────────────────────────────── */
@@ -277,7 +277,7 @@
       transition: color 0.25s, border-color 0.25s;
       white-space: nowrap;
     }
-    .filter-tab:hover { color: rgba(0, 0, 0, 0.75); }
+    .filter-tab:hover { color: rgba(255,255,255,0.75); }
     .filter-tab.is-active { color: var(--gold); border-bottom-color: var(--gold); }
 
     /* ─────────────────────────────────
@@ -857,94 +857,92 @@
       .main-nav { display: none; }
       .order-cta { flex-direction: column; align-items: flex-start; }
     }
-   /* ── LOGO HEADER IMG ── */
-      .logo-img-header {
-        height: 26px; width: auto; display: block;
-        filter: drop-shadow(0 1px 8px rgba(184,150,62,0.2));
-      }
-      /* ── MENU MOBILE DRAWER ── */
-      .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; z-index: 1100; }
-      .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
-      .menu-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-      .menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-      .menu-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-      .mobile-nav {
-        position: fixed; top: var(--header-h); left: 0; right: 0;
-        background: rgba(10,10,10,0.98); backdrop-filter: blur(16px);
-        border-bottom: 1px solid rgba(184,150,62,0.15);
-        z-index: 999; max-height: 0; overflow: hidden;
-        transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
-      }
-      .mobile-nav.is-open { max-height: 500px; }
-      .mobile-nav ul { list-style: none; display: flex; flex-direction: column; padding: 8px 0 20px; }
-      .mobile-nav li a {
-        display: block; padding: 15px 24px;
-        font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
-        color: rgba(255,255,255,0.70); border-bottom: 1px solid rgba(255,255,255,0.05);
-        transition: color 0.2s, background 0.2s;
-      }
-      .mobile-nav li a:hover { color: var(--gold); background: rgba(184,150,62,0.06); }
-      .mobile-nav li:last-child a { border-bottom: none; }
-      .mobile-nav-ordina {
-        display: block; margin: 12px 24px 8px; padding: 13px 24px; text-align: center;
-        background: var(--gold); color: var(--black);
-        font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-        transition: background 0.2s;
-      }
-      .mobile-nav-ordina:hover { background: var(--gold-lt); }
-      @media (max-width: 768px) { .menu-btn { display: flex !important; } .main-nav { display: none !important; } }
-   
-    </style>
-  </head>
-   
-  <body>
-   
-    <!-- ══════════════ HEADER ══════════════ -->
-    <!-- ══ HEADER ══ -->
-    <!-- ══ HEADER ══ -->
-    <header class="site-header" id="site-header">
-      <div class="header-inner" style="max-width:1280px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;position:relative;">
-        <!-- Nav sinistra — desktop -->
-        <nav class="main-nav">
-          <ul>
-            <li><a href="catalogo.html">Catalogo</a></li>
-            <li><a href="chi_siamo.html">Chi Siamo</a></li>
-            <li><a href="collaborazioni.html">Collaborazioni</a></li>
-          </ul>
-        </nav>
-        <!-- Hamburger — mobile only, a sinistra -->
-        <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-        <!-- Logo centro -->
-        <a href="index.html" class="logo-wrap" aria-label="33GIRI Home" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;">
-          <img src="Screenshot bg-preview.png" alt="33GIRI" class="logo-img-header">
-        </a>
-        <!-- Azioni destra — desktop -->
-        <div class="header-actions" style="display:flex;align-items:center;gap:20px;">
-          <a href="quiz.html" style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.55);transition:color 0.2s;">33Quiz</a>
-          <a href="https://wa.me/393925430575" target="_blank" style="color:var(--gold);letter-spacing:0.15em;font-size:11px;font-weight:600;">Ordina →</a>
-        </div>
-      </div>
-    </header>
-   
-    <!-- Drawer mobile -->
-    <nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
-      <ul>
-        <li><a href="catalogo.html">Catalogo</a></li>
-        <li><a href="chi_siamo.html">Chi Siamo</a></li>
-        <li><a href="collaborazioni.html">Collaborazioni</a></li>
-        <li><a href="quiz.html">33Quiz</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="contribuisci.html">Dona un vinile</a></li>
-        <li><a href="corporate.html">Corporate / Regalo</a></li>
-        <li><a href="recensioni.html">Recensioni</a></li>
-      </ul>
-      <a href="https://wa.me/393925430575" target="_blank" class="mobile-nav-ordina">Ordina su WhatsApp →</a>
-    </nav>
-   
-    <main>
- 
+  
+    /* ── LOGO HEADER IMG ── */
+    .logo-img-header {
+      height: 26px; width: auto; display: block;
+      filter: drop-shadow(0 1px 8px rgba(184,150,62,0.2));
+    }
+    /* ── MENU MOBILE DRAWER ── */
+    .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; z-index: 1100; }
+    .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
+    .menu-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-nav {
+      position: fixed; top: var(--header-h); left: 0; right: 0;
+      background: rgba(10,10,10,0.98); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(184,150,62,0.15);
+      z-index: 999; max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-nav.is-open { max-height: 500px; }
+    .mobile-nav ul { list-style: none; display: flex; flex-direction: column; padding: 8px 0 20px; }
+    .mobile-nav li a {
+      display: block; padding: 15px 24px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.70); border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-nav li a:hover { color: var(--gold); background: rgba(184,150,62,0.06); }
+    .mobile-nav li:last-child a { border-bottom: none; }
+    .mobile-nav-ordina {
+      display: block; margin: 12px 24px 8px; padding: 13px 24px; text-align: center;
+      background: var(--gold); color: var(--black);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .mobile-nav-ordina:hover { background: var(--gold-lt); }
+    @media (max-width: 768px) { .menu-btn { display: flex !important; } .main-nav { display: none !important; } }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════ HEADER ══════════════ -->
+  <!-- ══ HEADER ══ -->
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner" style="max-width:1280px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;position:relative;">
+      <!-- Nav sinistra — desktop -->
+      <nav class="main-nav">
+        <ul>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi Siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </nav>
+      <!-- Hamburger — mobile only, a sinistra -->
+      <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <!-- Logo centro -->
+      <a href="index.html" class="logo-wrap" aria-label="33GIRI Home" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;">
+        <img src="Screenshot bg-preview.png" alt="33GIRI" class="logo-img-header">
+      </a>
+      <!-- Spazio bilanciato destra — vuoto -->
+      <div style="width:80px;"></div>
+    </div>
+  </header>
+
+  <!-- Drawer mobile -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
+    <ul>
+      <li><a href="catalogo.html">Catalogo</a></li>
+      <li><a href="chi_siamo.html">Chi Siamo</a></li>
+      <li><a href="collaborazioni.html">Collaborazioni</a></li>
+      <li><a href="quiz.html">33Quiz</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contribuisci.html">Dona un vinile</a></li>
+      <li><a href="corporate.html">Corporate / Regalo</a></li>
+      <li><a href="recensioni.html">Recensioni</a></li>
+    </ul>
+    <a href="https://wa.me/393925430575" target="_blank" class="mobile-nav-ordina">Ordina su WhatsApp →</a>
+  </nav>
+
+  <main>
+
     <!-- ══════════════ HERO ══════════════ -->
     <section class="cat-hero">
       <div class="cat-hero-bg">
@@ -958,7 +956,8 @@
         <p class="cat-hero-sub">Svuotatasche · Posacenere · Edizioni Artistiche — tutto fatto a mano, nessun pezzo uguale.</p>
       </div>
     </section>
-   
+
+
     <!-- ══════════════ FILTRI ══════════════ -->
     <nav class="filters-bar" id="filters">
       <div class="filters-inner">
@@ -1023,7 +1022,7 @@
               <span class="p-price-current">20€</span>
               <span class="p-price-old">25€</span>
             </div>
-            <a href="https://wa.me/3471692948?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Normal" target="_blank" class="p-card-cta">Ordina ora</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Normal" target="_blank" class="p-card-cta">Ordina ora</a>
           </div>
         </div>
 
@@ -1040,7 +1039,7 @@
               <span class="p-price-current">25€</span>
               <span class="p-price-old">31€</span>
             </div>
-            <a href="https://wa.me/3471692948?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Splash" target="_blank" class="p-card-cta">Ordina ora</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Splash" target="_blank" class="p-card-cta">Ordina ora</a>
           </div>
         </div>
 
@@ -1057,7 +1056,7 @@
               <span class="p-price-current">25€</span>
               <span class="p-price-old">31€</span>
             </div>
-            <a href="https://wa.me/3471692948?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Spiral" target="_blank" class="p-card-cta">Ordina ora</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Spiral" target="_blank" class="p-card-cta">Ordina ora</a>
           </div>
         </div>
 
@@ -1097,7 +1096,7 @@
               <span class="p-price-current" style="color:var(--gold-dk)">15€</span>
               <span class="p-price-old">18,75€</span>
             </div>
-            <a href="https://wa.me/3471692948?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Normal" target="_blank" class="p-card-cta">Ordina ora</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Normal" target="_blank" class="p-card-cta">Ordina ora</a>
           </div>
         </div>
 
@@ -1114,7 +1113,7 @@
               <span class="p-price-current" style="color:var(--gold-dk)">17€</span>
               <span class="p-price-old">21,25€</span>
             </div>
-            <a href="https://wa.me/3471692948?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Splash" target="_blank" class="p-card-cta">Ordina ora</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Splash" target="_blank" class="p-card-cta">Ordina ora</a>
           </div>
         </div>
 
@@ -1131,7 +1130,7 @@
               <span class="p-price-current" style="color:var(--gold-dk)">17€</span>
               <span class="p-price-old">21,25€</span>
             </div>
-            <a href="https://wa.me/3471692948?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Touch" target="_blank" class="p-card-cta">Ordina ora</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20un%20Posacenere%20Touch" target="_blank" class="p-card-cta">Ordina ora</a>
           </div>
         </div>
 
@@ -1183,7 +1182,7 @@
 
           <div style="margin-top:36px; display:flex; gap:16px; flex-wrap:wrap;">
             <a href="collaborazioni.html" class="btn-gold">Scopri le collaborazioni</a>
-            <a href="https://wa.me/3471692948?text=Ciao!%20Voglio%20essere%20aggiornato%20sulla%20prossima%20collab" target="_blank" class="btn-outline-dark" style="color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2);">Avvisami →</a>
+            <a href="https://wa.me/TUONUMERO?text=Ciao!%20Voglio%20essere%20aggiornato%20sulla%20prossima%20collab" target="_blank" class="btn-outline-dark" style="color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2);">Avvisami →</a>
           </div>
         </div>
 
@@ -1233,7 +1232,7 @@
         </div>
 
         <div class="order-cta reveal">
-          <a href="https://wa.me/3471692948" target="_blank" class="btn-gold">Ordina su WhatsApp</a>
+          <a href="https://wa.me/TUONUMERO" target="_blank" class="btn-gold">Ordina su WhatsApp</a>
           <a href="https://instagram.com/33giri.studio" target="_blank" class="btn-outline-dark" style="color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2);">Seguici su Instagram</a>
         </div>
       </div>
@@ -1312,7 +1311,7 @@
             </button>
             <div class="faq-a">
               Se il pezzo arriva danneggiato o si rompe entro 30 giorni, lo ritiriamo a nostre spese (zona Bologna, Milano, Trento)
-              e puoi scegliere sostituzione o rimborso. Scrivici a 33giristudios@gmail.com con foto del pezzo.
+              e puoi scegliere sostituzione o rimborso. Scrivici a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80b3b3e7e9f2e9f3f4f5e4e9eff3c0e7ede1e9ecaee3efed">[email&#160;protected]</a> con foto del pezzo.
             </div>
           </div>
 
@@ -1365,14 +1364,14 @@
   </footer>
 
   <!-- WhatsApp Float -->
-  <a class="wa-float" href="https://wa.me/3471692948" target="_blank" aria-label="Ordina su WhatsApp">
+  <a class="wa-float" href="https://wa.me/TUONUMERO" target="_blank" aria-label="Ordina su WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   </a>
 
   <!-- ──────────── SCRIPT ──────────── -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── HEADER SCROLL ──
     (function() {
       const header = document.getElementById('site-header');
@@ -1443,12 +1442,41 @@
             i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
           });
 
+ 
           // Apri questo se era chiuso
           if (!isOpen) {
             item.classList.add('is-open');
             btn.setAttribute('aria-expanded', 'true');
           }
         });
+      });
+    })();
+
+    // ── HAMBURGER MENU ──
+    (function() {
+      const btn    = document.getElementById('menuBtn');
+      const drawer = document.getElementById('mobileNav');
+      if (!btn || !drawer) return;
+      btn.addEventListener('click', () => {
+        const isOpen = drawer.classList.toggle('is-open');
+        btn.classList.toggle('is-open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        drawer.classList.remove('is-open');
+        btn.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }));
+      document.addEventListener('click', (e) => {
+        if (drawer.classList.contains('is-open') &&
+            !drawer.contains(e.target) && !btn.contains(e.target)) {
+          drawer.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
       });
     })();
   </script>
