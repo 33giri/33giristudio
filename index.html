@@ -49,6 +49,12 @@
     .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; position: relative; }
     /* Logo centrato in assoluto — non compete con gli altri elementi flex */
     .logo-wrap { display: flex; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; pointer-events: auto; }
+    .logo-img-header {
+      height: 26px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 1px 8px rgba(184,150,62,0.2));
+    }
     .logo-mark { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; white-space: nowrap; }
     .logo-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); display: inline-block; margin: 0 2px; }
     /* Nav desktop sinistra */
@@ -382,9 +388,9 @@
         <span></span><span></span><span></span>
       </button>
 
-      <!-- Logo centro -->
+      <!-- Logo centro — immagine -->
       <a href="index.html" class="logo-wrap" aria-label="33GIRI Home">
-        <span class="logo-mark">33<span class="logo-dot"></span>GIRI</span>
+        <img src="assets/logo-header.png" alt="33GIRI" class="logo-img-header">
       </a>
 
       <!-- Azioni destra — desktop -->
@@ -431,7 +437,7 @@
       <div class="hero-inner">
         <h1 class="hero-logo-img">
           <img
-            src="Screenshot_2026-03-16_alle_03.44.16-removebg-preview.png"
+            src="assets/logo-hero.png"
             alt="33GIRI — Reshape the Art"
             class="hero-logo-img-el"
           >
