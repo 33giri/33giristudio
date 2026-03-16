@@ -46,20 +46,59 @@
 
     /* HEADER */
     .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--header-h); background: rgba(10,10,10,0.94); backdrop-filter: blur(12px) saturate(120%); border-bottom: 1px solid rgba(184,150,62,0.18); transition: background 0.3s var(--ease-smooth); }
-    .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; }
-    .logo-wrap { display: flex; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); }
-    .logo-mark { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+    .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; position: relative; }
+    /* Logo centrato in assoluto — non compete con gli altri elementi flex */
+    .logo-wrap { display: flex; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; pointer-events: auto; }
+    .logo-mark { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; white-space: nowrap; }
     .logo-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); display: inline-block; margin: 0 2px; }
+    /* Nav desktop sinistra */
     .main-nav ul { list-style: none; display: flex; gap: 36px; align-items: center; }
     .main-nav a { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.72); transition: color 0.25s; position: relative; }
     .main-nav a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s var(--ease-smooth); }
     .main-nav a:hover { color: var(--gold-lt); }
     .main-nav a:hover::after { width: 100%; }
+    /* Azioni destra */
     .header-actions { display: flex; align-items: center; gap: 20px; }
-    .header-actions a { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+    .header-actions a { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); transition: color 0.2s; white-space: nowrap; }
     .header-actions a:hover { color: var(--gold); }
-    .menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-    .menu-btn span { display: block; width: 24px; height: 1.5px; background: rgba(255,255,255,0.8); }
+    /* Hamburger button */
+    .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; }
+    .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
+    .menu-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    /* Drawer mobile */
+    .mobile-nav {
+      position: fixed;
+      top: var(--header-h); left: 0; right: 0;
+      background: rgba(10,10,10,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(184,150,62,0.15);
+      z-index: 999;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease-smooth);
+    }
+    .mobile-nav.is-open { max-height: 500px; }
+    .mobile-nav ul { list-style: none; display: flex; flex-direction: column; padding: 8px 0 20px; }
+    .mobile-nav li a {
+      display: block; padding: 15px 24px;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-nav li a:hover { color: var(--gold); background: rgba(184,150,62,0.06); }
+    .mobile-nav li:last-child a { border-bottom: none; }
+    .mobile-nav-ordina {
+      display: block; margin: 12px 24px 8px;
+      padding: 13px 24px; text-align: center;
+      background: var(--gold); color: var(--black);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .mobile-nav-ordina:hover { background: var(--gold-lt); }
 
     /* ═══════════════════════════════
        HERO — immagine centrata
@@ -308,8 +347,10 @@
       .g-item { height: 200px; }
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      /* Header mobile: nascondi nav e quiz desktop, mostra hamburger */
       .main-nav { display: none; }
       .menu-btn { display: flex; }
+      .header-actions a:not(.ordina-mobile) { display: none; } /* nasconde 33quiz e ordina desktop */
       .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
     }
 
@@ -327,6 +368,7 @@
   <!-- HEADER -->
   <header class="site-header" id="site-header">
     <div class="wrap header-inner">
+      <!-- Nav sinistra — desktop only -->
       <nav class="main-nav">
         <ul>
           <li><a href="catalogo.html">Catalogo</a></li>
@@ -334,19 +376,37 @@
           <li><a href="collaborazioni.html">Collaborazioni</a></li>
         </ul>
       </nav>
-      <label class="menu-btn" for="nav-toggle-cb" aria-label="Menu">
+
+      <!-- Hamburger — mobile only -->
+      <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">
         <span></span><span></span><span></span>
-      </label>
-      <input type="checkbox" id="nav-toggle-cb" style="display:none">
+      </button>
+
+      <!-- Logo centro -->
       <a href="index.html" class="logo-wrap" aria-label="33GIRI Home">
         <span class="logo-mark">33<span class="logo-dot"></span>GIRI</span>
       </a>
+
+      <!-- Azioni destra — desktop -->
       <div class="header-actions">
         <a href="quiz.html">33Quiz</a>
         <a href="https://wa.me/3471692948" target="_blank" style="color:var(--gold);letter-spacing:0.15em;font-size:11px;font-weight:600;">Ordina →</a>
       </div>
     </div>
   </header>
+
+  <!-- Drawer mobile -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
+    <ul>
+      <li><a href="catalogo.html">Catalogo</a></li>
+      <li><a href="chi_siamo.html">Chi Siamo</a></li>
+      <li><a href="collaborazioni.html">Collaborazioni</a></li>
+      <li><a href="quiz.html">33Quiz</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contribuisci.html">Dona un vinile</a></li>
+    </ul>
+    <a href="https://wa.me/3471692948" target="_blank" class="mobile-nav-ordina">Ordina su WhatsApp →</a>
+  </nav>
 
   <main>
 
@@ -634,6 +694,43 @@
       window.addEventListener('scroll', () => {
         h.style.background = window.scrollY > 40 ? 'rgba(10,10,10,0.98)' : 'rgba(10,10,10,0.94)';
       }, { passive: true });
+    })();
+
+    // HAMBURGER MENU
+    (function() {
+      const btn    = document.getElementById('menuBtn');
+      const drawer = document.getElementById('mobileNav');
+      if (!btn || !drawer) return;
+
+      btn.addEventListener('click', () => {
+        const isOpen = drawer.classList.toggle('is-open');
+        btn.classList.toggle('is-open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+        // blocca scroll body quando menu aperto
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      // Chiudi cliccando un link del drawer
+      drawer.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          drawer.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // Chiudi cliccando fuori
+      document.addEventListener('click', (e) => {
+        if (drawer.classList.contains('is-open') &&
+            !drawer.contains(e.target) &&
+            !btn.contains(e.target)) {
+          drawer.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
     })();
 
     // SCROLL REVEAL
