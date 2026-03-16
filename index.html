@@ -626,6 +626,205 @@
     }
 
     /* ─────────────────────────────────
+   SEZIONE: RECENSIONI
+───────────────────────────────── */
+    .recensioni {
+      background: var(--black);
+      padding: 120px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .recensioni::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent, transparent 80px,
+        rgba(184,150,62,0.03) 80px,
+        rgba(184,150,62,0.03) 81px
+      );
+      pointer-events: none;
+    }
+    .recensioni-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .recensioni-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+    .recensioni-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .recensioni-stars-avg {
+      font-size: 22px;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+    .recensioni-count {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+    }
+    .recensioni-cta-link {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(184,150,62,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.25s, color 0.25s;
+      white-space: nowrap;
+    }
+    .recensioni-cta-link:hover {
+      color: var(--gold-lt);
+      border-color: var(--gold-lt);
+    }
+    .recensioni-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .rec-item {
+      border-top: 1px solid rgba(184,150,62,0.12);
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .rec-item:last-child {
+      border-bottom: 1px solid rgba(184,150,62,0.12);
+    }
+    .rec-item:hover {
+      background: rgba(184,150,62,0.03);
+    }
+    .rec-trigger {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 220px 1fr auto auto;
+      align-items: center;
+      gap: 32px;
+      padding: 28px 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .rec-trigger-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .rec-trigger-preview {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.38);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: 0.03em;
+    }
+    .rec-trigger-stars {
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .rec-trigger-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,150,62,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 300;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.3s, background 0.3s;
+    }
+    .rec-item.is-open .rec-trigger-icon {
+      transform: rotate(45deg);
+      border-color: var(--gold);
+      background: rgba(184,150,62,0.1);
+    }
+    .rec-item.is-open .rec-trigger-preview { opacity: 0; }
+    .rec-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .rec-item.is-open .rec-body { max-height: 600px; }
+    .rec-body-inner {
+      padding: 0 0 36px 0;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .rec-body-meta { padding-top: 4px; }
+    .rec-body-date {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .rec-body-product {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(184,150,62,0.3);
+      padding: 4px 10px;
+    }
+    .rec-body-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.95;
+      color: rgba(255,255,255,0.60);
+      letter-spacing: 0.02em;
+      max-height: 320px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(184,150,62,0.3) transparent;
+      padding-right: 12px;
+    }
+    .rec-body-text::-webkit-scrollbar { width: 3px; }
+    .rec-body-text::-webkit-scrollbar-thumb {
+      background: rgba(184,150,62,0.3);
+      border-radius: 2px;
+    }
+    .rec-body-text::-webkit-scrollbar-track { background: transparent; }
+    
+    @media (max-width: 900px) {
+      .rec-trigger { grid-template-columns: 1fr auto auto; gap: 16px; }
+      .rec-trigger-name { font-size: 17px; }
+      .rec-trigger-preview { display: none; }
+      .rec-body-inner { grid-template-columns: 1fr; gap: 14px; }
+    }
+    @media (max-width: 768px) {
+      .recensioni { padding: 80px 20px; }
+      .recensioni-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .rec-trigger { padding: 22px 0; }
+    }
+
+    /* ─────────────────────────────────
        SEZIONE: PROCESSO ARTIGIANALE
     ───────────────────────────────── */
     .processo {
@@ -1270,6 +1469,127 @@
       </div>
     </section>
 
+    <!-- ══════════════ RECENSIONI ══════════════ -->
+    <section class="recensioni" id="recensioni">
+      <div class="recensioni-inner">
+    
+        <div class="recensioni-header reveal">
+          <div>
+            <div class="section-label" style="color:var(--gold)">Clienti reali</div>
+            <h2 class="section-title" style="color:var(--white)">Cosa dicono <em style="color:var(--gold-lt)">di noi.</em></h2>
+            <div class="recensioni-meta">
+              <span class="recensioni-stars-avg">★★★★★</span>
+              <span class="recensioni-count">Recensioni verificate</span>
+            </div>
+          </div>
+          <a href="recensioni.html" class="recensioni-cta-link">Lascia la tua →</a>
+        </div>
+    
+        <div class="recensioni-list">
+    
+          <div class="rec-item reveal">
+            <button class="rec-trigger" aria-expanded="false">
+              <span class="rec-trigger-name">Marco T.</span>
+              <span class="rec-trigger-preview">Ho comprato lo svuotatasche Splash per me stesso, prima ancora di regalarlo…</span>
+              <span class="rec-trigger-stars">★★★★★</span>
+              <span class="rec-trigger-icon">+</span>
+            </button>
+            <div class="rec-body">
+              <div class="rec-body-inner">
+                <div class="rec-body-meta">
+                  <div class="rec-body-date">Novembre 2025</div>
+                  <div class="rec-body-product">Svuotatasche Splash</div>
+                </div>
+                <div class="rec-body-text">
+                  Ho comprato lo svuotatasche Splash per me stesso, prima ancora di regalarlo a qualcuno. L'avevo visto su Instagram, pensavo fosse una di quelle cose che sembrano meglio in foto — invece dal vivo è ancora meglio. Il colore è distribuito in modo irregolare, quindi sai già che non ne esiste un altro uguale. Lo tengo sulla scrivania da un mese e ogni giorno ci butto dentro chiavi, monetine e un accendino. Funziona benissimo. Ha anche quel peso da oggetto vero, non da gadget. Consegna veloce, imballaggio curato. Tornerò sicuro.
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="rec-item reveal reveal--delay-1">
+            <button class="rec-trigger" aria-expanded="false">
+              <span class="rec-trigger-name">Chiara V.</span>
+              <span class="rec-trigger-preview">Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo…</span>
+              <span class="rec-trigger-stars">★★★★★</span>
+              <span class="rec-trigger-icon">+</span>
+            </button>
+            <div class="rec-body">
+              <div class="rec-body-inner">
+                <div class="rec-body-meta">
+                  <div class="rec-body-date">Dicembre 2025</div>
+                  <div class="rec-body-product">Posacenere Normal</div>
+                </div>
+                <div class="rec-body-text">
+                  Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo che colleziona vinili — è rimasto senza parole quando ha visto che era fatto da un vero 33 giri. Si vede ancora l'etichetta originale del disco, è questo il dettaglio che rende tutto speciale. La consegna è stata puntuale e il packaging era davvero curato, con un piccolo biglietto scritto a mano. Quel tipo di attenzione fa la differenza. Lo regalo ancora.
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="rec-item reveal reveal--delay-2">
+            <button class="rec-trigger" aria-expanded="false">
+              <span class="rec-trigger-name">Luca M.</span>
+              <span class="rec-trigger-preview">Ero scettico sul prezzo all'inizio, poi l'ho tenuto in mano e ho capito tutto…</span>
+              <span class="rec-trigger-stars">★★★★★</span>
+              <span class="rec-trigger-icon">+</span>
+            </button>
+            <div class="rec-body">
+              <div class="rec-body-inner">
+                <div class="rec-body-meta">
+                  <div class="rec-body-date">Gennaio 2026</div>
+                  <div class="rec-body-product">Svuotatasche Spiral</div>
+                </div>
+                <div class="rec-body-text">
+                  Ero scettico sul prezzo all'inizio — pensavo potevo trovare qualcosa di simile a meno. Poi l'ho tenuto in mano e ho capito tutto. Non è solo la forma, è il materiale: il vinile ha un suo peso, una consistenza diversa da qualsiasi cosa in plastica o metallo. La spirale di colore è esatta, non sbavata, sembra quasi disegnata. L'ho messo sulla scrivania in ufficio e ogni persona che entra me lo nota. Ho già avuto tre persone che me ne vogliono uno.
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="rec-item reveal">
+            <button class="rec-trigger" aria-expanded="false">
+              <span class="rec-trigger-name">Sara B.</span>
+              <span class="rec-trigger-preview">Li ho usati come centrotavola per un aperitivo. Tutti hanno chiesto dove li avevo presi…</span>
+              <span class="rec-trigger-stars">★★★★★</span>
+              <span class="rec-trigger-icon">+</span>
+            </button>
+            <div class="rec-body">
+              <div class="rec-body-inner">
+                <div class="rec-body-meta">
+                  <div class="rec-body-date">Febbraio 2026</div>
+                  <div class="rec-body-product">Svuotatasche × 3</div>
+                </div>
+                <div class="rec-body-text">
+                  Ne ho presi tre insieme — uno per me e due da regalare. Li ho usati come centrotavola per un aperitivo a casa prima di regalarli e tutti hanno chiesto dove li avevo presi. Il bello è che ognuno è diverso: stesso modello, ma forma leggermente diversa, etichetta diversa, segni diversi. Comunicazione velocissima su WhatsApp, consegna a mano a Milano senza problemi. Cinque stelle senza dubbi.
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="rec-item reveal reveal--delay-1">
+            <button class="rec-trigger" aria-expanded="false">
+              <span class="rec-trigger-name">Davide R.</span>
+              <span class="rec-trigger-preview">Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni mi dà speranza…</span>
+              <span class="rec-trigger-stars">★★★★★</span>
+              <span class="rec-trigger-icon">+</span>
+            </button>
+            <div class="rec-body">
+              <div class="rec-body-inner">
+                <div class="rec-body-meta">
+                  <div class="rec-body-date">Febbraio 2026</div>
+                  <div class="rec-body-product">Posacenere Touch</div>
+                </div>
+                <div class="rec-body-text">
+                  Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni con questa cura mi dà speranza. Ho preso il posacenere Touch — la forma è più piatta rispetto agli altri, quasi un vassoio con i bordi rialzati. Lo uso sia come posacenere che come punto di appoggio per l'orologio e il telefono di notte. L'ho mostrato a mio padre che ha 60 anni e colleziona vinili dal 1975 — ha detto che avrebbe voluto averlo inventato lui.
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    </section>
 
       
     <!-- ══════════════ CTA FINALE ══════════════ -->
