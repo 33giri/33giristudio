@@ -219,23 +219,32 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.45) 40%, rgba(10,10,10,0.55) 100%),
-        radial-gradient(ellipse at 50% 60%, transparent 30%, rgba(10,10,10,0.35) 100%);
+        linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.10) 100%),
+        linear-gradient(to right, rgba(10,10,10,0.20) 0%, transparent 60%);
       z-index: 1;
     }
 
-    /* Gold line accent — nascosta con layout centrato */
-    .hero-gold-line { display: none; }
+    /* Gold line accent */
+    .hero-gold-line {
+      position: absolute;
+      left: 48px; top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 180px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      z-index: 2;
+      opacity: 0;
+      animation: fadeInLine 1.2s ease 0.8s forwards;
+    }
+    @keyframes fadeInLine {
+      to { opacity: 0.6; }
+    }
 
     .hero-inner {
       position: relative;
       z-index: 2;
-      padding: 0 80px 100px;
+      padding: 0 80px 80px;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
     }
 
     .hero-kicker {
@@ -248,21 +257,6 @@
       margin-bottom: 20px;
       opacity: 0;
       animation: slideUp 0.8s var(--ease-smooth) 0.3s forwards;
-    }
-
-    /* Logo immagine hero */
-    .hero-logo-img {
-      margin-bottom: 36px;
-      opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.3s forwards;
-      line-height: 1;
-    }
-    .hero-logo-img-el {
-      width: clamp(280px, 42vw, 620px);
-      height: auto;
-      display: block;
-      /* Effetto drop shadow dorato per far risaltare sul bg scuro */
-      filter: drop-shadow(0 4px 32px rgba(184,150,62,0.25));
     }
 
     .hero-title {
@@ -286,21 +280,19 @@
       font-weight: 300;
       letter-spacing: 0.06em;
       color: rgba(255,255,255,0.60);
-      max-width: 480px;
+      max-width: 420px;
       line-height: 1.8;
       margin-bottom: 44px;
       opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.5s forwards;
-      text-align: center;
+      animation: slideUp 0.9s var(--ease-smooth) 0.7s forwards;
     }
 
     .hero-ctas {
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 24px;
       opacity: 0;
-      animation: slideUp 0.9s var(--ease-smooth) 0.7s forwards;
+      animation: slideUp 0.9s var(--ease-smooth) 0.9s forwards;
     }
 
     /* Dot indicators */
@@ -634,6 +626,205 @@
     }
 
     /* ─────────────────────────────────
+   SEZIONE: RECENSIONI
+───────────────────────────────── */
+    .recensioni {
+      background: var(--black);
+      padding: 120px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .recensioni::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent, transparent 80px,
+        rgba(184,150,62,0.03) 80px,
+        rgba(184,150,62,0.03) 81px
+      );
+      pointer-events: none;
+    }
+    .recensioni-inner {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .recensioni-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+    .recensioni-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .recensioni-stars-avg {
+      font-size: 22px;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+    .recensioni-count {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+    }
+    .recensioni-cta-link {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(184,150,62,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.25s, color 0.25s;
+      white-space: nowrap;
+    }
+    .recensioni-cta-link:hover {
+      color: var(--gold-lt);
+      border-color: var(--gold-lt);
+    }
+    .recensioni-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .rec-item {
+      border-top: 1px solid rgba(184,150,62,0.12);
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .rec-item:last-child {
+      border-bottom: 1px solid rgba(184,150,62,0.12);
+    }
+    .rec-item:hover {
+      background: rgba(184,150,62,0.03);
+    }
+    .rec-trigger {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 220px 1fr auto auto;
+      align-items: center;
+      gap: 32px;
+      padding: 28px 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .rec-trigger-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .rec-trigger-preview {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.38);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: 0.03em;
+    }
+    .rec-trigger-stars {
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .rec-trigger-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,150,62,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 300;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.3s, background 0.3s;
+    }
+    .rec-item.is-open .rec-trigger-icon {
+      transform: rotate(45deg);
+      border-color: var(--gold);
+      background: rgba(184,150,62,0.1);
+    }
+    .rec-item.is-open .rec-trigger-preview { opacity: 0; }
+    .rec-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .rec-item.is-open .rec-body { max-height: 600px; }
+    .rec-body-inner {
+      padding: 0 0 36px 0;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .rec-body-meta { padding-top: 4px; }
+    .rec-body-date {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .rec-body-product {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(184,150,62,0.3);
+      padding: 4px 10px;
+    }
+    .rec-body-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.95;
+      color: rgba(255,255,255,0.60);
+      letter-spacing: 0.02em;
+      max-height: 320px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(184,150,62,0.3) transparent;
+      padding-right: 12px;
+    }
+    .rec-body-text::-webkit-scrollbar { width: 3px; }
+    .rec-body-text::-webkit-scrollbar-thumb {
+      background: rgba(184,150,62,0.3);
+      border-radius: 2px;
+    }
+    .rec-body-text::-webkit-scrollbar-track { background: transparent; }
+    
+    @media (max-width: 900px) {
+      .rec-trigger { grid-template-columns: 1fr auto auto; gap: 16px; }
+      .rec-trigger-name { font-size: 17px; }
+      .rec-trigger-preview { display: none; }
+      .rec-body-inner { grid-template-columns: 1fr; gap: 14px; }
+    }
+    @media (max-width: 768px) {
+      .recensioni { padding: 80px 20px; }
+      .recensioni-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .rec-trigger { padding: 22px 0; }
+    }
+
+    /* ─────────────────────────────────
        SEZIONE: PROCESSO ARTIGIANALE
     ───────────────────────────────── */
     .processo {
@@ -786,60 +977,7 @@
     .g-item:nth-child(5) { grid-column: span 2; }
     .g-item:nth-child(6) { grid-column: span 1; }
 
-    /* ─────────────────────────────────
-       SEZIONE: WHY 33GIRI
-    ───────────────────────────────── */
-    .why {
-      background: var(--black);
-      padding: 120px 32px;
-    }
-    .why-inner {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: start;
-    }
-    .why-left {
-      position: sticky;
-      top: 120px;
-    }
-    .why-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .why-item {
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 36px 0;
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 24px;
-      align-items: start;
-      transition: background 0.3s;
-    }
-    .why-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .why-num {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--gold);
-      padding-top: 4px;
-    }
-    .why-title {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-    .why-desc {
-      font-size: 13px;
-      font-weight: 300;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.45);
-    }
+    
 
     /* ─────────────────────────────────
        SEZIONE: CTA FINALE
@@ -1009,10 +1147,9 @@
 
     @media (max-width: 768px) {
       :root { --header-h: 64px; }
-      .hero-inner { padding: 0 24px 72px; }
+      .hero-inner { padding: 0 24px 60px; }
       .hero-gold-line { display: none; }
       .hero-dots { right: 24px; }
-      .hero-logo-img-el { width: clamp(220px, 72vw, 360px); }
       .manifesto, .prodotti, .processo, .galleria, .why, .cta-section { padding: 80px 20px; }
       .prodotti-grid { grid-template-columns: 1fr; }
       .prod-card--featured { grid-column: span 1; }
@@ -1042,236 +1179,6 @@
     .reveal--delay-1 { transition-delay: 0.1s; }
     .reveal--delay-2 { transition-delay: 0.2s; }
     .reveal--delay-3 { transition-delay: 0.3s; }
-
-    /* ─────────────────────────────────
-       SEZIONE: RECENSIONI
-    ───────────────────────────────── */
-    .recensioni {
-      background: var(--black);
-      padding: 120px 32px;
-      position: relative;
-      overflow: hidden;
-    }
-    /* Pattern sfondo sottile */
-    .recensioni::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 80px,
-          rgba(184,150,62,0.03) 80px,
-          rgba(184,150,62,0.03) 81px
-        );
-      pointer-events: none;
-    }
-    .recensioni-inner {
-      max-width: var(--wrap);
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-    .recensioni-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 64px;
-    }
-    .recensioni-header-left {}
-    .recensioni-meta {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 14px;
-    }
-    .recensioni-stars-avg {
-      font-size: 22px;
-      color: var(--gold);
-      letter-spacing: 3px;
-    }
-    .recensioni-count {
-      font-size: 12px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.08em;
-    }
-    .recensioni-cta-link {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border-bottom: 1px solid rgba(184,150,62,0.3);
-      padding-bottom: 2px;
-      transition: border-color 0.25s, color 0.25s;
-      white-space: nowrap;
-    }
-    .recensioni-cta-link:hover {
-      color: var(--gold-lt);
-      border-color: var(--gold-lt);
-    }
-
-    /* Lista accordion */
-    .recensioni-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    /* Singola recensione */
-    .rec-item {
-      border-top: 1px solid rgba(184,150,62,0.12);
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-    .rec-item:last-child {
-      border-bottom: 1px solid rgba(184,150,62,0.12);
-    }
-    .rec-item:hover {
-      background: rgba(184,150,62,0.03);
-    }
-
-    /* Riga "chiusa" — sempre visibile */
-    .rec-trigger {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 220px 1fr auto auto;
-      align-items: center;
-      gap: 32px;
-      padding: 28px 0;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .rec-trigger-name {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--white);
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-    }
-    .rec-trigger-preview {
-      font-size: 13px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.38);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      letter-spacing: 0.03em;
-    }
-    .rec-trigger-stars {
-      font-size: 13px;
-      color: var(--gold);
-      letter-spacing: 2px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .rec-trigger-icon {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 1px solid rgba(184,150,62,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      font-size: 18px;
-      font-weight: 300;
-      transition: transform 0.35s var(--ease-smooth), border-color 0.3s, background 0.3s;
-    }
-    .rec-item.is-open .rec-trigger-icon {
-      transform: rotate(45deg);
-      border-color: var(--gold);
-      background: rgba(184,150,62,0.1);
-    }
-    .rec-item.is-open .rec-trigger-preview {
-      opacity: 0;
-    }
-
-    /* Corpo espanso */
-    .rec-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.45s var(--ease-smooth);
-    }
-    .rec-item.is-open .rec-body {
-      max-height: 600px; /* abbastanza per qualsiasi testo */
-    }
-    .rec-body-inner {
-      padding: 0 0 36px 0;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 32px;
-      align-items: start;
-    }
-    .rec-body-meta {
-      padding-top: 4px;
-    }
-    .rec-body-date {
-      font-size: 11px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.25);
-      letter-spacing: 0.1em;
-      margin-bottom: 10px;
-    }
-    .rec-body-product {
-      display: inline-block;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(184,150,62,0.3);
-      padding: 4px 10px;
-    }
-    .rec-body-text {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 1.95;
-      color: rgba(255,255,255,0.60);
-      letter-spacing: 0.02em;
-      /* scrollabile se supera limite */
-      max-height: 320px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(184,150,62,0.3) transparent;
-      padding-right: 12px;
-    }
-    .rec-body-text::-webkit-scrollbar {
-      width: 3px;
-    }
-    .rec-body-text::-webkit-scrollbar-thumb {
-      background: rgba(184,150,62,0.3);
-      border-radius: 2px;
-    }
-    .rec-body-text::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    /* Responsive recensioni */
-    @media (max-width: 900px) {
-      .rec-trigger {
-        grid-template-columns: 1fr auto auto;
-        gap: 16px;
-      }
-      .rec-trigger-name { font-size: 17px; }
-      .rec-trigger-preview { display: none; }
-      .rec-body-inner {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-    }
-    @media (max-width: 768px) {
-      .recensioni { padding: 80px 20px; }
-      .recensioni-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .rec-trigger { padding: 22px 0; }
-    }
   </style>
 </head>
 
@@ -1304,7 +1211,7 @@
       <!-- Azioni destra -->
       <div class="header-actions">
         <a href="quiz.html">33Quiz</a>
-        <a href="https://wa.me/TUONUMERO" target="_blank" style="color: var(--gold); letter-spacing:0.15em; font-size:11px; font-weight:600;">Ordina →</a>
+        <a href="https://wa.me/3471692948" target="_blank" style="color: var(--gold); letter-spacing:0.15em; font-size:11px; font-weight:600;">Ordina →</a>
       </div>
 
     </div>
@@ -1333,12 +1240,10 @@
 
       <!-- Contenuto hero -->
       <div class="hero-inner">
-        <h1 class="hero-logo-img">
-          <img
-            src="assets/logo-hero.png"
-            alt="33GIRI — Reshape the Art"
-            class="hero-logo-img-el"
-          >
+        <div class="hero-kicker">Made in Italy · Handmade · Upcycling design</div>
+        <h1 class="hero-title">
+          Reshape<br>
+          <em>the Art.</em>
         </h1>
         <p class="hero-sub">
           Vinili reali trasformati in oggetti di design.<br>
@@ -1564,64 +1469,12 @@
       </div>
     </section>
 
-    <!-- ══════════════ WHY ══════════════ -->
-    <section class="why">
-      <div class="why-inner">
-
-        <div class="why-left reveal">
-          <div class="section-label" style="color:var(--gold)">Perché 33GIRI</div>
-          <h2 class="section-title" style="color:var(--white)">
-            Non è solo<br><em style="color:var(--gold-lt)">un oggetto.</em>
-          </h2>
-          <p style="font-size:13px; font-weight:300; line-height:1.9; color:rgba(255,255,255,0.40); margin-top:28px; max-width:320px;">
-            Ogni pezzo che scegli ha una storia dietro.
-            Una scelta che vale più di un acquisto.
-          </p>
-          <a href="https://wa.me/TUONUMERO" target="_blank" class="btn-gold" style="margin-top:40px; display:inline-flex;">
-            Ordina su WhatsApp
-          </a>
-        </div>
-
-        <div class="why-list">
-          <div class="why-item reveal">
-            <div class="why-num">01</div>
-            <div>
-              <div class="why-title">Ogni pezzo è irripetibile</div>
-              <div class="why-desc">Nessun vinile è identico. Graffi, etichette, colori: la storia del disco diventa parte del design. Non esiste un secondo esemplare uguale.</div>
-            </div>
-          </div>
-          <div class="why-item reveal reveal--delay-1">
-            <div class="why-num">02</div>
-            <div>
-              <div class="why-title">Zero plastica vergine</div>
-              <div class="why-desc">Usiamo solo vinili recuperati. Nessuna materia prima nuova, nessuno spreco calcolato. L'upcycling non è una scelta di marketing — è la base del progetto.</div>
-            </div>
-          </div>
-          <div class="why-item reveal reveal--delay-2">
-            <div class="why-num">03</div>
-            <div>
-              <div class="why-title">Fatto a mano, davvero</div>
-              <div class="why-desc">Niente stampi, niente fabbriche. Ogni curvatura è modellata a mano da noi. Lentamente, con attenzione. Si vede — e si sente.</div>
-            </div>
-          </div>
-          <div class="why-item reveal reveal--delay-3">
-            <div class="why-num">04</div>
-            <div>
-              <div class="why-title">Design che dura</div>
-              <div class="why-desc">Il PVC dei vinili è progettato per durare decenni. Trasformato in oggetto di design, dura altrettanto. Non è oggettistica usa-e-getta.</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
     <!-- ══════════════ RECENSIONI ══════════════ -->
     <section class="recensioni" id="recensioni">
       <div class="recensioni-inner">
-
+    
         <div class="recensioni-header reveal">
-          <div class="recensioni-header-left">
+          <div>
             <div class="section-label" style="color:var(--gold)">Clienti reali</div>
             <h2 class="section-title" style="color:var(--white)">Cosa dicono <em style="color:var(--gold-lt)">di noi.</em></h2>
             <div class="recensioni-meta">
@@ -1629,12 +1482,11 @@
               <span class="recensioni-count">Recensioni verificate</span>
             </div>
           </div>
-          <a href="recensioni.html" class="recensioni-cta-link reveal reveal--delay-1">Lascia la tua →</a>
+          <a href="recensioni.html" class="recensioni-cta-link">Lascia la tua →</a>
         </div>
-
+    
         <div class="recensioni-list">
-
-          <!-- 01 -->
+    
           <div class="rec-item reveal">
             <button class="rec-trigger" aria-expanded="false">
               <span class="rec-trigger-name">Marco T.</span>
@@ -1654,8 +1506,7 @@
               </div>
             </div>
           </div>
-
-          <!-- 02 -->
+    
           <div class="rec-item reveal reveal--delay-1">
             <button class="rec-trigger" aria-expanded="false">
               <span class="rec-trigger-name">Chiara V.</span>
@@ -1670,13 +1521,12 @@
                   <div class="rec-body-product">Posacenere Normal</div>
                 </div>
                 <div class="rec-body-text">
-                  Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo che colleziona vinili — è rimasto senza parole quando ha visto che era fatto da un vero 33 giri. Si vede ancora l'etichetta originale del disco, è questo il dettaglio che rende tutto speciale. Abbiamo anche fatto una foto insieme al giradischi perché ci sembrava giusto. La consegna è stata puntuale e il packaging era davvero curato, con un piccolo biglietto scritto a mano. Quel tipo di attenzione fa la differenza. Lo regalo ancora.
+                  Regalo perfetto per chi ama la musica e il design. L'ho preso per il mio ragazzo che colleziona vinili — è rimasto senza parole quando ha visto che era fatto da un vero 33 giri. Si vede ancora l'etichetta originale del disco, è questo il dettaglio che rende tutto speciale. La consegna è stata puntuale e il packaging era davvero curato, con un piccolo biglietto scritto a mano. Quel tipo di attenzione fa la differenza. Lo regalo ancora.
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- 03 -->
+    
           <div class="rec-item reveal reveal--delay-2">
             <button class="rec-trigger" aria-expanded="false">
               <span class="rec-trigger-name">Luca M.</span>
@@ -1691,13 +1541,12 @@
                   <div class="rec-body-product">Svuotatasche Spiral</div>
                 </div>
                 <div class="rec-body-text">
-                  Ero scettico sul prezzo all'inizio — pensavo potevo trovare qualcosa di simile a meno. Poi l'ho tenuto in mano e ho capito tutto. Non è solo la forma, è il materiale: il vinile ha un suo peso, una consistenza diversa da qualsiasi cosa in plastica o metallo. La spirale di colore è esatta, non sbavata, sembra quasi disegnata. L'ho messo sulla scrivania in ufficio e ogni persona che entra me lo nota. Ho già avuto tre persone che me ne vogliono uno. Prossimo acquisto: il posacenere per un collega che fuma e ama Miles Davis.
+                  Ero scettico sul prezzo all'inizio — pensavo potevo trovare qualcosa di simile a meno. Poi l'ho tenuto in mano e ho capito tutto. Non è solo la forma, è il materiale: il vinile ha un suo peso, una consistenza diversa da qualsiasi cosa in plastica o metallo. La spirale di colore è esatta, non sbavata, sembra quasi disegnata. L'ho messo sulla scrivania in ufficio e ogni persona che entra me lo nota. Ho già avuto tre persone che me ne vogliono uno.
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- 04 -->
+    
           <div class="rec-item reveal">
             <button class="rec-trigger" aria-expanded="false">
               <span class="rec-trigger-name">Sara B.</span>
@@ -1712,13 +1561,12 @@
                   <div class="rec-body-product">Svuotatasche × 3</div>
                 </div>
                 <div class="rec-body-text">
-                  Ne ho presi tre insieme — uno per me e due da regalare. Li ho usati come centrotavola per un aperitivo a casa prima di regalarli e tutti hanno chiesto dove li avevo presi. Il bello è che ognuno è diverso: stesso modello, ma forma leggermente diversa, etichetta diversa, segni diversi. Uno ha ancora il bordo biancastro dell'etichetta originale che si vede benissimo — è quello che mi piaceva di più e l'ho tenuto io. Comunicazione velocissima su WhatsApp, consegna a mano a Milano senza problemi. Cinque stelle senza dubbi.
+                  Ne ho presi tre insieme — uno per me e due da regalare. Li ho usati come centrotavola per un aperitivo a casa prima di regalarli e tutti hanno chiesto dove li avevo presi. Il bello è che ognuno è diverso: stesso modello, ma forma leggermente diversa, etichetta diversa, segni diversi. Comunicazione velocissima su WhatsApp, consegna a mano a Milano senza problemi. Cinque stelle senza dubbi.
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- 05 -->
+    
           <div class="rec-item reveal reveal--delay-1">
             <button class="rec-trigger" aria-expanded="false">
               <span class="rec-trigger-name">Davide R.</span>
@@ -1733,16 +1581,17 @@
                   <div class="rec-body-product">Posacenere Touch</div>
                 </div>
                 <div class="rec-body-text">
-                  Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni con questa cura mi dà speranza. Ho preso il posacenere Touch — la forma è più piatta rispetto agli altri, quasi un vassoio con i bordi rialzati. Lo uso sia come posacenere che come punto di appoggio per l'orologio e il telefono di notte. Il fatto che abbia ancora i solchi del vinile lo rende quasi una scultura minimalista. L'ho mostrato a mio padre che ha 60 anni e colleziona vinili dal 1975 — ha detto che avrebbe voluto averlo inventato lui. Direi che è la miglior recensione possibile.
+                  Progetto bellissimo. Che qualcuno stia facendo queste cose a 20 anni con questa cura mi dà speranza. Ho preso il posacenere Touch — la forma è più piatta rispetto agli altri, quasi un vassoio con i bordi rialzati. Lo uso sia come posacenere che come punto di appoggio per l'orologio e il telefono di notte. L'ho mostrato a mio padre che ha 60 anni e colleziona vinili dal 1975 — ha detto che avrebbe voluto averlo inventato lui.
                 </div>
               </div>
             </div>
           </div>
-
-        </div><!-- /recensioni-list -->
+    
+        </div>
       </div>
     </section>
 
+      
     <!-- ══════════════ CTA FINALE ══════════════ -->
     <section class="cta-section">
       <div class="cta-label reveal">Pronto a scegliere il tuo pezzo?</div>
@@ -1752,7 +1601,7 @@
       </h2>
       <div class="cta-btns reveal reveal--delay-2">
         <a href="catalogo.html" class="btn-gold">Vai al catalogo</a>
-        <a href="https://wa.me/TUONUMERO" target="_blank" class="btn-black">Scrivici su WhatsApp</a>
+        <a href="https://wa.me/3471692948" target="_blank" class="btn-black">Scrivici su WhatsApp</a>
       </div>
     </section>
 
@@ -1809,7 +1658,7 @@
   </footer>
 
   <!-- WhatsApp Float -->
-  <a class="wa-float" href="https://wa.me/TUONUMERO" target="_blank" aria-label="Scrivici su WhatsApp">
+  <a class="wa-float" href="https://wa.me/3471692948" target="_blank" aria-label="Scrivici su WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
@@ -1882,7 +1731,6 @@
       }, { threshold: 0.12 });
       els.forEach(el => io.observe(el));
     })();
-  })();
 
     // ── RECENSIONI ACCORDION ──
     (function() {
@@ -1892,16 +1740,13 @@
         const body    = item.querySelector('.rec-body');
         trigger.addEventListener('click', () => {
           const isOpen = item.classList.contains('is-open');
-          // Chiudi tutti
           items.forEach(i => {
             i.classList.remove('is-open');
             i.querySelector('.rec-trigger').setAttribute('aria-expanded', 'false');
           });
-          // Apri quello cliccato se era chiuso
           if (!isOpen) {
             item.classList.add('is-open');
             trigger.setAttribute('aria-expanded', 'true');
-            // Scroll morbido verso il testo aperto
             setTimeout(() => {
               body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 80);
@@ -1909,6 +1754,7 @@
         });
       });
     })();
+    
   </script>
 
 </body>
