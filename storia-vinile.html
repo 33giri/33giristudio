@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Storia del Tuo Vinile — 33Giri</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:#0a0a0b; --gold:#c9a84c; --gold-lt:#e8c97e;
+      --white:#f5f0e8; --gray:#6b6b6b;
+      --surface:rgba(255,255,255,0.04); --border:rgba(201,168,76,0.20);
+      --radius:18px; --glow:0 0 60px rgba(201,168,76,0.12);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--black);color:var(--white);min-height:100vh;overflow-x:hidden}
+    body::after{content:'';position:fixed;top:-20%;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(201,168,76,0.07) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+    .page{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:72px 24px 120px;display:flex;flex-direction:column;align-items:center;gap:52px}
+
+    /* BRAND */
+    .brand{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+    .brand-name{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,36px);font-weight:900;letter-spacing:.10em;color:var(--gold);text-transform:uppercase}
+    .brand-claim{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gray)}
+    .brand-line{margin-top:14px;width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+    /* HERO */
+    .hero{text-align:center}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5.5vw,40px);font-weight:900;line-height:1.18;margin-bottom:14px}
+    .hero h1 em{font-style:italic;color:var(--gold)}
+    .hero p{font-size:14px;line-height:1.85;color:rgba(245,240,232,0.55);max-width:480px;margin:0 auto}
+
+    /* SEARCH */
+    .search-box{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:16px}
+    .search-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.30em;text-transform:uppercase;color:var(--gold)}
+    .code-input{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);padding:18px 24px;font-family:'DM Mono',monospace;font-size:30px;font-weight:500;color:var(--white);text-align:center;letter-spacing:.22em;text-transform:uppercase;outline:none;transition:border-color .3s,box-shadow .3s}
+    .code-input::placeholder{color:rgba(245,240,232,0.15)}
+    .code-input:focus{border-color:var(--gold);box-shadow:var(--glow)}
+    .code-input.shake{animation:shake .35s ease}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+    .btn-cerca{width:100%;padding:16px;background:linear-gradient(135deg,var(--gold) 0%,#9a7230 100%);color:#0a0a0b;border:none;border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}
+    .btn-cerca::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);transition:left .5s ease}
+    .btn-cerca:hover::before{left:100%}
+    .btn-cerca:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,0.30)}
+    .btn-cerca:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+    .search-hint{font-size:11px;color:rgba(245,240,232,0.28);text-align:center;line-height:1.7}
+    .search-hint code{font-family:'DM Mono',monospace;color:rgba(245,240,232,0.45);font-size:11px}
+
+    /* STATES */
+    .state{display:none;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:440px}
+    .state.on{display:flex}
+    .spinner{width:52px;height:52px;border-radius:50%;border:2px solid rgba(201,168,76,0.15);border-top-color:var(--gold);animation:spin .8s linear infinite;position:relative}
+    .spinner::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:var(--gold)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-txt{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:.2em;animation:blink 1.4s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+    .error-box{width:100%;padding:28px 24px;background:rgba(192,57,43,0.07);border:1px solid rgba(192,57,43,0.25);border-radius:var(--radius);text-align:center;display:flex;flex-direction:column;gap:10px}
+    .error-icon{font-size:28px}
+    .error-title{font-family:'Playfair Display',serif;font-size:18px;color:#e55}
+    .error-msg{font-size:13px;color:rgba(245,240,232,0.45);line-height:1.7}
+
+    /* RESULT CARD */
+    .result-card{display:none;flex-direction:column;width:100%;border:1px solid var(--border);border-radius:24px;overflow:hidden;background:var(--surface);box-shadow:0 28px 70px rgba(0,0,0,0.5),var(--glow);animation:cardIn .55s cubic-bezier(.34,1.56,.64,1) both}
+    .result-card.on{display:flex}
+    @keyframes cardIn{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .rc-header{display:flex;align-items:center;justify-content:space-between;padding:18px 26px;border-bottom:1px solid var(--border);background:rgba(201,168,76,0.04)}
+    .rc-code{font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.2em;color:var(--gold)}
+    .rc-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(201,168,76,0.08);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-lt)}
+    .rc-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);animation:blink 2s ease-in-out infinite}
+    .rc-body{padding:32px 28px 36px;display:flex;flex-direction:column;gap:26px}
+    .rc-images{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .rc-images.single{grid-template-columns:1fr;max-width:320px;margin:0 auto;width:100%}
+    .rc-img-wrap{border-radius:14px;overflow:hidden;aspect-ratio:1;background:rgba(255,255,255,0.04);border:1px solid var(--border)}
+    .rc-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+    .rc-img-wrap img:hover{transform:scale(1.04)}
+    .rc-disc-wrap{display:flex;justify-content:center}
+    .rc-disc{width:96px;height:96px;border-radius:50%;background:conic-gradient(#181818 0deg,#0f0f0f 40deg,#181818 80deg,#0f0f0f 120deg,#181818 160deg,#0f0f0f 200deg,#181818 240deg,#0f0f0f 280deg,#181818 320deg,#0f0f0f 360deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #1c1c1c,0 0 0 5px #282828,0 18px 44px rgba(0,0,0,0.55);animation:slowspin 14s linear infinite}
+    @keyframes slowspin{to{transform:rotate(360deg)}}
+    .rc-disc-label{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold) 0%,#7a5c1e 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:8px;font-weight:900;color:#0a0a0b;letter-spacing:.05em;text-align:center}
+    .rc-type{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+    .rc-name{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,30px);font-weight:900;line-height:1.12;margin-top:4px}
+    .rc-sub{font-size:13px;color:rgba(245,240,232,0.45);font-weight:300;margin-top:4px}
+    .rc-chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-size:11px;color:rgba(245,240,232,0.60)}
+    .rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .rc-info{padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px}
+    .rc-info-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:4px}
+    .rc-info-val{font-size:14px;font-weight:600}
+    .sold-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;background:rgba(201,168,76,0.08);border:1px solid var(--border);font-size:13px;color:var(--gold-lt)}
+    .sold-badge strong{font-family:'DM Mono',monospace}
+    .rc-footer{padding:20px 28px;border-top:1px solid var(--border);background:rgba(201,168,76,0.02);display:flex;flex-direction:column;align-items:center;gap:10px}
+    .rc-footer-note{font-size:12px;color:rgba(245,240,232,0.35);text-align:center}
+    .btn-wa{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:999px;background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.25);color:#25d366;text-decoration:none;font-weight:600;font-size:13px;transition:all .3s ease}
+    .btn-wa:hover{background:rgba(37,211,102,0.15);transform:translateY(-2px)}
+
+    @media(max-width:480px){
+      .page{padding:52px 16px 90px;gap:40px}
+      .rc-body{padding:22px 18px 26px}
+      .rc-header,.rc-footer{padding:14px 18px}
+      .rc-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="brand">
+    <div class="brand-name">33Giri</div>
+    <div class="brand-claim">Reshape the Art</div>
+    <div class="brand-line"></div>
+  </div>
+
+  <div class="hero">
+    <h1>La storia del<br><em>tuo vinile</em></h1>
+    <p>Ogni pezzo 33Giri nasce da un disco vero, con una storia. Inserisci il codice che hai ricevuto nella confezione per scoprirla.</p>
+  </div>
+
+  <div class="search-box">
+    <div class="search-label">Inserisci il tuo codice</div>
+    <input class="code-input" id="codeInput" type="text" placeholder="es. S31" maxlength="10" autocomplete="off" autocorrect="off" spellcheck="false"/>
+    <button class="btn-cerca" id="btnCerca">Scopri la storia</button>
+    <div class="search-hint">
+      Il codice è sul foglio nella confezione.<br>
+      Esempio: <code>S31</code> &nbsp;·&nbsp; <code>P21</code> &nbsp;·&nbsp; <code>S3100</code>
+    </div>
+  </div>
+
+  <div class="state" id="stateLoading">
+    <div class="spinner"></div>
+    <div class="loading-txt">Ricerca in corso…</div>
+  </div>
+
+  <div class="state" id="stateError">
+    <div class="error-box">
+      <div class="error-icon">🎵</div>
+      <div class="error-title">Codice non trovato</div>
+      <div class="error-msg" id="errorMsg">Il codice inserito non corrisponde a nessun vinile.<br>Controlla il foglio nella confezione e riprova.</div>
+    </div>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="rc-header">
+      <div class="rc-code" id="rcCode">—</div>
+      <div class="rc-badge"><div class="rc-dot"></div><span>Autentico</span></div>
+    </div>
+    <div class="rc-body">
+      <div id="imagesWrap"></div>
+      <div class="rc-disc-wrap" id="discFallback">
+        <div class="rc-disc"><div class="rc-disc-label" id="discLabel">33G</div></div>
+      </div>
+      <div>
+        <div class="rc-type" id="rcType">—</div>
+        <div class="rc-name" id="rcName">—</div>
+        <div class="rc-sub"  id="rcSub">—</div>
+      </div>
+      <div class="rc-chips">
+        <div class="chip">🇮🇹 Handmade in Italy</div>
+        <div class="chip">♻️ Upcycled Vinyl</div>
+        <div class="chip">✦ Pezzo unico</div>
+      </div>
+      <div class="rc-grid">
+        <div class="rc-info"><div class="rc-info-label">Artista originale</div><div class="rc-info-val" id="rcArtist">—</div></div>
+        <div class="rc-info"><div class="rc-info-label">Genere</div><div class="rc-info-val" id="rcGenre">—</div></div>
+        <div class="rc-info"><div class="rc-info-label">Anno vinile</div><div class="rc-info-val" id="rcYear">—</div></div>
+        <div class="rc-info"><div class="rc-info-label">Modello</div><div class="rc-info-val" id="rcModel">—</div></div>
+        <div class="rc-info"><div class="rc-info-label">Collezione</div><div class="rc-info-val" id="rcCollection">—</div></div>
+        <div class="rc-info"><div class="rc-info-label">Provenienza</div><div class="rc-info-val" id="rcPlace">—</div></div>
+      </div>
+      <div id="soldWrap" style="display:none">
+        <div class="sold-badge">
+          <span>🏠</span>
+          <span>Venduto il <strong id="rcSoldAt">—</strong></span>
+          <span id="rcSaleNote" style="opacity:.7"></span>
+        </div>
+      </div>
+    </div>
+    <div class="rc-footer">
+      <div class="rc-footer-note">Hai domande sul tuo pezzo? Scrivici.</div>
+      <a class="btn-wa" id="btnWa" href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/></svg>
+        Scrivici su WhatsApp
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SUPABASE_URL      = 'https://oovqibecarfdoybzbqwt.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_pOzkEqcT6oMW4pLKv_sWZw_WyCkFC6a';
+const TABLE = 'code';
+const COL = {
+  code:'code', title:'title', artist:'artist', genre:'genre',
+  year:'year', model:'model', collection:'collection',
+  image1:'image1', image2:'image2', place:'place',
+  sold_at:'sold_at', sale_price:'sale_price', sale_note:'sale_note'
+};
+
+const PRODOTTI   = { S:'Svuotatasche', P:'Posacenere' };
+const COLLEZIONI = { 1:'Normal', 2:'Splash', 3:'Spiral', 4:'Collab / Artista' };
+
+function parseCode(raw) {
+  const s = raw.trim().toUpperCase();
+  if (s.length < 3) return { ok:false, err:'Codice troppo corto. Esempio: <strong>S31</strong>' };
+  const lettera = s[0];
+  if (!PRODOTTI[lettera]) return { ok:false, err:`Lettera "<strong>${lettera}</strong>" non valida. Usa S o P.` };
+  const cifra = parseInt(s[1], 10);
+  if (isNaN(cifra) || !COLLEZIONI[cifra]) return { ok:false, err:`Cifra collezione "<strong>${s[1]}</strong>" non valida. Usa 1-4.` };
+  const id = parseInt(s.slice(2), 10);
+  if (isNaN(id) || id < 1) return { ok:false, err:`ID pezzo "<strong>${s.slice(2)}</strong>" non valido.` };
+  return { ok:true, raw:s, lettera, cifra, id,
+    nomeProdotto:PRODOTTI[lettera], nomeCollezione:COLLEZIONI[cifra] };
+}
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function fetchVinile(id) {
+  const { data, error } = await sb.from(TABLE).select('*').eq(COL.code, id).single();
+  if (error) {
+    if (error.code === 'PGRST116') return null;
+    throw new Error('Errore di connessione. Riprova tra qualche secondo.');
+  }
+  return data;
+}
+
+const $ = id => document.getElementById(id);
+
+function setState(active) {
+  ['stateLoading','stateError','resultCard'].forEach(id => {
+    $(id).classList.toggle('on', id === active);
+  });
+}
+
+function showErr(html) {
+  $('errorMsg').innerHTML = html;
+  setState('stateError');
+}
+
+function val(rec, col, fallback='—') {
+  const v = rec[col];
+  return (v !== null && v !== undefined && String(v).trim() !== '') ? String(v).trim() : fallback;
+}
+
+function populate(p, rec) {
+  $('rcCode').textContent = p.raw;
+
+  const img1 = val(rec, COL.image1, '');
+  const img2 = val(rec, COL.image2, '');
+  const wrap = $('imagesWrap');
+  wrap.innerHTML = '';
+
+  if (img1 || img2) {
+    $('discFallback').style.display = 'none';
+    const grid = document.createElement('div');
+    grid.className = 'rc-images' + (img1 && img2 ? '' : ' single');
+    [img1, img2].filter(Boolean).forEach(src => {
+      const div = document.createElement('div');
+      div.className = 'rc-img-wrap';
+      const img = document.createElement('img');
+      img.src = src; img.alt = val(rec, COL.title, 'Vinile 33Giri'); img.loading = 'lazy';
+      div.appendChild(img); grid.appendChild(div);
+    });
+    wrap.appendChild(grid);
+  } else {
+    $('discFallback').style.display = 'flex';
+    $('discLabel').textContent = p.raw.slice(0,3);
+  }
+
+  $('rcType').textContent = (val(rec, COL.model, p.nomeProdotto)).toUpperCase();
+  $('rcName').textContent = val(rec, COL.title, `${p.nomeProdotto} ${p.nomeCollezione} #${p.id}`);
+  $('rcSub').textContent  = `${val(rec, COL.collection, p.nomeCollezione)} · Pezzo #${p.id}`;
+
+  $('rcArtist').textContent     = val(rec, COL.artist);
+  $('rcGenre').textContent      = val(rec, COL.genre);
+  $('rcYear').textContent       = val(rec, COL.year);
+  $('rcModel').textContent      = val(rec, COL.model);
+  $('rcCollection').textContent = val(rec, COL.collection);
+  $('rcPlace').textContent      = val(rec, COL.place);
+
+  const soldAt = val(rec, COL.sold_at, '');
+  if (soldAt) {
+    const d = new Date(soldAt);
+    $('rcSoldAt').textContent  = isNaN(d) ? soldAt : d.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'});
+    $('rcSaleNote').textContent = val(rec, COL.sale_note,'') ? `· ${val(rec, COL.sale_note,'')}` : '';
+    $('soldWrap').style.display = 'block';
+  } else {
+    $('soldWrap').style.display = 'none';
+  }
+
+  const msgWa = encodeURIComponent(`Ciao! Ho ricevuto il pezzo con codice ${p.raw} (${val(rec, COL.title, p.nomeProdotto)}) e volevo chiedervi:`);
+  $('btnWa').href = `https://wa.me/393925430575?text=${msgWa}`;
+
+  setState('resultCard');
+  setTimeout(() => $('resultCard').scrollIntoView({ behavior:'smooth', block:'start' }), 120);
+}
+
+async function cerca() {
+  const raw = $('codeInput').value;
+  const p = parseCode(raw);
+  if (!p.ok) {
+    $('codeInput').classList.add('shake');
+    setTimeout(() => $('codeInput').classList.remove('shake'), 400);
+    showErr(p.err + '<br><br>Il codice è sul foglio nella confezione. Esempio: <strong>S31</strong>');
+    return;
+  }
+  setState('stateLoading');
+  $('btnCerca').disabled = true;
+  try {
+    const rec = await fetchVinile(p.id);
+    if (!rec) {
+      showErr(`Nessun vinile con codice <strong>${p.raw}</strong>.<br><br>Controlla di aver digitato tutto correttamente oppure <a href="https://wa.me/393925430575" style="color:var(--gold)">scrivici su WhatsApp</a>.`);
+      return;
+    }
+    populate(p, rec);
+  } catch(e) {
+    showErr(e.message);
+  } finally {
+    $('btnCerca').disabled = false;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('btnCerca').addEventListener('click', cerca);
+  $('codeInput').addEventListener('keydown', e => { if (e.key === 'Enter') cerca(); });
+  $('codeInput').addEventListener('input', e => {
+    const pos = e.target.selectionStart;
+    e.target.value = e.target.value.toUpperCase();
+    e.target.setSelectionRange(pos, pos);
+  });
+  const params = new URLSearchParams(location.search);
+  const urlCode = params.get('codice') || params.get('code');
+  if (urlCode) { $('codeInput').value = urlCode.toUpperCase(); cerca(); }
+});
+</script>
+</body>
+</html>
