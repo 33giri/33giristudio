@@ -64,9 +64,10 @@
     .main-nav a:hover { color: var(--gold-lt); }
     .main-nav a:hover::after { width: 100%; }
     /* Azioni destra */
-    .header-actions { display: flex; align-items: center; gap: 20px; }
+    .header-actions { display: flex; align-items: center; gap: 36px; }
     .header-actions a { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); transition: color 0.2s; white-space: nowrap; }
     .header-actions a:hover { color: var(--gold); }
+    .header-actions a.header-link-gold { color: var(--gold); font-weight: 600; }
     /* Hamburger button */
     .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; }
     .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
@@ -140,7 +141,7 @@
       padding: 0 40px 60px;
       display: flex;
       flex-direction: column;
-      align-items: center;    /* centrato orizzontalmente */
+      align-items: center;
       text-align: center;
     }
 
@@ -356,7 +357,7 @@
       /* Header mobile: nascondi nav e quiz desktop, mostra hamburger */
       .main-nav { display: none; }
       .menu-btn { display: flex; }
-      .header-actions a:not(.ordina-mobile) { display: none; } /* nasconde 33quiz e ordina desktop */
+      .header-actions a:not(.ordina-mobile) { display: none; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
     }
 
@@ -395,11 +396,9 @@
       </a>
 
       <!-- Azioni destra — desktop -->
-      <div class="header-actions" style="display:flex;align-items:center;gap:20px;">
-        <a href="storia-vinile.html" target="_blank" class="ordina-mobile" style="color:var(--gold);letter-spacing:0.15em;font-size:11px;font-weight:600;">Storia →</a>
-      </div>
-      <div class="header-actions" style="display:flex;align-items:center;gap:20px;">
-        <a href="https://wa.me/393925430575" target="_blank" class="ordina-mobile" style="color:var(--gold);letter-spacing:0.15em;font-size:11px;font-weight:600;">Ordina →</a>
+      <div class="header-actions">
+        <a href="storia-vinile.html" target="_blank" class="ordina-mobile header-link-gold">Storia</a>
+        <a href="https://wa.me/393925430575" target="_blank" class="ordina-mobile header-link-gold">Ordina →</a>
       </div>
     </div>
   </header>
@@ -416,7 +415,6 @@
       <li><a href="contribuisci.html">Dona un vinile</a></li>
       <li><a href="corporate.html">Corporate / Regalo</a></li>
       <li><a href="recensioni.html">Recensioni</a></li>
-     
     </ul>
     <a href="https://wa.me/3471692948" target="_blank" class="mobile-nav-ordina">Ordina su WhatsApp →</a>
   </nav>
@@ -701,11 +699,9 @@
         const isOpen = drawer.classList.toggle('is-open');
         btn.classList.toggle('is-open', isOpen);
         btn.setAttribute('aria-expanded', isOpen);
-        // blocca scroll body quando menu aperto
         document.body.style.overflow = isOpen ? 'hidden' : '';
       });
 
-      // Chiudi cliccando un link del drawer
       drawer.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
           drawer.classList.remove('is-open');
@@ -715,7 +711,6 @@
         });
       });
 
-      // Chiudi cliccando fuori
       document.addEventListener('click', (e) => {
         if (drawer.classList.contains('is-open') &&
             !drawer.contains(e.target) &&
@@ -754,9 +749,7 @@
       });
     })();
   </script>
-  
 
-  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/config.js"></script>
   <script>
