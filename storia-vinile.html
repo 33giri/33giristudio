@@ -7,6 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --black:   #0a0a0b;
@@ -16,8 +17,14 @@
       --gray:    #6b6b6b;
       --border:  rgba(201,168,76,0.18);
       --radius:  20px;
+      --header-h: 82px;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -26,15 +33,161 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+
     body::before {
       content: '';
       position: fixed;
-      top: -10%; left: 50%;
+      top: -10%;
+      left: 50%;
       transform: translateX(-50%);
-      width: 600px; height: 360px;
+      width: 600px;
+      height: 360px;
       background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
+    }
+
+    /* ══════════════ HEADER ══════════════ */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-h);
+      z-index: 1000;
+      background: rgba(10, 10, 11, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .main-nav a {
+      text-decoration: none;
+      color: rgba(245,240,232,0.78);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color .25s ease, opacity .25s ease;
+    }
+
+    .main-nav a:hover {
+      color: var(--gold);
+    }
+
+    .logo-wrap {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img-header {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .menu-btn {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(201,168,76,0.16);
+      background: rgba(255,255,255,0.02);
+      border-radius: 14px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--white);
+      transition: .25s ease;
+    }
+
+    .menu-btn.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-btn.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      width: 100%;
+      background: rgba(10,10,11,0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      padding: 18px 22px 24px;
+      z-index: 999;
+      display: none;
+    }
+
+    .mobile-nav.open {
+      display: block;
+    }
+
+    .mobile-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .mobile-nav a {
+      text-decoration: none;
+      color: rgba(245,240,232,0.86);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .mobile-nav-ordina {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold) 0%, #9a7230 100%);
+      color: #0a0a0b !important;
+      font-weight: 700 !important;
+      font-size: 13px !important;
+      letter-spacing: .04em;
     }
 
     /* ── LAYOUT ── */
@@ -43,57 +196,57 @@
       z-index: 1;
       max-width: 520px;
       margin: 0 auto;
-      padding: 64px 20px 100px;
+      padding: calc(var(--header-h) + 34px) 20px 100px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 44px;
     }
 
-    /* ── BRAND ── */
-    .brand { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    .brand-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px; font-weight: 900;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--gold);
-    }
-    .brand-claim {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px; letter-spacing: .38em;
-      text-transform: uppercase; color: var(--gray);
-    }
-    .brand-line {
-      margin-top: 14px; width: 40px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      margin-top: 8px;
     }
 
-    /* ── HERO ── */
-    .hero { text-align: center; }
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(24px, 6vw, 38px);
-      font-weight: 900; line-height: 1.18;
+      font-weight: 900;
+      line-height: 1.18;
       margin-bottom: 12px;
     }
-    .hero h1 em { font-style: italic; color: var(--gold); }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
     .hero p {
-      font-size: 14px; line-height: 1.85;
+      font-size: 14px;
+      line-height: 1.85;
       color: rgba(245,240,232,0.45);
-      max-width: 380px; margin: 0 auto;
+      max-width: 380px;
+      margin: 0 auto;
     }
 
     /* ── SEARCH ── */
     .search-box {
       width: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
     }
+
     .search-label {
       font-family: 'DM Mono', monospace;
-      font-size: 9px; letter-spacing: .32em;
-      text-transform: uppercase; color: var(--gold);
+      font-size: 9px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
+
     .code-input {
       width: 100%;
       background: rgba(255,255,255,0.03);
@@ -101,7 +254,8 @@
       border-radius: var(--radius);
       padding: 20px 24px;
       font-family: 'DM Mono', monospace;
-      font-size: 32px; font-weight: 500;
+      font-size: 32px;
+      font-weight: 500;
       color: var(--white);
       text-align: center;
       letter-spacing: .20em;
@@ -109,12 +263,20 @@
       outline: none;
       transition: border-color .3s, box-shadow .3s;
     }
-    .code-input::placeholder { color: rgba(245,240,232,0.12); }
+
+    .code-input::placeholder {
+      color: rgba(245,240,232,0.12);
+    }
+
     .code-input:focus {
       border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
     }
-    .code-input.shake { animation: shake .34s ease; }
+
+    .code-input.shake {
+      animation: shake .34s ease;
+    }
+
     @keyframes shake {
       0%,100% { transform: translateX(0); }
       20% { transform: translateX(-7px); }
@@ -131,53 +293,93 @@
       border: none;
       border-radius: var(--radius);
       font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
       cursor: pointer;
       transition: all .3s ease;
-      position: relative; overflow: hidden;
+      position: relative;
+      overflow: hidden;
     }
+
     .btn-cerca::before {
       content: '';
-      position: absolute; top: 0; left: -100%;
-      width: 100%; height: 100%;
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.20), transparent);
       transition: left .5s;
     }
-    .btn-cerca:hover::before { left: 100%; }
-    .btn-cerca:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,168,76,.22); }
-    .btn-cerca:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .btn-cerca:hover::before {
+      left: 100%;
+    }
+
+    .btn-cerca:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201,168,76,.22);
+    }
+
+    .btn-cerca:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
 
     .search-hint {
       font-size: 11px;
       color: rgba(245,240,232,.20);
-      text-align: center; line-height: 1.7;
+      text-align: center;
+      line-height: 1.7;
     }
+
     .search-hint code {
       font-family: 'DM Mono', monospace;
       color: rgba(245,240,232,.35);
     }
 
     /* ── STATES ── */
-    .state { display: none; width: 100%; }
-    .state.on { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .state {
+      display: none;
+      width: 100%;
+    }
+
+    .state.on {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
 
     .spinner {
-      width: 46px; height: 46px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       border: 2px solid rgba(201,168,76,.10);
       border-top-color: var(--gold);
       animation: spin .75s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
     .loading-txt {
       font-family: 'DM Mono', monospace;
-      font-size: 10px; letter-spacing: .22em;
+      font-size: 10px;
+      letter-spacing: .22em;
       color: var(--gray);
       animation: pulse 1.4s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+
+    @keyframes pulse {
+      0%,100% { opacity:.35; }
+      50% { opacity:1; }
+    }
 
     .error-box {
       width: 100%;
@@ -186,15 +388,16 @@
       border: 1px solid rgba(192,57,43,.20);
       border-radius: var(--radius);
       text-align: center;
-      display: flex; flex-direction: column; gap: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
+
     .error-icon  { font-size: 26px; }
     .error-title { font-family: 'Playfair Display', serif; font-size: 17px; color: #e55; }
     .error-msg   { font-size: 13px; color: rgba(245,240,232,.40); line-height: 1.7; }
 
-    /* ══════════════════════════════
-       RESULT CARD
-    ══════════════════════════════ */
+    /* ══════════════════════════════ RESULT CARD ══════════════════════════════ */
     .result-card {
       display: none;
       width: 100%;
@@ -205,13 +408,16 @@
       box-shadow: 0 28px 80px rgba(0,0,0,.55);
       animation: cardIn .5s cubic-bezier(.34,1.56,.64,1) both;
     }
-    .result-card.on { display: block; }
+
+    .result-card.on {
+      display: block;
+    }
+
     @keyframes cardIn {
       from { opacity:0; transform: translateY(22px) scale(.97); }
       to   { opacity:1; transform: translateY(0) scale(1); }
     }
 
-    /* — IMMAGINE — */
     .rc-img-wrap {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -219,81 +425,108 @@
       overflow: hidden;
       background: rgba(255,255,255,0.04);
     }
+
     .rc-img-wrap img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
       transition: transform .6s ease;
     }
-    .rc-img-wrap:hover img { transform: scale(1.04); }
 
-    /* disco animato se non c'è immagine */
+    .rc-img-wrap:hover img {
+      transform: scale(1.04);
+    }
+
     .rc-img-ph {
       width: 100%;
       aspect-ratio: 1 / 1;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: rgba(255,255,255,0.02);
     }
+
     .disc {
-      width: 130px; height: 130px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       background: conic-gradient(
         #181818 0deg,#0f0f0f 40deg,#181818 80deg,#0f0f0f 120deg,
         #181818 160deg,#0f0f0f 200deg,#181818 240deg,#0f0f0f 280deg,
         #181818 320deg,#0f0f0f 360deg
       );
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: 0 0 0 4px #1c1c1c, 0 0 0 6px #282828, 0 20px 50px rgba(0,0,0,.6);
       animation: slowspin 16s linear infinite;
     }
-    @keyframes slowspin { to { transform: rotate(360deg); } }
+
+    @keyframes slowspin {
+      to { transform: rotate(360deg); }
+    }
+
     .disc-label {
-      width: 44px; height: 44px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--gold) 0%, #7a5c1e 100%);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 9px; font-weight: 900;
+      font-size: 9px;
+      font-weight: 900;
       color: #0a0a0b;
     }
 
-    /* badge autentico sull'immagine */
     .rc-badge {
       position: absolute;
-      top: 14px; right: 14px;
-      display: inline-flex; align-items: center; gap: 6px;
+      top: 14px;
+      right: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 6px 12px;
       border-radius: 999px;
       background: rgba(10,10,11,.72);
       border: 1px solid var(--border);
       backdrop-filter: blur(10px);
       font-family: 'DM Mono', monospace;
-      font-size: 9px; letter-spacing: .18em;
+      font-size: 9px;
+      letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--gold-lt);
     }
+
     .rc-badge-dot {
-      width: 6px; height: 6px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--gold);
       box-shadow: 0 0 6px var(--gold);
       animation: pulse 2s ease-in-out infinite;
     }
 
-    /* — BODY — */
     .rc-body {
       padding: 28px 26px 32px;
-      display: flex; flex-direction: column;
+      display: flex;
+      flex-direction: column;
       gap: 20px;
     }
 
-    /* codice */
     .rc-code-row {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
+
     .rc-code-pill {
       font-family: 'DM Mono', monospace;
-      font-size: 13px; font-weight: 500;
+      font-size: 13px;
+      font-weight: 500;
       letter-spacing: .14em;
       color: var(--gold);
       background: rgba(201,168,76,.08);
@@ -301,36 +534,45 @@
       border-radius: 999px;
       padding: 5px 14px;
     }
+
     .rc-code-desc {
       font-size: 12px;
       color: rgba(245,240,232,.30);
     }
 
-    /* titolo + artista */
-    .rc-identity { display: flex; flex-direction: column; gap: 5px; }
+    .rc-identity {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
     .rc-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(22px, 5vw, 28px);
-      font-weight: 900; line-height: 1.12;
+      font-weight: 900;
+      line-height: 1.12;
     }
+
     .rc-artist {
-      font-size: 14px; font-weight: 400;
+      font-size: 14px;
+      font-weight: 400;
       color: rgba(245,240,232,.45);
     }
 
-    /* divisore */
     .rc-sep {
       height: 1px;
       background: var(--border);
     }
 
-    /* storia */
     .rc-story-lbl {
       font-family: 'DM Mono', monospace;
-      font-size: 9px; letter-spacing: .30em;
-      text-transform: uppercase; color: var(--gold);
+      font-size: 9px;
+      letter-spacing: .30em;
+      text-transform: uppercase;
+      color: var(--gold);
       margin-bottom: 10px;
     }
+
     .rc-story {
       font-family: 'Playfair Display', serif;
       font-size: clamp(15px, 2.4vw, 17px);
@@ -339,375 +581,462 @@
       color: rgba(245,240,232,.78);
     }
 
-    /* chips */
-    .rc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 6px 12px; border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      font-size: 11px; color: rgba(245,240,232,.45);
+    .rc-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    /* footer */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      font-size: 11px;
+      color: rgba(245,240,232,.45);
+    }
+
     .rc-footer {
       padding: 16px 26px 18px;
       border-top: 1px solid var(--border);
-      display: flex; align-items: center;
+      display: flex;
+      align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap; gap: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .rc-footer-note { font-size: 11px; color: rgba(245,240,232,.25); }
+
+    .rc-footer-note {
+      font-size: 11px;
+      color: rgba(245,240,232,.25);
+    }
+
     .btn-wa {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 9px 18px; border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: 999px;
       background: rgba(37,211,102,0.07);
       border: 1px solid rgba(37,211,102,.20);
       color: #25d366;
       text-decoration: none;
-      font-size: 12px; font-weight: 600;
+      font-size: 12px;
+      font-weight: 600;
       transition: all .3s ease;
     }
-    .btn-wa:hover { background: rgba(37,211,102,.14); transform: translateY(-1px); }
+
+    .btn-wa:hover {
+      background: rgba(37,211,102,.14);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+      .main-nav {
+        display: none;
+      }
+
+      .menu-btn {
+        display: flex;
+      }
+
+      .header-inner {
+        padding: 0 18px;
+      }
+
+      .logo-img-header {
+        height: 36px;
+      }
+    }
 
     @media (max-width: 480px) {
-      .page     { padding: 48px 14px 80px; gap: 36px; }
-      .rc-body  { padding: 20px 16px 26px; }
-      .rc-footer{ padding: 14px 16px 16px; }
-      .code-input { font-size: 26px; padding: 16px 18px; }
+      .page {
+        padding: calc(var(--header-h) + 26px) 14px 80px;
+        gap: 36px;
+      }
+
+      .rc-body {
+        padding: 20px 16px 26px;
+      }
+
+      .rc-footer {
+        padding: 14px 16px 16px;
+      }
+
+      .code-input {
+        font-size: 26px;
+        padding: 16px 18px;
+      }
+
+      .header-inner {
+        padding: 0 14px;
+      }
     }
   </style>
 </head>
 <body>
-<div class="page">
 
-  <!-- BRAND -->
-  <div class="brand">
-    <div class="brand-name">33Giri</div>
-    <div class="brand-claim">Reshape the Art</div>
-    <div class="brand-line"></div>
-  </div>
+  <!-- ══════════════ HEADER ══════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <!-- Nav sinistra — desktop -->
+      <nav class="main-nav">
+        <ul>
+          <li><a href="catalogo.html">Catalogo</a></li>
+          <li><a href="chi_siamo.html">Chi Siamo</a></li>
+          <li><a href="collaborazioni.html">Collaborazioni</a></li>
+        </ul>
+      </nav>
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1>La storia del<br><em>tuo vinile</em></h1>
-    <p>Inserisci il codice che hai ricevuto nella confezione per scoprire la storia del tuo pezzo.</p>
-  </div>
+      <!-- Hamburger — mobile only -->
+      <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
 
-  <!-- SEARCH -->
-  <div class="search-box">
-    <div class="search-label">Inserisci il tuo codice</div>
-    <input
-      class="code-input" id="codeInput"
-      type="text" placeholder="es. S31"
-      maxlength="12"
-      autocomplete="off" autocorrect="off" spellcheck="false"
-    />
-    <button class="btn-cerca" id="btnCerca">Scopri la storia</button>
-    <div class="search-hint">
-      Il codice è sul foglio nella confezione &nbsp;·&nbsp;
-      es. <code>S31</code> &nbsp;·&nbsp; <code>P21</code>
-    </div>
-  </div>
-
-  <!-- LOADING -->
-  <div class="state" id="stateLoading">
-    <div class="spinner"></div>
-    <div class="loading-txt">Ricerca in corso…</div>
-  </div>
-
-  <!-- ERROR -->
-  <div class="state" id="stateError">
-    <div class="error-box">
-      <div class="error-icon">🎵</div>
-      <div class="error-title">Codice non trovato</div>
-      <div class="error-msg" id="errorMsg">
-        Controlla il foglio nella confezione e riprova.
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════
-       RESULT CARD
-  ════════════════════════════════ -->
-  <div class="result-card" id="resultCard">
-
-    <!-- IMMAGINE -->
-    <div id="rcImgArea"></div>
-
-    <!-- BODY -->
-    <div class="rc-body">
-
-      <!-- CODICE -->
-      <div class="rc-code-row">
-        <div class="rc-code-pill" id="rcCodePill">—</div>
-        <div class="rc-code-desc" id="rcCodeDesc">—</div>
-      </div>
-
-      <!-- TITOLO + ARTISTA -->
-      <div class="rc-identity">
-        <div class="rc-title"  id="rcTitle">—</div>
-        <div class="rc-artist" id="rcArtist">—</div>
-      </div>
-
-      <!-- CHIPS -->
-      <div class="rc-chips">
-        <div class="chip">🇮🇹 Handmade in Italy</div>
-        <div class="chip">♻️ Upcycled Vinyl</div>
-        <div class="chip">✦ Pezzo unico</div>
-      </div>
-
-      <div class="rc-sep"></div>
-
-      <!-- STORIA -->
-      <div>
-        <div class="rc-story-lbl">La storia</div>
-        <div class="rc-story" id="rcStory">—</div>
-      </div>
-
-    </div>
-
-    <!-- FOOTER -->
-    <div class="rc-footer">
-      <div class="rc-footer-note">Hai domande? Scrivici.</div>
-      <a class="btn-wa" id="btnWa" href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
-        </svg>
-        WhatsApp
+      <!-- Logo centro -->
+      <a href="index.html" class="logo-wrap" aria-label="33GIRI Home">
+        <img src="Screenshot bg-preview.png" alt="33GIRI" class="logo-img-header">
       </a>
+
+      <!-- Spazio bilanciato destra -->
+      <div style="width:80px;"></div>
+    </div>
+  </header>
+
+  <!-- Drawer mobile -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
+    <ul>
+      <li><a href="catalogo.html">Catalogo</a></li>
+      <li><a href="chi_siamo.html">Chi Siamo</a></li>
+      <li><a href="collaborazioni.html">Collaborazioni</a></li>
+      <li><a href="quiz.html">33Quiz</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contribuisci.html">Dona un vinile</a></li>
+      <li><a href="corporate.html">Corporate / Regalo</a></li>
+      <li><a href="recensioni.html">Recensioni</a></li>
+    </ul>
+    <a href="https://wa.me/393925430575" target="_blank" class="mobile-nav-ordina">Ordina su WhatsApp →</a>
+  </nav>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <div class="hero">
+      <h1>La storia del<br><em>tuo vinile</em></h1>
+      <p>Inserisci il codice che hai ricevuto nella confezione per scoprire la storia del tuo pezzo.</p>
     </div>
 
-  </div><!-- /result-card -->
+    <!-- SEARCH -->
+    <div class="search-box">
+      <div class="search-label">Inserisci il tuo codice</div>
+      <input
+        class="code-input" id="codeInput"
+        type="text" placeholder="es. S31"
+        maxlength="12"
+        autocomplete="off" autocorrect="off" spellcheck="false"
+      />
+      <button class="btn-cerca" id="btnCerca">Scopri la storia</button>
+      <div class="search-hint">
+        Il codice è sul foglio nella confezione &nbsp;·&nbsp;
+        es. <code>S31</code> &nbsp;·&nbsp; <code>P21</code>
+      </div>
+    </div>
 
-</div><!-- /page -->
+    <!-- LOADING -->
+    <div class="state" id="stateLoading">
+      <div class="spinner"></div>
+      <div class="loading-txt">Ricerca in corso…</div>
+    </div>
 
-<script>
-/* ================================================================
-   CONFIG SUPABASE
-================================================================ */
-const SUPABASE_URL      = 'https://oovqibecarfdoybzbqwt.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_pOzkEqcT6oMW4pLKv_sWZw_WyCkFC6a';
+    <!-- ERROR -->
+    <div class="state" id="stateError">
+      <div class="error-box">
+        <div class="error-icon">🎵</div>
+        <div class="error-title">Codice non trovato</div>
+        <div class="error-msg" id="errorMsg">
+          Controlla il foglio nella confezione e riprova.
+        </div>
+      </div>
+    </div>
 
-/* ================================================================
-   NOMI TABELLA E COLONNE
-   La tabella si chiama "products".
-   Le colonne usate: code (testo), title, artist, image1, story
-================================================================ */
-const TABLE   = 'products';
-const C_CODE  = 'code';    // es. "S31"
-const C_TITLE = 'title';
-const C_ART   = 'artist';
-const C_IMG   = 'image1';
-const C_STORY = 'story';   // ← colonna storia nel tuo DB
+    <!-- RESULT CARD -->
+    <div class="result-card" id="resultCard">
 
-/* ================================================================
-   DIZIONARI PER DECODIFICA CODICE
-================================================================ */
-const PRODOTTI   = { S: 'Svuotatasche', P: 'Posacenere' };
-const COLLEZIONI = { '1': 'Normal', '2': 'Splash', '3': 'Spiral', '4': 'Collab' };
+      <!-- IMMAGINE -->
+      <div id="rcImgArea"></div>
 
-function decodeCode(raw) {
-  const s = (raw || '').trim().toUpperCase();
-  if (s.length < 3) return null;
-  const lettera = s[0];
-  const cifra   = s[1];
-  const id      = s.slice(2);
-  const prod = PRODOTTI[lettera];
-  const coll = COLLEZIONI[cifra];
-  if (!prod || !coll || !id || isNaN(parseInt(id, 10))) return null;
-  return { prod, coll, id, desc: `${prod} · ${coll} · #${id}` };
-}
+      <!-- BODY -->
+      <div class="rc-body">
 
-/* ================================================================
-   SUPABASE CLIENT
-================================================================ */
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        <!-- CODICE -->
+        <div class="rc-code-row">
+          <div class="rc-code-pill" id="rcCodePill">—</div>
+          <div class="rc-code-desc" id="rcCodeDesc">—</div>
+        </div>
 
-async function fetchByCode(code) {
-  /*
-    Cerca nella colonna "code" il valore esatto inserito (es. "S31").
-    Restituisce il record o null.
-  */
-  const { data, error } = await sb
-    .from(TABLE)
-    .select(`${C_CODE}, ${C_TITLE}, ${C_ART}, ${C_IMG}, ${C_STORY}`)
-    .eq(C_CODE, code)
-    .single();
+        <!-- TITOLO + ARTISTA -->
+        <div class="rc-identity">
+          <div class="rc-title" id="rcTitle">—</div>
+          <div class="rc-artist" id="rcArtist">—</div>
+        </div>
 
-  if (error) {
-    if (error.code === 'PGRST116') return null; // nessun record
-    throw new Error('Errore di connessione. Riprova tra qualche secondo.');
-  }
-  return data;
-}
+        <!-- CHIPS -->
+        <div class="rc-chips">
+          <div class="chip">🇮🇹 Handmade in Italy</div>
+          <div class="chip">♻️ Upcycled Vinyl</div>
+          <div class="chip">✦ Pezzo unico</div>
+        </div>
 
-/* ================================================================
-   UI
-================================================================ */
-const $ = id => document.getElementById(id);
+        <div class="rc-sep"></div>
 
-function setState(active) {
-  ['stateLoading', 'stateError', 'resultCard'].forEach(id => {
-    const el = $(id);
-    const isCard = id === 'resultCard';
-    if (id === active) {
-      isCard ? el.classList.add('on') : el.classList.add('on');
-    } else {
-      isCard ? el.classList.remove('on') : el.classList.remove('on');
+        <!-- STORIA -->
+        <div>
+          <div class="rc-story-lbl">La storia</div>
+          <div class="rc-story" id="rcStory">—</div>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="rc-footer">
+        <div class="rc-footer-note">Hai domande? Scrivici.</div>
+        <a class="btn-wa" id="btnWa" href="https://wa.me/393925430575" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /* ================================================================
+       CONFIG SUPABASE
+    ================================================================ */
+    const SUPABASE_URL      = 'https://oovqibecarfdoybzbqwt.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_pOzkEqcT6oMW4pLKv_sWZw_WyCkFC6a';
+
+    /* ================================================================
+       NOMI TABELLA E COLONNE
+    ================================================================ */
+    const TABLE   = 'products';
+    const C_CODE  = 'code';
+    const C_TITLE = 'title';
+    const C_ART   = 'artist';
+    const C_IMG   = 'image1';
+    const C_STORY = 'story';
+
+    /* ================================================================
+       DIZIONARI PER DECODIFICA CODICE
+    ================================================================ */
+    const PRODOTTI   = { S: 'Svuotatasche', P: 'Posacenere' };
+    const COLLEZIONI = { '1': 'Normal', '2': 'Splash', '3': 'Spiral', '4': 'Collab' };
+
+    function decodeCode(raw) {
+      const s = (raw || '').trim().toUpperCase();
+      if (s.length < 3) return null;
+      const lettera = s[0];
+      const cifra   = s[1];
+      const id      = s.slice(2);
+      const prod = PRODOTTI[lettera];
+      const coll = COLLEZIONI[cifra];
+      if (!prod || !coll || !id || isNaN(parseInt(id, 10))) return null;
+      return { prod, coll, id, desc: `${prod} · ${coll} · #${id}` };
     }
-  });
-}
 
-function showErr(html) {
-  $('errorMsg').innerHTML = html;
-  // attiva solo error state
-  $('stateLoading').classList.remove('on');
-  $('stateError').classList.add('on');
-  $('resultCard').classList.remove('on');
-}
+    /* ================================================================
+       SUPABASE CLIENT
+    ================================================================ */
+    const { createClient } = supabase;
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-function val(rec, col, fallback) {
-  const v = rec[col];
-  return (v !== null && v !== undefined && String(v).trim() !== '')
-    ? String(v).trim()
-    : (fallback !== undefined ? fallback : '—');
-}
+    async function fetchByCode(code) {
+      const { data, error } = await sb
+        .from(TABLE)
+        .select(`${C_CODE}, ${C_TITLE}, ${C_ART}, ${C_IMG}, ${C_STORY}`)
+        .eq(C_CODE, code)
+        .single();
 
-function populate(code, rec) {
-  const decoded = decodeCode(code);
+      if (error) {
+        if (error.code === 'PGRST116') return null;
+        throw new Error('Errore di connessione. Riprova tra qualche secondo.');
+      }
+      return data;
+    }
 
-  /* ── IMMAGINE ── */
-  const imgUrl = val(rec, C_IMG, '');
-  const imgArea = $('rcImgArea');
+    /* ================================================================
+       UI
+    ================================================================ */
+    const $ = id => document.getElementById(id);
 
-  if (imgUrl) {
-    imgArea.innerHTML = `
-      <div class="rc-img-wrap">
-        <img src="${esc(imgUrl)}" alt="${esc(val(rec, C_TITLE, ''))}" loading="lazy"
-             onerror="this.closest('.rc-img-wrap').replaceWith(makePh('${esc(code)}'))">
-        <div class="rc-badge">
-          <div class="rc-badge-dot"></div>
-          <span>Autentico</span>
-        </div>
-      </div>`;
-  } else {
-    imgArea.innerHTML = `
-      <div class="rc-img-ph">
-        <div class="disc">
-          <div class="disc-label">${esc(code.slice(0,3))}</div>
-        </div>
-      </div>`;
-  }
+    function setState(active) {
+      ['stateLoading', 'stateError', 'resultCard'].forEach(id => {
+        const el = $(id);
+        const isCard = id === 'resultCard';
+        if (id === active) {
+          isCard ? el.classList.add('on') : el.classList.add('on');
+        } else {
+          isCard ? el.classList.remove('on') : el.classList.remove('on');
+        }
+      });
+    }
 
-  /* ── CODICE ── */
-  $('rcCodePill').textContent = code;
-  $('rcCodeDesc').textContent = decoded ? decoded.desc : '';
+    function showErr(html) {
+      $('errorMsg').innerHTML = html;
+      $('stateLoading').classList.remove('on');
+      $('stateError').classList.add('on');
+      $('resultCard').classList.remove('on');
+    }
 
-  /* ── TITOLO + ARTISTA ── */
-  $('rcTitle').textContent  = val(rec, C_TITLE);
-  $('rcArtist').textContent = val(rec, C_ART, '');
+    function val(rec, col, fallback) {
+      const v = rec[col];
+      return (v !== null && v !== undefined && String(v).trim() !== '')
+        ? String(v).trim()
+        : (fallback !== undefined ? fallback : '—');
+    }
 
-  /* ── STORIA (colonna "story") ── */
-  const story = val(rec, C_STORY, '');
-  $('rcStory').textContent = story || 'La storia di questo pezzo sarà presto disponibile.';
+    function populate(code, rec) {
+      const decoded = decodeCode(code);
 
-  /* ── WHATSAPP ── */
-  const msg = encodeURIComponent(
-    `Ciao! Ho ricevuto il pezzo con codice ${code} e volevo chiedervi:`
-  );
-  $('btnWa').href = `https://wa.me/393925430575?text=${msg}`;
+      const imgUrl = val(rec, C_IMG, '');
+      const imgArea = $('rcImgArea');
 
-  /* ── MOSTRA ── */
-  $('stateLoading').classList.remove('on');
-  $('stateError').classList.remove('on');
-  $('resultCard').classList.add('on');
-  setTimeout(() => $('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
-}
+      if (imgUrl) {
+        imgArea.innerHTML = `
+          <div class="rc-img-wrap">
+            <img src="${esc(imgUrl)}" alt="${esc(val(rec, C_TITLE, ''))}" loading="lazy"
+                 onerror="this.closest('.rc-img-wrap').replaceWith(makePh('${esc(code)}'))">
+            <div class="rc-badge">
+              <div class="rc-badge-dot"></div>
+              <span>Autentico</span>
+            </div>
+          </div>`;
+      } else {
+        imgArea.innerHTML = `
+          <div class="rc-img-ph">
+            <div class="disc">
+              <div class="disc-label">${esc(code.slice(0,3))}</div>
+            </div>
+          </div>`;
+      }
 
-// helper escape per attributi inline
-function esc(s) {
-  return String(s || '')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
+      $('rcCodePill').textContent = code;
+      $('rcCodeDesc').textContent = decoded ? decoded.desc : '';
 
-// placeholder disco (usato nell'onerror inline)
-window.makePh = function(code) {
-  const div = document.createElement('div');
-  div.className = 'rc-img-ph';
-  div.innerHTML = `<div class="disc"><div class="disc-label">${esc(code.slice(0,3))}</div></div>`;
-  return div;
-};
+      $('rcTitle').textContent  = val(rec, C_TITLE);
+      $('rcArtist').textContent = val(rec, C_ART, '');
 
-/* ================================================================
-   MAIN — cerca
-================================================================ */
-async function cerca() {
-  const raw = ($('codeInput').value || '').trim().toUpperCase();
+      const story = val(rec, C_STORY, '');
+      $('rcStory').textContent = story || 'La storia di questo pezzo sarà presto disponibile.';
 
-  // Validazione minima: deve avere almeno 3 char e struttura corretta
-  if (raw.length < 3) {
-    $('codeInput').classList.add('shake');
-    setTimeout(() => $('codeInput').classList.remove('shake'), 400);
-    showErr('Codice troppo corto. Esempio: <strong>S31</strong>');
-    return;
-  }
-
-  $('stateLoading').classList.add('on');
-  $('stateError').classList.remove('on');
-  $('resultCard').classList.remove('on');
-  $('btnCerca').disabled = true;
-
-  try {
-    const rec = await fetchByCode(raw);
-
-    if (!rec) {
-      showErr(
-        `Nessun vinile con codice <strong>${esc(raw)}</strong>.<br><br>` +
-        `Controlla il foglio nella confezione oppure ` +
-        `<a href="https://wa.me/393925430575" style="color:var(--gold)">scrivici su WhatsApp</a>.`
+      const msg = encodeURIComponent(
+        `Ciao! Ho ricevuto il pezzo con codice ${code} e volevo chiedervi:`
       );
-      return;
+      $('btnWa').href = `https://wa.me/393925430575?text=${msg}`;
+
+      $('stateLoading').classList.remove('on');
+      $('stateError').classList.remove('on');
+      $('resultCard').classList.add('on');
+      setTimeout(() => $('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
     }
 
-    populate(raw, rec);
+    function esc(s) {
+      return String(s || '')
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
 
-  } catch (err) {
-    showErr(err.message || 'Errore imprevisto. Riprova tra qualche secondo.');
-  } finally {
-    $('btnCerca').disabled = false;
-  }
-}
+    window.makePh = function(code) {
+      const div = document.createElement('div');
+      div.className = 'rc-img-ph';
+      div.innerHTML = `<div class="disc"><div class="disc-label">${esc(code.slice(0,3))}</div></div>`;
+      return div;
+    };
 
-/* ================================================================
-   EVENTI
-================================================================ */
-document.addEventListener('DOMContentLoaded', () => {
+    /* ================================================================
+       MAIN — cerca
+    ================================================================ */
+    async function cerca() {
+      const raw = ($('codeInput').value || '').trim().toUpperCase();
 
-  $('btnCerca').addEventListener('click', cerca);
+      if (raw.length < 3) {
+        $('codeInput').classList.add('shake');
+        setTimeout(() => $('codeInput').classList.remove('shake'), 400);
+        showErr('Codice troppo corto. Esempio: <strong>S31</strong>');
+        return;
+      }
 
-  $('codeInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') cerca();
-  });
+      $('stateLoading').classList.add('on');
+      $('stateError').classList.remove('on');
+      $('resultCard').classList.remove('on');
+      $('btnCerca').disabled = true;
 
-  // Auto-maiuscolo live
-  $('codeInput').addEventListener('input', e => {
-    const pos = e.target.selectionStart;
-    e.target.value = e.target.value.toUpperCase();
-    e.target.setSelectionRange(pos, pos);
-  });
+      try {
+        const rec = await fetchByCode(raw);
 
-  // Supporto URL param: storia-vinile.html?codice=S31
-  const params  = new URLSearchParams(location.search);
-  const urlCode = params.get('codice') || params.get('code');
-  if (urlCode) {
-    $('codeInput').value = urlCode.toUpperCase();
-    cerca();
-  }
+        if (!rec) {
+          showErr(
+            `Nessun vinile con codice <strong>${esc(raw)}</strong>.<br><br>` +
+            `Controlla il foglio nella confezione oppure ` +
+            `<a href="https://wa.me/393925430575" style="color:var(--gold)">scrivici su WhatsApp</a>.`
+          );
+          return;
+        }
 
-});
-</script>
+        populate(raw, rec);
+
+      } catch (err) {
+        showErr(err.message || 'Errore imprevisto. Riprova tra qualche secondo.');
+      } finally {
+        $('btnCerca').disabled = false;
+      }
+    }
+
+    /* ================================================================
+       EVENTI
+    ================================================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = $('menuBtn');
+      const mobileNav = $('mobileNav');
+
+      menuBtn.addEventListener('click', () => {
+        const isOpen = mobileNav.classList.toggle('open');
+        menuBtn.classList.toggle('active', isOpen);
+        menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.remove('open');
+          menuBtn.classList.remove('active');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      $('btnCerca').addEventListener('click', cerca);
+
+      $('codeInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter') cerca();
+      });
+
+      $('codeInput').addEventListener('input', e => {
+        const pos = e.target.selectionStart;
+        e.target.value = e.target.value.toUpperCase();
+        e.target.setSelectionRange(pos, pos);
+      });
+
+      const params  = new URLSearchParams(location.search);
+      const urlCode = params.get('codice') || params.get('code');
+      if (urlCode) {
+        $('codeInput').value = urlCode.toUpperCase();
+        cerca();
+      }
+    });
+  </script>
 </body>
 </html>
