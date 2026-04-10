@@ -856,6 +856,281 @@
     .reveal--d3 { transition-delay: 0.3s; }
     .reveal--d4 { transition-delay: 0.4s; }
 
+        /* ─────────────────────────────────
+       SPRING COLLECTION / LUXURY DROP
+    ───────────────────────────────── */
+    .spring-drop {
+      position: relative;
+      background:
+        linear-gradient(180deg, #f7f1e8 0%, #efe5d6 100%);
+      padding: 110px 32px 120px;
+      overflow: hidden;
+      border-top: 1px solid rgba(184,150,62,0.14);
+      border-bottom: 1px solid rgba(184,150,62,0.14);
+    }
+
+    .spring-drop::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(184,150,62,0.10) 0%, transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(212,175,106,0.10) 0%, transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,0.22) 0%, transparent 42%);
+      pointer-events: none;
+    }
+
+    .spring-drop::after {
+      content: '';
+      position: absolute;
+      inset: 26px;
+      border: 1px solid rgba(184,150,62,0.16);
+      pointer-events: none;
+    }
+
+    .spring-drop-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--wrap);
+      margin: 0 auto;
+    }
+
+    .spring-head {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 70px;
+      align-items: end;
+      margin-bottom: 58px;
+    }
+
+    .spring-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 20px;
+    }
+
+    .spring-kicker::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .spring-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5vw, 74px);
+      font-weight: 300;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 18px;
+    }
+
+    .spring-title em {
+      font-style: italic;
+      color: var(--gold-dk);
+    }
+
+    .spring-sub {
+      max-width: 560px;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--text-muted);
+    }
+
+    .spring-meta-card {
+      background: rgba(255,255,255,0.42);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(184,150,62,0.18);
+      padding: 30px 32px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.06);
+    }
+
+    .spring-meta-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .spring-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    .spring-count {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .spring-price {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .spring-price span {
+      color: var(--gold-dk);
+    }
+
+    .spring-meta-desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .spring-meta-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .spring-pill {
+      padding: 7px 12px;
+      border: 1px solid rgba(0,0,0,0.10);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: rgba(255,255,255,0.5);
+    }
+
+    .spring-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .spring-gallery {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .spring-shot {
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      background: #ddd;
+      cursor: pointer;
+      isolation: isolate;
+    }
+
+    .spring-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-smooth), filter 0.35s;
+      filter: brightness(0.94) saturate(1.02);
+    }
+
+    .spring-shot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.24), rgba(10,10,10,0.02));
+      opacity: 0.75;
+      transition: opacity 0.3s;
+    }
+
+    .spring-shot:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.88) saturate(1.08);
+    }
+
+    .spring-shot:hover::after {
+      opacity: 1;
+    }
+
+    .spring-shot--main {
+      grid-row: span 2;
+      min-height: 620px;
+    }
+
+    .spring-shot-label {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      z-index: 2;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.86);
+    }
+
+    @media (max-width: 1100px) {
+      .spring-head {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .spring-gallery {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .spring-shot--main {
+        grid-column: span 2;
+        grid-row: span 1;
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .spring-drop {
+        padding: 70px 20px 80px;
+      }
+
+      .spring-drop::after {
+        inset: 12px;
+      }
+
+      .spring-gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .spring-shot--main {
+        grid-column: auto;
+        min-height: 320px;
+      }
+
+      .spring-shot {
+        min-height: 240px;
+      }
+
+      .spring-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
     /* ─────────────────────────────────
        RESPONSIVE
     ───────────────────────────────── */
@@ -1083,6 +1358,92 @@
               <span class="p-price-old">31€</span>
             </div>
             <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Spiral" target="_blank" class="p-card-cta">Ordina ora</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+        <!-- ══════════════ SPRING DROP / NUOVA COLLEZIONE ══════════════ -->
+    <section class="spring-drop" data-section="svuotatasche">
+      <div class="spring-drop-inner">
+
+        <div class="spring-head">
+          <div class="reveal">
+            <div class="spring-kicker">Spring Drop 2026 · Edizione floreale</div>
+            <h2 class="spring-title">
+              Svuotatasche <em>Primavera</em><br>
+              tra colore, fiori e vinile.
+            </h2>
+            <p class="spring-sub">
+              Una collezione stagionale di 15 pezzi unici decorati con composizioni floreali, colori vivi
+              e dettagli più espressivi del solito. È la versione più scenica della linea 33GIRI:
+              più luminosa, più materica, più da notare appena entra in una stanza.
+            </p>
+          </div>
+
+          <div class="spring-meta-card reveal reveal--d1">
+            <div class="spring-meta-top">
+              <div class="spring-badge">Nuova collezione</div>
+              <div class="spring-count">15 pezzi</div>
+            </div>
+
+            <div class="spring-price"><span>30€</span> / pezzo</div>
+
+            <p class="spring-meta-desc">
+              Vinili 33 giri trasformati a mano e arricchiti da decorazioni floreali colorate.
+              Ogni pezzo mantiene la materia originale del disco ma si apre a una dimensione più
+              decorativa, luminosa e primaverile.
+            </p>
+
+            <div class="spring-meta-points">
+              <span class="spring-pill">Pezzo unico</span>
+              <span class="spring-pill">Handmade</span>
+              <span class="spring-pill">Spring Edition</span>
+              <span class="spring-pill">33 giri</span>
+            </div>
+
+            <div class="spring-actions">
+              <a href="https://wa.me/TUONUMERO?text=Ciao!%20Vorrei%20ordinare%20uno%20Svuotatasche%20Primavera%20della%20nuova%20collezione%20floreale" target="_blank" class="btn-gold">Ordina ora</a>
+              <a href="https://instagram.com/33giri.studio" target="_blank" class="btn-outline-dark">Scopri di più</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="spring-gallery">
+          <div class="spring-shot spring-shot--main reveal">
+            <img src="assets/spring-drop/spring-1.jpg" alt="Svuotatasche Primavera 1" loading="lazy">
+            <div class="spring-shot-label">Hero Piece</div>
+          </div>
+
+          <div class="spring-shot reveal reveal--d1">
+            <img src="assets/spring-drop/spring-2.jpg" alt="Svuotatasche Primavera 2" loading="lazy">
+            <div class="spring-shot-label">Floral Detail</div>
+          </div>
+
+          <div class="spring-shot reveal reveal--d2">
+            <img src="assets/spring-drop/spring-3.jpg" alt="Svuotatasche Primavera 3" loading="lazy">
+            <div class="spring-shot-label">Color Bloom</div>
+          </div>
+
+          <div class="spring-shot reveal reveal--d1">
+            <img src="assets/spring-drop/spring-4.jpg" alt="Svuotatasche Primavera 4" loading="lazy">
+            <div class="spring-shot-label">Handmade Finish</div>
+          </div>
+
+          <div class="spring-shot reveal reveal--d2">
+            <img src="assets/spring-drop/spring-5.jpg" alt="Svuotatasche Primavera 5" loading="lazy">
+            <div class="spring-shot-label">Spring Texture</div>
+          </div>
+
+          <div class="spring-shot reveal reveal--d3">
+            <img src="assets/spring-drop/spring-6.jpg" alt="Svuotatasche Primavera 6" loading="lazy">
+            <div class="spring-shot-label">One of One</div>
+          </div>
+
+          <div class="spring-shot reveal reveal--d4">
+            <img src="assets/spring-drop/spring-7.jpg" alt="Svuotatasche Primavera 7" loading="lazy">
+            <div class="spring-shot-label">Seasonal Drop</div>
           </div>
         </div>
 
