@@ -529,6 +529,21 @@
     .p-card--light .p-card-cta { color: var(--gold-dk); }
     .p-card--light:hover .p-card-body { border-color: var(--gold); }
 
+    .spring-shot-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.8s var(--ease-smooth), filter 0.35s;
+      filter: brightness(0.94) saturate(1.02);
+    }
+    
+    .spring-shot:hover .spring-shot-video {
+      transform: scale(1.05);
+      filter: brightness(0.88) saturate(1.08);
+    }
+
     /* ─────────────────────────────────
        SEZIONE COLLAB / ARTISTICA
     ───────────────────────────────── */
@@ -1412,25 +1427,34 @@
 
         <div class="spring-gallery">
           <div class="spring-shot spring-shot--main reveal">
-            <img src="assets/spring-drop/spring-1.jpg" alt="Svuotatasche Primavera 1" loading="lazy">
+            <img src="IMG_6716.jpg" loading="lazy">
             <div class="spring-shot-label">Hero Piece</div>
           </div>
 
           <div class="spring-shot reveal reveal--d1">
-            <img src="assets/spring-drop/spring-2.jpg" alt="Svuotatasche Primavera 2" loading="lazy">
+            <img src="IMG_6729.jpg" alt="Svuotatasche Primavera 2" loading="lazy">
             <div class="spring-shot-label">Floral Detail</div>
           </div>
 
           <div class="spring-shot reveal reveal--d2">
-            <img src="assets/spring-drop/spring-3.jpg" alt="Svuotatasche Primavera 3" loading="lazy">
+            <img src="IMG_6731.jpg" alt="Svuotatasche Primavera 3" loading="lazy">
             <div class="spring-shot-label">Color Bloom</div>
           </div>
 
           <div class="spring-shot reveal reveal--d1">
-            <img src="assets/spring-drop/spring-4.jpg" alt="Svuotatasche Primavera 4" loading="lazy">
+            <video
+              class="spring-shot-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+            >
+              <source src="Richiesta_Video_Primavera_Colorata.mp4" type="video/mp4">
+            </video>
             <div class="spring-shot-label">Handmade Finish</div>
           </div>
-
+         
           <div class="spring-shot reveal reveal--d2">
             <img src="assets/spring-drop/spring-5.jpg" alt="Svuotatasche Primavera 5" loading="lazy">
             <div class="spring-shot-label">Spring Texture</div>
