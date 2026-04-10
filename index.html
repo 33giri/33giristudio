@@ -47,7 +47,6 @@
     /* HEADER */
     .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--header-h); background: rgba(10,10,10,0.94); backdrop-filter: blur(12px) saturate(120%); border-bottom: 1px solid rgba(184,150,62,0.18); transition: background 0.3s var(--ease-smooth); }
     .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; position: relative; }
-    /* Logo centrato in assoluto — non compete con gli altri elementi flex */
     .logo-wrap { display: flex; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; pointer-events: auto; }
     .logo-img-header {
       height: 26px;
@@ -57,24 +56,24 @@
     }
     .logo-mark { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; white-space: nowrap; }
     .logo-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); display: inline-block; margin: 0 2px; }
-    /* Nav desktop sinistra */
+
     .main-nav ul { list-style: none; display: flex; gap: 36px; align-items: center; }
     .main-nav a { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.72); transition: color 0.25s; position: relative; }
     .main-nav a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s var(--ease-smooth); }
     .main-nav a:hover { color: var(--gold-lt); }
     .main-nav a:hover::after { width: 100%; }
-    /* Azioni destra */
+
     .header-actions { display: flex; align-items: center; gap: 36px; }
     .header-actions a { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); transition: color 0.2s; white-space: nowrap; }
     .header-actions a:hover { color: var(--gold); }
     .header-actions a.header-link-gold { color: var(--gold); font-weight: 600; }
-    /* Hamburger button */
+
     .menu-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; flex-shrink: 0; }
     .menu-btn span { display: block; width: 22px; height: 1.5px; background: rgba(255,255,255,0.85); transition: transform 0.3s, opacity 0.3s; transform-origin: center; }
     .menu-btn.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .menu-btn.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    /* Drawer mobile */
+
     .mobile-nav {
       position: fixed;
       top: var(--header-h); left: 0; right: 0;
@@ -107,13 +106,10 @@
     }
     .mobile-nav-ordina:hover { background: var(--gold-lt); }
 
-    /* ═══════════════════════════════
-       HERO — immagine centrata
-    ═══════════════════════════════ */
+    /* HERO */
     .hero {
       position: relative;
       height: 100vh; min-height: 600px;
-      /* allineamento centrale sia orizzontale che verticale */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -134,7 +130,6 @@
         radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(10,10,10,0.38) 100%);
     }
 
-    /* Inner: colonna centrata */
     .hero-inner {
       position: relative; z-index: 2;
       width: 100%;
@@ -145,7 +140,6 @@
       text-align: center;
     }
 
-    /* Logo immagine */
     .hero-logo-img {
       margin-bottom: 40px;
       opacity: 0;
@@ -158,7 +152,6 @@
       filter: drop-shadow(0 2px 28px rgba(184,150,62,0.22));
     }
 
-    /* Testo sotto */
     .hero-sub {
       font-size: 15px; font-weight: 300;
       letter-spacing: 0.07em;
@@ -169,7 +162,6 @@
       animation: slideUp 0.9s var(--ease-smooth) 0.6s forwards;
     }
 
-    /* Bottoni */
     .hero-ctas {
       display: flex; align-items: center; justify-content: center;
       gap: 24px;
@@ -177,7 +169,6 @@
       animation: slideUp 0.9s var(--ease-smooth) 0.6s forwards;
     }
 
-    /* Dot nav */
     .hero-dots { position: absolute; right: 48px; bottom: 48px; z-index: 3; display: flex; flex-direction: column; gap: 10px; }
     .hero-dot { width: 2px; height: 32px; background: rgba(255,255,255,0.2); cursor: pointer; transition: background 0.3s; }
     .hero-dot.is-active { background: var(--gold); height: 48px; }
@@ -235,6 +226,137 @@
     .prod-card--featured .prod-card-img { height: 520px; }
     .prod-card--small .prod-card-img { height: 256px; }
     .prod-right { display: flex; flex-direction: column; gap: 2px; }
+
+    /* SPRING TEASER */
+    .spring-teaser {
+      position: relative;
+      background: linear-gradient(180deg, #f7f1e8 0%, #efe4d3 100%);
+      padding: 110px 32px;
+      overflow: hidden;
+      border-top: 1px solid rgba(184,150,62,0.12);
+      border-bottom: 1px solid rgba(184,150,62,0.12);
+    }
+    .spring-teaser::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(184,150,62,0.10) 0%, transparent 28%),
+        radial-gradient(circle at 85% 18%, rgba(212,175,106,0.10) 0%, transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,0.30) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .spring-teaser::after {
+      content: '';
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(184,150,62,0.15);
+      pointer-events: none;
+    }
+    .spring-teaser-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--wrap);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .spring-teaser-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 18px;
+    }
+    .spring-teaser-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px,5vw,68px);
+      font-weight: 300;
+      line-height: 1.02;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+    }
+    .spring-teaser-title em {
+      font-style: italic;
+      color: var(--gold-dk);
+    }
+    .spring-teaser-body {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 30px;
+    }
+    .spring-teaser-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .spring-pill {
+      padding: 7px 12px;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: rgba(255,255,255,0.45);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .spring-teaser-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .spring-teaser-gallery {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .spring-shot {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      background: var(--black);
+    }
+    .spring-shot--small {
+      min-height: 420px;
+    }
+    .spring-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-smooth), filter 0.35s;
+      filter: brightness(0.94) saturate(1.02);
+    }
+    .spring-shot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.28), rgba(10,10,10,0.02));
+      pointer-events: none;
+    }
+    .spring-shot:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.88) saturate(1.08);
+    }
+    .spring-shot-label {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      z-index: 2;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+    }
 
     /* RECENSIONI */
     .recensioni { background: var(--black); padding: 120px 32px; position: relative; overflow: hidden; }
@@ -328,6 +450,7 @@
       .prodotti-grid { grid-template-columns: 1fr 1fr; }
       .prod-card--featured { grid-column: span 2; }
       .manifesto-inner { grid-template-columns: 1fr; gap: 60px; }
+      .spring-teaser-inner { grid-template-columns: 1fr; gap: 38px; }
       .processo-steps { grid-template-columns: repeat(2,1fr); }
       .galleria-grid { grid-template-columns: repeat(3,1fr); grid-template-rows: 220px 220px; }
       .g-item:nth-child(1) { grid-column: span 3; grid-row: span 1; }
@@ -342,19 +465,22 @@
       .hero-inner { padding: 0 20px 64px; }
       .hero-logo-img-el { width: clamp(200px, 70vw, 340px); }
       .hero-dots { right: 20px; bottom: 28px; }
-      .manifesto, .prodotti, .processo, .galleria, .cta-section { padding: 80px 20px; }
+      .manifesto, .prodotti, .processo, .galleria, .cta-section, .spring-teaser { padding: 80px 20px; }
       .recensioni { padding: 80px 20px; }
       .recensioni-header { flex-direction: column; align-items: flex-start; gap: 20px; }
       .rec-trigger { padding: 22px 0; }
       .prodotti-grid { grid-template-columns: 1fr; }
       .prod-card--featured { grid-column: span 1; }
+      .spring-teaser::after { inset: 12px; }
+      .spring-teaser-gallery { grid-template-columns: 1fr; }
+      .spring-shot, .spring-shot--small { min-height: 260px; }
+      .spring-teaser-actions { flex-direction: column; align-items: flex-start; }
       .processo-steps { grid-template-columns: 1fr; }
       .galleria-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
       .g-item:nth-child(1) { grid-column: span 2; grid-row: span 1; height: 260px; }
       .g-item { height: 200px; }
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-      /* Header mobile: nascondi nav e quiz desktop, mostra hamburger */
       .main-nav { display: none; }
       .menu-btn { display: flex; }
       .header-actions a:not(.ordina-mobile) { display: none; }
@@ -375,7 +501,6 @@
   <!-- HEADER -->
   <header class="site-header" id="site-header">
     <div class="wrap header-inner">
-      <!-- Nav sinistra — desktop only -->
       <nav class="main-nav">
         <ul>
           <li><a href="catalogo.html">Catalogo</a></li>
@@ -385,17 +510,14 @@
         </ul>
       </nav>
 
-      <!-- Hamburger — mobile only -->
       <button class="menu-btn" id="menuBtn" aria-label="Apri menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
 
-      <!-- Logo centro — immagine -->
       <a href="index.html" class="logo-wrap" aria-label="33GIRI Home">
         <img src="Screenshot bg-preview.png" alt="33GIRI" class="logo-img-header">
       </a>
 
-      <!-- Azioni destra — desktop -->
       <div class="header-actions">
         <a href="storia-vinile.html" target="_blank" class="ordina-mobile header-link-gold">Storia</a>
         <a href="https://wa.me/393925430575" target="_blank" class="ordina-mobile header-link-gold">Ordina →</a>
@@ -421,7 +543,7 @@
 
   <main>
 
-    <!-- ════════ HERO ════════ -->
+    <!-- HERO -->
     <section class="hero" id="home">
 
       <div class="hero-slides" id="heroSlides">
@@ -438,7 +560,6 @@
 
       <div class="hero-overlay"></div>
 
-      <!-- Contenuto: centrato sia X che Y -->
       <div class="hero-inner">
         <h1 class="hero-logo-img">
           <img
@@ -538,6 +659,46 @@
               <div class="prod-card-desc">Collab con artisti — edizioni limitate, tiratura 1.</div>
               <a href="collaborazioni.html" class="prod-card-cta">Collaborazioni</a>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUOVA COLLEZIONE PRIMAVERILE -->
+    <section class="spring-teaser" id="spring-drop">
+      <div class="spring-teaser-inner">
+        <div class="reveal">
+          <div class="spring-teaser-label">Nuovo drop stagionale</div>
+          <h2 class="spring-teaser-title">
+            È arrivata la<br><em>collezione primaverile.</em>
+          </h2>
+          <p class="spring-teaser-body">
+            Una serie di svuotatasche in vinile 33 giri decorati con dettagli floreali,
+            colori più vivi e una presenza più luminosa. Una collezione più scenica,
+            più materica, pensata per attirare subito lo sguardo.
+          </p>
+
+          <div class="spring-teaser-pills">
+            <span class="spring-pill">15 pezzi unici</span>
+            <span class="spring-pill">30€</span>
+            <span class="spring-pill">Spring Edition</span>
+            <span class="spring-pill">Handmade</span>
+          </div>
+
+          <div class="spring-teaser-actions">
+            <a href="catalogo.html" class="btn-gold">Scopri la collezione</a>
+            <a href="https://wa.me/393925430575?text=Ciao!%20Vorrei%20vedere%20la%20nuova%20collezione%20primaverile%20di%2033GIRI" target="_blank" class="btn-black">Chiedi info</a>
+          </div>
+        </div>
+
+        <div class="spring-teaser-gallery">
+          <div class="spring-shot reveal reveal--delay-1">
+            <img src="assets/spring-drop/spring-1.jpg" alt="33GIRI collezione primaverile 1" loading="lazy">
+            <div class="spring-shot-label">Spring Drop</div>
+          </div>
+          <div class="spring-shot spring-shot--small reveal reveal--delay-2">
+            <img src="assets/spring-drop/spring-2.jpg" alt="33GIRI collezione primaverile 2" loading="lazy">
+            <div class="spring-shot-label">Floral Detail</div>
           </div>
         </div>
       </div>
@@ -737,9 +898,14 @@
       items.forEach(item => {
         const trigger = item.querySelector('.rec-trigger');
         const body    = item.querySelector('.rec-body');
+        if (!trigger || !body) return;
         trigger.addEventListener('click', () => {
           const isOpen = item.classList.contains('is-open');
-          items.forEach(i => { i.classList.remove('is-open'); i.querySelector('.rec-trigger').setAttribute('aria-expanded','false'); });
+          items.forEach(i => {
+            i.classList.remove('is-open');
+            const btn = i.querySelector('.rec-trigger');
+            if (btn) btn.setAttribute('aria-expanded','false');
+          });
           if (!isOpen) {
             item.classList.add('is-open');
             trigger.setAttribute('aria-expanded','true');
